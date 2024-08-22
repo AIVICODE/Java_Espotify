@@ -16,7 +16,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Cliente implements Serializable {
-    @Id
+    @Id//Comentario
     private String correoelectronico;
     @Basic
     private String nickname;
