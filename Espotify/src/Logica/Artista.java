@@ -1,18 +1,21 @@
 
 package Logica;
 
-public class Cliente extends Usuario{
+
+public class Artista extends Usuario{
+    protected String biografia, sitioWeb;
     
     
+    public Artista() {}
     
-    public Cliente() {}
-    
-    public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail) {
+    public Artista(String nickname, String nombre, String apellido, String contrasenia, String mail, String biografia, String sitioWeb) {
     this.nickname = nickname;
     this.nombre = nombre;
     this.apellido = apellido;
     this.contrasenia = contrasenia;
     this.mail = mail;
+    this.biografia = biografia;
+    this.sitioWeb = sitioWeb;
     }
 
     //Setters
@@ -40,6 +43,14 @@ public class Cliente extends Usuario{
     public void setMail(String mail){
         this.mail = mail;
     }
+    
+    public void setBiografia(String biografia){
+        this.biografia = biografia;
+    }
+    
+    public void setSitioWeb(String sitioWeb){
+        this.sitioWeb = sitioWeb;
+    }
     //Getters
     @Override
     public String getNickname (){
@@ -60,5 +71,13 @@ public class Cliente extends Usuario{
     @Override
     public String getMail (){
         return mail;
+    }
+    
+    public String getBiografia (){
+        return biografia;
+    }
+    
+    public String getSitioWeb (){
+        return sitioWeb;
     }
 }

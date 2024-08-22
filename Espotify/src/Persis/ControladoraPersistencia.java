@@ -11,13 +11,13 @@ import Logica.Cliente;
  * @author ivan
  */
 public class ControladoraPersistencia {
-    ClienteJpaController clijpa=new ClienteJpaController();
+    //ClienteJpaController clijpa=new ClienteJpaController();
 
-    public void AddCliente(Cliente cli) throws Exception {
+    /*public void AddCliente(Cliente cli) throws Exception {
        clijpa.create(cli);
     }
 
     public void guardar(Cliente cli) throws Exception {
         clijpa.create(cli);
-    }
+    }*/
 }

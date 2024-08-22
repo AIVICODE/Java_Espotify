@@ -9,7 +9,7 @@ public class Controlador {
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
     
     public void AddCliente(Cliente cli) throws Exception{
-            controlpersis.AddCliente(cli);
+            //controlpersis.AddCliente(cli);
     }
     // creamos cliente y recibe datos de GUI
     public void Guardar(String NombreCli) throws Exception{
@@ -17,10 +17,11 @@ public class Controlador {
         cli.setNombre(NombreCli); // para cambiar
         cli.setApellido(NombreCli);
         cli.setNickname(NombreCli);
-        cli.setFechnac(new Date());
+        /*cli.setFechnac(new Date());
         cli.setImagen(NombreCli);
         cli.setCorreoelectronico(NombreCli);
-        controlpersis.guardar(cli);
+        */
+        //controlpersis.guardar(cli);
     }
     
 }
