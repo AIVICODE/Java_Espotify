@@ -4,6 +4,8 @@
  */
 package espotify;
 
+import GUI.Principal;
+
 /**
  *
  * @author ivan
@@ -14,7 +16,8 @@ public class Espotify {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Principal prin= new Principal();
+        prin.setVisible(true);
     }
     
 }
