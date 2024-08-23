@@ -6,7 +6,7 @@ public class Artista extends Usuario{
     protected String biografia, sitioWeb;
     
     
-    public Artista() {}//
+    public Artista() {}
     
     public Artista(String nickname, String nombre, String apellido, String contrasenia, String mail, String biografia, String sitioWeb) {
     this.nickname = nickname;
