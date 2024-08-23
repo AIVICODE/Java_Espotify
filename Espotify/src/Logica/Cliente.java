@@ -20,7 +20,7 @@ public class Cliente extends Usuario{
     public void setNickname(String nickname){
         this.nickname = nickname;
     }
-    
+    //
     @Override
     public void setNombre(String nombre){
         this.nombre = nombre;

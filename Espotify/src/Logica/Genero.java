@@ -8,7 +8,7 @@ import java.util.List;
 public class Genero {
     protected String nombre;
     protected List<Genero> listaGeneros;
-    
+    //
     public Genero(){}
     
     public Genero(String nombre){//no le puse la lista aca porq puede estar vacia si es el genero mas grande

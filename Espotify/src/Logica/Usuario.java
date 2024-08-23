@@ -7,7 +7,7 @@ public class Usuario {
     protected String nickname;
     protected String nombre, apellido, contrasenia;
     protected String mail, imagen;
-    
+    //
     // ver tema fecha con bd pa q no de problemas
     // ver tema imagen
     

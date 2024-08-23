@@ -4,7 +4,7 @@ package Logica;
 import java.util.List;
 
 
-public class Album {
+public class Album {//
     protected String nombre;
     protected int anioCreacion;
     protected List<Genero> listaGeneros;

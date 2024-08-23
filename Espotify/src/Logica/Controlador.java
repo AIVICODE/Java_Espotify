@@ -8,7 +8,7 @@ import java.util.Date;
 public class Controlador {
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
     //
-    
+    //
     public void AddCliente(Cliente cli) throws Exception{
             //controlpersis.AddCliente(cli);
     }
