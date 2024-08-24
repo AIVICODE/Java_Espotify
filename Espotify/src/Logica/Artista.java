@@ -1,15 +1,18 @@
 package Logica;
 
+import java.util.Date;
+
 public class Artista extends Usuario {
     protected String biografia, sitioWeb;
     
     public Artista() {}
 
-    public Artista(String nickname, String nombre, String apellido, String contrasenia, String mail, String biografia, String sitioWeb) {
+    public Artista(String nickname, String nombre, String apellido, String contrasenia,Date FechaNac, String mail, String biografia, String sitioWeb) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.contrasenia = contrasenia;
+        this.fechaNac=FechaNac;
         this.mail = mail;
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;

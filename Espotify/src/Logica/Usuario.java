@@ -1,20 +1,28 @@
 package Logica;
 
+import java.util.Date;
+
 public abstract class Usuario {
     protected String nickname;
     protected String nombre, apellido, contrasenia;
     protected String mail, imagen;
+    protected Date fechaNac;
     
     // Constructor vacío
     public Usuario() {}
     
     // Constructor con parámetros
-    public Usuario(String nickname, String nombre, String apellido, String contrasenia, String mail) {
+    public Usuario(String nickname, String nombre, String apellido, String contrasenia, String mail,String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.contrasenia = contrasenia;
         this.mail = mail;
+        this.imagen=imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     // Setters
@@ -59,7 +67,13 @@ public abstract class Usuario {
         return mail;
     }
     
-    
+    public void setFechaNac(Date fechaNac) {
+         this.fechaNac = fechaNac;
+    }
+
+    public Date getFechaNac() {
+         return fechaNac;
+    }
    // public abstract void metodoAbstracto1();
    // public abstract void metodoAbstracto2();
 }

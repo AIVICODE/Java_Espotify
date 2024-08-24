@@ -13,16 +13,27 @@ public class Controlador {
             //controlpersis.AddCliente(cli);
     }
     // creamos cliente y recibe datos de GUI
-    public void Guardar(String NombreCli) throws Exception{
-        Cliente cli= new Cliente();
-        cli.setNombre(NombreCli); // para cambiar
-        cli.setApellido(NombreCli);
-        cli.setNickname(NombreCli);
-        /*cli.setFechnac(new Date());
-        cli.setImagen(NombreCli);
-        cli.setCorreoelectronico(NombreCli);
-        */
-        //controlpersis.guardar(cli);
+    public void Guardar(String Nickname, String Nombre, String Apellido, String Correo, Date FechaNac, String Imagen, boolean esCli, String Biografia, String SitioWeb) throws Exception {
+
+    if (esCli) {
+        Cliente cli = new Cliente();
+        cli.setNombre(Nombre);
+        cli.setApellido(Apellido);
+        cli.setNickname(Nickname);
+        cli.setMail(Correo);
+        cli.setFechaNac(FechaNac);
+         if (Imagen != null && !Imagen.isEmpty()) {
+        cli.setImagen(Imagen);
+    }
+    } else {
+        Artista artis= new Artista(Nickname,Nombre,Apellido,Correo,FechaNac,Imagen,Biografia,SitioWeb);
+        
+        if (Imagen != null && !Imagen.isEmpty()) {
+        artis.setImagen(Imagen);
+    }
     }
     
+
+    // controlpersis.guardar(user);
+}
 }
