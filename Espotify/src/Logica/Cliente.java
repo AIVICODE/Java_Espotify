@@ -1,26 +1,23 @@
-
 package Logica;
 
-public class Cliente extends Usuario{
-    
-    
+public class Cliente extends Usuario {
     
     public Cliente() {}
     
     public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail) {
-    this.nickname = nickname;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.contrasenia = contrasenia;
-    this.mail = mail;
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contrasenia = contrasenia;
+        this.mail = mail;
     }
 
-    //Setters
+    // Setters
     @Override
     public void setNickname(String nickname){
         this.nickname = nickname;
     }
-    //
+
     @Override
     public void setNombre(String nombre){
         this.nombre = nombre;
@@ -32,7 +29,7 @@ public class Cliente extends Usuario{
     }
     
     @Override
-    public void setContraseña(String contrasenia){
+    public void setContrasenia(String contrasenia){
         this.contrasenia = contrasenia;
     }
     
@@ -40,25 +37,30 @@ public class Cliente extends Usuario{
     public void setMail(String mail){
         this.mail = mail;
     }
-    //Getters
+    
+    // Getters
     @Override
-    public String getNickname (){
+    public String getNickname(){
         return nickname;
     }
+
     @Override
-    public String getNombre (){
+    public String getNombre(){
         return nombre;
     }
+
     @Override
-    public String getApellido (){
+    public String getApellido(){
         return apellido;
     }
+
     @Override
-    public String getContrasenia (){
+    public String getContrasenia(){
         return contrasenia;
     }
+
     @Override
-    public String getMail (){
+    public String getMail(){
         return mail;
     }
 }
