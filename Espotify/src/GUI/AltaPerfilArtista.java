@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import Datatypes.DTArtista;
 import java.util.Date;
 import java.util.Calendar;
 import javax.swing.JSpinner;
@@ -257,11 +258,13 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
         String correo = txtMail.getText();
         String imagen = txtImagen.getText();
         String nickname = txtNickname.getText();
+        String Web= txtPaginaweb.getText();
+        String Biografia= txtBiografia.getText();
         Date fechaSeleccionada = (Date) jSpinner2.getValue();
 
 
      //faltan los atributos propios de cliente   
-     DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, "");
+     DTUsuario user = new DTArtista(nickname, nombre, apellido, "",correo, fechaSeleccionada, correo,Biografia,Web);
        try {
            control.crearUsuario(user);
        } catch (Exception ex) {

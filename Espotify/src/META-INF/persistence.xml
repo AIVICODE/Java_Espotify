@@ -3,6 +3,7 @@
   <persistence-unit name="EspotifyPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Logica.Cliente</class>
+    <class>Logica.Artista</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Espotify?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="sammy"/>

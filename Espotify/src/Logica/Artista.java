@@ -1,8 +1,14 @@
 package Logica;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-public class Artista extends Usuario {
+@Entity
+@PrimaryKeyJoinColumn(name = "mail")
+public class Artista extends Usuario implements Serializable {
     protected String biografia, sitioWeb;
     
     public Artista() {}

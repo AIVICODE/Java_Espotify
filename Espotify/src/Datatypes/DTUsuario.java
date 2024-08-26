@@ -18,6 +18,7 @@ public class DTUsuario {
         this.correo = correo;
         this.fechaNac = fechaNac;
         this.contrasenia = contrasenia;
+        this.imagen= imagen;
     }
 
     public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia, List<String> listaUsuariosFavoritos) {
