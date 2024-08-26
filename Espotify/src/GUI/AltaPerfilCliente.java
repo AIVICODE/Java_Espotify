@@ -13,6 +13,7 @@ import Logica.Controlador;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
@@ -23,7 +24,10 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
    Controlador control= new Controlador();
     public AltaPerfilCliente() {
         initComponents();
-        
+        setTitle("AltaCliente");
+        setSize(600, 500);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
+        setLocationRelativeTo(null);
         
     }
 
@@ -230,7 +234,7 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
 
 
      //faltan los atributos propios de cliente   
-     DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, "");
+     DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, "",imagen);
        try {
            control.crearUsuario(user);
        } catch (Exception ex) {

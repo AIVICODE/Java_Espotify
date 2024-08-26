@@ -11,7 +11,7 @@ public class DTUsuario {
     protected Date fechaNac;
     private List<String> listaUsuariosFavoritos;
 
-    public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia) {
+    public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia,String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;

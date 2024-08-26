@@ -12,6 +12,7 @@ import Datatypes.DTUsuario;
 import Logica.Controlador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 public class AltaPerfilArtista extends javax.swing.JFrame {
 
@@ -19,6 +20,11 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
     public AltaPerfilArtista() {
         
         initComponents();
+        
+        setTitle("AltaArtista");
+        setSize(600, 500);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
+        setLocationRelativeTo(null);
      
         
     }
