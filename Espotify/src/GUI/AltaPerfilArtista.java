@@ -281,7 +281,7 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         txtApellido.setText("");
         txtMail.setText("");
-        
+        txtBiografia.setText("");
         txtImagen.setText("");
         txtNickname.setText("");
         txtNombrecli.setText("");
