@@ -1,24 +1,33 @@
 package Logica;
 
 import java.util.Date;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@MappedSuperclass
 public abstract class Usuario {
+    @Id
+    protected String mail;
     protected String nickname;
     protected String nombre, apellido, contrasenia;
-    protected String mail, imagen;
+    protected String imagen;
+    @Temporal(TemporalType.DATE)
     protected Date fechaNac;
     
     // Constructor vacío
     public Usuario() {}
     
     // Constructor con parámetros
-    public Usuario(String nickname, String nombre, String apellido, String contrasenia, String mail,String imagen) {
+    public Usuario(String nickname, String nombre, String apellido, String contrasenia, String mail, String imagen, Date fechaNac) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.contrasenia = contrasenia;
         this.mail = mail;
-        this.imagen=imagen;
+        this.imagen = imagen;
+        this.fechaNac = fechaNac;
     }
 
     public void setImagen(String imagen) {
@@ -46,34 +55,32 @@ public abstract class Usuario {
         this.mail = mail;
     }
     
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
     // Getters
-    public String getNickname (){
+    public String getNickname(){
         return nickname;
     }
     
-    public String getNombre (){
+    public String getNombre(){
         return nombre;
     }
     
-    public String getApellido (){
+    public String getApellido(){
         return apellido;
     }
     
-    public String getContrasenia (){
+    public String getContrasenia(){
         return contrasenia;
     }
     
-    public String getMail (){
+    public String getMail(){
         return mail;
     }
     
-    public void setFechaNac(Date fechaNac) {
-         this.fechaNac = fechaNac;
-    }
-
     public Date getFechaNac() {
-         return fechaNac;
+        return fechaNac;
     }
-   // public abstract void metodoAbstracto1();
-   // public abstract void metodoAbstracto2();
 }

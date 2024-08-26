@@ -1,15 +1,18 @@
 package Logica;
 
-public class Cliente extends Usuario {
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+@Entity
+@PrimaryKeyJoinColumn(name = "mail")
+public class Cliente extends Usuario implements Serializable {
     
     public Cliente() {}
     
-    public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail) {
-        this.nickname = nickname;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.contrasenia = contrasenia;
-        this.mail = mail;
+    public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail, Date fechaNac) {
+        super(nickname, nombre, apellido, contrasenia, mail, "", fechaNac); // Llamar al constructor de la clase base
     }
 
     // Setters
@@ -38,29 +41,8 @@ public class Cliente extends Usuario {
         this.mail = mail;
     }
     
-    // Getters
     @Override
-    public String getNickname(){
-        return nickname;
-    }
-
-    @Override
-    public String getNombre(){
-        return nombre;
-    }
-
-    @Override
-    public String getApellido(){
-        return apellido;
-    }
-
-    @Override
-    public String getContrasenia(){
-        return contrasenia;
-    }
-
-    @Override
-    public String getMail(){
-        return mail;
+    public Date getFechaNac() {
+        return fechaNac;
     }
 }
