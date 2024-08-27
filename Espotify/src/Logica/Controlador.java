@@ -5,6 +5,7 @@ import Datatypes.DTArtista;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
 import java.util.Date;
+import java.util.List;
 
 
 public class Controlador {
@@ -45,6 +46,10 @@ Usuario nuevoUsuario;
     // Llamada al método adecuado según el tipo de usuario
 
     }
-   
+    
+    public boolean verificarExistenciaArtista(String correo) throws Exception {
+
+    return controlpersis.findArtista(correo);
+}
    
 }

@@ -35,7 +35,7 @@ public class ArtistaJpaController implements Serializable {
     public ArtistaJpaController() {
         this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
-
+   
     public void create(Artista artista) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
