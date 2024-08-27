@@ -21,6 +21,14 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
+        
+        // Configura el tamaño deseado
+        setSize(800, 600); // Ajusta el tamaño según tus necesidades
+
+        // Centra la ventana en la pantalla
+        setLocationRelativeTo(null); // Esto centra la ventana en la pantalla
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
    

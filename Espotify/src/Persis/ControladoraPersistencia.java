@@ -26,4 +26,6 @@ public class ControladoraPersistencia {
     
         return artjpa.findArtista(correo)!=null;// Si encuentra al artista, devuelve true, de lo contrario, false
     }
+    
+    
 }
