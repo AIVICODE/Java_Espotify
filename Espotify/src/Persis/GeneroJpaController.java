@@ -15,6 +15,7 @@ import Persis.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -25,6 +26,11 @@ public class GeneroJpaController implements Serializable {
     public GeneroJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
+    public GeneroJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
+    }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -32,79 +38,76 @@ public class GeneroJpaController implements Serializable {
     }
 
     public void create(Genero genero) throws PreexistingEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Genero padre = genero.getPadre();
-            if (padre != null) {
-                padre = em.getReference(padre.getClass(), padre.getNombre());
-                genero.setPadre(padre);
-            }
-            em.persist(genero);
-            if (padre != null) {
-                Genero oldPadreOfPadre = padre.getPadre();
-                if (oldPadreOfPadre != null) {
-                    oldPadreOfPadre.setPadre(null);
-                    oldPadreOfPadre = em.merge(oldPadreOfPadre);
-                }
-                padre.setPadre(genero);
-                padre = em.merge(padre);
-            }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findGenero(genero.getNombre()) != null) {
-                throw new PreexistingEntityException("Genero " + genero + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
+       EntityManager em = null;
+    try {
+        em = getEntityManager();
+        em.getTransaction().begin();
+        Genero padre = genero.getPadre();
+        if (padre != null && !padre.getNombre().isEmpty()) {
+            padre = em.getReference(padre.getClass(), padre.getNombre());
+            genero.setPadre(padre);
+        } else {
+            genero.setPadre(null); // Asegúrate de que padre sea null si no hay padre
         }
+        em.persist(genero);
+        em.getTransaction().commit();
+    } catch (Exception ex) {
+        if (findGenero(genero.getNombre()) != null) {
+            throw new PreexistingEntityException("Genero " + genero + " already exists.", ex);
+        }
+        throw ex;
+    } finally {
+        if (em != null) {
+            em.close();
+        }
+    }
     }
 
     public void edit(Genero genero) throws NonexistentEntityException, Exception {
         EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Genero persistentGenero = em.find(Genero.class, genero.getNombre());
-            Genero padreOld = persistentGenero.getPadre();
-            Genero padreNew = genero.getPadre();
-            if (padreNew != null) {
-                padreNew = em.getReference(padreNew.getClass(), padreNew.getNombre());
-                genero.setPadre(padreNew);
+    try {
+        em = getEntityManager();
+        em.getTransaction().begin();
+
+        Genero persistentGenero = em.find(Genero.class, genero.getNombre());
+        Genero padreOld = persistentGenero.getPadre();
+        Genero padreNew = genero.getPadre();
+        if (padreNew != null) {
+            padreNew = em.getReference(padreNew.getClass(), padreNew.getNombre());
+            genero.setPadre(padreNew);
+        } else {
+            genero.setPadre(null);
+        }
+        genero = em.merge(genero);
+
+        if (padreOld != null && !padreOld.equals(padreNew)) {
+            padreOld.setPadre(null);
+            padreOld = em.merge(padreOld);
+        }
+        if (padreNew != null && !padreNew.equals(padreOld)) {
+            Genero oldPadreOfPadre = padreNew.getPadre();
+            if (oldPadreOfPadre != null) {
+                oldPadreOfPadre.setPadre(null);
+                oldPadreOfPadre = em.merge(oldPadreOfPadre);
             }
-            genero = em.merge(genero);
-            if (padreOld != null && !padreOld.equals(padreNew)) {
-                padreOld.setPadre(null);
-                padreOld = em.merge(padreOld);
-            }
-            if (padreNew != null && !padreNew.equals(padreOld)) {
-                Genero oldPadreOfPadre = padreNew.getPadre();
-                if (oldPadreOfPadre != null) {
-                    oldPadreOfPadre.setPadre(null);
-                    oldPadreOfPadre = em.merge(oldPadreOfPadre);
-                }
-                padreNew.setPadre(genero);
-                padreNew = em.merge(padreNew);
-            }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                String id = genero.getNombre();
-                if (findGenero(id) == null) {
-                    throw new NonexistentEntityException("The genero with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
+            padreNew.setPadre(genero);
+            padreNew = em.merge(padreNew);
+        }
+        em.getTransaction().commit();
+    } catch (Exception ex) {
+        String msg = ex.getLocalizedMessage();
+        if (msg == null || msg.length() == 0) {
+            String id = genero.getNombre();
+            if (findGenero(id) == null) {
+                throw new NonexistentEntityException("The genero with id " + id + " no longer exists.");
             }
         }
+        throw ex;
+    } finally {
+        if (em != null) {
+            em.close();
+        }
+    }
     }
 
     public void destroy(String id) throws NonexistentEntityException {

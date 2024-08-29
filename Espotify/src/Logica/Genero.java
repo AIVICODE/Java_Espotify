@@ -18,6 +18,15 @@ public class Genero implements Serializable {
     @JoinColumn(name = "padre_id")
     private Genero padre;
 
+    
+    public Genero(String nombre, Genero padre) {
+        this.nombre = nombre;
+        this.padre = padre;
+    }
+
+    public Genero() {
+    }
+
     // Getters y setters
     public String getNombre() {
         return nombre;
