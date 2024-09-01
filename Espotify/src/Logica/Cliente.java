@@ -1,11 +1,25 @@
 package Logica;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Cliente extends Usuario{
-    
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "cliente_seguidores",
+        joinColumns = @JoinColumn(name = "cliente_seguidor_nickname"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_seguido_nickname")
+    )
+    private Set<Usuario> usuariosSeguidos = new HashSet<>();
     public Cliente() {}
     
     public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail, Date fechaNac) {
@@ -15,7 +29,10 @@ public class Cliente extends Usuario{
         this.apellido = apellido;
         this.mail = mail;
     }
-
+    //getters
+    public Set<Usuario> getUsuariosSeguidos() {
+        return usuariosSeguidos;
+    }
     // Setters
     @Override
     public void setNickname(String nickname){
@@ -46,4 +63,14 @@ public class Cliente extends Usuario{
     public Date getFechaNac() {
         return fechaNac;
     }
+     public void setUsuariosSeguidos(Set<Usuario> usuariosSeguidos) {
+        this.usuariosSeguidos = usuariosSeguidos;
+    }
+     public void seguirUsuario(Usuario usuario) {
+        this.usuariosSeguidos.add(usuario);
+    }
+     public void dejarDeSeguirUsuario(Usuario usuario) {
+        this.usuariosSeguidos.remove(usuario);
+    }
+ 
 }

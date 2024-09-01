@@ -39,6 +39,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
+        menuSeguirUsuario = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -48,11 +49,11 @@ public class Principal extends javax.swing.JFrame {
         desktopPane.setLayout(desktopPaneLayout);
         desktopPaneLayout.setHorizontalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 344, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -98,6 +99,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(AltaAlbum);
+
+        menuSeguirUsuario.setText("Seguir Usuarios");
+        menuSeguirUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSeguirUsuarioActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuSeguirUsuario);
 
         jMenuBar1.add(jMenu2);
 
@@ -155,6 +164,19 @@ public class Principal extends javax.swing.JFrame {
     altaAlbum.show();
     }//GEN-LAST:event_AltaAlbumActionPerformed
 
+    private void menuSeguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSeguirUsuarioActionPerformed
+        // TODO add your handling code here:
+        SeguirUsuario seguirUsuario = new SeguirUsuario();
+        desktopPane.add(seguirUsuario);
+        seguirUsuario.setVisible(true);
+        seguirUsuario.setClosable(true);
+        seguirUsuario.setMaximizable(true);
+        seguirUsuario.setIconifiable(true);
+        seguirUsuario.setResizable(true);
+        seguirUsuario.toFront();
+        seguirUsuario.show();
+    }//GEN-LAST:event_menuSeguirUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +224,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem menuSeguirUsuario;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {
