@@ -1,18 +1,19 @@
 package Logica;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "mail")
-public class Cliente extends Usuario implements Serializable {
+public class Cliente extends Usuario{
     
     public Cliente() {}
     
     public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail, Date fechaNac) {
-        super(nickname, nombre, apellido, contrasenia, mail, "", fechaNac); // Llamar al constructor de la clase base
+        super();
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
     }
 
     // Setters

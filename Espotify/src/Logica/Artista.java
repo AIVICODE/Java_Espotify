@@ -1,24 +1,20 @@
 package Logica;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "mail")
-public class Artista extends Usuario implements Serializable {
+public class Artista extends Usuario{
     protected String biografia, sitioWeb;
     
     public Artista() {}
 
     public Artista(String nickname, String nombre, String apellido, String contrasenia,Date FechaNac, String mail, String biografia, String sitioWeb) {
+        
+        super();
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.contrasenia = contrasenia;
-        this.fechaNac=FechaNac;
         this.mail = mail;
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;

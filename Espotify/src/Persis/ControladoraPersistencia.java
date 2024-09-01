@@ -1,29 +1,29 @@
 
 package Persis;
 
-import Logica.Artista;
-import Logica.Cliente;
-import java.util.ArrayList;
-import java.util.List;
+import Logica.Usuario;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
    
 
 
 public class ControladoraPersistencia {
-    ClienteJpaController clijpa=new ClienteJpaController();
-    ArtistaJpaController artjpa=new ArtistaJpaController();
-    public void AddCliente(Cliente cli) throws Exception {
-       clijpa.create(cli);
-    }
     
-    public void AddArtista(Artista art) throws Exception{
-    artjpa.create(art);
-    }
-    
-    public boolean findArtista(String correo) throws Exception{
-    
-        return artjpa.findArtista(correo)!=null;// Si encuentra al artista, devuelve true, de lo contrario, false
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("EspotifyPU");
+
+    public void addUsuario(Usuario usuario) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(usuario);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new Exception("Error al crear el usuario: " + e.getMessage());
+        } finally {
+            em.close();
+        }
     }
 }

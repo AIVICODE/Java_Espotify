@@ -1,15 +1,25 @@
 package Logica;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
-@MappedSuperclass
-public abstract class Usuario {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "nickname"))
+public abstract class Usuario implements Serializable{
     @Id
+    @Column(name = "mail", nullable = false, unique = true)
     protected String mail;
+    @Column(name = "nickname", nullable = false, unique = true)
     protected String nickname;
     protected String nombre, apellido, contrasenia;
     protected String imagen;

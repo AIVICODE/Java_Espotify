@@ -19,12 +19,15 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author ivan
+ * @author topo
  */
 public class ArtistaJpaController implements Serializable {
 
     public ArtistaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
+    }
+    public ArtistaJpaController (){
+        emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -32,10 +35,6 @@ public class ArtistaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public ArtistaJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
-    }
-   
     public void create(Artista artista) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {

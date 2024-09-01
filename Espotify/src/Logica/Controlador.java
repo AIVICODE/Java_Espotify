@@ -4,10 +4,6 @@ package Logica;
 import Datatypes.DTArtista;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
-import java.util.Date;
-import java.util.List;
-
-
 public class Controlador {
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
     //
@@ -30,18 +26,23 @@ Usuario nuevoUsuario;
             artista.getBiografia(),
             artista.getSitioWeb()
         );
-        controlpersis.AddArtista((Artista) nuevoUsuario);
-    } else {
+        //controlpersis.AddArtista((Artista) nuevoUsuario);
+    } else if (user instanceof DTUsuario){
+        DTUsuario cliente = (DTUsuario) user;
+        
         nuevoUsuario = new Cliente(
-            user.getNickname(),
-            user.getNombre(),
-            user.getApellido(),
-            user.getContrasenia(),
-            user.getCorreo(),
-            user.getFechaNac()
+            cliente.getNickname(),
+            cliente.getNombre(),
+            cliente.getApellido(),
+            cliente.getContrasenia(),
+            cliente.getCorreo(),
+            cliente.getFechaNac()
         );
-         controlpersis.AddCliente((Cliente) nuevoUsuario);
-    }
+         //controlpersis.AddCliente((Cliente) nuevoUsuario);
+    }else {
+            throw new IllegalArgumentException("Tipo de usuario no soportado");
+        }
+    controlpersis.addUsuario(nuevoUsuario);
 
     // Llamada al método adecuado según el tipo de usuario
 
@@ -49,7 +50,7 @@ Usuario nuevoUsuario;
     
     public boolean verificarExistenciaArtista(String correo) throws Exception {
 
-    return controlpersis.findArtista(correo);
+    return false; //controlpersis.findArtista(correo);
 }
    
 }
