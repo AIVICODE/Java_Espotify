@@ -1,3 +1,6 @@
+Seguir usuario funciona, dejar de seguir no (no se porque)
+
+
 Hice este cambio por la siguiente situacion: 
   Para poder usar nickname para poder buscar artistas y clientes en lugar de mail habia que etiquetarlo como Unique.
   Ahi me di cuenta de que se no se podian repetir entre artistas o clientes, pero si podian haber clientes y artistas con mismo nickname.. lo que no deberia pasar,
