@@ -12,9 +12,7 @@ import GUI.Principal;
  */
 public class Espotify {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         Principal prin= new Principal();
         prin.setVisible(true);
