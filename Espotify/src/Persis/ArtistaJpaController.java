@@ -4,18 +4,20 @@
  */
 package Persis;
 
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import Logica.Album;
 import Logica.Artista;
 import Persis.exceptions.NonexistentEntityException;
 import Persis.exceptions.PreexistingEntityException;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
@@ -26,22 +28,42 @@ public class ArtistaJpaController implements Serializable {
     public ArtistaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
+    
+    public ArtistaJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
+    }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public ArtistaJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
-    }
-   
     public void create(Artista artista) throws PreexistingEntityException, Exception {
+        if (artista.getAlbumes() == null) {
+            artista.setAlbumes(new ArrayList<Album>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Album> attachedAlbumes = new ArrayList<Album>();
+            for (Album albumesAlbumToAttach : artista.getAlbumes()) {
+                albumesAlbumToAttach = em.getReference(albumesAlbumToAttach.getClass(), albumesAlbumToAttach.getNombre());
+                attachedAlbumes.add(albumesAlbumToAttach);
+            }
+            artista.setAlbumes(attachedAlbumes);
             em.persist(artista);
+            for (Album albumesAlbum : artista.getAlbumes()) {
+                Artista oldArtistaOfAlbumesAlbum = albumesAlbum.getArtista();
+                albumesAlbum.setArtista(artista);
+                albumesAlbum = em.merge(albumesAlbum);
+                if (oldArtistaOfAlbumesAlbum != null) {
+                    oldArtistaOfAlbumesAlbum.getAlbumes().remove(albumesAlbum);
+                    oldArtistaOfAlbumesAlbum = em.merge(oldArtistaOfAlbumesAlbum);
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findArtista(artista.getMail()) != null) {
@@ -60,7 +82,34 @@ public class ArtistaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Artista persistentArtista = em.find(Artista.class, artista.getMail());
+            List<Album> albumesOld = persistentArtista.getAlbumes();
+            List<Album> albumesNew = artista.getAlbumes();
+            List<Album> attachedAlbumesNew = new ArrayList<Album>();
+            for (Album albumesNewAlbumToAttach : albumesNew) {
+                albumesNewAlbumToAttach = em.getReference(albumesNewAlbumToAttach.getClass(), albumesNewAlbumToAttach.getNombre());
+                attachedAlbumesNew.add(albumesNewAlbumToAttach);
+            }
+            albumesNew = attachedAlbumesNew;
+            artista.setAlbumes(albumesNew);
             artista = em.merge(artista);
+            for (Album albumesOldAlbum : albumesOld) {
+                if (!albumesNew.contains(albumesOldAlbum)) {
+                    albumesOldAlbum.setArtista(null);
+                    albumesOldAlbum = em.merge(albumesOldAlbum);
+                }
+            }
+            for (Album albumesNewAlbum : albumesNew) {
+                if (!albumesOld.contains(albumesNewAlbum)) {
+                    Artista oldArtistaOfAlbumesNewAlbum = albumesNewAlbum.getArtista();
+                    albumesNewAlbum.setArtista(artista);
+                    albumesNewAlbum = em.merge(albumesNewAlbum);
+                    if (oldArtistaOfAlbumesNewAlbum != null && !oldArtistaOfAlbumesNewAlbum.equals(artista)) {
+                        oldArtistaOfAlbumesNewAlbum.getAlbumes().remove(albumesNewAlbum);
+                        oldArtistaOfAlbumesNewAlbum = em.merge(oldArtistaOfAlbumesNewAlbum);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -89,6 +138,11 @@ public class ArtistaJpaController implements Serializable {
                 artista.getMail();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The artista with id " + id + " no longer exists.", enfe);
+            }
+            List<Album> albumes = artista.getAlbumes();
+            for (Album albumesAlbum : albumes) {
+                albumesAlbum.setArtista(null);
+                albumesAlbum = em.merge(albumesAlbum);
             }
             em.remove(artista);
             em.getTransaction().commit();

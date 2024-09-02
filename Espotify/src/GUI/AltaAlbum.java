@@ -22,9 +22,8 @@ import javax.swing.SwingUtilities;
  */
 public class AltaAlbum extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form AltaAlbum
-     */
+    
+    
     Controlador control= new Controlador();
     public AltaAlbum() {
         initComponents();
@@ -115,7 +114,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     try {
         if (control.verificarExistenciaArtista(correo)) {
          AltaAlbum_FlujoArtista altaAlbum = new AltaAlbum_FlujoArtista();
-    
+         altaAlbum.setCorreo(correo);
         JDesktopPane desktopPan=getDesktopPane();
     desktopPan.add(altaAlbum,JLayeredPane.DEFAULT_LAYER);
     altaAlbum.setVisible(true);

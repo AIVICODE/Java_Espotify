@@ -5,6 +5,8 @@
     <class>Logica.Cliente</class>
     <class>Logica.Artista</class>
     <class>Logica.Genero</class>
+    <class>Logica.Album</class>
+    <class>Logica.Tema</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Espotify?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="sammy"/>

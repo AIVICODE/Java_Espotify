@@ -1,8 +1,10 @@
 package Persis;
 
+import Logica.Album;
 import Logica.Artista;
 import Logica.Cliente;
 import Logica.Genero;
+import Logica.Tema;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,8 @@ public class ControladoraPersistencia {
     ClienteJpaController clijpa = new ClienteJpaController();
     ArtistaJpaController artjpa = new ArtistaJpaController();
     GeneroJpaController genjpa = new GeneroJpaController();
+    AlbumJpaController albjpa = new AlbumJpaController();
+    TemaJpaController temajpa = new TemaJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -92,5 +96,20 @@ private boolean isAncestor(DefaultMutableTreeNode ancestor, DefaultMutableTreeNo
     return false;
 }
 
+public void crearAlbum(Album album) throws Exception{
+    albjpa.create(album);
+}
+
+    public void crearTema(Tema tema) throws Exception {
+        temajpa.create(tema);
+    }
+
+    public void actualizarAlbum(Album album) throws Exception {
+        albjpa.edit(album);
+    }
+
+    public Artista findArtistaByCorreo(String correo) {
+        return artjpa.findArtista(correo);
+    }
 
 }
