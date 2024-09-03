@@ -1,27 +1,40 @@
-
-
 package Logica;
 
+import java.util.Date;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Usuario {
+@MappedSuperclass
+public abstract class Usuario {
+    @Id
+    protected String mail;
     protected String nickname;
     protected String nombre, apellido, contrasenia;
-    protected String mail, imagen;
-    //
-    // ver tema fecha con bd pa q no de problemas
-    // ver tema imagen
+    protected String imagen;
+    @Temporal(TemporalType.DATE)
+    protected Date fechaNac;
     
+    // Constructor vacío
     public Usuario() {}
     
-    public Usuario(String nickname, String nombre, String apellido, String contrasenia, String mail) {
-    this.nickname = nickname;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.contrasenia = contrasenia;
-    this.mail = mail;
+    // Constructor con parámetros
+    public Usuario(String nickname, String nombre, String apellido, String contrasenia, String mail, String imagen, Date fechaNac) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contrasenia = contrasenia;
+        this.mail = mail;
+        this.imagen = imagen;
+        this.fechaNac = fechaNac;
     }
 
-    //Setters
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    // Setters
     public void setNickname(String nickname){
         this.nickname = nickname;
     }
@@ -34,28 +47,40 @@ public class Usuario {
         this.apellido = apellido;
     }
     
-    public void setContraseña(String contrasenia){
+    public void setContrasenia(String contrasenia){
         this.contrasenia = contrasenia;
     }
     
     public void setMail(String mail){
         this.mail = mail;
     }
-    //Getters
-    public String getNickname (){
+    
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    // Getters
+    public String getNickname(){
         return nickname;
     }
-    public String getNombre (){
+    
+    public String getNombre(){
         return nombre;
     }
-    public String getApellido (){
+    
+    public String getApellido(){
         return apellido;
     }
-    public String getContrasenia (){
+    
+    public String getContrasenia(){
         return contrasenia;
     }
-    public String getMail (){
+    
+    public String getMail(){
         return mail;
     }
     
+    public Date getFechaNac() {
+        return fechaNac;
+    }
 }

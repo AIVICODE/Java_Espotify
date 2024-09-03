@@ -1,24 +1,30 @@
-
 package Logica;
 
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-public class Artista extends Usuario{
+@Entity
+@PrimaryKeyJoinColumn(name = "mail")
+public class Artista extends Usuario implements Serializable {
     protected String biografia, sitioWeb;
     
-    
     public Artista() {}
-    
-    public Artista(String nickname, String nombre, String apellido, String contrasenia, String mail, String biografia, String sitioWeb) {
-    this.nickname = nickname;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.contrasenia = contrasenia;
-    this.mail = mail;
-    this.biografia = biografia;
-    this.sitioWeb = sitioWeb;
+
+    public Artista(String nickname, String nombre, String apellido, String contrasenia,Date FechaNac, String mail, String biografia, String sitioWeb) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contrasenia = contrasenia;
+        this.fechaNac=FechaNac;
+        this.mail = mail;
+        this.biografia = biografia;
+        this.sitioWeb = sitioWeb;
     }
 
-    //Setters
+    // Setters
     @Override
     public void setNickname(String nickname){
         this.nickname = nickname;
@@ -35,7 +41,7 @@ public class Artista extends Usuario{
     }
     
     @Override
-    public void setContraseña(String contrasenia){
+    public void setContrasenia(String contrasenia){
         this.contrasenia = contrasenia;
     }
     
@@ -51,33 +57,38 @@ public class Artista extends Usuario{
     public void setSitioWeb(String sitioWeb){
         this.sitioWeb = sitioWeb;
     }
-    //Getters
+
+    // Getters
     @Override
-    public String getNickname (){
+    public String getNickname(){
         return nickname;
     }
+
     @Override
-    public String getNombre (){
+    public String getNombre(){
         return nombre;
     }
+
     @Override
-    public String getApellido (){
+    public String getApellido(){
         return apellido;
     }
+
     @Override
-    public String getContrasenia (){
+    public String getContrasenia(){
         return contrasenia;
     }
+
     @Override
-    public String getMail (){
+    public String getMail(){
         return mail;
     }
     
-    public String getBiografia (){
+    public String getBiografia(){
         return biografia;
     }
     
-    public String getSitioWeb (){
+    public String getSitioWeb(){
         return sitioWeb;
     }
 }

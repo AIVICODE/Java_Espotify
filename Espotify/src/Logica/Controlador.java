@@ -1,28 +1,55 @@
 
 package Logica;
 
+import Datatypes.DTArtista;
+import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
 import java.util.Date;
+import java.util.List;
 
 
 public class Controlador {
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
     //
     //
-    public void AddCliente(Cliente cli) throws Exception{
-            //controlpersis.AddCliente(cli);
-    }
+    
     // creamos cliente y recibe datos de GUI
-    public void Guardar(String NombreCli) throws Exception{
-        Cliente cli= new Cliente();
-        cli.setNombre(NombreCli); // para cambiar
-        cli.setApellido(NombreCli);
-        cli.setNickname(NombreCli);
-        /*cli.setFechnac(new Date());
-        cli.setImagen(NombreCli);
-        cli.setCorreoelectronico(NombreCli);
-        */
-        //controlpersis.guardar(cli);
+    public void crearUsuario(DTUsuario user) throws Exception {
+        
+Usuario nuevoUsuario;
+
+    if (user instanceof DTArtista) {
+        DTArtista artista = (DTArtista) user;
+        nuevoUsuario = new Artista(
+            artista.getNickname(),
+            artista.getNombre(),
+            artista.getApellido(),
+            artista.getContrasenia(),
+            artista.getFechaNac(),
+            artista.getCorreo(),
+            artista.getBiografia(),
+            artista.getSitioWeb()
+        );
+        controlpersis.AddArtista((Artista) nuevoUsuario);
+    } else {
+        nuevoUsuario = new Cliente(
+            user.getNickname(),
+            user.getNombre(),
+            user.getApellido(),
+            user.getContrasenia(),
+            user.getCorreo(),
+            user.getFechaNac()
+        );
+         controlpersis.AddCliente((Cliente) nuevoUsuario);
+    }
+
+    // Llamada al método adecuado según el tipo de usuario
+
     }
     
+    public boolean verificarExistenciaArtista(String correo) throws Exception {
+
+    return controlpersis.findArtista(correo);
+}
+   
 }
