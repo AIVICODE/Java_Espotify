@@ -51,5 +51,18 @@ Usuario nuevoUsuario;
 
     return controlpersis.findArtista(correo);
 }
-   
+  
+    public List<Cliente> listaClientes(){
+        return controlpersis.listaClientes();//retorno la lista de personas de la BD
+    }
+    public Cliente encontrarCliente(String mail){
+        return controlpersis.encontrarCliente(mail);//la persis me manda el cliente encontrado
+    }
+    
+    public List<Artista> listaArtistas(){
+        return controlpersis.listaArtistas();//retorno la lista de personas de la BD
+    }
+    public Artista encontrarArtista(String mail){
+        return controlpersis.encontrarArtista(mail);//la persis me manda el cliente encontrado
+    }
 }

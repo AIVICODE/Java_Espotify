@@ -39,6 +39,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        menuConsultaCliente = new javax.swing.JMenuItem();
+        menuConsultaArtista = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -98,6 +101,23 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(AltaAlbum);
+        jMenu2.add(jSeparator1);
+
+        menuConsultaCliente.setText("Consulta de Cliente");
+        menuConsultaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultaClienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuConsultaCliente);
+
+        menuConsultaArtista.setText("Consulta de Artista");
+        menuConsultaArtista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultaArtistaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuConsultaArtista);
 
         jMenuBar1.add(jMenu2);
 
@@ -155,6 +175,30 @@ public class Principal extends javax.swing.JFrame {
     altaAlbum.show();
     }//GEN-LAST:event_AltaAlbumActionPerformed
 
+    private void menuConsultaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaClienteActionPerformed
+        ConsultaPerfilCliente consultaCliente = new ConsultaPerfilCliente();
+        desktopPane.add(consultaCliente);
+        consultaCliente.setVisible(true);
+        consultaCliente.setClosable(true);
+        consultaCliente.setMaximizable(true);
+        consultaCliente.setIconifiable(true);
+        consultaCliente.setResizable(true);
+        consultaCliente.toFront();
+        consultaCliente.show();
+    }//GEN-LAST:event_menuConsultaClienteActionPerformed
+
+    private void menuConsultaArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaArtistaActionPerformed
+        ConsultaPerfilArtista consultaArtista = new ConsultaPerfilArtista();
+        desktopPane.add(consultaArtista);
+        consultaArtista.setVisible(true);
+        consultaArtista.setClosable(true);
+        consultaArtista.setMaximizable(true);
+        consultaArtista.setIconifiable(true);
+        consultaArtista.setResizable(true);
+        consultaArtista.toFront();
+        consultaArtista.show();
+    }//GEN-LAST:event_menuConsultaArtistaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +246,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem menuConsultaArtista;
+    private javax.swing.JMenuItem menuConsultaCliente;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {
