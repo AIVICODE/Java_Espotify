@@ -26,19 +26,14 @@ public class ClienteJpaController implements Serializable {
     public ClienteJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    
-    public ClienteJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
-    }
-    
-    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+   public ClienteJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
+    }
     public void create(Cliente cliente) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {

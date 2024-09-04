@@ -13,11 +13,11 @@ import javax.persistence.criteria.Root;
 import Logica.Artista;
 import Logica.Tema;
 import Persis.exceptions.NonexistentEntityException;
-import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
@@ -30,6 +30,7 @@ public class AlbumJpaController implements Serializable {
         this.emf = emf;
     }
     
+    
     public AlbumJpaController() {
         this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
@@ -40,7 +41,7 @@ public class AlbumJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Album album) throws PreexistingEntityException, Exception {
+    public void create(Album album) {
         if (album.getListaTemas() == null) {
             album.setListaTemas(new ArrayList<Tema>());
         }
@@ -74,11 +75,6 @@ public class AlbumJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findAlbum(album.getNombre()) != null) {
-                throw new PreexistingEntityException("Album " + album + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -91,7 +87,7 @@ public class AlbumJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Album persistentAlbum = em.find(Album.class, album.getNombre());
+            Album persistentAlbum = em.find(Album.class, album.getId());
             Artista artistaOld = persistentAlbum.getArtista();
             Artista artistaNew = album.getArtista();
             List<Tema> listaTemasOld = persistentAlbum.getListaTemas();
@@ -137,7 +133,7 @@ public class AlbumJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = album.getNombre();
+                Long id = album.getId();
                 if (findAlbum(id) == null) {
                     throw new NonexistentEntityException("The album with id " + id + " no longer exists.");
                 }
@@ -150,7 +146,7 @@ public class AlbumJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -158,7 +154,7 @@ public class AlbumJpaController implements Serializable {
             Album album;
             try {
                 album = em.getReference(Album.class, id);
-                album.getNombre();
+                album.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The album with id " + id + " no longer exists.", enfe);
             }
@@ -205,7 +201,7 @@ public class AlbumJpaController implements Serializable {
         }
     }
 
-    public Album findAlbum(String id) {
+    public Album findAlbum(Long id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Album.class, id);
@@ -226,5 +222,22 @@ public class AlbumJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Album findAlbumByName(String nombre) {
+    EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL (Java Persistence Query Language) para buscar el álbum por nombre
+        Query query = em.createQuery("SELECT a FROM Album a WHERE a.nombre = :nombre");
+        query.setParameter("nombre", nombre);
+        // Utilizamos getSingleResult() si estamos seguros de que solo habrá un álbum con ese nombre
+        // Si puede haber más de uno, usa getResultList() y maneja la lista de resultados
+        return (Album) query.getSingleResult();
+    } catch (NoResultException e) {
+        // Manejar el caso donde no se encontró ningún álbum con el nombre dado
+        return null;
+    } finally {
+        em.close();
+    }
+}
     
 }

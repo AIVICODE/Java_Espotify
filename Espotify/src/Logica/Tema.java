@@ -17,11 +17,10 @@ import javax.persistence.PreUpdate;
 
 @Entity
 @Table(name = "tema")
-public class Tema implements Serializable {
+public class Tema extends Favoritos {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
+    
     
     private String nombre;
 
@@ -98,13 +97,6 @@ private void postLoad() {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public int getOrden() {
         return orden;

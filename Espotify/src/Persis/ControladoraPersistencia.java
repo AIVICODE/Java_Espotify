@@ -4,7 +4,9 @@ import Logica.Album;
 import Logica.Artista;
 import Logica.Cliente;
 import Logica.Genero;
+import Logica.ListaRep;
 import Logica.Tema;
+import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ public class ControladoraPersistencia {
     GeneroJpaController genjpa = new GeneroJpaController();
     AlbumJpaController albjpa = new AlbumJpaController();
     TemaJpaController temajpa = new TemaJpaController();
+    ListaRepJpaController listjpa = new ListaRepJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -32,7 +35,7 @@ public class ControladoraPersistencia {
         genjpa.create(gen);
     }
     
-    public Genero findGenerobynombre(String nombre) {
+    public Genero findGenerobynombre(String nombre)  {
         
         return genjpa.findGenero(nombre);
     }
@@ -96,11 +99,17 @@ private boolean isAncestor(DefaultMutableTreeNode ancestor, DefaultMutableTreeNo
     return false;
 }
 
-public void crearAlbum(Album album) throws Exception{
-    albjpa.create(album);
+public void crearAlbum(Album album) throws Exception {
+    try {
+        albjpa.create(album);
+    }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ha ocurrido un error al intentar crear el álbum: " + album.getNombre(), e);
+    }
+        
 }
 
-    public void crearTema(Tema tema) throws Exception {
+    public void crearTema(Tema tema) throws Exception,PreexistingEntityException {
         temajpa.create(tema);
     }
 
@@ -110,6 +119,38 @@ public void crearAlbum(Album album) throws Exception{
 
     public Artista findArtistaByCorreo(String correo) {
         return artjpa.findArtista(correo);
+    }
+
+    public Cliente findClienteByCorreo(String correoCliente) {
+        return clijpa.findCliente(correoCliente);
+    }
+
+    public void createListaRep(ListaRep nuevaLista) {
+        listjpa.create(nuevaLista);
+    }
+
+    public void editCliente(Cliente cliente) throws Exception {
+        clijpa.edit(cliente);
+    }
+
+    public Album findAlbumByNombre(String recurso) throws Exception{
+        
+           try {
+        return albjpa.findAlbumByName(recurso);
+    }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("No se encuentra el nombre del album: " +recurso, e);
+    }
+        
+    }
+
+    public ListaRep findListaRepByNombre(String recurso) throws Exception{
+        try {
+        return listjpa.findListaRepByNombre(recurso);
+    }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("No se encuentra el nombre de la lista de reproduccion: " +recurso, e);
+    }
     }
 
 }

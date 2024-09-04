@@ -28,14 +28,13 @@ public class ArtistaJpaController implements Serializable {
     public ArtistaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    
+    private EntityManagerFactory emf = null;
+
     public ArtistaJpaController() {
         this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
     
-    private EntityManagerFactory emf = null;
-
+    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
@@ -50,7 +49,7 @@ public class ArtistaJpaController implements Serializable {
             em.getTransaction().begin();
             List<Album> attachedAlbumes = new ArrayList<Album>();
             for (Album albumesAlbumToAttach : artista.getAlbumes()) {
-                albumesAlbumToAttach = em.getReference(albumesAlbumToAttach.getClass(), albumesAlbumToAttach.getNombre());
+                albumesAlbumToAttach = em.getReference(albumesAlbumToAttach.getClass(), albumesAlbumToAttach.getId());
                 attachedAlbumes.add(albumesAlbumToAttach);
             }
             artista.setAlbumes(attachedAlbumes);
@@ -87,7 +86,7 @@ public class ArtistaJpaController implements Serializable {
             List<Album> albumesNew = artista.getAlbumes();
             List<Album> attachedAlbumesNew = new ArrayList<Album>();
             for (Album albumesNewAlbumToAttach : albumesNew) {
-                albumesNewAlbumToAttach = em.getReference(albumesNewAlbumToAttach.getClass(), albumesNewAlbumToAttach.getNombre());
+                albumesNewAlbumToAttach = em.getReference(albumesNewAlbumToAttach.getClass(), albumesNewAlbumToAttach.getId());
                 attachedAlbumesNew.add(albumesNewAlbumToAttach);
             }
             albumesNew = attachedAlbumesNew;

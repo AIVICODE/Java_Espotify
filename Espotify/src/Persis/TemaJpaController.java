@@ -26,13 +26,14 @@ public class TemaJpaController implements Serializable {
     public TemaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
+    public TemaJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
+    }
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
-    public TemaJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
 
     public void create(Tema tema) {
@@ -42,7 +43,7 @@ public class TemaJpaController implements Serializable {
             em.getTransaction().begin();
             Album album = tema.getAlbum();
             if (album != null) {
-                album = em.getReference(album.getClass(), album.getNombre());
+                album = em.getReference(album.getClass(), album.getId());
                 tema.setAlbum(album);
             }
             em.persist(tema);
@@ -67,7 +68,7 @@ public class TemaJpaController implements Serializable {
             Album albumOld = persistentTema.getAlbum();
             Album albumNew = tema.getAlbum();
             if (albumNew != null) {
-                albumNew = em.getReference(albumNew.getClass(), albumNew.getNombre());
+                albumNew = em.getReference(albumNew.getClass(), albumNew.getId());
                 tema.setAlbum(albumNew);
             }
             tema = em.merge(tema);

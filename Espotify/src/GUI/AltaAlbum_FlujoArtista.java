@@ -295,31 +295,28 @@ private List<DTTema> listaTemas = new ArrayList<>();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try { 
+try {
         String nombreAlbum = txtNombreAlbum.getText();
-    Date fechaCreacion = (Date) FechaCreacion.getValue();
-    String imagen = txtImagen.getText();
-   
-if (selectedNodesList.isEmpty()) {
+        Date fechaCreacion = (Date) FechaCreacion.getValue();
+        String imagen = txtImagen.getText();
+
+        if (selectedNodesList.isEmpty()) {
             throw new IllegalArgumentException("La lista de géneros seleccionados no puede estar vacía.");
         }
-    List<String> generosSeleccionados = new ArrayList<>(selectedNodesList);
+        List<String> generosSeleccionados = new ArrayList<>(selectedNodesList);
 
-    // Crear un objeto Album con todos los datos
-    DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, fechaCreacion, imagen, generosSeleccionados);
+        // Crear un objeto Album con todos los datos
+        DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, fechaCreacion, imagen, generosSeleccionados);
 
-    try {
-        // Llamar al controlador para guardar el álbum
-        control.guardarAlbum(correo,nuevoAlbum,listaTemas);
-    } catch (Exception ex) {
-        Logger.getLogger(AltaAlbum_FlujoArtista.class.getName()).log(Level.SEVERE, null, ex);
+    
+            // Llamar al controlador para guardar el álbum
+            control.guardarAlbum(correo, nuevoAlbum, listaTemas);
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+    } finally {
+        limpiarFormulario();
     }
-        }catch(IllegalArgumentException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    
-    
-    limpiarFormulario();
     }//GEN-LAST:event_jButton2ActionPerformed
 private void limpiarFormulario() {
         // Limpiar campos de texto

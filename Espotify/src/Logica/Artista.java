@@ -16,7 +16,7 @@ public class Artista extends Usuario implements Serializable {
 
     @OneToMany(mappedBy = "artista")
     private List<Album> albumes;
-
+    
     public Artista() {}
 
     public Artista(String nickname, String nombre, String apellido, String contrasenia, Date fechaNac, String mail, String biografia, String sitioWeb) {
