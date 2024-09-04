@@ -49,6 +49,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -118,6 +120,22 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setText("Consulta Artista");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("Consulta Cliente");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
 
@@ -189,6 +207,34 @@ public class Principal extends javax.swing.JFrame {
     altafav.show(); 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        ConsultaPerfilArtista consulta_artista = new ConsultaPerfilArtista();
+    
+
+    desktopPane.add(consulta_artista,JLayeredPane.DEFAULT_LAYER);
+    consulta_artista.setVisible(true);
+    consulta_artista.setClosable(true);
+    consulta_artista.setMaximizable(true);
+    consulta_artista.setIconifiable(true);
+    consulta_artista.setResizable(true);
+    consulta_artista.toFront();
+    consulta_artista.show(); 
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        ConsultaPerfilCliente consulta_cliente = new ConsultaPerfilCliente();
+    
+
+    desktopPane.add(consulta_cliente,JLayeredPane.DEFAULT_LAYER);
+    consulta_cliente.setVisible(true);
+    consulta_cliente.setClosable(true);
+    consulta_cliente.setMaximizable(true);
+    consulta_cliente.setIconifiable(true);
+    consulta_cliente.setResizable(true);
+    consulta_cliente.toFront();
+    consulta_cliente.show(); 
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,6 +283,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 

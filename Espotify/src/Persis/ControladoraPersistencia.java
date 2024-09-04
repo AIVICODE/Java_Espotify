@@ -152,5 +152,21 @@ public void crearAlbum(Album album) throws Exception {
         throw new Exception("No se encuentra el nombre de la lista de reproduccion: " +recurso, e);
     }
     }
+    
+    
+    public List<Cliente> listaClientes (){
+        return clijpa.findClienteEntities(); //me devuelve una lista con todos los clientes de la BD para mostrarlos de ahi
+    }
+    
+    public Cliente encontrarCliente(String mail){
+        return clijpa.findCliente(mail);//devuelvo el cliente
+    }
+    public List<Artista> listaArtistas (){
+        return artjpa.findArtistaEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
+    }
+    
+    public Artista encontrarArtista(String mail){
+        return artjpa.findArtista(mail);//devuelvo el artista
+    }
 
 }
