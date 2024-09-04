@@ -155,7 +155,7 @@ public class GuardarTema_Lista_Album extends javax.swing.JInternalFrame {
     switch (seleccion) {
         case "Tema":
             try {
-            control.GuardarTemaFavorito(correoCliente,recurso);
+            //control.GuardarTemaFavorito(correoCliente,recurso);
             } catch (Exception ex) {
                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
             }
@@ -165,7 +165,7 @@ public class GuardarTema_Lista_Album extends javax.swing.JInternalFrame {
         case "Album":
         {
             try {
-                control.GuardarAlbumFavorito(correoCliente,recurso);
+               // control.GuardarAlbumFavorito(correoCliente,recurso);
             } catch (Exception ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
 
@@ -176,7 +176,7 @@ public class GuardarTema_Lista_Album extends javax.swing.JInternalFrame {
         case "ListaReproduccion":
         {
             try {
-                control.GuardarListaFavorito(correoCliente,recurso);
+              //  control.GuardarListaFavorito(correoCliente,recurso);
             } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
             }
