@@ -1,15 +1,14 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package GUI;
 
-
-import java.util.Date;
 import java.util.Calendar;
 import javax.swing.JSpinner;
 import Datatypes.DTUsuario;
 import Logica.Controlador;
+import static java.awt.SystemColor.control;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,16 +18,15 @@ import javax.swing.JFrame;
  *
  * @author ivan
  */
-public class AltaPerfilCliente extends javax.swing.JFrame {
+public class AltaCliente extends javax.swing.JInternalFrame {
 
-   Controlador control= new Controlador();
-    public AltaPerfilCliente() {
+     Controlador control= new Controlador();
+    public AltaCliente() {
         initComponents();
         setTitle("AltaCliente");
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
-        setLocationRelativeTo(null);
-        
+        setVisible(true);
     }
 
     /**
@@ -55,8 +53,6 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nickname");
 
@@ -151,7 +147,7 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
                                 .addGap(90, 90, 90)
                                 .addComponent(txtNombrecli, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNickname, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +180,7 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         JSpinner.DateEditor editor = new JSpinner.DateEditor(jSpinner1, "dd/MM/yyyy");
@@ -198,7 +194,10 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -232,14 +231,15 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
         String nickname = txtNickname.getText();
         Date fechaSeleccionada = (Date) jSpinner1.getValue();
 
-
-     //faltan los atributos propios de cliente   
-     DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, "",imagen);
-       try {
-           control.crearUsuario(user);
-       } catch (Exception ex) {
-           Logger.getLogger(AltaPerfilArtista.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        //faltan los atributos propios de cliente
+        DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, "",imagen);
+        
+         try {
+             control.crearUsuario(user);
+         } catch (Exception ex) {
+             Logger.getLogger(AltaCliente.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -250,10 +250,6 @@ public class AltaPerfilCliente extends javax.swing.JFrame {
         txtNombrecli.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;

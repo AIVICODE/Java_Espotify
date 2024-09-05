@@ -1,33 +1,46 @@
 
 package Logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Genero implements Serializable {
+   @Id
+    private String nombre;
+    
+    @ManyToOne
+    @JoinColumn(name = "padre_id")
+    private Genero padre;
 
-public class Genero {
-    protected String nombre;
-    protected List<Genero> listaGeneros;
-    //
-    public Genero(){}
     
-    public Genero(String nombre){//no le puse la lista aca porq puede estar vacia si es el genero mas grande
+    public Genero(String nombre, Genero padre) {
         this.nombre = nombre;
-        this.listaGeneros = new ArrayList<>();
+        this.padre = padre;
     }
-    
-    //Setters
-    public void setNombre(String nombre){
-        this.nombre = nombre;
+
+    public Genero() {
     }
-    public void setListaGeneros(List<Genero> listaGeneros){
-        this.listaGeneros = listaGeneros;
-    }
-    //Getters
-    public String getNombre(){
+
+    // Getters y setters
+    public String getNombre() {
         return nombre;
     }
-    public List<Genero> getListaGeneros (){
-        return this.listaGeneros;        
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Genero getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Genero padre) {
+        this.padre = padre;
     }
 }

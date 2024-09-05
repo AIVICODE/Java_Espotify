@@ -1,32 +1,29 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package GUI;
+
 import Datatypes.DTArtista;
-import java.util.Date;
-import java.util.Calendar;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
 import Datatypes.DTUsuario;
 import Logica.Controlador;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
+import static java.awt.SystemColor.control;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JSpinner;
 
-public class AltaPerfilArtista extends javax.swing.JFrame {
+/**
+ *
+ * @author ivan
+ */
+public class AltaArtista extends javax.swing.JInternalFrame {
 
-   Controlador control= new Controlador();
-    public AltaPerfilArtista() {
-        
+    Controlador control= new Controlador();
+    public AltaArtista() {
         initComponents();
-        
         setTitle("AltaArtista");
-        setSize(600, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
-        setLocationRelativeTo(null);
-     
-        
     }
 
     /**
@@ -57,9 +54,6 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSpinner2 = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nickname");
 
@@ -129,8 +123,6 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
 
         jSpinner2.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
 
-        jButton1.setText("jButton1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -166,15 +158,14 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel8))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtBiografia, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPaginaweb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtPaginaweb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -206,28 +197,23 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
                         .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9)
                         .addComponent(txtPaginaweb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
-                        .addContainerGap(12, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         JSpinner.DateEditor editor = new JSpinner.DateEditor(jSpinner2, "dd/MM/yyyy");
@@ -241,7 +227,9 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,7 +256,7 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         String nombre = txtNombrecli.getText();
+        String nombre = txtNombrecli.getText();
         String apellido = txtApellido.getText();
         String correo = txtMail.getText();
         String imagen = txtImagen.getText();
@@ -277,14 +265,15 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
         String Biografia= txtBiografia.getText();
         Date fechaSeleccionada = (Date) jSpinner2.getValue();
 
-
-     //faltan los atributos propios de cliente   
-     DTUsuario user = new DTArtista(nickname, nombre, apellido, "",correo, fechaSeleccionada, correo,Biografia,Web);
-       try {
-           control.crearUsuario(user);
-       } catch (Exception ex) {
-           Logger.getLogger(AltaPerfilArtista.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        //faltan los atributos propios de cliente
+        DTUsuario user = new DTArtista(nickname, nombre, apellido, "",correo, fechaSeleccionada, correo,Biografia,Web);
+        
+        try {
+            control.crearUsuario(user);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(AltaArtista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -301,13 +290,8 @@ public class AltaPerfilArtista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBiografiaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
