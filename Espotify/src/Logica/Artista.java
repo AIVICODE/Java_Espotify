@@ -29,6 +29,19 @@ public class Artista extends Usuario implements Serializable {
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
     }
+     public Artista(String nickname, String nombre, String apellido, String contrasenia, Date fechaNac, String mail, String biografia, String sitioWeb,String imagen) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contrasenia = contrasenia;
+        this.fechaNac = fechaNac;
+        this.mail = mail;
+        this.biografia = biografia;
+        this.sitioWeb = sitioWeb;
+        this.imagen = imagen;
+    }
+
+    
 
     // Setters
     @Override

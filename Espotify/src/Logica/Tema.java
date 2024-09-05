@@ -18,8 +18,7 @@ import javax.persistence.PreUpdate;
 @Entity
 @Table(name = "tema")
 public class Tema extends Favoritos {
-
-    @Id
+@Column(unique = true)
     private String nombre;
 
     @Column(name = "duracion_segundos")

@@ -34,6 +34,23 @@ public class Cliente extends Usuario implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "lista_reproduccion_id"))
     private List<ListaRep> listaRepFavoritos;
 
+    public Cliente(List<Tema> temas, List<Album> albums) {
+        this.temas = temas;
+        this.albums = albums;
+    }
+
+    public Cliente(List<Tema> temas, List<Album> albums, String nickname, String nombre, String apellido, String contrasenia, String mail, String imagen, Date fechaNac) {
+        super(nickname, nombre, apellido, contrasenia, mail, imagen, fechaNac);
+        this.temas = temas;
+        this.albums = albums;
+    }
+
+    public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail,  Date fechaNac,String imagen) {
+        super(nickname, nombre, apellido, contrasenia, mail, imagen, fechaNac);
+    }
+
+    
+
    
     public List<ListaRep> getListaRepFavoritos() {
         return listaRepFavoritos;

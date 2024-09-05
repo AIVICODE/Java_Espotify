@@ -3,6 +3,7 @@ package Logica;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Album extends Favoritos implements Serializable {
-
-    @Id
+    @Column(unique = true)
     private String nombre;
     @Temporal(TemporalType.DATE)
     private Date anioCreacion;
@@ -35,8 +35,8 @@ public class Album extends Favoritos implements Serializable {
     @OneToMany(mappedBy = "album")
     private List<Tema> listaTemas;
 
-    @ManyToOne
-    @JoinColumn(name = "artista_mail") // Nombre de la columna en la tabla album
+        @ManyToOne
+    @JoinColumn(name = "artista_id")
     private Artista artista;
 
     public Album() {

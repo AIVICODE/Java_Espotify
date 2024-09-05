@@ -9,13 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author ivan
  */
-@Entity
-public class Favoritos implements Serializable {
+@MappedSuperclass
+public abstract class  Favoritos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

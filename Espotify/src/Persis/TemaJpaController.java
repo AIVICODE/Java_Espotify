@@ -30,6 +30,7 @@ public class TemaJpaController implements Serializable {
     public TemaJpaController() {
         this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

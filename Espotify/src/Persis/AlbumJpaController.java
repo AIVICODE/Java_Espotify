@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,14 +30,12 @@ public class AlbumJpaController implements Serializable {
     public AlbumJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    
+    private EntityManagerFactory emf = null;
+
     public AlbumJpaController() {
         this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
     
-    private EntityManagerFactory emf = null;
-
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
@@ -222,22 +221,22 @@ public class AlbumJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public Album findAlbumByName(String nombre) {
-    EntityManager em = getEntityManager();
-    try {
-        // Usamos JPQL (Java Persistence Query Language) para buscar el álbum por nombre
-        Query query = em.createQuery("SELECT a FROM Album a WHERE a.nombre = :nombre");
-        query.setParameter("nombre", nombre);
-        // Utilizamos getSingleResult() si estamos seguros de que solo habrá un álbum con ese nombre
-        // Si puede haber más de uno, usa getResultList() y maneja la lista de resultados
-        return (Album) query.getSingleResult();
-    } catch (NoResultException e) {
-        // Manejar el caso donde no se encontró ningún álbum con el nombre dado
-        return null;
-    } finally {
-        em.close();
+
+       public Album findAlbumByName(String nombre) {
+        EntityManager em = getEntityManager();
+        try {
+            // Crear la consulta usando el nombre del álbum
+            TypedQuery<Album> query = em.createQuery("SELECT a FROM Album a WHERE a.nombre = :nombre", Album.class);
+            query.setParameter("nombre", nombre);
+
+            // Intentar obtener un resultado único
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Si no se encuentra un álbum con ese nombre, devolver null
+            return null;
+        } finally {
+            em.close();
+        }
     }
-}
     
 }
