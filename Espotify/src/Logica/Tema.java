@@ -30,7 +30,7 @@ public class Tema extends Favoritos {
     private String direccion;
     
     private int orden;
-    @ManyToOne
+    
     @JoinColumn(name = "album_id") // Nombre de la columna en la tabla tema
     private Album album;
 
