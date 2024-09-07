@@ -294,7 +294,7 @@ public class Controlador {
 
     public void Cargar_Datos_Prueba() throws Exception {
         //Cargar_Perfiles();
-        //Cargar_Generos();
+        Cargar_Generos();
         //Cargar_Albumes();
 //       CrearListaRepParticular("Musica para dormior", "cli1", "txt.png", true);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
@@ -580,6 +580,18 @@ public class Controlador {
         throw new Exception("Error al cargar el álbum 'Violator': " + e.getMessage());
     }
     }
+    
+    public List<Genero> listaGeneros() {
+        return controlpersis.listaGeneros();//retorno la lista de personas de la BD
+    }
+    
+    public List<Album> listaAlbumes(){
+        return controlpersis.listaAlbumes(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
+    }
 
+    public Genero findGenerobynombre(String nombre)  {
+        
+        return controlpersis.findGenerobynombre(nombre);
+    }
 
 }

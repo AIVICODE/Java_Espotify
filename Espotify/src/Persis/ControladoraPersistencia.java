@@ -168,5 +168,12 @@ public void crearAlbum(Album album) throws Exception {
     public Artista encontrarArtista(String mail){
         return artjpa.findArtista(mail);//devuelvo el artista
     }
+    public List<Genero> listaGeneros(){
+        return genjpa.findGeneroEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
+    }
+    
+    public List<Album> listaAlbumes(){
+        return albjpa.findAlbumEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
+    }
 
 }

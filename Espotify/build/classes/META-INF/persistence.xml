@@ -8,7 +8,6 @@
     <class>Logica.Genero</class>
     <class>Logica.ListaRep</class>
     <class>Logica.Tema</class>
-    <class>Logica.Favoritos</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/espotify?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
