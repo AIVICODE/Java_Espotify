@@ -289,8 +289,8 @@ if (cliente.getListaRepFavoritos().contains(listarep)) {
     
     public void Cargar_Datos_Prueba() throws Exception{
         Cargar_Perfiles();
-       Cargar_Generos();
-        Cargar_Albumes();
+        Cargar_Generos();
+//        Cargar_Albumes();
 //       CrearListaRepParticular("Musica para dormior", "cli1", "txt.png", true);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
 //       CrearListaRepParticular("Musica para mi cumple", "cli1", "cumpleanos.png", false);
