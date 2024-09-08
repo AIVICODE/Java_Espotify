@@ -4,15 +4,15 @@
  */
 package Persis;
 
-import Logica.Cliente;
+import Logica.ListaRep;
 import Persis.exceptions.NonexistentEntityException;
-import Persis.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -21,34 +21,27 @@ import javax.persistence.criteria.Root;
  *
  * @author ivan
  */
-public class ClienteJpaController implements Serializable {
+public class ListaRepJpaController implements Serializable {
 
-    public ClienteJpaController(EntityManagerFactory emf) {
+    public ListaRepJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
-
-    public ClienteJpaController() {
+    
+      public ListaRepJpaController() {
         this.emf = Persistence.createEntityManagerFactory("EspotifyPU");
     }
-    
-    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Cliente cliente) throws PreexistingEntityException, Exception {
+    public void create(ListaRep listaRep) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(cliente);
+            em.persist(listaRep);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findCliente(cliente.getMail()) != null) {
-                throw new PreexistingEntityException("Cliente " + cliente + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -56,19 +49,19 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public void edit(Cliente cliente) throws NonexistentEntityException, Exception {
+    public void edit(ListaRep listaRep) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            cliente = em.merge(cliente);
+            listaRep = em.merge(listaRep);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = cliente.getMail();
-                if (findCliente(id) == null) {
-                    throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.");
+                Long id = listaRep.getId();
+                if (findListaRep(id) == null) {
+                    throw new NonexistentEntityException("The listaRep with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -79,19 +72,19 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cliente cliente;
+            ListaRep listaRep;
             try {
-                cliente = em.getReference(Cliente.class, id);
-                cliente.getMail();
+                listaRep = em.getReference(ListaRep.class, id);
+                listaRep.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The listaRep with id " + id + " no longer exists.", enfe);
             }
-            em.remove(cliente);
+            em.remove(listaRep);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -100,19 +93,19 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public List<Cliente> findClienteEntities() {
-        return findClienteEntities(true, -1, -1);
+    public List<ListaRep> findListaRepEntities() {
+        return findListaRepEntities(true, -1, -1);
     }
 
-    public List<Cliente> findClienteEntities(int maxResults, int firstResult) {
-        return findClienteEntities(false, maxResults, firstResult);
+    public List<ListaRep> findListaRepEntities(int maxResults, int firstResult) {
+        return findListaRepEntities(false, maxResults, firstResult);
     }
 
-    private List<Cliente> findClienteEntities(boolean all, int maxResults, int firstResult) {
+    private List<ListaRep> findListaRepEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Cliente.class));
+            cq.select(cq.from(ListaRep.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -124,20 +117,20 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public Cliente findCliente(String id) {
+    public ListaRep findListaRep(Long id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Cliente.class, id);
+            return em.find(ListaRep.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getClienteCount() {
+    public int getListaRepCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Cliente> rt = cq.from(Cliente.class);
+            Root<ListaRep> rt = cq.from(ListaRep.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -145,5 +138,22 @@ public class ClienteJpaController implements Serializable {
             em.close();
         }
     }
+    
+    
+    public ListaRep findListaRepByNombre(String nombre) throws Exception {
+    EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL (Java Persistence Query Language) para buscar la lista de reproducción por nombre
+        Query query = em.createQuery("SELECT l FROM ListaRep l WHERE l.nombre = :nombre");
+        query.setParameter("nombre", nombre);
+        // Utilizamos getSingleResult() si estamos seguros de que solo habrá una lista con ese nombre
+        return (ListaRep) query.getSingleResult();
+    } catch (NoResultException e) {
+        // Si no se encuentra la lista, lanzamos una excepción específica
+        throw new Exception("No se encuentra la lista de reproducción con el nombre: " + nombre, e);
+    } finally {
+        em.close();
+    }
+}
     
 }

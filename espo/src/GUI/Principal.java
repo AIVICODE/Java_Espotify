@@ -273,31 +273,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        TemaFavorito tema_favorito = new TemaFavorito();
-    
-
-    desktopPane.add(tema_favorito,JLayeredPane.DEFAULT_LAYER);
-    tema_favorito.setVisible(true);
-    tema_favorito.setClosable(true);
-    tema_favorito.setMaximizable(true);
-    tema_favorito.setIconifiable(true);
-    tema_favorito.setResizable(true);
-    tema_favorito.toFront();
-    tema_favorito.show(); 
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        AlbumFavorito album_favorito = new AlbumFavorito();
-    
-
-    desktopPane.add(album_favorito,JLayeredPane.DEFAULT_LAYER);
-    album_favorito.setVisible(true);
-    album_favorito.setClosable(true);
-    album_favorito.setMaximizable(true);
-    album_favorito.setIconifiable(true);
-    album_favorito.setResizable(true);
-    album_favorito.toFront();
-    album_favorito.show(); 
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed

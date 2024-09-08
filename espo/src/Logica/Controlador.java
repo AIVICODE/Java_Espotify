@@ -304,43 +304,39 @@ public class Controlador {
 }
 
 
-    public void GuardarListaFavorito(String correoCliente,String correo_Cliente_Con_Lista, String nombreLista) throws Exception {
-try {
-        // Buscar el cliente que quiere guardar la lista como favorita
-        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
-        if (cliente == null) {
-            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
-        }
-
-        // Buscar el cliente que posee la lista
-        Cliente clienteConLista = controlpersis.findClienteByCorreo(correo_Cliente_Con_Lista);
-        if (clienteConLista == null) {
-            throw new Exception("Cliente no encontrado con el correo: " + correo_Cliente_Con_Lista);
-        }
-
-        // Buscar la lista por nombre dentro del cliente que posee la lista
-        ListaRep listaEncontrada = null;
-        for (ListaRep lista : clienteConLista.getListaReproduccion()) {
-            if (lista.getNombre().equals(nombreLista)) {
-                listaEncontrada = lista;
-                break;
+    public void GuardarListaFavorito(String correoCliente, String recurso) throws Exception {
+        try {
+            // Buscar el cliente por correo
+            Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+            if (cliente == null) {
+                throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
             }
+
+//            ListaRep listarep = controlpersis.findListaRepByNombre(recurso);
+//            if (listarep == null) {
+//                throw new Exception("Lista de reproduccion no encontrada con el nombre: " + recurso);
+//            }
+
+            // PUEDE AGREGAR LISTAS FAVORITAS SOLO SI SON SUYAS O SOLO SI SON PUBLICAS
+//            if (!cliente.getListaReproduccion().contains(listarep)) {
+//                if (listarep.isPrivada() == true) {
+//                    throw new Exception("Lista de reproduccion inaccesible para el usuario" + correoCliente);
+//                }
+//            }
+
+//            if (cliente.getListaRepFavoritos().contains(listarep)) {
+//                throw new Exception("La lista de reproducción ya está en los favoritos del cliente.");
+//            }
+//            // Agregar el álbum al cliente
+//            cliente.getListaRepFavoritos().add(listarep);
+
+            // Guardar los cambios en la base de datos
+            controlpersis.editCliente(cliente);
+
+        } catch (Exception e) {
+            // Lanza la excepción para que sea gestionada en un nivel superior
+            throw e;
         }
-
-        if (listaEncontrada == null) {
-            throw new Exception("Lista no encontrada con el nombre: " + nombreLista + " para el cliente: " + correo_Cliente_Con_Lista);
-        }
-
-        // Agregar la lista al cliente que la quiere guardar como favorita
-        cliente.getListaRepFavoritos().add(listaEncontrada);
-
-        // Guardar los cambios en la base de datos
-        controlpersis.editCliente(cliente);
-
-    } catch (Exception e) {
-        // Lanza la excepción para que sea gestionada en un nivel superior
-        throw new Exception(e.getMessage());
-    }
     }
 
 public List<String> MostrarNombreClientes() {
@@ -374,9 +370,9 @@ public List<String> MostrarNombreClientes() {
 
     public void Cargar_Datos_Prueba() throws Exception {
         //Cargar_Perfiles();
-       // Cargar_Generos();
-       // Cargar_Albumes();
-       CrearListaRepParticular("Musica para dormior", "cli1", "txt.png", false);
+        //Cargar_Generos();
+        //Cargar_Albumes();
+//       CrearListaRepParticular("Musica para dormior", "cli1", "txt.png", true);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
 //       CrearListaRepParticular("Musica para mi cumple", "cli1", "cumpleanos.png", false);
 //       CrearListaRepParticular("Musica", "cli1", "mejor musica para bailar.png", false);
@@ -661,17 +657,5 @@ public List<String> MostrarNombreClientes() {
     }
     }
 
-    public List<String> MostrarNombreArtistas() {
-        List<Artista> listaArtista = listaArtistas(); // Supongamos que este método devuelve todos los clientes
-        
-    List<String> listaCorreos = new ArrayList<>();
-    
-    for (Artista artista: listaArtista) {
-        listaCorreos.add(artista.getMail()); // Añades el correo de cada cliente a la lista
-    }
-    
-    return listaCorreos; // Devuelves la lista de correos
-    }
-        
 
 }
