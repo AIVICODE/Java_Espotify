@@ -29,7 +29,7 @@ public class Cliente extends Usuario implements Serializable {
     private List<ListaRep> listaReproduccion;
 
     @OneToMany
-    @JoinTable(name = "CLIENTE_FAVORITOS",
+    @JoinTable(name = "CLIENTE_LISTA_FAVORITOS",
                joinColumns = @JoinColumn(name = "cliente_mail"),
                inverseJoinColumns = @JoinColumn(name = "lista_reproduccion_id"))
     private List<ListaRep> listaRepFavoritos;
@@ -123,4 +123,5 @@ public class Cliente extends Usuario implements Serializable {
     public Date getFechaNac() {
         return fechaNac;
     }
+
 }
