@@ -61,7 +61,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu8 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
 
@@ -162,13 +164,25 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem12);
 
-        jMenuItem13.setText("Lista de Rep");
+        jMenu9.setText("Lista de reproduccion");
+
+        jMenuItem13.setText("Lista de Rep particular");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem13ActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem13);
+        jMenu9.add(jMenuItem13);
+
+        jMenuItem5.setText("Lista por defecto");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem5);
+
+        jMenu8.add(jMenu9);
 
         jMenu2.add(jMenu8);
 
@@ -314,6 +328,20 @@ public class Principal extends javax.swing.JFrame {
     lista_favorito.show(); 
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       ListaDeRep_Por_Default_Favorito lista_favorito = new ListaDeRep_Por_Default_Favorito();
+    
+
+    desktopPane.add(lista_favorito,JLayeredPane.DEFAULT_LAYER);
+    lista_favorito.setVisible(true);
+    lista_favorito.setClosable(true);
+    lista_favorito.setMaximizable(true);
+    lista_favorito.setIconifiable(true);
+    lista_favorito.setResizable(true);
+    lista_favorito.toFront();
+    lista_favorito.show(); 
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -361,6 +389,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
@@ -372,6 +401,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
