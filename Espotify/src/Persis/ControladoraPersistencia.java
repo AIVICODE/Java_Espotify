@@ -175,5 +175,18 @@ public void crearAlbum(Album album) throws Exception {
     public List<Album> listaAlbumes(){
         return albjpa.findAlbumEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
     }
+       
+    public Artista findArtistaNickname(String nickname) throws Exception {
+        //Quiero buscar el artista por el nickname
+        List<Artista> artistas = listaArtistas(); //Obtengo la lista de todos los artistas del controlador
+        Artista artista = null; // Creo una variable la cual voy a retornar al final
+        for (Artista auxA:artistas){ // Recorro la lista de artistas
+            if(auxA.getNickname().equals(nickname)){ //Y si el nickname de ese artista de la lista, es igual al nickname que me pasan por parametro:
+                artista = auxA; // Le asigno el objeto artista a la variable "artista"
+            }
+        }
+        
+        return artista; // Retorno el objeto 
+    }
 
 }

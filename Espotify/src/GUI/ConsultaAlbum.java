@@ -9,6 +9,8 @@ import Logica.Artista;
 import Logica.Controlador;
 import Logica.Genero;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +26,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         txtG.setVisible(false);  //No aparece en la ventana principal hasta que el usuario seleccione genero o artista
         comboOpciones.setVisible(false); // Lo mismo con este
         txtAlbum.setVisible(false);
-        comboOpcionesA.setVisible(false);
+        comboAlbumes.setVisible(false);
         
     }
 
@@ -44,7 +46,17 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         txtG = new javax.swing.JLabel();
         comboOpciones = new javax.swing.JComboBox<>();
         txtAlbum = new javax.swing.JLabel();
-        comboOpcionesA = new javax.swing.JComboBox<>();
+        comboAlbumes = new javax.swing.JComboBox<>();
+        txtNombre = new javax.swing.JLabel();
+        txtAñoC = new javax.swing.JLabel();
+        txtGenAlbum = new javax.swing.JLabel();
+        txtTemas = new javax.swing.JLabel();
+        nombreAlbum = new javax.swing.JLabel();
+        añoCreacionAlbum = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        generosAlbum = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        temasAlbum = new javax.swing.JList<>();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Consulta Álbum");
@@ -65,7 +77,45 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
         txtG.setText("texto");
 
+        comboOpciones.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboOpcionesItemStateChanged(evt);
+            }
+        });
+
         txtAlbum.setText("Albumes:");
+
+        comboAlbumes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboAlbumesItemStateChanged(evt);
+            }
+        });
+        comboAlbumes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAlbumesActionPerformed(evt);
+            }
+        });
+
+        txtNombre.setText("Nombre Album:");
+
+        txtAñoC.setText("Año creación:");
+
+        txtGenAlbum.setText("Generos:");
+
+        txtTemas.setText("Temas:");
+
+        nombreAlbum.setText("jLabel7");
+
+        añoCreacionAlbum.setText("jLabel8");
+
+        generosAlbum.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(generosAlbum);
+
+        jScrollPane3.setViewportView(temasAlbum);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,17 +124,38 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboOpcionesA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAlbum)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtG)
-                            .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(257, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtAñoC)
+                                    .addComponent(txtGenAlbum))
+                                .addGap(41, 41, 41)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(añoCreacionAlbum)
+                                    .addComponent(nombreAlbum)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtTemas)
+                                .addGap(55, 55, 55)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtG)
+                                    .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(53, 53, 53)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtAlbum))))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,16 +165,32 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
-                .addComponent(txtG)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(txtAlbum)
-                .addGap(18, 18, 18)
-                .addComponent(comboOpcionesA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtG)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtAlbum)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(71, 71, 71)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombre)
+                            .addComponent(nombreAlbum)
+                            .addComponent(txtTemas))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtAñoC)
+                            .addComponent(añoCreacionAlbum))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtGenAlbum)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -121,19 +208,6 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             }
             comboOpciones.setVisible(true);
             txtAlbum.setVisible(true);
-            comboOpcionesA.removeAllItems();
-            List<Album> listaAlbumes = controlador.listaAlbumes(); //Obtengo la lista de todos los albumes del controlador
-            for (Album auxA:listaAlbumes){//Recorro esa lista de albumbes
-                 List<Genero> listaGenero = auxA.getListaGeneros();//A cada album de la lista anterior, le pido su lista de generos
-                 Genero gen = controlador.findGenerobynombre((String)comboOpciones.getSelectedItem());//Guardo en una variable el genero que me selecciona el usuario en comboBox1
-                 //Toca comparar si el genero seleccionado por el usuario, existe en la lista de generos del album actual
-                 if (listaGenero.contains(gen)){
-                    comboOpcionesA.addItem(auxA.getNombre());    
-                 }
-                 
-            }
-            comboOpcionesA.setVisible(true);
-            
         }
         if ("Artista".equals(jList1.getSelectedValue()) ){
             txtG.setText("Artistas:"); //Lo mismo pero con Artista
@@ -142,28 +216,77 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             Controlador controlador= new Controlador();
              List<Artista> listaArtistas = controlador.listaArtistas(); //pido los Artistas
             for (Artista auxA:listaArtistas){//lleno el combobox con los mails
-                 comboOpciones.addItem(auxA.getNombre());
+                 comboOpciones.addItem(auxA.getNickname());
             }
             comboOpciones.setVisible(true);
             txtAlbum.setVisible(true);
-            comboOpcionesA.removeAllItems();
-            comboOpcionesA.setVisible(true);
+            comboAlbumes.removeAllItems();
+            comboAlbumes.setVisible(true);
             
-        }
-        
-       
-        
+        }     
     }//GEN-LAST:event_jList1ValueChanged
+
+    private void comboOpcionesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboOpcionesItemStateChanged
+        Controlador controlador= new Controlador();
+        if ("Genero".equals(jList1.getSelectedValue()) ){  
+            txtAlbum.setVisible(true);
+            comboAlbumes.removeAllItems();
+            List<Album> listaAlbumes = controlador.listaAlbumes(); //Obtengo la lista de todos los albumes del controlador
+              for (Album auxA:listaAlbumes){//Recorro esa lista de albumbes
+                  List<Genero> listaGenero = auxA.getListaGeneros();//A cada album de la lista anterior, le pido su lista de generos
+                  for (Genero auxG:listaGenero){
+                      if (auxG.getNombre().equals((String)comboOpciones.getSelectedItem())){
+                          comboAlbumes.addItem(auxA.getNombre()); 
+                      }
+                  }
+                }
+            comboAlbumes.setVisible(true);
+        }
+        if ("Artista".equals(jList1.getSelectedValue()) ){
+            txtAlbum.setVisible(true);
+            comboAlbumes.removeAllItems();
+            Artista artista = null;
+            try {
+                artista = controlador.findArtistaNickname((String)comboOpciones.getSelectedItem());     
+            } catch (Exception ex) {
+                Logger.getLogger(ConsultaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<Album> listaAlbum = artista.getAlbumes();
+            for (Album auxA:listaAlbum){
+                //CONTROL POR SI EL ALBUM ES VACIO
+                comboAlbumes.addItem(auxA.getNombre());
+            }
+              
+        }
+    }//GEN-LAST:event_comboOpcionesItemStateChanged
+
+    private void comboAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlbumesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboAlbumesActionPerformed
+
+    private void comboAlbumesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboAlbumesItemStateChanged
+        
+    }//GEN-LAST:event_comboAlbumesItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel añoCreacionAlbum;
+    private javax.swing.JComboBox<String> comboAlbumes;
     private javax.swing.JComboBox<String> comboOpciones;
-    private javax.swing.JComboBox<String> comboOpcionesA;
+    private javax.swing.JList<String> generosAlbum;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel nombreAlbum;
+    private javax.swing.JList<String> temasAlbum;
     private javax.swing.JLabel txtAlbum;
+    private javax.swing.JLabel txtAñoC;
     private javax.swing.JLabel txtG;
+    private javax.swing.JLabel txtGenAlbum;
+    private javax.swing.JLabel txtNombre;
+    private javax.swing.JLabel txtTemas;
     // End of variables declaration//GEN-END:variables
 }

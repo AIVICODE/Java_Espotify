@@ -593,5 +593,9 @@ public class Controlador {
         
         return controlpersis.findGenerobynombre(nombre);
     }
+    
+    public Artista findArtistaNickname(String nickname) throws Exception {
+        return controlpersis.findArtistaNickname(nickname); // Retorno el objeto 
+    }
 
 }
