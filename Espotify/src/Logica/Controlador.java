@@ -388,6 +388,48 @@ public class Controlador {
         return controlpersis.encontrarArtista(mail);//la persis me manda el cliente encontrado
     }
 
+    
+    
+    public void seguirUsuario (String correoSeguidor, String correoSeguido) throws Exception{
+        Cliente seguidor = encontrarCliente(correoSeguidor);
+        Cliente cSeguido = encontrarCliente(correoSeguido);
+        Artista aSeguido = encontrarArtista(correoSeguido);
+        if(seguidor != null){
+            if(cSeguido != null){
+                seguidor.seguirCliente(cSeguido);
+                controlpersis.editCliente(seguidor);
+            }else if (aSeguido != null){
+                seguidor.seguirArtista(aSeguido);
+                controlpersis.editCliente(seguidor);
+            }else{
+                throw new IllegalArgumentException("No se encontró Cliente o Artista con el correo: " + correoSeguido);
+            }
+        }else{
+            throw new IllegalArgumentException("No se encontró el seguidor con el correo: " + correoSeguidor);
+        }
+    }
+    public void dejarSeguirUsuario (String correoSeguidor, String correoSeguido) throws Exception{
+        Cliente seguidor = encontrarCliente(correoSeguidor);
+        Cliente cSeguido = encontrarCliente(correoSeguido);
+        Artista aSeguido = encontrarArtista(correoSeguido);
+        if(seguidor != null){
+            if(cSeguido != null){
+                seguidor.dejarDeSeguirCliente(cSeguido);
+                controlpersis.editCliente(seguidor);
+            }else if (aSeguido != null){
+                seguidor.dejarDeSeguirArtista(aSeguido);
+                controlpersis.editCliente(seguidor);
+            }else{
+                throw new IllegalArgumentException("No se encontró Cliente o Artista con el correo: " + correoSeguido);
+            }
+        }else{
+            throw new IllegalArgumentException("No se encontró el seguidor con el correo: " + correoSeguidor);
+        }
+    }
+    
+    
+    
+    
     public void Cargar_Datos_Prueba() throws Exception {
         //Cargar_Perfiles();
         // Cargar_Generos();

@@ -3,6 +3,7 @@ package Logica;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.OneToMany;
@@ -118,4 +119,17 @@ public class Artista extends Usuario implements Serializable {
     public List<Album> getAlbumes() {
         return albumes;
     }
+    
+     @Override
+    public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Artista artista = (Artista) o;
+    return Objects.equals(mail, artista.mail);  // Compara por correo
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(mail);  // Utiliza el correo como base para el hash
+    }
+    
 }

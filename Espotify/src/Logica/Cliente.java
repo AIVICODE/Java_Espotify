@@ -1,11 +1,14 @@
 package Logica;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -15,6 +18,53 @@ public class Cliente extends Usuario implements Serializable {
     
 
 
+    @ManyToMany
+    @JoinTable(
+        name = "cliente_artista",
+        joinColumns = @JoinColumn(name = "cliente_id"),
+        inverseJoinColumns = @JoinColumn(name = "artista_id")
+    )
+    private List<Artista> artistasSeguidos;
+    @ManyToMany
+    @JoinTable(
+        name = "cliente_cliente",
+        joinColumns = @JoinColumn(name = "seguidor_id"),
+        inverseJoinColumns = @JoinColumn(name = "seguido_id")
+    )
+    private List<Cliente> clientesSeguidos;
+
+    public List<Artista> getArtistasSeguidos() {
+        return artistasSeguidos;
+    }
+
+    public void setArtistasSeguidos(List<Artista> artistasSeguidos) {
+        this.artistasSeguidos = artistasSeguidos;
+    }
+
+    public List<Cliente> getClientesSeguidos() {
+        return clientesSeguidos;
+    }
+
+    public void setClientesSeguidos(List<Cliente> clientesSeguidos) {
+        this.clientesSeguidos = clientesSeguidos;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail, Date fechaNac) {
+        super(nickname, nombre, apellido, contrasenia, mail, "", fechaNac); // Llamar al constructor de la clase base
+        this.clientesSeguidos = new ArrayList<>();
+        this.artistasSeguidos = new ArrayList<>();
+    }
+
+    
+    
     @OneToMany
     private List<Tema> temas;
 
@@ -34,6 +84,8 @@ public class Cliente extends Usuario implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "lista_reproduccion_id"))
     private List<ListaRep> listaRepFavoritos;
 
+        public Cliente() {}
+          
     public Cliente(List<Tema> temas, List<Album> albums) {
         this.temas = temas;
         this.albums = albums;
@@ -87,12 +139,7 @@ public class Cliente extends Usuario implements Serializable {
     }
     
     
-    public Cliente() {}
     
-    public Cliente(String nickname, String nombre, String apellido, String contrasenia, String mail, Date fechaNac) {
-        super(nickname, nombre, apellido, contrasenia, mail, "", fechaNac); // Llamar al constructor de la clase base
-    }
-
     // Setters
     @Override
     public void setNickname(String nickname){
@@ -124,4 +171,30 @@ public class Cliente extends Usuario implements Serializable {
         return fechaNac;
     }
 
+    @Override
+    public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Cliente cliente = (Cliente) o;
+    return Objects.equals(mail, cliente.mail);  // Compara por correo
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(mail);  // Utiliza el correo como base para el hash
+    }
+    public void seguirCliente(Cliente cliente) {
+        this.clientesSeguidos.add(cliente);
+    }
+    public void dejarDeSeguirCliente(Cliente cliente) {
+        
+        this.clientesSeguidos.remove(cliente);
+    }
+      public void seguirArtista(Artista artista) {
+        this.artistasSeguidos.add(artista);
+    }
+    public void dejarDeSeguirArtista(Artista artista) {
+        this.artistasSeguidos.remove(artista);
+    }
+    
+    
 }
