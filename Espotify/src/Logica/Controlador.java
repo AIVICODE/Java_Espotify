@@ -416,11 +416,62 @@ public class Controlador {
     
     
     
-    
-    
-    
-    
-    
+     public void EliminarTemaFavorito(String correoCliente, String correoArtista, String nombreAlbum, String nombreTema) throws Exception {
+           try {
+        // Buscar el cliente por correo
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Buscar el artista por correo
+        Artista artista = controlpersis.findArtistaByCorreo(correoArtista);
+        if (artista == null) {
+            throw new Exception("Artista no encontrado con el correo: " + correoArtista);
+        }
+
+        // Buscar el álbum por nombre dentro del artista
+        Album albumEncontrado = null;
+        for (Album album : artista.getAlbumes()) {
+            if (album.getNombre().equals(nombreAlbum)) {
+                albumEncontrado = album;
+                break;
+            }
+        }
+
+        if (albumEncontrado == null) {
+            throw new Exception("Álbum no encontrado con el nombre: " + nombreAlbum + " para el artista: " + correoArtista);
+        }
+
+        // Buscar el tema por nombre dentro del álbum
+        Tema temaEncontrado = null;
+        for (Tema tema : albumEncontrado.getListaTemas()) {
+            if (tema.getNombre().equals(nombreTema)) {
+                temaEncontrado = tema;
+                break;
+            }
+        }
+
+        if (temaEncontrado == null) {
+            throw new Exception("Tema no encontrado con el nombre: " + nombreTema + " en el álbum: " + nombreAlbum);
+        }
+
+        // Verificar si el tema está en los favoritos del cliente
+        if (!cliente.getTemas().contains(temaEncontrado)) {
+            throw new Exception("El tema no está marcado como favorito.");
+        }
+
+        // Eliminar el tema de los favoritos del cliente
+        cliente.getTemas().remove(temaEncontrado);
+
+        // Guardar los cambios en la base de datos
+        controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        // Lanza la excepción para que sea gestionada en un nivel superior
+        throw new Exception(e.getMessage());
+    }
+    }
     
     
     public List<String> MostrarNombreClientes() {
@@ -797,6 +848,8 @@ public class Controlador {
 
         return listaCorreos; // Devuelves la lista de correos
     }
+
+   
 
    
 

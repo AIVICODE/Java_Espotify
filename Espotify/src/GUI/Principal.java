@@ -226,6 +226,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu10.add(jMenuItem15);
 
         jMenuItem16.setText("Tema");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem16);
 
         jMenuItem17.setText("Lista de reproduccion");
@@ -400,6 +405,20 @@ public class Principal extends javax.swing.JFrame {
     eliminar_album .toFront();
     eliminar_album .show(); 
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        EliminarTemaFavorito eliminar_tema = new EliminarTemaFavorito();
+    
+
+    desktopPane.add(eliminar_tema ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_tema .setVisible(true);
+    eliminar_tema .setClosable(true);
+    eliminar_tema .setMaximizable(true);
+    eliminar_tema .setIconifiable(true);
+    eliminar_tema .setResizable(true);
+    eliminar_tema .toFront();
+    eliminar_tema .show(); 
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     /**
      * @param args the command line arguments
