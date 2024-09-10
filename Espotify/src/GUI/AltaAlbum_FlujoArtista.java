@@ -310,7 +310,7 @@ try {
 
     
             // Llamar al controlador para guardar el álbum
-            control.guardarAlbum(correo, nuevoAlbum, listaTemas);
+            control.CrearAlbum(correo, nuevoAlbum, listaTemas);
         
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 

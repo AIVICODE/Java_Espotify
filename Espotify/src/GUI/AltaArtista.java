@@ -12,6 +12,7 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 /**
@@ -271,7 +272,7 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         try {
             control.crearUsuario(user);
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(AltaArtista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed

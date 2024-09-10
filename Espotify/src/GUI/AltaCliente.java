@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -237,7 +238,7 @@ public class AltaCliente extends javax.swing.JInternalFrame {
          try {
              control.crearUsuario(user);
          } catch (Exception ex) {
-             Logger.getLogger(AltaCliente.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
          }
      
     }//GEN-LAST:event_jButton2ActionPerformed
