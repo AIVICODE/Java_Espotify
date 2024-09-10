@@ -67,6 +67,10 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -210,6 +214,24 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem14);
+
+        jMenu10.setText("Eliminar Favorito");
+
+        jMenuItem15.setText("Album");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem15);
+
+        jMenuItem16.setText("Tema");
+        jMenu10.add(jMenuItem16);
+
+        jMenuItem17.setText("Lista de reproduccion");
+        jMenu10.add(jMenuItem17);
+
+        jMenu2.add(jMenu10);
 
         jMenuBar1.add(jMenu2);
 
@@ -365,6 +387,20 @@ public class Principal extends javax.swing.JFrame {
     seguir_user .show(); 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        EliminarAlbumFavorito eliminar_album = new EliminarAlbumFavorito();
+    
+
+    desktopPane.add(eliminar_album ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_album .setVisible(true);
+    eliminar_album .setClosable(true);
+    eliminar_album .setMaximizable(true);
+    eliminar_album .setIconifiable(true);
+    eliminar_album .setResizable(true);
+    eliminar_album .toFront();
+    eliminar_album .show(); 
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -405,6 +441,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem AltaAlbum;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -422,6 +459,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

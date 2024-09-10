@@ -138,9 +138,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         String mailSeguido = txtSeguido.getText();
         try {
             control.dejarSeguirUsuario(mailSeguidor, mailSeguido);
-            JOptionPane.showMessageDialog(this, "Ahora "+txtSeguidor.getText()+" ya no sigue al usuario "+txtSeguido.getText()+" ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+           
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(SeguirUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(this, "Ahora "+txtSeguidor.getText()+" ya no sigue al usuario "+txtSeguido.getText()+" ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnDejarDeSeguirActionPerformed
 

@@ -187,7 +187,6 @@ public class Controlador {
             controlpersis.createListaRep(nuevaLista);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-
         }
     }
 
@@ -244,10 +243,12 @@ public class Controlador {
                     break;
                 }
             }
-
+            
             if (albumEncontrado == null) {
                 throw new Exception("Álbum no encontrado con el nombre: " + nombreAlbum + " para el artista: " + correoArtista);
             }
+            
+            
 
             // Buscar el tema por nombre dentro del álbum
             Tema temaEncontrado = null;
@@ -261,7 +262,10 @@ public class Controlador {
             if (temaEncontrado == null) {
                 throw new Exception("Tema no encontrado con el nombre: " + nombreTema + " en el álbum: " + nombreAlbum);
             }
-
+            
+            if (cliente.getTemas().contains(temaEncontrado)) {
+            throw new Exception("El tema ya está marcado como favorito.");
+        }
             // Agregar el tema al cliente
             cliente.getTemas().add(temaEncontrado);
 
@@ -296,11 +300,15 @@ public class Controlador {
                     break;
                 }
             }
+            
+            if (cliente.getAlbums().contains(albumEncontrado)) {
+            throw new Exception("El álbum ya está marcado como favorito.");
+        }
 
             if (albumEncontrado == null) {
                 throw new Exception("Álbum no encontrado con el nombre: " + nombreAlbum + " para el artista: " + correoArtista);
             }
-
+            
             // Agregar el álbum al cliente
             cliente.getAlbums().add(albumEncontrado);
 
@@ -361,6 +369,60 @@ public class Controlador {
         }
     }
 
+    
+     public void EliminarAlbumFavorito(String correoCliente, String correoArtista, String nombreAlbum) throws Exception{
+        try {
+        // Buscar el cliente por correo
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Buscar el artista por correo
+        Artista artista = controlpersis.findArtistaByCorreo(correoArtista);
+        if (artista == null) {
+            throw new Exception("Artista no encontrado con el correo: " + correoArtista);
+        }
+
+        // Buscar el álbum por nombre dentro del artista
+        Album albumEncontrado = null;
+        for (Album album : artista.getAlbumes()) {
+            if (album.getNombre().equals(nombreAlbum)) {
+                albumEncontrado = album;
+                break;
+            }
+        }
+
+        if (albumEncontrado == null) {
+            throw new Exception("Álbum no encontrado con el nombre: " + nombreAlbum + " para el artista: " + correoArtista);
+        }
+
+        // Verificar si el álbum está en los favoritos del cliente
+        if (!cliente.getAlbums().contains(albumEncontrado)) {
+            throw new Exception("El álbum no está marcado como favorito.");
+        }
+
+        // Eliminar el álbum de los favoritos del cliente
+        cliente.getAlbums().remove(albumEncontrado);
+
+        // Guardar los cambios en la base de datos
+        controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        // Lanza la excepción para que sea gestionada en un nivel superior
+        throw new Exception(e.getMessage());
+    }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public List<String> MostrarNombreClientes() {
         List<Cliente> listaClientes = listaClientes(); // Supongamos que este método devuelve todos los clientes
         List<String> listaCorreos = new ArrayList<>();
@@ -409,6 +471,7 @@ public class Controlador {
         }
     }
     public void dejarSeguirUsuario (String correoSeguidor, String correoSeguido) throws Exception{
+        try{
         Cliente seguidor = encontrarCliente(correoSeguidor);
         Cliente cSeguido = encontrarCliente(correoSeguido);
         Artista aSeguido = encontrarArtista(correoSeguido);
@@ -425,15 +488,19 @@ public class Controlador {
         }else{
             throw new IllegalArgumentException("No se encontró el seguidor con el correo: " + correoSeguidor);
         }
+        }
+        catch(Exception e){
+            throw new IllegalArgumentException("Error ");
+        }
     }
     
     
     
     
     public void Cargar_Datos_Prueba() throws Exception {
-        //Cargar_Perfiles();
-        // Cargar_Generos();
-        // Cargar_Albumes();
+        Cargar_Perfiles();
+         Cargar_Generos();
+         Cargar_Albumes();
         CrearListaRepParticular("Musica", "cli2", "txt.png", true);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
 //       CrearListaRepParticular("Musica para mi cumple", "cli1", "cumpleanos.png", false);
@@ -730,5 +797,7 @@ public class Controlador {
 
         return listaCorreos; // Devuelves la lista de correos
     }
+
+   
 
 }
