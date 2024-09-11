@@ -341,10 +341,7 @@ public class Controlador {
                 // Verificar si la lista es una instancia de ListaRepParticular
                 if (lista instanceof ListaRepParticular) {
                     ListaRepParticular listaParticular = (ListaRepParticular) lista;
-                       if(listaParticular.isPrivada()==true){
-                       
-                       throw new Exception("Intentas acceder  a una lista privada");
-                       }
+                      
                     // Comparar el nombre de la lista
                     if (listaParticular.getNombre().equals(nombreLista)) {
                         listaEncontrada = listaParticular;
@@ -352,10 +349,14 @@ public class Controlador {
                     }
                 }
             }
-
+             
             if (listaEncontrada == null) {
                 throw new Exception("Lista no encontrada con el nombre: " + nombreLista + " para el cliente: " + correo_Cliente_Con_Lista);
             }
+            if(listaEncontrada.isPrivada()==true){
+                       
+                       throw new Exception("Intentas acceder  a una lista privada");
+                }
 
             // Agregar la lista al cliente que la quiere guardar como favorita
             cliente.getListaRepFavoritos().add(listaEncontrada);
@@ -369,7 +370,38 @@ public class Controlador {
         }
     }
 
-    
+       public void GuardarLista_Por_Defecto_Favorito(String correoCliente, String nombreLista) throws Exception {
+    try {
+        // Buscar el cliente que quiere guardar la lista por defecto como favorita
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Buscar la lista por defecto (ListaRepGeneral) por nombre directamente desde la base de datos
+        ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreLista);
+        if (listaPorDefecto == null) {
+            throw new Exception("Lista por defecto no encontrada con el nombre: " + nombreLista);
+        }
+
+        // Verificar si la lista ya está marcada como favorita por el cliente
+        if (cliente.getListaRepFavoritos().contains(listaPorDefecto)) {
+            throw new Exception("La lista ya está marcada como favorita.");
+        }
+
+        // Agregar la lista por defecto al cliente como favorita
+        cliente.getListaRepFavoritos().add(listaPorDefecto);
+
+        // Guardar los cambios en la base de datos
+        controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        // Lanza la excepción para que sea gestionada en un nivel superior
+        throw new Exception(e.getMessage());
+    }
+}
+
+       
      public void EliminarAlbumFavorito(String correoCliente, String correoArtista, String nombreAlbum) throws Exception{
         try {
         // Buscar el cliente por correo
@@ -472,8 +504,85 @@ public class Controlador {
         throw new Exception(e.getMessage());
     }
     }
+     
+       public void EliminarListaFavorito(String correoCliente, String correo_Cliente_Con_Lista, String nombreLista) throws Exception {
+            try {
+        // Buscar el cliente que tiene la lista marcada como favorita
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Buscar el cliente que posee la lista original
+        Cliente clienteConLista = controlpersis.findClienteByCorreo(correo_Cliente_Con_Lista);
+        if (clienteConLista == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correo_Cliente_Con_Lista);
+        }
+
+        // Buscar la lista por nombre dentro del cliente que posee la lista
+        ListaRepParticular listaEncontrada = null;
+        for (ListaRep lista : clienteConLista.getListaReproduccion()) {
+            if (lista instanceof ListaRepParticular) {
+                ListaRepParticular listaParticular = (ListaRepParticular) lista;
+                if (listaParticular.getNombre().equals(nombreLista)) {
+                    listaEncontrada = listaParticular;
+                    break;
+                }
+            }
+        }
+
+        if (listaEncontrada == null) {
+            throw new Exception("Lista no encontrada con el nombre: " + nombreLista + " para el cliente: " + correo_Cliente_Con_Lista);
+        }
+
+        // Verificar si la lista está en los favoritos del cliente
+        if (!cliente.getListaRepFavoritos().contains(listaEncontrada)) {
+            throw new Exception("La lista no está marcada como favorita.");
+        }
+
+        // Eliminar la lista de los favoritos del cliente
+        cliente.getListaRepFavoritos().remove(listaEncontrada);
+
+        // Guardar los cambios en la base de datos
+        controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        // Lanza la excepción para que sea gestionada en un nivel superior
+        throw new Exception(e.getMessage());
+    }
+    }
     
-    
+public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nombreLista) throws Exception {
+    try {
+        // Buscar el cliente que quiere eliminar la lista por defecto de sus favoritos
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Buscar la lista por defecto (ListaRepGeneral) por nombre directamente desde la base de datos
+        ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreLista);
+        if (listaPorDefecto == null) {
+            throw new Exception("Lista por defecto no encontrada con el nombre: " + nombreLista);
+        }
+
+        // Verificar si la lista está marcada como favorita por el cliente
+        if (!cliente.getListaRepFavoritos().contains(listaPorDefecto)) {
+            throw new Exception("La lista no está marcada como favorita.");
+        }
+
+        // Eliminar la lista por defecto de los favoritos del cliente
+        cliente.getListaRepFavoritos().remove(listaPorDefecto);
+
+        // Guardar los cambios en la base de datos
+        controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        // Lanza la excepción para que sea gestionada en un nivel superior
+        throw new Exception(e.getMessage());
+    }
+}
+
     public List<String> MostrarNombreClientes() {
         List<Cliente> listaClientes = listaClientes(); // Supongamos que este método devuelve todos los clientes
         List<String> listaCorreos = new ArrayList<>();
@@ -549,13 +658,15 @@ public class Controlador {
     
     
     public void Cargar_Datos_Prueba() throws Exception {
-        Cargar_Perfiles();
-         Cargar_Generos();
-         Cargar_Albumes();
-        CrearListaRepParticular("Musica", "cli2", "txt.png", true);
+        //Cargar_Perfiles();
+         //Cargar_Generos();
+         //Cargar_Albumes();
+        //CrearListaRepParticular("Musica2", "cli2", "txt.png", false);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
 //       CrearListaRepParticular("Musica para mi cumple", "cli1", "cumpleanos.png", false);
 //       CrearListaRepParticular("Musica", "cli1", "mejor musica para bailar.png", false);
+
+//CrearListaRepGeneral("Musica lista rep", "gatitobailando.png");
 //      
 //       GuardarListaFavorito("cli1", "Musica");
 
@@ -848,6 +959,12 @@ public class Controlador {
 
         return listaCorreos; // Devuelves la lista de correos
     }
+
+    
+
+ 
+
+ 
 
    
 

@@ -5,6 +5,7 @@ import Logica.Artista;
 import Logica.Cliente;
 import Logica.Genero;
 import Logica.ListaRep;
+import Logica.ListaRepGeneral;
 import Logica.Tema;
 import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
@@ -167,6 +168,10 @@ public void crearAlbum(Album album) throws Exception {
     
     public Artista encontrarArtista(String mail){
         return artjpa.findArtista(mail);//devuelvo el artista
+    }
+
+    public ListaRepGeneral findListaRep_Por_Defecto_ByNombre(String nombreLista) throws Exception {
+        return listjpa.findListaRep_Por_Defecto_ByNombre(nombreLista);
     }
 
        
