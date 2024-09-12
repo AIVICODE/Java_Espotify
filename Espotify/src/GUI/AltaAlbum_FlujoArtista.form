@@ -53,9 +53,9 @@
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="txtNombreAlbum" min="-2" pref="146" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                              <Component id="FechaCreacion" min="-2" pref="146" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                              <Component id="anioAlbum" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -131,7 +131,7 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="FechaCreacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="anioAlbum" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -208,17 +208,6 @@
             <Property name="text" type="java.lang.String" value="Seleccione generos"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="FechaCreacion">
-          <Properties>
-            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH)" type="code"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="JSpinner.DateEditor editor = new JSpinner.DateEditor(FechaCreacion, &quot;dd/MM/yyyy&quot;);&#xa;        FechaCreacion.setEditor(editor);"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner()"/>
-          </AuxValues>
-        </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -291,6 +280,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDIR">
+        </Component>
+        <Component class="javax.swing.JSpinner" name="anioAlbum">
         </Component>
       </SubComponents>
     </Container>

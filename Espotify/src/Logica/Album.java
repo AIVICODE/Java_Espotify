@@ -1,6 +1,7 @@
 package Logica;
 
 import java.io.Serializable;
+import java.time.Year;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -20,8 +21,7 @@ import javax.persistence.TemporalType;
 public class Album extends Favoritos implements Serializable {
 
     private String nombre;
-    @Temporal(TemporalType.DATE)
-    private Date anioCreacion;
+    private int anioCreacion;
     private String imagen;
 
     @ManyToMany
@@ -42,7 +42,7 @@ public class Album extends Favoritos implements Serializable {
     public Album() {
     }
 
-    public Album(String nombre, Date anioCreacion, String imagen, List<Genero> listaGeneros, List<Tema> listaTemas, Artista artista) {
+    public Album(String nombre, int anioCreacion, String imagen, List<Genero> listaGeneros, List<Tema> listaTemas, Artista artista) {
         this.nombre = nombre;
         this.anioCreacion = anioCreacion;
         this.imagen = imagen;
@@ -60,11 +60,11 @@ public class Album extends Favoritos implements Serializable {
         this.nombre = nombre;
     }
 
-    public Date getAnioCreacion() {
+    public int getAnioCreacion() {
         return anioCreacion;
     }
 
-    public void setAnioCreacion(Date anioCreacion) {
+    public void setAnioCreacion(int anioCreacion) {
         this.anioCreacion = anioCreacion;
     }
 

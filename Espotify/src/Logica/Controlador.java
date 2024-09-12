@@ -7,6 +7,7 @@ import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,33 +21,39 @@ public class Controlador {
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
 
     public void crearUsuario(DTUsuario user) throws Exception {
+if (controlpersis.findClienteByCorreo(user.getCorreo()) != null) {
+        throw new Exception("Ya existe un cliente con el correo: " + user.getCorreo());
+    }
+    if (controlpersis.findArtistaByCorreo(user.getCorreo()) != null) {
+        throw new Exception("Ya existe un artista con el correo: " + user.getCorreo());
+    }
 
-        if (user instanceof DTArtista) {
-            Artista nuevoUsuario;
-            DTArtista artista = (DTArtista) user;
-            nuevoUsuario = new Artista(
-                    artista.getNickname(),
-                    artista.getNombre(),
-                    artista.getApellido(),
-                    artista.getContrasenia(),
-                    artista.getFechaNac(),
-                    artista.getCorreo(),
-                    artista.getBiografia(),
-                    artista.getSitioWeb()
-            );
-            controlpersis.AddArtista((Artista) nuevoUsuario);
-        } else {
-            Cliente nuevoUsuario;
-            nuevoUsuario = new Cliente(
-                    user.getNickname(),
-                    user.getNombre(),
-                    user.getApellido(),
-                    user.getContrasenia(),
-                    user.getCorreo(),
-                    user.getFechaNac()
-            );
-            controlpersis.AddCliente((Cliente) nuevoUsuario);
-        }
+    if (user instanceof DTArtista) {
+        Artista nuevoUsuario;
+        DTArtista artista = (DTArtista) user;
+        nuevoUsuario = new Artista(
+                artista.getNickname(),
+                artista.getNombre(),
+                artista.getApellido(),
+                artista.getContrasenia(),
+                artista.getFechaNac(),
+                artista.getCorreo(),
+                artista.getBiografia(),
+                artista.getSitioWeb()
+        );
+        controlpersis.AddArtista((Artista) nuevoUsuario);
+    } else {
+        Cliente nuevoUsuario;
+        nuevoUsuario = new Cliente(
+                user.getNickname(),
+                user.getNombre(),
+                user.getApellido(),
+                user.getContrasenia(),
+                user.getCorreo(),
+                user.getFechaNac()
+        );
+        controlpersis.AddCliente((Cliente) nuevoUsuario);
+    }
     }
 
     public boolean verificarExistenciaArtista(String correo) throws Exception {
@@ -658,9 +665,9 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
     
     
     public void Cargar_Datos_Prueba() throws Exception {
-         //Cargar_Perfiles();
-         //Cargar_Generos();
-         //Cargar_Albumes();
+         Cargar_Perfiles();
+         Cargar_Generos();
+         Cargar_Albumes();
          Cargar_Seguidores();
         //CrearListaRepParticular("Musica2", "cli2", "txt.png", false);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
@@ -880,7 +887,7 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
             Album nuevoAlbum = new Album();
             nuevoAlbum.setNombre("Live and Sleazy");
             nuevoAlbum.setImagen("Imagen");
-            nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("2003"));
+            nuevoAlbum.setAnioCreacion(2003);
             nuevoAlbum.setListaGeneros(generos);
             nuevoAlbum.setArtista(buscarArtistaPorCorreo("vpeople@tuta.io"));
             if(nuevoAlbum.getArtista()==null){
@@ -929,7 +936,7 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
             Album nuevoAlbum = new Album();
             nuevoAlbum.setNombre("Violator");
             nuevoAlbum.setImagen("Imagen_Violator");
-            nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1990"));
+            nuevoAlbum.setAnioCreacion(1990);
             nuevoAlbum.setListaGeneros(generos);
             nuevoAlbum.setArtista(buscarArtistaPorCorreo("dmode@tuta.io"));
  if(nuevoAlbum.getArtista()==null){
@@ -978,7 +985,7 @@ private void Album3() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("She’s So Unusual");
         nuevoAlbum.setImagen("Imagen_She’s_So_Unusual");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1983"));  // Fecha ejemplo, ajusta si es necesario
+        nuevoAlbum.setAnioCreacion(1983);  // Fecha ejemplo, ajusta si es necesario
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("clauper@hotmail.com"));
  if(nuevoAlbum.getArtista()==null){
@@ -1026,7 +1033,7 @@ private void Album4() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("Born In The U.S.A.");
         nuevoAlbum.setImagen("Imagen_Born_In_The_USA");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1984"));
+        nuevoAlbum.setAnioCreacion(1984);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("bruceTheBoss@gmail.com"));
         
@@ -1078,7 +1085,7 @@ private void Album5() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("It’s Not Unusual");
         nuevoAlbum.setImagen("Imagen_It’s_Not_Unusual");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1965"));
+        nuevoAlbum.setAnioCreacion(1965);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("tigerOfWales@tuta.io"));
         
@@ -1127,7 +1134,7 @@ private void Album6() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("Agua Y Sal");
         nuevoAlbum.setImagen("Imagen_Agua_Y_Sal");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("2012"));
+        nuevoAlbum.setAnioCreacion(2012);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("tripleNelson@tuta.io"));
         
@@ -1176,7 +1183,7 @@ private void Album7() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("MTV Unplugged");
         nuevoAlbum.setImagen("Imagen_MTV_Unplugged");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("2001"));
+        nuevoAlbum.setAnioCreacion(2001);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("la_ley@tuta.io"));
         
@@ -1225,7 +1232,7 @@ private void Album8() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("El Lago De Los Cisnes");
         nuevoAlbum.setImagen("Imagen_El_Lago_De_Los_Cisnes");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1875"));
+        nuevoAlbum.setAnioCreacion(1875);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("chaiko@tuta.io"));
 
@@ -1274,7 +1281,7 @@ private void Album9() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("Concierto Para Piano No. 1");
         nuevoAlbum.setImagen("Imagen_Concierto_Para_Piano_No_1");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1875"));
+        nuevoAlbum.setAnioCreacion(1875);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("chaiko@tuta.io"));
 
@@ -1322,7 +1329,7 @@ private void Album10() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("Primer Amor");
         nuevoAlbum.setImagen("Imagen_Primer_Amor");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1994"));
+        nuevoAlbum.setAnioCreacion(1994);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("nicoleneu@hotmail.com"));
 
@@ -1372,7 +1379,7 @@ private void Album11() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("Hay Amores Que Matan");
         nuevoAlbum.setImagen("Imagen_Hay_Amores_Que_Matan");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1993"));
+        nuevoAlbum.setAnioCreacion(1993);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("lospimpi@gmail.com"));
 
@@ -1422,7 +1429,7 @@ private void Album12() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("Un Loco Como Yo");
         nuevoAlbum.setImagen("Imagen_Un_Loco_Como_Yo");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1993"));
+        nuevoAlbum.setAnioCreacion(1993);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("dyangounchained@gmail.com"));
 
@@ -1470,7 +1477,7 @@ private void Album13() throws Exception {
         Album nuevoAlbum = new Album();
         nuevoAlbum.setNombre("20 Grandes Éxitos");
         nuevoAlbum.setImagen("Imagen_20_Grandes_Exitos");
-        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1989"));
+        nuevoAlbum.setAnioCreacion(1989);
         nuevoAlbum.setListaGeneros(generos);
         nuevoAlbum.setArtista(buscarArtistaPorCorreo("alcides@tuta.io"));
 
