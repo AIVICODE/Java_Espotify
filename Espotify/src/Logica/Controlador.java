@@ -658,9 +658,10 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
     
     
     public void Cargar_Datos_Prueba() throws Exception {
-        //Cargar_Perfiles();
+         //Cargar_Perfiles();
          //Cargar_Generos();
          //Cargar_Albumes();
+         Cargar_Seguidores();
         //CrearListaRepParticular("Musica2", "cli2", "txt.png", false);
 //       CrearListaRepParticular("Musica para Correr", "cli1", "xd.png", false);
 //       CrearListaRepParticular("Musica para mi cumple", "cli1", "cumpleanos.png", false);
@@ -849,8 +850,18 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
     private void Cargar_Albumes() throws Exception {
 
         Album1();
-        //Album2();
-
+        Album2();
+        Album3();
+        Album4();
+        Album5();
+        Album6();
+        Album7();
+        Album8();
+        Album9();
+        Album10();
+        Album11();
+        Album12();
+        Album13();
     }
 
     private void Album1() throws Exception {
@@ -869,17 +880,19 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
             Album nuevoAlbum = new Album();
             nuevoAlbum.setNombre("Live and Sleazy");
             nuevoAlbum.setImagen("Imagen");
-            nuevoAlbum.setAnioCreacion(new SimpleDateFormat("dd/MM/yyyy").parse("12/02/2003"));
+            nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("2003"));
             nuevoAlbum.setListaGeneros(generos);
             nuevoAlbum.setArtista(buscarArtistaPorCorreo("vpeople@tuta.io"));
-
+            if(nuevoAlbum.getArtista()==null){
+            throw new Exception("El artista seleccionado no existe para el album");
+            }
             // Persistir el álbum primero
             controlpersis.crearAlbum(nuevoAlbum);
 
             // Crear lista de temas para el álbum
             List<Tema> temas = new ArrayList<>();
             temas.add(new Tema("YMCA", 4, 28, "bit.ly/SCvpymca"));
-            temas.add(new Tema("Macho Man", 3, 28, ""));
+            temas.add(new Tema("Macho Man", 3, 28, "picosong.com/download/zf8T"));
             temas.add(new Tema("In the Navy", 3, 13, "bit.ly/SCvpinthenavy"));
 
             // Asociar los temas con el álbum
@@ -906,8 +919,8 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
             // Crear lista de géneros para el álbum
             List<Genero> generos = new ArrayList<>();
             try {
-                generos.add(buscarGeneroPorNombre("Synth-pop"));
-                generos.add(buscarGeneroPorNombre("New Wave"));
+                generos.add(buscarGeneroPorNombre("Electropop"));
+                
             } catch (Exception e) {
                 throw new Exception(e.getMessage());
             }
@@ -916,18 +929,21 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
             Album nuevoAlbum = new Album();
             nuevoAlbum.setNombre("Violator");
             nuevoAlbum.setImagen("Imagen_Violator");
+            nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1990"));
             nuevoAlbum.setListaGeneros(generos);
             nuevoAlbum.setArtista(buscarArtistaPorCorreo("dmode@tuta.io"));
-
+ if(nuevoAlbum.getArtista()==null){
+            throw new Exception("El artista seleccionado no existe para el album");
+            }
             // Persistir el álbum primero
             controlpersis.crearAlbum(nuevoAlbum);
 
             // Crear lista de temas para el álbum
             List<Tema> temas = new ArrayList<>();
-            temas.add(new Tema("World in My Eyes", 4, 26, "Ubicación_WorldInMyEyes"));
-            temas.add(new Tema("Personal Jesus", 4, 56, "Ubicación_PersonalJesus"));
-            temas.add(new Tema("Enjoy the Silence", 6, 12, "Ubicación_EnjoyTheSilence"));
-            temas.add(new Tema("Policy of Truth", 4, 55, "Ubicación_PolicyOfTruth"));
+            
+            temas.add(new Tema("Personal Jesus", 4, 56, "picosong.com/download/zfQ3"));
+            temas.add(new Tema("Enjoy the Silence", 6, 12, "picosong.com/download/zfQX"));
+            
 
             // Asociar los temas con el álbum
             for (Tema tema : temas) {
@@ -947,6 +963,547 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
             throw new Exception("Error al cargar el álbum 'Violator': " + e.getMessage());
         }
     }
+private void Album3() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Dance-pop"));
+            generos.add(buscarGeneroPorNombre("Pop Clásico"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("She’s So Unusual");
+        nuevoAlbum.setImagen("Imagen_She’s_So_Unusual");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1983"));  // Fecha ejemplo, ajusta si es necesario
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("clauper@hotmail.com"));
+ if(nuevoAlbum.getArtista()==null){
+            throw new Exception("El artista seleccionado no existe para el album");
+            }
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Girls Just Want To Have Fun", 3, 15, "bit.ly/shesunusual"));
+        temas.add(new Tema("Time After Time", 5, 12, ""));  // No hay URL para este tema
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'She’s So Unusual': " + e.getMessage());
+    }
+}
+private void Album4() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Rock Clásico"));
+            generos.add(buscarGeneroPorNombre("Rock & Roll"));
+            generos.add(buscarGeneroPorNombre("Pop Clásico"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("Born In The U.S.A.");
+        nuevoAlbum.setImagen("Imagen_Born_In_The_USA");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1984"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("bruceTheBoss@gmail.com"));
+        
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Born In The U.S.A.", 4, 58, "picosong.com/download/zf86"));
+        temas.add(new Tema("Glory Days", 5, 23, "bit.ly/SCbsglorydays"));
+        temas.add(new Tema("Dancing In The Dark", 3, 58, "bit.ly/SCbsborninusa"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'Born In The U.S.A.': " + e.getMessage());
+    }
+}
+
+private void Album5() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Rock Clásico"));
+            generos.add(buscarGeneroPorNombre("Pop Clásico"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("It’s Not Unusual");
+        nuevoAlbum.setImagen("Imagen_It’s_Not_Unusual");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1965"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("tigerOfWales@tuta.io"));
+        
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("It’s Not Unusual", 2, 0, "picosong.com/download/zfbS"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'It’s Not Unusual': " + e.getMessage());
+    }
+}
+
+private void Album6() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Rock Latino"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("Agua Y Sal");
+        nuevoAlbum.setImagen("Imagen_Agua_Y_Sal");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("2012"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("tripleNelson@tuta.io"));
+        
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Adagio De Mi País", 4, 50, "bit.ly/SCtnadagiopais"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'Agua Y Sal': " + e.getMessage());
+    }
+}
+private void Album7() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Rock Latino"));
+            generos.add(buscarGeneroPorNombre("Pop Clásico"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("MTV Unplugged");
+        nuevoAlbum.setImagen("Imagen_MTV_Unplugged");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("2001"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("la_ley@tuta.io"));
+        
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("El Duelo", 5, 23, "picosong.com/download/zfh6"));
+        temas.add(new Tema("Mentira", 4, 48, "picosong.com/download/zfAe"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'MTV Unplugged': " + e.getMessage());
+    }
+}
+private void Album8() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Clásica"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("El Lago De Los Cisnes");
+        nuevoAlbum.setImagen("Imagen_El_Lago_De_Los_Cisnes");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1875"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("chaiko@tuta.io"));
+
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Acto 2, Número 10, Escena (Moderato)", 2, 40, "bit.ly/SCptswanlake"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'El Lago De Los Cisnes': " + e.getMessage());
+    }
+}
+
+private void Album9() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Clásica"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("Concierto Para Piano No. 1");
+        nuevoAlbum.setImagen("Imagen_Concierto_Para_Piano_No_1");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1875"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("chaiko@tuta.io"));
+
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)", 21, 58, "bit.ly/SCptpiano"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'Concierto Para Piano No. 1': " + e.getMessage());
+    }
+}
+private void Album10() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Electropop"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("Primer Amor");
+        nuevoAlbum.setImagen("Imagen_Primer_Amor");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1994"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("nicoleneu@hotmail.com"));
+
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("No Quiero Estudiar", 2, 12, "picosong.com/download/zfZN"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'Primer Amor': " + e.getMessage());
+    }
+}
+
+private void Album11() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Pop Clásico"));
+            generos.add(buscarGeneroPorNombre("Balada"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("Hay Amores Que Matan");
+        nuevoAlbum.setImagen("Imagen_Hay_Amores_Que_Matan");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1993"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("lospimpi@gmail.com"));
+
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Por Ese Hombre", 4, 45, "picosong.com/download/zfa4"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'Hay Amores Que Matan': " + e.getMessage());
+    }
+}
+
+private void Album12() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Pop Clásico"));
+            generos.add(buscarGeneroPorNombre("Balada"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("Un Loco Como Yo");
+        nuevoAlbum.setImagen("Imagen_Un_Loco_Como_Yo");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1993"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("dyangounchained@gmail.com"));
+
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Por Ese Hombre", 5, 13, "bit.ly/SCdyporesehombre"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum 'Un Loco Como Yo': " + e.getMessage());
+    }
+}
+private void Album13() throws Exception {
+    try {
+        // Crear lista de géneros para el álbum
+        List<Genero> generos = new ArrayList<>();
+        try {
+            generos.add(buscarGeneroPorNombre("Cumbia"));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        // Crear el álbum
+        Album nuevoAlbum = new Album();
+        nuevoAlbum.setNombre("20 Grandes Éxitos");
+        nuevoAlbum.setImagen("Imagen_20_Grandes_Exitos");
+        nuevoAlbum.setAnioCreacion(new SimpleDateFormat("yyyy").parse("1989"));
+        nuevoAlbum.setListaGeneros(generos);
+        nuevoAlbum.setArtista(buscarArtistaPorCorreo("alcides@tuta.io"));
+
+        // Verificar si el artista existe
+        if (nuevoAlbum.getArtista() == null) {
+            throw new Exception("El artista seleccionado no existe para el álbum");
+        }
+
+        // Persistir el álbum primero
+        controlpersis.crearAlbum(nuevoAlbum);
+
+        // Crear lista de temas para el álbum
+        List<Tema> temas = new ArrayList<>();
+        temas.add(new Tema("Violeta", 1, 56, "bit.ly/SCvioleta"));
+
+        // Asociar los temas con el álbum
+        for (Tema tema : temas) {
+            tema.setAlbum(nuevoAlbum);  // Asocia cada tema con el álbum
+        }
+        nuevoAlbum.setListaTemas(temas);
+
+        // Persistir los temas
+        for (Tema tema : temas) {
+            controlpersis.crearTema(tema);
+        }
+
+        // Actualizar el álbum con la lista de temas
+        controlpersis.actualizarAlbum(nuevoAlbum);
+
+    } catch (Exception e) {
+        throw new Exception("Error al cargar el álbum '20 Grandes Éxitos': " + e.getMessage());
+    }
+}
 
     public List<String> MostrarNombreArtistas() {
         List<Artista> listaArtista = listaArtistas(); // Supongamos que este método devuelve todos los clientes
@@ -958,6 +1515,95 @@ public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nomb
         }
 
         return listaCorreos; // Devuelves la lista de correos
+    }
+
+    private void Cargar_Seguidores() throws Exception {
+        try {
+        //cliente1 
+        
+       seguirUsuario("el_padrino@tuta.io","vpeople@tuta.io");
+       seguirUsuario("el_padrino@tuta.io","dmode@tuta.io");
+       seguirUsuario("el_padrino@tuta.io","clauper@hotmail.com");
+       seguirUsuario("el_padrino@tuta.io","benKenobi@gmail.com");
+       seguirUsuario("el_padrino@tuta.io","lachiqui@hotmail.com.ar");
+       seguirUsuario("el_padrino@tuta.io","cbochinche@vera.com.uy");
+       seguirUsuario("el_padrino@tuta.io","Eleven11@gmail.com");
+       
+       //cliente 2
+       seguirUsuario("scarlettO@tuta.io","tigerOfWales@tuta.io");
+       seguirUsuario("scarlettO@tuta.io","dmode@tuta.io");
+       seguirUsuario("scarlettO@tuta.io","bruceTheBoss@gmail.com");
+       seguirUsuario("scarlettO@tuta.io","tripleNelson@tuta.io");
+       seguirUsuario("scarlettO@tuta.io","Heisenberg@tuta.io");
+       seguirUsuario("scarlettO@tuta.io","benKenobi@gmail.com");
+       seguirUsuario("scarlettO@tuta.io","lachiqui@hotmail.com.ar");
+       
+       //cliente 3
+       
+       seguirUsuario("ppArgento@hotmail.com","dmode@tuta.io");
+       seguirUsuario("ppArgento@hotmail.com","bruceTheBoss@gmail.com");
+       seguirUsuario("ppArgento@hotmail.com","tripleNelson@tuta.io");
+       seguirUsuario("ppArgento@hotmail.com","benKenobi@gmail.com");
+       seguirUsuario("ppArgento@hotmail.com","lachiqui@hotmail.com.ar");
+       seguirUsuario("ppArgento@hotmail.com","cbochinche@vera.com.uy");
+       seguirUsuario("ppArgento@hotmail.com","Eleven11@gmail.com");
+       
+        //cliente 4
+       seguirUsuario("Heisenberg@tuta.io","dmode@tuta.io");
+       seguirUsuario("Heisenberg@tuta.io","bruceTheBoss@gmail.com");
+       seguirUsuario("Heisenberg@tuta.io","tigerOfWales@tuta.io");
+       seguirUsuario("Heisenberg@tuta.io","tripleNelson@tuta.io");
+       seguirUsuario("Heisenberg@tuta.io","lospimpi@gmail.com");
+       seguirUsuario("Heisenberg@tuta.io","dyangounchained@gmail.com");
+       seguirUsuario("Heisenberg@tuta.io","alcides@tuta.io");
+       seguirUsuario("Heisenberg@tuta.io","el_padrino@tuta.io");
+       seguirUsuario("Heisenberg@tuta.io","scarlettO@tuta.io");
+       seguirUsuario("Heisenberg@tuta.io","ppArgento@hotmail.com");
+       seguirUsuario("Heisenberg@tuta.io","benKenobi@gmail.com");
+       seguirUsuario("Heisenberg@tuta.io","lachiqui@hotmail.com.ar");
+       seguirUsuario("Heisenberg@tuta.io","Eleven11@gmail.com");
+ 
+//       //cliente 5
+       seguirUsuario("benKenobi@gmail.com","dmode@tuta.io");
+       seguirUsuario("benKenobi@gmail.com","bruceTheBoss@gmail.com");
+       seguirUsuario("benKenobi@gmail.com","la_ley@tuta.io");
+       seguirUsuario("benKenobi@gmail.com","chaiko@tuta.io");
+       seguirUsuario("benKenobi@gmail.com","nicoleneu@hotmail.com");
+       seguirUsuario("benKenobi@gmail.com","lospimpi@gmail.com");
+       seguirUsuario("benKenobi@gmail.com","alcides@tuta.io");
+       seguirUsuario("benKenobi@gmail.com","el_padrino@tuta.io");
+       seguirUsuario("benKenobi@gmail.com","ppArgento@hotmail.com");
+       seguirUsuario("benKenobi@gmail.com","lachiqui@hotmail.com.ar");
+       seguirUsuario("benKenobi@gmail.com","cbochinche@vera.com.uy");
+       seguirUsuario("benKenobi@gmail.com","Eleven11@gmail.com");
+       
+       //cliente 6 
+       
+       seguirUsuario("lachiqui@hotmail.com.ar","bruceTheBoss@gmail.com");
+       seguirUsuario("lachiqui@hotmail.com.ar","la_ley@tuta.io");
+       seguirUsuario("lachiqui@hotmail.com.ar","lospimpi@gmail.com");
+       seguirUsuario("lachiqui@hotmail.com.ar","alcides@tuta.io");
+       seguirUsuario("lachiqui@hotmail.com.ar","el_padrino@tuta.io");
+       seguirUsuario("lachiqui@hotmail.com.ar","scarlettO@tuta.io");
+       seguirUsuario("lachiqui@hotmail.com.ar","ppArgento@hotmail.com");
+       // cliente 7 
+       seguirUsuario("cbochinche@vera.com.uy","lachiqui@hotmail.com.ar");
+       seguirUsuario("cbochinche@vera.com.uy","lospimpi@gmail.com");
+       seguirUsuario("cbochinche@vera.com.uy","dyangounchained@gmail.com");
+       seguirUsuario("cbochinche@vera.com.uy","alcides@tuta.io");
+       seguirUsuario("cbochinche@vera.com.uy","ppArgento@hotmail.com");
+       
+       // cliente 8 
+       
+       seguirUsuario("Eleven11@gmail.com","la_ley@tuta.io");
+       seguirUsuario("Eleven11@gmail.com","el_padrino@tuta.io");
+       seguirUsuario("Eleven11@gmail.com","scarlettO@tuta.io");
+       seguirUsuario("Eleven11@gmail.com","ppArgento@hotmail.com");
+
+       
+       } catch (Exception e) {
+        throw new Exception("Error al cargar seguidores: " + e.getMessage());
+    }
     }
 
     

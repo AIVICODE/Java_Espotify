@@ -3,11 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/Persis/ControladoraPersistencia.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/Logica/Favoritos.java</file>
             <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/EliminarTemaFavorito.java</file>
             <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/espotify/Espotify.java</file>
-            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/EliminarAlbumFavorito.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/ListaDeRepFavorito.java</file>
             <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/Logica/Controlador.java</file>
             <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/META-INF/persistence.xml</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/ListaDeRep_Por_Default_Favorito.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/Persis/ListaRepJpaController.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/EliminarListaRep_Por_Defecto_Favorito.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/Logica/ListaRep.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/Principal.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/Logica/ListaRepGeneral.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/EliminarAlbumFavorito.java</file>
+            <file>file:/home/ivan/GitProject/ProgApps-/Espotify/src/GUI/EliminarListaRepFavorito.java</file>
         </group>
     </open-files>
 </project-private>
