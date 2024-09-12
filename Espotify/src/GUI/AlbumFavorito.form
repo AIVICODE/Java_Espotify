@@ -116,6 +116,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNombreAlbum">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreAlbumActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox2">
           <Properties>
