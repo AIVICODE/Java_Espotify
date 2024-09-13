@@ -132,4 +132,11 @@ public class Artista extends Usuario implements Serializable {
         return Objects.hash(mail);  // Utiliza el correo como base para el hash
     }
     
+    
+        public Album buscarAlbumPorNombre(String nombreAlbum) throws Exception {
+        return albumes.stream()
+            .filter(album -> album.getNombre().equalsIgnoreCase(nombreAlbum))
+            .findFirst()
+            .orElseThrow(() -> new Exception("Álbum '" + nombreAlbum + "' no encontrado para el artista " + this.getNombre()));
+    }
 }

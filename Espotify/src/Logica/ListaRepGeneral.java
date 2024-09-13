@@ -4,6 +4,7 @@
  */
 package Logica;
 
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -18,4 +19,10 @@ public class ListaRepGeneral extends ListaRep {
     }
 
     public ListaRepGeneral() {}
+
+    public ListaRepGeneral(List<Tema> listaTemas, String nombre, String imagen) {
+        super(listaTemas, nombre, imagen);
+    }
+    
+    
 }

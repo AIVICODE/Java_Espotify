@@ -99,4 +99,11 @@ public class Album extends Favoritos implements Serializable {
     public void setArtista(Artista artista) {
         this.artista = artista;
     }
+    
+    public Tema buscarTemaPorNombre(String nombreTema) throws Exception {
+    return listaTemas.stream()
+        .filter(tema -> tema.getNombre().equalsIgnoreCase(nombreTema))
+        .findFirst()
+        .orElseThrow(() -> new Exception("Tema '" + nombreTema + "' no encontrado en el álbum " + this.getNombre()));
+}
 }
