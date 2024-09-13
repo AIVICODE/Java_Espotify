@@ -2,6 +2,7 @@ package Logica;
 
 import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
+import Datatypes.DTCliente;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
@@ -798,6 +799,23 @@ public class Controlador {
         return listaCorreos; // Devuelves la lista de correos
     }
 
-   
-
+   public DTCliente encontrarClientePorNickname (String nick){
+       List<Cliente> clientes = listaClientes();
+       DTCliente encontrado = null;
+       for (Cliente c:clientes){
+           if (c.getNickname().equals(nick)){
+               encontrado.setApellido(c.getApellido());
+               encontrado.setContrasenia(c.getContrasenia());
+               encontrado.setCorreo(c.getMail());
+               encontrado.setFechaNac(c.getFechaNac());
+               encontrado.setImagen(c.getImagen());
+               encontrado.setNombre(c.getNombre());
+               encontrado.setNickname(c.getNickname());
+               encontrado.setListaReproduccion(c.getListaReproduccion());//no se si son estas las particulares
+           }
+       }
+       
+       return encontrado;
+   }
+//FUncion dt que devuelva dt lista de cliente
 }

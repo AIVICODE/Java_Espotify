@@ -71,6 +71,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        menuPublicarLista = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -233,6 +234,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.add(jMenu10);
 
+        menuPublicarLista.setText("Publicar Lista");
+        menuPublicarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPublicarListaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuPublicarLista);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -378,13 +387,13 @@ public class Principal extends javax.swing.JFrame {
     
 
     desktopPane.add(seguir_user ,JLayeredPane.DEFAULT_LAYER);
-    seguir_user .setVisible(true);
-    seguir_user .setClosable(true);
-    seguir_user .setMaximizable(true);
-    seguir_user .setIconifiable(true);
-    seguir_user .setResizable(true);
-    seguir_user .toFront();
-    seguir_user .show(); 
+    seguir_user.setVisible(true);
+    seguir_user.setClosable(true);
+    seguir_user.setMaximizable(true);
+    seguir_user.setIconifiable(true);
+    seguir_user.setResizable(true);
+    seguir_user.toFront();
+    seguir_user.show(); 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
@@ -392,14 +401,26 @@ public class Principal extends javax.swing.JFrame {
     
 
     desktopPane.add(eliminar_album ,JLayeredPane.DEFAULT_LAYER);
-    eliminar_album .setVisible(true);
-    eliminar_album .setClosable(true);
-    eliminar_album .setMaximizable(true);
-    eliminar_album .setIconifiable(true);
-    eliminar_album .setResizable(true);
-    eliminar_album .toFront();
-    eliminar_album .show(); 
+    eliminar_album.setVisible(true);
+    eliminar_album.setClosable(true);
+    eliminar_album.setMaximizable(true);
+    eliminar_album.setIconifiable(true);
+    eliminar_album.setResizable(true);
+    eliminar_album.toFront();
+    eliminar_album.show(); 
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void menuPublicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPublicarListaActionPerformed
+        PublicarLista publicarLista = new PublicarLista();
+        desktopPane.add(publicarLista ,JLayeredPane.DEFAULT_LAYER);
+        publicarLista.setVisible(true);
+        publicarLista.setClosable(true);
+        publicarLista.setMaximizable(true);
+        publicarLista.setIconifiable(true);
+        publicarLista.setResizable(true);
+        publicarLista.toFront();
+        publicarLista.show();
+    }//GEN-LAST:event_menuPublicarListaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,6 +493,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JMenuItem menuPublicarLista;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {
