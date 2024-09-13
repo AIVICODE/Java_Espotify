@@ -389,9 +389,11 @@ public class Controlador {
             }
 
             // Verificar si la lista ya está marcada como favorita por el cliente
-            if (cliente.getListaRepFavoritos().contains(listaPorDefecto)) {
+           for (ListaRep listaFavorita : cliente.getListaRepFavoritos()) {
+            if (listaFavorita.getId().equals(listaPorDefecto.getId())) {
                 throw new Exception("La lista ya está marcada como favorita.");
             }
+        }
 
             // Agregar la lista por defecto al cliente como favorita
             cliente.getListaRepFavoritos().add(listaPorDefecto);
@@ -654,15 +656,12 @@ public class Controlador {
     }
 
     public void Cargar_Datos_Prueba() throws Exception {
-        //Cargar_Perfiles();
-        //Cargar_Generos();
-       // Cargar_Albumes();
-        //Cargar_Seguidores();
+        Cargar_Perfiles();
+        Cargar_Generos();
+       Cargar_Albumes();
+        Cargar_Seguidores();
        Cargar_Listas();
-        
-
-//      
-//       GuardarListaFavorito("cli1", "Musica");
+       CargarFavoritos();
     }
 
     private void Cargar_Perfiles() {
@@ -1961,6 +1960,50 @@ public void ListaParticular6() throws Exception {
     // Guardar la lista de reproducción en la base de datos
     controlpersis.createListaRep(listaRepParticular);
 }
+
+    private void CargarFavoritos() throws Exception {
+        //Cliente 1 
+        
+        try{
+      GuardarTemaFavorito("el_padrino@tuta.io", "la_ley@tuta.io", "MTV Unplugged", "El Duelo");
+      GuardarLista_Por_Defecto_Favorito("el_padrino@tuta.io", "Noche De La Nostalgia");
+      GuardarLista_Por_Defecto_Favorito("el_padrino@tuta.io", "Música Clásica");
+      GuardarAlbumFavorito("el_padrino@tuta.io", "dmode@tuta.io", "Violator");
+            GuardarAlbumFavorito("el_padrino@tuta.io", "chaiko@tuta.io", "El Lago De Los Cisnes");
+                  GuardarAlbumFavorito("el_padrino@tuta.io", "chaiko@tuta.io", "Concierto Para Piano No. 1");
+                  
+      //Cliente 2 
+      GuardarLista_Por_Defecto_Favorito("scarlettO@tuta.io", "Música Clásica");
+      
+      //Cliente 3
+      
+              GuardarTemaFavorito("ppArgento@hotmail.com", "tripleNelson@tuta.io", "Agua Y Sal", "Adagio De Mi País");
+      GuardarLista_Por_Defecto_Favorito("ppArgento@hotmail.com", "Noche De La Nostalgia");
+      GuardarLista_Por_Defecto_Favorito("ppArgento@hotmail.com", "Rock En Español");
+      
+      //cliente 4
+      GuardarListaFavorito("Heisenberg@tuta.io", "el_padrino@tuta.io", "Música Inspiradora");
+      
+      //cliente 5
+            GuardarAlbumFavorito("benKenobi@gmail.com", "chaiko@tuta.io", "El Lago De Los Cisnes");
+              GuardarAlbumFavorito("benKenobi@gmail.com", "chaiko@tuta.io", "Concierto Para Piano No. 1");
+              
+              //cliente 6  VACIO
+              
+      //Cliente 7
+      GuardarTemaFavorito("cbochinche@vera.com.uy", "chaiko@tuta.io", "Concierto Para Piano No. 1", "Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+              GuardarLista_Por_Defecto_Favorito("cbochinche@vera.com.uy", "Noche De La Nostalgia");
+      GuardarLista_Por_Defecto_Favorito("cbochinche@vera.com.uy", "Rock En Español");
+      GuardarAlbumFavorito("cbochinche@vera.com.uy", "lospimpi@gmail.com", "Hay Amores Que Matan");
+      
+      //cliente 8 
+      GuardarTemaFavorito("Eleven11@gmail.com", "nicoleneu@hotmail.com", "Primer Amor", "No Quiero Estudiar");
+        }
+       catch (Exception e) {
+            // Lanza la excepción para que sea gestionada en un nivel superior
+            throw new Exception(e.getMessage());
+        }
+    }
 
 
 }
