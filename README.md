@@ -79,3 +79,9 @@ Se fomenta el trabajo en grupo, la planificación de actividades y el registro d
 - **Seguimiento**: Los clientes pueden seguir la actividad de otros usuarios, ya sean clientes o artistas.
 - **Recomendaciones**: Basadas en las preferencias de los clientes y los usuarios a los que siguen.
 
+# Participantes 
+- [Ivan](https://github.com/AIVICODE)
+- [Madian](https://github.com/madiayelen)
+- [Mariano](https://github.com/RamosMariano)
+- **Camila Suárez**
+- **Gonzalo Díaz**
