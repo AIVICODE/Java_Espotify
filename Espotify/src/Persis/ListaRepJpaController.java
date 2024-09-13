@@ -5,6 +5,7 @@
 package Persis;
 
 import Logica.ListaRep;
+import Logica.ListaRepGeneral;
 import Persis.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -151,6 +152,23 @@ public class ListaRepJpaController implements Serializable {
     } catch (NoResultException e) {
         // Si no se encuentra la lista, lanzamos una excepción específica
         throw new Exception("No se encuentra la lista de reproducción con el nombre: " + nombre, e);
+    } finally {
+        em.close();
+    }
+}
+    
+    public ListaRepGeneral findListaRep_Por_Defecto_ByNombre(String nombreLista) throws Exception {
+    EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL para buscar solo listas generales (ListaRepGeneral) por nombre
+        Query query = em.createQuery("SELECT l FROM ListaRepGeneral l WHERE l.nombre = :nombre");
+        query.setParameter("nombre", nombreLista);
+
+        // Utilizamos getSingleResult() para obtener la lista general
+        return (ListaRepGeneral) query.getSingleResult();
+    } catch (NoResultException e) {
+        // Si no se encuentra la lista, lanzamos una excepción específica
+        throw new Exception("No se encuentra la lista general con el nombre: " + nombreLista, e);
     } finally {
         em.close();
     }

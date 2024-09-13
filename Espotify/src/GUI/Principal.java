@@ -70,8 +70,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu10 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        menuPublicarLista = new javax.swing.JMenuItem();
+        jMenu11 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -227,20 +228,34 @@ public class Principal extends javax.swing.JFrame {
         jMenu10.add(jMenuItem15);
 
         jMenuItem16.setText("Tema");
-        jMenu10.add(jMenuItem16);
-
-        jMenuItem17.setText("Lista de reproduccion");
-        jMenu10.add(jMenuItem17);
-
-        jMenu2.add(jMenu10);
-
-        menuPublicarLista.setText("Publicar Lista");
-        menuPublicarLista.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuPublicarListaActionPerformed(evt);
+                jMenuItem16ActionPerformed(evt);
             }
         });
-        jMenu2.add(menuPublicarLista);
+        jMenu10.add(jMenuItem16);
+
+        jMenu11.setText("Lista de rep");
+
+        jMenuItem18.setText("Particular");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem18);
+
+        jMenuItem19.setText("Por Defecto");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem19);
+
+        jMenu10.add(jMenu11);
+
+        jMenu2.add(jMenu10);
 
         jMenuBar1.add(jMenu2);
 
@@ -387,13 +402,13 @@ public class Principal extends javax.swing.JFrame {
     
 
     desktopPane.add(seguir_user ,JLayeredPane.DEFAULT_LAYER);
-    seguir_user.setVisible(true);
-    seguir_user.setClosable(true);
-    seguir_user.setMaximizable(true);
-    seguir_user.setIconifiable(true);
-    seguir_user.setResizable(true);
-    seguir_user.toFront();
-    seguir_user.show(); 
+    seguir_user .setVisible(true);
+    seguir_user .setClosable(true);
+    seguir_user .setMaximizable(true);
+    seguir_user .setIconifiable(true);
+    seguir_user .setResizable(true);
+    seguir_user .toFront();
+    seguir_user .show(); 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
@@ -401,26 +416,56 @@ public class Principal extends javax.swing.JFrame {
     
 
     desktopPane.add(eliminar_album ,JLayeredPane.DEFAULT_LAYER);
-    eliminar_album.setVisible(true);
-    eliminar_album.setClosable(true);
-    eliminar_album.setMaximizable(true);
-    eliminar_album.setIconifiable(true);
-    eliminar_album.setResizable(true);
-    eliminar_album.toFront();
-    eliminar_album.show(); 
+    eliminar_album .setVisible(true);
+    eliminar_album .setClosable(true);
+    eliminar_album .setMaximizable(true);
+    eliminar_album .setIconifiable(true);
+    eliminar_album .setResizable(true);
+    eliminar_album .toFront();
+    eliminar_album .show(); 
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
-    private void menuPublicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPublicarListaActionPerformed
-        PublicarLista publicarLista = new PublicarLista();
-        desktopPane.add(publicarLista ,JLayeredPane.DEFAULT_LAYER);
-        publicarLista.setVisible(true);
-        publicarLista.setClosable(true);
-        publicarLista.setMaximizable(true);
-        publicarLista.setIconifiable(true);
-        publicarLista.setResizable(true);
-        publicarLista.toFront();
-        publicarLista.show();
-    }//GEN-LAST:event_menuPublicarListaActionPerformed
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        EliminarTemaFavorito eliminar_tema = new EliminarTemaFavorito();
+    
+
+    desktopPane.add(eliminar_tema ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_tema .setVisible(true);
+    eliminar_tema .setClosable(true);
+    eliminar_tema .setMaximizable(true);
+    eliminar_tema .setIconifiable(true);
+    eliminar_tema .setResizable(true);
+    eliminar_tema .toFront();
+    eliminar_tema .show(); 
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+         EliminarListaRepFavorito eliminar_listarep = new EliminarListaRepFavorito();
+    
+
+    desktopPane.add(eliminar_listarep ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_listarep .setVisible(true);
+    eliminar_listarep .setClosable(true);
+    eliminar_listarep .setMaximizable(true);
+    eliminar_listarep .setIconifiable(true);
+    eliminar_listarep .setResizable(true);
+    eliminar_listarep .toFront();
+    eliminar_listarep .show(); 
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        EliminarListaRep_Por_Defecto_Favorito eliminar_listarep_por_defecto = new EliminarListaRep_Por_Defecto_Favorito();
+    
+
+    desktopPane.add(eliminar_listarep_por_defecto ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_listarep_por_defecto .setVisible(true);
+    eliminar_listarep_por_defecto .setClosable(true);
+    eliminar_listarep_por_defecto .setMaximizable(true);
+    eliminar_listarep_por_defecto .setIconifiable(true);
+    eliminar_listarep_por_defecto .setResizable(true);
+    eliminar_listarep_por_defecto .toFront();
+    eliminar_listarep_por_defecto .show(); 
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,6 +508,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -482,7 +528,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -493,7 +540,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JMenuItem menuPublicarLista;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {

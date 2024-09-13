@@ -55,6 +55,12 @@ public class AlbumFavorito extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Seleccione artista");
 
+        txtNombreAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreAlbumActionPerformed(evt);
+            }
+        });
+
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -151,6 +157,10 @@ public class AlbumFavorito extends javax.swing.JInternalFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
 
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void txtNombreAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreAlbumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreAlbumActionPerformed
 private void actualizarComboBoxClientes() {
     List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
     

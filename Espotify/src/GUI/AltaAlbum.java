@@ -4,8 +4,10 @@
  */
 package GUI;
 
+import Logica.Artista;
 import Logica.Controlador;
 import java.awt.BorderLayout;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
@@ -27,6 +29,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     Controlador control= new Controlador();
     public AltaAlbum() {
         initComponents();
+        actualizarComboBoxArtistas() ;
         setTitle("AltaAlbum");
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
@@ -44,21 +47,21 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtCorreoArtista = new javax.swing.JTextField();
         VerificarArtista = new javax.swing.JButton();
+        comboMails = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Ingrese correo del Artista");
-
-        txtCorreoArtista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCorreoArtistaActionPerformed(evt);
-            }
-        });
 
         VerificarArtista.setText("Verificar");
         VerificarArtista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VerificarArtistaActionPerformed(evt);
+            }
+        });
+
+        comboMails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMailsActionPerformed(evt);
             }
         });
 
@@ -69,14 +72,14 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(128, 128, 128)
+                        .addComponent(VerificarArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtCorreoArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(VerificarArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(comboMails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +87,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCorreoArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboMails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addComponent(VerificarArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(86, Short.MAX_VALUE))
@@ -104,12 +107,8 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCorreoArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoArtistaActionPerformed
-        
-    }//GEN-LAST:event_txtCorreoArtistaActionPerformed
-
     private void VerificarArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerificarArtistaActionPerformed
-        String correo = txtCorreoArtista.getText();
+        String correo= (String) comboMails.getSelectedItem();
     
     try {
         if (control.verificarExistenciaArtista(correo)) {
@@ -134,12 +133,24 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }
         
     }//GEN-LAST:event_VerificarArtistaActionPerformed
+private void actualizarComboBoxArtistas() {
+    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+    
+comboMails.removeAllItems(); // Limpiamos los ítems actuales del comboBox
+    
+    for (String correo : correosArtistas) {
+       comboMails.addItem(correo); // Agregamos cada correo al comboBox
+    }
+}
+    private void comboMailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMailsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMailsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton VerificarArtista;
+    private javax.swing.JComboBox<String> comboMails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCorreoArtista;
     // End of variables declaration//GEN-END:variables
 }

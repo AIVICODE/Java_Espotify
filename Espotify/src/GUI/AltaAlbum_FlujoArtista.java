@@ -7,6 +7,7 @@ package GUI;
 import Datatypes.DTAlbum;
 import Datatypes.DTTema;
 import Logica.Controlador;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +79,6 @@ private List<String> selectedNodesList = new ArrayList<>();
         txtNombreAlbum = new javax.swing.JTextField();
         txtImagen = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        FechaCreacion = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
         jLabel7 = new javax.swing.JLabel();
@@ -91,6 +91,7 @@ private List<String> selectedNodesList = new ArrayList<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtDIR = new javax.swing.JTextField();
+        anioAlbum = new javax.swing.JSpinner();
 
         jLabel1.setText("Ingrese nombre del album");
 
@@ -110,8 +111,6 @@ private List<String> selectedNodesList = new ArrayList<>();
         });
 
         jLabel6.setText("Seleccione generos");
-
-        FechaCreacion.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
 
         jScrollPane1.setViewportView(jTree1);
 
@@ -160,9 +159,9 @@ private List<String> selectedNodesList = new ArrayList<>();
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(18, 18, 18)
                                             .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(FechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(33, 33, 33)
+                                            .addComponent(anioAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(12, 12, 12)))
@@ -218,7 +217,7 @@ private List<String> selectedNodesList = new ArrayList<>();
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(anioAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,8 +244,6 @@ private List<String> selectedNodesList = new ArrayList<>();
                 .addGap(38, 38, 38))
         );
 
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(FechaCreacion, "dd/MM/yyyy");
-        FechaCreacion.setEditor(editor);
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(DuracionTema, "mm:ss");
         DuracionTema.setEditor(timeEditor);
 
@@ -297,7 +294,7 @@ private List<DTTema> listaTemas = new ArrayList<>();
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 try {
         String nombreAlbum = txtNombreAlbum.getText();
-        Date fechaCreacion = (Date) FechaCreacion.getValue();
+        int fechaCreacion = (int) anioAlbum.getValue();
         String imagen = txtImagen.getText();
 
         if (selectedNodesList.isEmpty()) {
@@ -326,7 +323,7 @@ private void limpiarFormulario() {
     txtDIR.setText("");
     
     // Restablecer JSpinners a sus valores por defecto
-    FechaCreacion.setValue(new Date()); // O el valor por defecto que desees
+    anioAlbum.setValue(0); // O el valor por defecto que desees
     DuracionTema.setValue(new Date(0)); // Valor por defecto para duración (00:00)
     
     // Limpiar lista de temas
@@ -342,7 +339,7 @@ private void limpiarFormulario() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner DuracionTema;
-    private javax.swing.JSpinner FechaCreacion;
+    private javax.swing.JSpinner anioAlbum;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
