@@ -73,6 +73,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu11 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        menuPublicarLista = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -218,6 +219,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem14);
 
         jMenu10.setText("Eliminar Favorito");
+        jMenu10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu10ActionPerformed(evt);
+            }
+        });
 
         jMenuItem15.setText("Album");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +262,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu10.add(jMenu11);
 
         jMenu2.add(jMenu10);
+
+        menuPublicarLista.setText("Publicar Lista");
+        menuPublicarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPublicarListaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuPublicarLista);
 
         jMenuBar1.add(jMenu2);
 
@@ -467,6 +481,22 @@ public class Principal extends javax.swing.JFrame {
     eliminar_listarep_por_defecto .show(); 
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
+    private void jMenu10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu10ActionPerformed
+
+    private void menuPublicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPublicarListaActionPerformed
+        PublicarLista publicarLista = new PublicarLista();
+        desktopPane.add(publicarLista ,JLayeredPane.DEFAULT_LAYER);
+        publicarLista.setVisible(true);
+        publicarLista.setClosable(true);
+        publicarLista.setMaximizable(true);
+        publicarLista.setIconifiable(true);
+        publicarLista.setResizable(true);
+        publicarLista.toFront();
+        publicarLista.show(); 
+    }//GEN-LAST:event_menuPublicarListaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -540,6 +570,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JMenuItem menuPublicarLista;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {
