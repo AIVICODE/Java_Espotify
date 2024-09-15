@@ -2,6 +2,7 @@ package Logica;
 
 import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
+import Datatypes.DTCliente;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
@@ -2004,6 +2005,62 @@ public void ListaParticular6() throws Exception {
             throw new Exception(e.getMessage());
         }
     }
+//nuevo PUBLICAR LISTA
+    public DTCliente encontrarClientePorNickname (String nick){
+       List<Cliente> clientes = listaClientes();
+       DTCliente encontrado = new DTCliente();
+       for (Cliente c:clientes){
+           if (c.getNickname().equals(nick)){
+               encontrado = new DTCliente(c.getNickname(), c.getNombre(), c.getApellido(), c.getMail(), c.fechaNac, c.getContrasenia(), c.getImagen());
+               encontrado.setListaReproduccion(c.getListaReproduccion());// esas son las particulares
+           }
+       }
+       return encontrado;
+   }
 
+    public List<DTCliente> listaClientesDT() {
+        List<DTCliente> listaClientesDT = new ArrayList();
+        List<Cliente> clientes = controlpersis.listaClientes();
+        for(Cliente c:clientes){
+            DTCliente pasarDT = new DTCliente (c.getNickname(), c.getNombre(), c.getApellido(), c.getMail(), c.fechaNac, c.getContrasenia(), c.getImagen());
+            pasarDT.setListaReproduccion(c.getListaReproduccion());
+            listaClientesDT.add(pasarDT);
+        }        
+        return listaClientesDT;
+    }
+    
+    public List<String> nombreDeListasPrivadasDeCliente (String mail){//devuelve una lista con los nombres de las listas de rep privadas del cliente
+       List<String> lisPrivadas = new ArrayList();
+       Cliente client = controlpersis.encontrarCliente(mail);//busco el cliente
+       List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
+       for(ListaRep l:listasdelcliente){//para cada lista en las del cliente
+           if(l instanceof ListaRepParticular){//si la lista del momento es una instancia de lista particular
+               ListaRepParticular particular = (ListaRepParticular) l;//guardo esa lista en una particular
+               if(particular.isPrivada()==true){//si esa lista es privada
+                   lisPrivadas.add(particular.getNombre());//la sumo a la lista a retornar
+               }
+           }
+       }       
+       return lisPrivadas; 
+    }
+    
+    public void publicarListaPrivada(String nick, String nombreLista) throws Exception{
+        List<Cliente> clientes = listaClientes();
+        Cliente client = new Cliente();
+        for(Cliente c:clientes){//busco el cliente por nickname
+            if (c.getNickname().equals(nick)){
+                client = c;
+            }
+        }
+        //Busco la lista en sus listas
+        List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
+        for(ListaRep l:listasdelcliente){
+            if(l.getNombre().equals(nombreLista)){//selecciono la lista a hacer publica
+               ListaRepParticular particular = (ListaRepParticular) l;//la casteo para hacerla publica
+               particular.setPrivada(false);//la hago publica
+               controlpersis.editListaPrivada(particular);//le mando la lista para editarla en la bd
+            }
+        }
+    }
 
 }

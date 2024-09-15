@@ -73,6 +73,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu11 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -256,6 +257,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu10.add(jMenu11);
 
         jMenu2.add(jMenu10);
+
+        jMenuItem17.setText("Publicar Lista");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem17);
 
         jMenuBar1.add(jMenu2);
 
@@ -467,6 +476,20 @@ public class Principal extends javax.swing.JFrame {
     eliminar_listarep_por_defecto .show(); 
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        PublicarLista publicar_lista= new PublicarLista();
+    
+
+    desktopPane.add(publicar_lista ,JLayeredPane.DEFAULT_LAYER);
+    publicar_lista .setVisible(true);
+    publicar_lista .setClosable(true);
+    publicar_lista .setMaximizable(true);
+    publicar_lista .setIconifiable(true);
+    publicar_lista .setResizable(true);
+    publicar_lista .toFront();
+    publicar_lista .show(); 
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -528,6 +551,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;

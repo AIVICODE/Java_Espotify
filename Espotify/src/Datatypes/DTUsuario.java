@@ -21,6 +21,9 @@ public class DTUsuario {
         this.imagen= imagen;
     }
 
+    public DTUsuario() {
+    }
+
     public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia, List<String> listaUsuariosFavoritos) {
         this.nickname = nickname;
         this.nombre = nombre;
