@@ -9,6 +9,7 @@ import java.util.List;
 public class DTCliente extends DTUsuario{
     
     public DTCliente(){}
+    
     public DTCliente(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia, String imagen) {
         super(nickname, nombre, apellido, correo, fechaNac, contrasenia, imagen);
     }

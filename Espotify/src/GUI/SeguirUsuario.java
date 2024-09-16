@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ */
 package GUI;
 
 import Logica.Controlador;
@@ -138,9 +141,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         String mailSeguido = txtSeguido.getText();
         try {
             control.dejarSeguirUsuario(mailSeguidor, mailSeguido);
-           
+            JOptionPane.showMessageDialog(this, "Ahora "+txtSeguidor.getText()+" ya no sigue al usuario "+txtSeguido.getText()+" ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, "Ahora "+txtSeguidor.getText()+" ya no sigue al usuario "+txtSeguido.getText()+" ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            java.util.logging.Logger.getLogger(SeguirUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDejarDeSeguirActionPerformed
 
@@ -148,7 +151,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         String mailSeguidor = txtSeguidor.getText();
         String mailSeguido = txtSeguido.getText();
         try {
-           control.seguirUsuario(mailSeguidor, mailSeguido);
+            control.seguirUsuario(mailSeguidor, mailSeguido);
             JOptionPane.showMessageDialog(this, "Ahora "+txtSeguidor.getText()+" sigue al usuario "+txtSeguido.getText()+" ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

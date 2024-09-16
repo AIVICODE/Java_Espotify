@@ -73,7 +73,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu11 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
-        menuPublicarLista = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -219,11 +219,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem14);
 
         jMenu10.setText("Eliminar Favorito");
-        jMenu10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu10ActionPerformed(evt);
-            }
-        });
 
         jMenuItem15.setText("Album");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -263,13 +258,13 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.add(jMenu10);
 
-        menuPublicarLista.setText("Publicar Lista");
-        menuPublicarLista.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem17.setText("Publicar Lista");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuPublicarListaActionPerformed(evt);
+                jMenuItem17ActionPerformed(evt);
             }
         });
-        jMenu2.add(menuPublicarLista);
+        jMenu2.add(jMenuItem17);
 
         jMenuBar1.add(jMenu2);
 
@@ -481,21 +476,19 @@ public class Principal extends javax.swing.JFrame {
     eliminar_listarep_por_defecto .show(); 
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
-    private void jMenu10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu10ActionPerformed
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        PublicarLista publicar_lista= new PublicarLista();
+    
 
-    private void menuPublicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPublicarListaActionPerformed
-        PublicarLista publicarLista = new PublicarLista();
-        desktopPane.add(publicarLista ,JLayeredPane.DEFAULT_LAYER);
-        publicarLista.setVisible(true);
-        publicarLista.setClosable(true);
-        publicarLista.setMaximizable(true);
-        publicarLista.setIconifiable(true);
-        publicarLista.setResizable(true);
-        publicarLista.toFront();
-        publicarLista.show(); 
-    }//GEN-LAST:event_menuPublicarListaActionPerformed
+    desktopPane.add(publicar_lista ,JLayeredPane.DEFAULT_LAYER);
+    publicar_lista .setVisible(true);
+    publicar_lista .setClosable(true);
+    publicar_lista .setMaximizable(true);
+    publicar_lista .setIconifiable(true);
+    publicar_lista .setResizable(true);
+    publicar_lista .toFront();
+    publicar_lista .show(); 
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -558,6 +551,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
@@ -570,7 +564,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JMenuItem menuPublicarLista;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {
