@@ -33,6 +33,7 @@ private List<String> selectedNodesList = new ArrayList<>();
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+    
     Controlador control= new Controlador();
     
     public AltaAlbum_FlujoArtista() {

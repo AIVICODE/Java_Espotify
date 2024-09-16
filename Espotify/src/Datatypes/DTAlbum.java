@@ -36,6 +36,22 @@ public class DTAlbum {
         this.listaTemas = listaTemas;
         this.artista = artista;
     }
+
+    public List<DTTema> getListaTemas() {
+        return listaTemas;
+    }
+
+    public void setListaTemas(List<DTTema> listaTemas) {
+        this.listaTemas = listaTemas;
+    }
+
+    public DTArtista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(DTArtista artista) {
+        this.artista = artista;
+    }
     
     
     public String getNombre() {
