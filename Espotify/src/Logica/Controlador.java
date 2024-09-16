@@ -2086,5 +2086,66 @@ public List<String> ListaAlbumesParaArtista(String correoArtista) throws Excepti
     return nombresAlbumes; // Devolver la lista de nombres de álbumes
 }
 
+public DTAlbum findAlbumPorArtistaYNombre(String correoArtista, String nombreAlbum) throws Exception {
+    // Buscar al artista por correo
+    Artista artista = controlpersis.findArtistaByCorreo(correoArtista);
+    
+    if (artista == null) {
+        throw new Exception("Artista no encontrado con el correo proporcionado.");
+    }
+    
+    // Buscar el álbum por nombre en la lista de álbumes del artista
+    Album albumEncontrado = null;
+    for (Album album : artista.getAlbumes()) {
+        if (album.getNombre().equalsIgnoreCase(nombreAlbum)) {
+            albumEncontrado = album;
+            break;
+        }
+    }
+    
+    if (albumEncontrado == null) {
+        throw new Exception("Álbum '" + nombreAlbum + "' no encontrado para el artista '" + artista.getNombre() + "'.");
+    }
 
+    // Crear la lista de géneros del álbum
+    List<String> generosDT = new ArrayList<>();
+    for (Genero auxG : albumEncontrado.getListaGeneros()) {
+        generosDT.add(auxG.getNombre());
+    }
+    
+    // Crear el objeto DTArtista
+    DTArtista dtartista = new DTArtista(
+        artista.getNickname(),
+        artista.getNombre(),
+        artista.getApellido(),
+        artista.getContrasenia(),
+        artista.getImagen(),
+        artista.getFechaNac(),
+        artista.getMail(),
+        artista.getBiografia(),
+        artista.getSitioWeb()
+    );
+    
+    // Crear la lista de temas del álbum
+    List<DTTema> dtTemas = new ArrayList<>();
+    for (Tema auxT : albumEncontrado.getListaTemas()) {
+        long duracionSegundos = auxT.getDuracionSegundos();
+        int minutos = (int) (duracionSegundos / 60);
+        int segundos = (int) (duracionSegundos % 60);
+        
+        DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
+        dtTemas.add(dttema);
+    }
+    
+    // Crear y retornar el DTAlbum
+    return new DTAlbum(
+        albumEncontrado.getNombre(),
+        albumEncontrado.getAnioCreacion(),
+        albumEncontrado.getImagen(),
+        generosDT,
+        dtTemas,
+        dtartista
+    );
 }
+}
+

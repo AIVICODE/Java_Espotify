@@ -19,6 +19,14 @@ import javax.persistence.PreUpdate;
 @Table(name = "tema")
 public class Tema extends Favoritos {
 
+    public long getDuracionSegundos() {
+        return duracionSegundos;
+    }
+
+    public void setDuracionSegundos(long duracionSegundos) {
+        this.duracionSegundos = duracionSegundos;
+    }
+
     private String nombre;
 
     @Column(name = "duracion_segundos")

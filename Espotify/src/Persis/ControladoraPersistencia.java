@@ -179,7 +179,10 @@ public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede 
         listjpa.edit(lista);//le ando la lista hecha publica
     } 
 
- 
+     public Album findAlbumId(Long id){
+        
+        return albjpa.findAlbum(id);
+    }
 
        
 }
