@@ -5,13 +5,9 @@
         <group>
             <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/GUI/Principal.java</file>
             <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Persis/ControladoraPersistencia.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/Cliente.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/GUI/ConsultaPerfilCliente.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/Album.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Persis/ClienteJpaController.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/Favoritos.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/Artista.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/GUI/PublicarLista.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Datatypes/DTUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/Controlador.java</file>
         </group>
     </open-files>
 </project-private>
