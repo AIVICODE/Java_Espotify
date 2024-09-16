@@ -8,9 +8,11 @@ import Logica.Album;
 import Logica.Artista;
 import Logica.Controlador;
 import Logica.Genero;
+import Logica.Tema;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -27,6 +29,14 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         comboOpciones.setVisible(false); // Lo mismo con este
         txtAlbum.setVisible(false);
         comboAlbumes.setVisible(false);
+        txtNombre.setVisible(false);
+        nombreAlbum.setVisible(false);
+        txtAñoC.setVisible(false);
+        añoCreacionAlbum.setVisible(false);
+        txtGenAlbum.setVisible(false);
+        generosAlbum.setVisible(false);
+        txtTemas.setVisible(false);
+        temasAlbum.setVisible(false);
         
     }
 
@@ -155,7 +165,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(comboAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtAlbum))))))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,9 +198,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
                         .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtGenAlbum)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -203,11 +213,14 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             comboOpciones.removeAllItems(); 
             Controlador controlador= new Controlador();
              List<Genero> listaGeneros = controlador.listaGeneros(); //pido los Artistas
+             //Crear DTGenero y cargarlos y pedirle al controlador la lista de datatypes de generos
             for (Genero auxA:listaGeneros){//lleno el combobox con los mails
                  comboOpciones.addItem(auxA.getNombre());
             }
             comboOpciones.setVisible(true);
             txtAlbum.setVisible(true);
+           /* comboOpciones.setSelectedItem(null);
+            comboAlbumes.setSelectedItem(null);*/
         }
         if ("Artista".equals(jList1.getSelectedValue()) ){
             txtG.setText("Artistas:"); //Lo mismo pero con Artista
@@ -215,32 +228,40 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             comboOpciones.removeAllItems();
             Controlador controlador= new Controlador();
              List<Artista> listaArtistas = controlador.listaArtistas(); //pido los Artistas
+             //Cargar en controlador una lista de datatypes de artistas y pasarlo para aca asi no trabajo directo con el objeto
             for (Artista auxA:listaArtistas){//lleno el combobox con los mails
                  comboOpciones.addItem(auxA.getNickname());
             }
             comboOpciones.setVisible(true);
             txtAlbum.setVisible(true);
-            comboAlbumes.removeAllItems();
+            /*comboAlbumes.removeAllItems();
             comboAlbumes.setVisible(true);
+           comboOpciones.setSelectedItem(null);
+            comboAlbumes.setSelectedItem(null);*/
             
-        }     
+        }    
+        //comboOpciones.setSelectedItem(null);
+        //comboAlbumes.setSelectedItem(null);
+       
     }//GEN-LAST:event_jList1ValueChanged
 
     private void comboOpcionesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboOpcionesItemStateChanged
+
         Controlador controlador= new Controlador();
         if ("Genero".equals(jList1.getSelectedValue()) ){  
             txtAlbum.setVisible(true);
             comboAlbumes.removeAllItems();
             List<Album> listaAlbumes = controlador.listaAlbumes(); //Obtengo la lista de todos los albumes del controlador
+            //Crear funcion en el controlador que convierta esa lista de albumes en una lista de data albumes
+            //Pasar a esta capa, la lista de data albumes. Se la pido al controlador "controlador.listaDTalbumes"
               for (Album auxA:listaAlbumes){//Recorro esa lista de albumbes
                   List<Genero> listaGenero = auxA.getListaGeneros();//A cada album de la lista anterior, le pido su lista de generos
                   for (Genero auxG:listaGenero){
                       if (auxG.getNombre().equals((String)comboOpciones.getSelectedItem())){
-                          comboAlbumes.addItem(auxA.getNombre()); 
+                          comboAlbumes.addItem(auxA.getId()+ " " + auxA.getNombre()); 
                       }
                   }
                 }
-            comboAlbumes.setVisible(true);
         }
         if ("Artista".equals(jList1.getSelectedValue()) ){
             txtAlbum.setVisible(true);
@@ -258,6 +279,10 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             }
               
         }
+        if (null!=comboOpciones.getSelectedItem()){
+            comboAlbumes.setVisible(true);
+        }
+        //comboAlbumes.setVisible(true);
     }//GEN-LAST:event_comboOpcionesItemStateChanged
 
     private void comboAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlbumesActionPerformed
@@ -265,7 +290,66 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboAlbumesActionPerformed
 
     private void comboAlbumesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboAlbumesItemStateChanged
+            //Tengo que encontrar el artista seleccionado y buscar el album seleccionado posteriormente, en la lista de albumes del artista        
+            Controlador controlador= new Controlador();
+            if ("Artista".equals(jList1.getSelectedValue()) ){
+            Artista artista = null;
+            try {
+                artista = controlador.findArtistaNickname((String)comboOpciones.getSelectedItem());     
+            } catch (Exception ex) {
+                Logger.getLogger(ConsultaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<Album> listaAlbum = artista.getAlbumes();
+            for (Album auxA:listaAlbum){
+                //  Como hago para que no se muestre de una? O que no se seleccione solo dle combo box
+                    if (auxA.getNombre().equals((String)comboAlbumes.getSelectedItem())){
+                          //MOSTRAR LOS DATOS DEL ALBUM
+                          //auxA es el album a mostrar
+                        nombreAlbum.setText(auxA.getNombre());
+                        añoCreacionAlbum.setText(""+(auxA.getAnioCreacion().getYear()+1900));
+                        List<Genero> listaGeneros = auxA.getListaGeneros();
+                        DefaultListModel model = new DefaultListModel();
+                        for (Genero auxG: listaGeneros){
+                              model.addElement(auxG.getNombre());
+                        }
+                        generosAlbum.setModel(model);
+                        //MOSTRAR LOS TEMAS
+                        //CREAR OTRA VENTANA PARA MOSTRAR LOS TEMAS Y HACERLO CON DATATYPE
+                        DefaultListModel modelTema = new DefaultListModel();
+                        List<Tema> temas = auxA.getListaTemas();
+                        for (Tema auxT: temas){
+                            modelTema.addElement(auxT.getNombre());
+                        }
+                        temasAlbum.setModel(modelTema);
+                        
+                   }
+            }
+
+        }
+        if ("Genero".equals(jList1.getSelectedValue()) ){
+            
+            String p = (String) comboAlbumes.getSelectedItem();
+            
+           String[] parts = p.split(" ");
+           
+            
+            
+            
+            
         
+        
+        
+        
+        }
+                    
+        txtNombre.setVisible(true);
+        nombreAlbum.setVisible(true);
+        txtAñoC.setVisible(true);
+        añoCreacionAlbum.setVisible(true);
+        txtGenAlbum.setVisible(true);
+        generosAlbum.setVisible(true);
+        txtTemas.setVisible(true);
+        temasAlbum.setVisible(true);
     }//GEN-LAST:event_comboAlbumesItemStateChanged
 
 

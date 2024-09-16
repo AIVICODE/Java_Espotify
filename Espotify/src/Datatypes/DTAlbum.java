@@ -4,6 +4,8 @@
  */
 package Datatypes;
 
+import Logica.Artista;
+import Logica.Tema;
 import java.util.Date;
 import java.util.List;
 
@@ -16,14 +18,26 @@ public class DTAlbum {
     protected Date anioCreacion;
     protected String imagen;
     protected List<String> listaGeneros;
-
+    protected List<DTTema> listaTemas;
+    protected DTArtista artista;
+    
     public DTAlbum(String nombre, Date anioCreacion, String imagen, List<String> listaGeneros) {
         this.nombre = nombre;
         this.anioCreacion = anioCreacion;
         this.imagen = imagen;
         this.listaGeneros = listaGeneros;
     }
+    
+    public DTAlbum(String nombre, Date anioCreacion, String imagen, List<String> listaGeneros,List<DTTema> listaTemas,DTArtista artista) {
+        this.nombre = nombre;
+        this.anioCreacion = anioCreacion;
+        this.imagen = imagen;
+        this.listaGeneros = listaGeneros;
+        this.listaTemas = listaTemas;
+        this.artista = artista;
+    }
 
+    
     public String getNombre() {
         return nombre;
     }
@@ -40,10 +54,21 @@ public class DTAlbum {
         return listaGeneros;
     }
 
-   
+    public List<DTTema> getListaTemas() {
+        return listaTemas;
+    }
 
-    
-    
-    
-    
+    public void setListaTemas(List<DTTema> listaTemas) {
+        this.listaTemas = listaTemas;
+    }
+
+    public DTArtista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(DTArtista artista) {
+        this.artista = artista;
+    }
+  
 }
+

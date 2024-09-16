@@ -118,4 +118,21 @@ public class Artista extends Usuario implements Serializable {
     public List<Album> getAlbumes() {
         return albumes;
     }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public Date getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+    
 }

@@ -188,5 +188,10 @@ public void crearAlbum(Album album) throws Exception {
         
         return artista; // Retorno el objeto 
     }
+    
+    public Album findAlbumId(Long id){
+        
+        return albjpa.findAlbum(id);
+    }
 
 }

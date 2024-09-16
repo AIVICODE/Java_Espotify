@@ -299,7 +299,7 @@ try {
         String nombreAlbum = txtNombreAlbum.getText();
         Date fechaCreacion = (Date) FechaCreacion.getValue();
         String imagen = txtImagen.getText();
-
+        
         if (selectedNodesList.isEmpty()) {
             throw new IllegalArgumentException("La lista de géneros seleccionados no puede estar vacía.");
         }
@@ -307,7 +307,7 @@ try {
 
         // Crear un objeto Album con todos los datos
         DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, fechaCreacion, imagen, generosSeleccionados);
-
+//public DTAlbum(String nombre, Date anioCreacion, String imagen, List<String> listaGeneros,List<DTTema> listaTemas,DTArtista artista) 
     
             // Llamar al controlador para guardar el álbum
             control.guardarAlbum(correo, nuevoAlbum, listaTemas);

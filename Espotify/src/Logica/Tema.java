@@ -103,5 +103,13 @@ private void postLoad() {
         this.orden = orden;
     }
 
+    public long getDuracionSegundos() {
+        return duracionSegundos;
+    }
+
+    public void setDuracionSegundos(long duracionSegundos) {
+        this.duracionSegundos = duracionSegundos;
+    }
+
    
 }

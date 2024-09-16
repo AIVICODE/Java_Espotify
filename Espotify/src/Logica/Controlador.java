@@ -597,5 +597,30 @@ public class Controlador {
     public Artista findArtistaNickname(String nickname) throws Exception {
         return controlpersis.findArtistaNickname(nickname); // Retorno el objeto 
     }
+    
+    public DTAlbum findAlbumId(Long id){
+        
+        Album album = controlpersis.findAlbumId(id);
+        List<Genero> generos = album.getListaGeneros();
+        List<String> generosDT = new ArrayList(); 
+        for (Genero auxG: generos){
+            generosDT.add(auxG.getNombre());
+        }
+        Artista a = album.getArtista();
+        DTArtista dtartista = new DTArtista(a.getNickname(), a.getNombre(), a.getApellido(), a.getContrasenia(), a.getImagen(), a.getFechaNac(), a.getMail(), a.getBiografia(), a.getSitioWeb());
+        
+        List<Tema> t = album.getListaTemas();
+        List<DTTema> dtTemas = null;
+        for (Tema auxT: t){
+            DTTema dttema = new DTTema(auxT.getNombre(), 1/*ver como obtener minutos y segundos*/, 0, auxT.getDireccion());
+            //Agregar dttema a la lista dtTemas
+            dtTemas.add(dttema);
+        }
+        
+       // DTTema(String nombre, int minutos, int segundos, String directorio)
+        return new DTAlbum(album.getNombre(), album.getAnioCreacion(), album.getImagen(), generosDT, dtTemas, dtartista);
+    }
+
+    
 
 }
