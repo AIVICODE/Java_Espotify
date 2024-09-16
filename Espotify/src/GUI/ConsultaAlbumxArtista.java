@@ -56,7 +56,7 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtNombreAlbum = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        txtAnioCreacion = new javax.swing.JLabel();
 
         ComboArtistas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +82,7 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
 
         txtNombreAlbum.setText("jLabel6");
 
-        jLabel7.setText("jLabel7");
+        txtAnioCreacion.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,7 +117,7 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
                                 .addGap(79, 79, 79)
                                 .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                .addComponent(txtAnioCreacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                                 .addComponent(txtNombreAlbum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(59, 59, 59))
         );
@@ -143,7 +143,7 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                    .addComponent(txtAnioCreacion))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addContainerGap(48, Short.MAX_VALUE))
@@ -166,21 +166,25 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ComboArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboArtistasActionPerformed
-        String correoArtista = (String) ComboArtistas.getSelectedItem();
-                String nombreAlbum = (String) ComboAlbum.getSelectedItem();
-                
-        try {
-            DTAlbum album = control.findAlbumPorArtistaYNombre(correoArtista, nombreAlbum);
-            
-           txtNombreAlbum.setText(album.getNombre());
-            
-        } catch (Exception ex) {
-            Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_ComboArtistasActionPerformed
 
     private void ComboAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboAlbumActionPerformed
-        // TODO add your handling code here:
+                String correoArtista = (String) ComboArtistas.getSelectedItem();
+                String nombreAlbum = (String) ComboAlbum.getSelectedItem();
+                
+        try {
+            if(correoArtista !=null && nombreAlbum !=null){
+            DTAlbum album = control.findAlbumPorArtistaYNombre(correoArtista, nombreAlbum);
+            if(album!=null){
+           txtNombreAlbum.setText(album.getNombre());
+           txtAnioCreacion.setText(String.valueOf(album.getAnioCreacion()));
+           
+            }
+        }
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ComboAlbumActionPerformed
 private void ComboArtistasItemStateChanged(java.awt.event.ItemEvent evt) throws Exception {
     if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
@@ -220,8 +224,8 @@ private void actualizarComboBoxArtistas() {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel txtAnioCreacion;
     private javax.swing.JLabel txtAñoC;
     private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtNombreAlbum;

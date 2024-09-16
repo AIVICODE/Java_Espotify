@@ -74,7 +74,7 @@
                                   <Component id="ComboArtistas" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel7" alignment="0" pref="131" max="32767" attributes="0"/>
+                                  <Component id="txtAnioCreacion" alignment="0" pref="131" max="32767" attributes="0"/>
                                   <Component id="txtNombreAlbum" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -109,7 +109,7 @@
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtAnioCreacion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -179,7 +179,7 @@
             <Property name="text" type="java.lang.String" value="jLabel6"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel7">
+        <Component class="javax.swing.JLabel" name="txtAnioCreacion">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
