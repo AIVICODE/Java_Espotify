@@ -2063,4 +2063,28 @@ public void ListaParticular6() throws Exception {
         }
     }
 
+public List<String> ListaAlbumesParaArtista(String correoArtista) throws Exception {
+    // Obtener el artista por correo
+    Artista artista = buscarArtistaPorCorreo(correoArtista); // Debes implementar este método para buscar al artista
+
+    // Si no se encuentra el artista, lanzar una excepción
+    if (artista == null) {
+        throw new Exception("Artista con correo " + correoArtista + " no encontrado");
+    }
+
+    // Obtener la lista de álbumes del artista
+    List<Album> albumes = artista.getAlbumes();
+
+    // Crear una lista para almacenar los nombres de los álbumes
+    List<String> nombresAlbumes = new ArrayList<>();
+
+    // Añadir los nombres de los álbumes a la lista
+    for (Album album : albumes) {
+        nombresAlbumes.add(album.getNombre());
+    }
+
+    return nombresAlbumes; // Devolver la lista de nombres de álbumes
+}
+
+
 }
