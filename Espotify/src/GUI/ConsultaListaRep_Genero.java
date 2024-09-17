@@ -22,10 +22,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-/**
- *
- * @author ivan
- */
 public class ConsultaListaRep_Genero extends javax.swing.JInternalFrame {
 
     Controlador control= new Controlador();

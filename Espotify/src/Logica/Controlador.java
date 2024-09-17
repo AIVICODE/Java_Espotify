@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +20,11 @@ import java.util.stream.Collectors;
 import javax.swing.tree.TreeModel;
 
 public class Controlador {
-
+private Date createDate(int year, int month, int day) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(year, month - 1, day); // month is 0-based in Calendar
+    return calendar.getTime();
+}
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
 
     public void crearUsuario(DTUsuario user) throws Exception {
@@ -666,164 +671,167 @@ public class Controlador {
        CargarFavoritos();
     }
 
-    private void Cargar_Perfiles() {
-        try {
-            // Artistas
-            Artista artista1 = new Artista(
-                    "vpeople", "Village", "People", "pass123",
-                    new Date(), "vpeople@tuta.io",
-                    "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.",
-                    "www.officialvillagepeople.com",
-                    "bit.ly/vpeople"
-            );
-            Artista artista2 = new Artista(
-                    "dmode", "Depeche", "Mode", "pass456",
-                    new Date(1980, 6, 14), "dmode@tuta.io",
-                    "",
-                    "www.depechemode.com",
-                    "bit.ly/depecheMode"
-            );
-            Artista artista3 = new Artista(
-                    "clauper", "Cyndi", "Lauper", "pass789",
-                    new Date(1953, 6, 22), "clauper@hotmail.com",
-                    "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participar en el grupo musical Blue Angel, en 1983 firmó con Portrait Records y lanzó su exitoso álbum debut *She's So Unusual* a finales de ese mismo año.",
-                    "cyndilauper.com",
-                    "bit.ly/cLauper"
-            );
-            Artista artista4 = new Artista(
-                    "bruceTheBoss", "Bruce", "Springsteen", "pass101",
-                    new Date(1949, 9, 23), "bruceTheBoss@gmail.com",
-                    "",
-                    "brucespringsteen.net",
-                    "bit.ly/bruceTheBoss"
-            );
-            Artista artista5 = new Artista(
-                    "tripleNelson", "La Triple", "Nelson", "pass202",
-                    new Date(1998, 1, 1), "tripleNelson@tuta.io",
-                    "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998.",
-                    "", // No tiene página web
-                    "bit.ly/tripleNelson"
-            );
-            Artista artista6 = new Artista(
-                    "la_ley", "La", "Ley", "pass303",
-                    new Date(1987, 2, 14), "la_ley@tuta.io",
-                    "", "", // No hay biografía ni sitio web provisto
-                    "bit.ly/laLey"
-            );
-            Artista artista7 = new Artista(
-                    "tigerOfWales", "Tom", "Jones", "pass404",
-                    new Date(1940, 6, 7), "tigerOfWales@tuta.io",
-                    "Sir Thomas John, conocido por su nombre artístico de Tom Jones, es un cantante británico. Ha vendido más de 100 millones de discos en todo el mundo.",
-                    "www.tomjones.com",
-                    "bit.ly/tigerOfWales"
-            );
-            Artista artista8 = new Artista(
-                    "chaiko", "Piotr", "Tchaikovsky", "pass505",
-                    new Date(1840, 4, 25), "chaiko@tuta.io",
-                    "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo.",
-                    "", // No tiene página web
-                    "" // No tiene imagen provista
-            );
-            Artista artista9 = new Artista(
-                    "nicoleneu", "Nicole", "Neumann", "pass606",
-                    new Date(1980, 10, 31), "nicoleneu@hotmail.com",
-                    "", // No hay biografía provista
-                    "", // No tiene página web
-                    "bit.ly/nicoleneu"
-            );
-            Artista artista10 = new Artista(
-                    "lospimpi", "Pimpinela", "", "pass707",
-                    new Date(1981, 8, 13), "lospimpi@gmail.com",
-                    "",
-                    "www.pimpinela.net",
-                    "bit.ly/losPimpinela"
-            );
-            Artista artista11 = new Artista(
-                    "dyangounchained", "Dyango", "", "pass808",
-                    new Date(1940, 3, 5), "dyangounchained@gmail.com",
-                    "José Gómez Romero, conocido artísticamente como Dyango, es un cantante español de música romántica.",
-                    "", // No tiene página web
-                    "" // No tiene imagen provista
-            );
-            Artista artista12 = new Artista(
-                    "alcides", "Alcides", "", "pass909",
-                    new Date(1952, 7, 17), "alcides@tuta.io",
-                    "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano.",
-                    "", // No tiene página web
-                    "" // No tiene imagen provista
-            );
 
-            // Clientes con imágenes
-            Cliente cliente1 = new Cliente(
-                    "cel_padrino", "Vito", "Corleone", "pass789",
-                    "el_padrino@tuta.io", new Date(1972, 3, 8),
-                    "bit.ly/vitoCorleone"
-            );
-            Cliente cliente2 = new Cliente(
-                    "scarlettO", "Scarlett", "O’Hara", "pass101",
-                    "scarlettO@tuta.io", new Date(1984, 11, 27),
-                    "bit.ly/scarlettO"
-            );
-            Cliente cliente3 = new Cliente(
-                    "ppArgento", "Pepe", "Argento", "pass202",
-                    "ppArgento@hotmail.com", new Date(1955, 2, 14),
-                    "bit.ly/ppArgento"
-            );
-            Cliente cliente4 = new Cliente(
-                    "Heisenberg", "Walter", "White", "pass303",
-                    "Heisenberg@tuta.io", new Date(1956, 3, 7),
-                    "bit.ly/heisenbergWW"
-            );
-            Cliente cliente5 = new Cliente(
-                    "benKenobi", "Obi-Wan", "Kenobi", "pass404",
-                    "benKenobi@gmail.com", new Date(1914, 4, 2),
-                    "bit.ly/benKenobi"
-            );
-            Cliente cliente6 = new Cliente(
-                    "lachiqui", "Mirtha", "Legrand", "pass505",
-                    "lachiqui@hotmail.com.ar", new Date(1927, 2, 23),
-                    "bit.ly/laChiqui"
-            );
-            Cliente cliente7 = new Cliente(
-                    "cbochinche", "Cacho", "Bochinche", "pass606",
-                    "cbochinche@vera.com.uy", new Date(1937, 5, 8),
-                    "bit.ly/cbochinche"
-            );
-            Cliente cliente8 = new Cliente(
-                    "Eleven11", "Eleven", "", "pass707",
-                    "Eleven11@gmail.com", new Date(1971, 12, 31),
-                    "bit.ly/11Eleven11"
-            );
 
-            // Agregar Artistas
-            controlpersis.AddArtista(artista1);
-            controlpersis.AddArtista(artista2);
-            controlpersis.AddArtista(artista3);
-            controlpersis.AddArtista(artista4);
-            controlpersis.AddArtista(artista5);
-            controlpersis.AddArtista(artista6);
-            controlpersis.AddArtista(artista7);
-            controlpersis.AddArtista(artista8);
-            controlpersis.AddArtista(artista9);
-            controlpersis.AddArtista(artista10);
-            controlpersis.AddArtista(artista11);
-            controlpersis.AddArtista(artista12);
+private void Cargar_Perfiles() {
+    try {
+        // Artistas
+        Artista artista1 = new Artista(
+                "vpeople", "Village", "People", "pass123",
+                createDate(1980, 7, 14), "vpeople@tuta.io",
+                "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.",
+                "www.officialvillagepeople.com",
+                "bit.ly/vpeople"
+        );
+        Artista artista2 = new Artista(
+                "dmode", "Depeche", "Mode", "pass456",
+                createDate(1980, 7, 14), "dmode@tuta.io",
+                "",
+                "www.depechemode.com",
+                "bit.ly/depecheMode"
+        );
+        Artista artista3 = new Artista(
+                "clauper", "Cyndi", "Lauper", "pass789",
+                createDate(1953, 6, 22), "clauper@hotmail.com",
+                "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participar en el grupo musical Blue Angel, en 1983 firmó con Portrait Records y lanzó su exitoso álbum debut *She's So Unusual* a finales de ese mismo año.",
+                "cyndilauper.com",
+                "bit.ly/cLauper"
+        );
+        Artista artista4 = new Artista(
+                "bruceTheBoss", "Bruce", "Springsteen", "pass101",
+                createDate(1949, 10, 23), "bruceTheBoss@gmail.com",
+                "",
+                "brucespringsteen.net",
+                "bit.ly/bruceTheBoss"
+        );
+        Artista artista5 = new Artista(
+                "tripleNelson", "La Triple", "Nelson", "pass202",
+                createDate(1998, 1, 1), "tripleNelson@tuta.io",
+                "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998.",
+                "", // No tiene página web
+                "bit.ly/tripleNelson"
+        );
+        Artista artista6 = new Artista(
+                "la_ley", "La", "Ley", "pass303",
+                createDate(1987, 3, 14), "la_ley@tuta.io",
+                "", "", // No hay biografía ni sitio web provisto
+                "bit.ly/laLey"
+        );
+        Artista artista7 = new Artista(
+                "tigerOfWales", "Tom", "Jones", "pass404",
+                createDate(1940, 6, 7), "tigerOfWales@tuta.io",
+                "Sir Thomas John, conocido por su nombre artístico de Tom Jones, es un cantante británico. Ha vendido más de 100 millones de discos en todo el mundo.",
+                "www.tomjones.com",
+                "bit.ly/tigerOfWales"
+        );
+        Artista artista8 = new Artista(
+                "chaiko", "Piotr", "Tchaikovsky", "pass505",
+                createDate(1840, 5, 25), "chaiko@tuta.io",
+                "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo.",
+                "", // No tiene página web
+                "" // No tiene imagen provista
+        );
+        Artista artista9 = new Artista(
+                "nicoleneu", "Nicole", "Neumann", "pass606",
+                createDate(1980, 11, 31), "nicoleneu@hotmail.com",
+                "", // No hay biografía provista
+                "", // No tiene página web
+                "bit.ly/nicoleneu"
+        );
+        Artista artista10 = new Artista(
+                "lospimpi", "Pimpinela", "", "pass707",
+                createDate(1981, 9, 13), "lospimpi@gmail.com",
+                "",
+                "www.pimpinela.net",
+                "bit.ly/losPimpinela"
+        );
+        Artista artista11 = new Artista(
+                "dyangounchained", "Dyango", "", "pass808",
+                createDate(1940, 4, 5), "dyangounchained@gmail.com",
+                "José Gómez Romero, conocido artísticamente como Dyango, es un cantante español de música romántica.",
+                "", // No tiene página web
+                "" // No tiene imagen provista
+        );
+        Artista artista12 = new Artista(
+                "alcides", "Alcides", "", "pass909",
+                createDate(1952, 8, 17), "alcides@tuta.io",
+                "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano.",
+                "", // No tiene página web
+                "" // No tiene imagen provista
+        );
 
-            // Agregar Clientes
-            controlpersis.AddCliente(cliente1);
-            controlpersis.AddCliente(cliente2);
-            controlpersis.AddCliente(cliente3);
-            controlpersis.AddCliente(cliente4);
-            controlpersis.AddCliente(cliente5);
-            controlpersis.AddCliente(cliente6);
-            controlpersis.AddCliente(cliente7);
-            controlpersis.AddCliente(cliente8);
+        // Clientes con imágenes
+        Cliente cliente1 = new Cliente(
+                "cel_padrino", "Vito", "Corleone", "pass789",
+                "el_padrino@tuta.io", createDate(1972, 4, 8),
+                "bit.ly/vitoCorleone"
+        );
+        Cliente cliente2 = new Cliente(
+                "scarlettO", "Scarlett", "O’Hara", "pass101",
+                "scarlettO@tuta.io", createDate(1984, 12, 27),
+                "bit.ly/scarlettO"
+        );
+        Cliente cliente3 = new Cliente(
+                "ppArgento", "Pepe", "Argento", "pass202",
+                "ppArgento@hotmail.com", createDate(1955, 3, 14),
+                "bit.ly/ppArgento"
+        );
+        Cliente cliente4 = new Cliente(
+                "Heisenberg", "Walter", "White", "pass303",
+                "Heisenberg@tuta.io", createDate(1956, 4, 7),
+                "bit.ly/heisenbergWW"
+        );
+        Cliente cliente5 = new Cliente(
+                "benKenobi", "Obi-Wan", "Kenobi", "pass404",
+                "benKenobi@gmail.com", createDate(1914, 5, 2),
+                "bit.ly/benKenobi"
+        );
+        Cliente cliente6 = new Cliente(
+                "lachiqui", "Mirtha", "Legrand", "pass505",
+                "lachiqui@hotmail.com.ar", createDate(1927, 3, 23),
+                "bit.ly/laChiqui"
+        );
+        Cliente cliente7 = new Cliente(
+                "cbochinche", "Cacho", "Bochinche", "pass606",
+                "cbochinche@vera.com.uy", createDate(1937, 6, 8),
+                "bit.ly/cbochinche"
+        );
+        Cliente cliente8 = new Cliente(
+                "Eleven11", "Eleven", "", "pass707",
+                "Eleven11@gmail.com", createDate(1971, 12, 31),
+                "bit.ly/11Eleven11"
+        );
 
-            System.out.println("Perfiles cargados correctamente con biografías, sitios web e imágenes.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Agregar Artistas
+        controlpersis.AddArtista(artista1);
+        controlpersis.AddArtista(artista2);
+        controlpersis.AddArtista(artista3);
+        controlpersis.AddArtista(artista4);
+        controlpersis.AddArtista(artista5);
+        controlpersis.AddArtista(artista6);
+        controlpersis.AddArtista(artista7);
+        controlpersis.AddArtista(artista8);
+        controlpersis.AddArtista(artista9);
+        controlpersis.AddArtista(artista10);
+        controlpersis.AddArtista(artista11);
+        controlpersis.AddArtista(artista12);
+
+        // Agregar Clientes
+        controlpersis.AddCliente(cliente1);
+        controlpersis.AddCliente(cliente2);
+        controlpersis.AddCliente(cliente3);
+        controlpersis.AddCliente(cliente4);
+        controlpersis.AddCliente(cliente5);
+        controlpersis.AddCliente(cliente6);
+        controlpersis.AddCliente(cliente7);
+        controlpersis.AddCliente(cliente8);
+
+        System.out.println("Perfiles cargados correctamente con biografías, sitios web e imágenes.");
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
 
     private void Cargar_Generos() throws Exception {
         CrearGenero("Rock", "");
