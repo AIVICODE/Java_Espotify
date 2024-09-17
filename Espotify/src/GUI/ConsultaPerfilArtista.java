@@ -1,9 +1,12 @@
 
 package GUI;
 
-import Logica.Artista;
+import Datatypes.DTArtista;
 import Logica.Controlador;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 
 public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
@@ -11,18 +14,24 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
     public ConsultaPerfilArtista() {
         initComponents();
         Controlador controlador= new Controlador();
-        List<Artista> listaArtistas = controlador.listaArtistas(); //pido los Artistas
-        for (Artista auxA:listaArtistas){//lleno el combobox con los mails
-            comboMails.addItem(auxA.getMail());
+               
+        for (String n:controlador.nicknamesDeTodosLosArtistas()){//por cada string en la lista de nicks
+            comboNicks.addItem(n);//le agrego n q ya es un string del nickname
         }
+               
         //hago que no se vean los textos
         textoMostrarNick.setVisible(false);
         textoMostrarNombre.setVisible(false);
         textoMostrarApellido.setVisible(false);
         textoMostrarCorreo.setVisible(false);
         textoMostrarNacimiento.setVisible(false);
+        textoMostrarBio.removeAll();
+        textoMostrarBio.setText(" ");
         textoMostrarBio.setVisible(false);
         textoMostrarWeb.setVisible(false);
+        textoSeguidores.setVisible(false);
+        listaSeguidores.setVisible(false);
+        listaAlbumes.setVisible(false);
     }
 
     
@@ -31,7 +40,7 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        comboMails = new javax.swing.JComboBox<>();
+        comboNicks = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -43,23 +52,29 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
         textoMostrarApellido = new javax.swing.JLabel();
         textoMostrarCorreo = new javax.swing.JLabel();
         textoMostrarNacimiento = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        textoMostrarBio = new javax.swing.JLabel();
         textoMostrarWeb = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textoMostrarBio = new javax.swing.JTextArea();
+        textoSeguidores = new javax.swing.JLabel();
+        textoAlbumes = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaSeguidores = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaAlbumes = new javax.swing.JList<>();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Consulta de perfil de Artista");
 
-        comboMails.addItemListener(new java.awt.event.ItemListener() {
+        comboNicks.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboMailsItemStateChanged(evt);
+                comboNicksItemStateChanged(evt);
             }
         });
-        comboMails.addActionListener(new java.awt.event.ActionListener() {
+        comboNicks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboMailsActionPerformed(evt);
+                comboNicksActionPerformed(evt);
             }
         });
 
@@ -85,52 +100,72 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
 
         textoMostrarNacimiento.setText("..");
 
-        jLabel2.setText("Imagen / seguidores nicknames / albumes");
-
         jLabel9.setText("Biografía:");
 
         jLabel10.setText("Página Web:");
 
-        textoMostrarBio.setText("...");
-
         textoMostrarWeb.setText("...");
+
+        textoMostrarBio.setColumns(20);
+        textoMostrarBio.setRows(5);
+        jScrollPane1.setViewportView(textoMostrarBio);
+
+        textoSeguidores.setText("Seguidores:");
+
+        textoAlbumes.setText("Albumes:");
+
+        jScrollPane2.setViewportView(listaSeguidores);
+
+        jScrollPane3.setViewportView(listaAlbumes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel10))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textoMostrarNick)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(textoSeguidores)
+                                .addGap(109, 109, 109)
+                                .addComponent(textoAlbumes)
+                                .addGap(68, 68, 68))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textoMostrarApellido)
+                                    .addComponent(textoMostrarNombre)
+                                    .addComponent(textoMostrarNacimiento)
+                                    .addComponent(textoMostrarCorreo)
+                                    .addComponent(textoMostrarWeb))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(comboMails, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboNicks, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textoMostrarNacimiento)
-                                    .addComponent(textoMostrarCorreo)
-                                    .addComponent(textoMostrarApellido)
-                                    .addComponent(textoMostrarNombre)
-                                    .addComponent(textoMostrarNick)
-                                    .addComponent(textoMostrarBio)
-                                    .addComponent(textoMostrarWeb)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(95, 95, 95))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,77 +174,115 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboMails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboNicks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(textoMostrarNick))
+                    .addComponent(textoMostrarNick)
+                    .addComponent(textoSeguidores)
+                    .addComponent(textoAlbumes))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(textoMostrarNombre))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(textoMostrarApellido))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(textoMostrarCorreo))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(textoMostrarNacimiento))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(textoMostrarBio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(textoMostrarWeb))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(16, 16, 16))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(textoMostrarNombre))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(textoMostrarApellido))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(textoMostrarCorreo))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(textoMostrarNacimiento))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(textoMostrarWeb))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboMailsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboMailsItemStateChanged
-        Controlador controlador= new Controlador();//busco el cliente
-        Artista artista = controlador.encontrarArtista((String) comboMails.getSelectedItem());
-        //muestro datos
-        textoMostrarNick.setText(artista.getNickname());
-        textoMostrarNombre.setText(artista.getNombre());
-        textoMostrarApellido.setText(artista.getApellido());
-        textoMostrarCorreo.setText(artista.getMail());
-        String fecha = artista.getFechaNac().getDate() + "/" + (artista.getFechaNac().getMonth() +1) + "/" + (artista.getFechaNac().getYear() + 1900);
-        textoMostrarNacimiento.setText(fecha); //hay q sumarle 1 a mes y 1900 al año
-        textoMostrarBio.setText(artista.getBiografia());
-        textoMostrarWeb.setText(artista.getSitioWeb());
-        
-        //hago visible
-        textoMostrarNick.setVisible(true);
-        textoMostrarNombre.setVisible(true);
-        textoMostrarApellido.setVisible(true);
-        textoMostrarCorreo.setVisible(true);
-        textoMostrarNacimiento.setVisible(true);
-        textoMostrarBio.setVisible(true);
-        textoMostrarWeb.setVisible(true);
-    }//GEN-LAST:event_comboMailsItemStateChanged
+    private void comboNicksItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboNicksItemStateChanged
+        Controlador controlador= new Controlador();      
+        DTArtista artista = controlador.encontrarDTArtistaPorNickname((String) comboNicks.getSelectedItem());
+        if(artista!=null){
+            //muestro datos
+            textoMostrarNick.setText(artista.getNickname());
+            textoMostrarNombre.setText(artista.getNombre());
+            textoMostrarApellido.setText(artista.getApellido());
+            textoMostrarCorreo.setText(artista.getCorreo());
+            String fecha = artista.getFechaNac().getDate() + "/" + (artista.getFechaNac().getMonth() +1) + "/" + (artista.getFechaNac().getYear() + 1900);
+            textoMostrarNacimiento.setText(fecha); //hay q sumarle 1 a mes y 1900 al año
+            textoMostrarBio.setText(artista.getBiografia());
+            textoMostrarWeb.setText(artista.getSitioWeb());
+           
+            //Seguidores lista
+            int cantSeguidores = controlador.nicksClientesSiguenArtista((String) comboNicks.getSelectedItem()).size();
+            DefaultListModel modelSeguidos = new DefaultListModel();
+            for (String n:controlador.nicksClientesSiguenArtista((String) comboNicks.getSelectedItem())){
+                modelSeguidos.addElement(n);
+            }
+            listaSeguidores.setModel(modelSeguidos);
+            if(cantSeguidores == 1){
+                textoSeguidores.setText(cantSeguidores + " Seguidor");
+                listaSeguidores.setVisible(true);
+            }
+            if(cantSeguidores == 0){
+                textoSeguidores.setText(cantSeguidores + " Seguidores");
+                listaSeguidores.setVisible(false);
+            }
+            if(cantSeguidores > 1){
+                textoSeguidores.setText(cantSeguidores + " Seguidores");
+                listaSeguidores.setVisible(true);
+            }
+            
+            //Albumes
+            DefaultListModel modelAlbumes = new DefaultListModel();
+            try {
+                for(String s:controlador.listaAlbumesArtistaNick((String) comboNicks.getSelectedItem())){
+                    modelAlbumes.addElement(s);//agrego album del artista a lista
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ConsultaPerfilArtista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            listaAlbumes.setModel(modelAlbumes);
+            
+            //hago visible todo
+            textoMostrarNick.setVisible(true);
+            textoMostrarNombre.setVisible(true);
+            textoMostrarApellido.setVisible(true);
+            textoMostrarCorreo.setVisible(true);
+            textoMostrarNacimiento.setVisible(true);
+            textoMostrarBio.setVisible(true);
+            textoMostrarWeb.setVisible(true); 
+            textoSeguidores.setVisible(true);
+            listaAlbumes.setVisible(true);
+        }        
+    }//GEN-LAST:event_comboNicksItemStateChanged
 
-    private void comboMailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMailsActionPerformed
+    private void comboNicksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboNicksActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboMailsActionPerformed
+    }//GEN-LAST:event_comboNicksActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> comboMails;
+    private javax.swing.JComboBox<String> comboNicks;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -217,12 +290,19 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> listaAlbumes;
+    private javax.swing.JList<String> listaSeguidores;
+    private javax.swing.JLabel textoAlbumes;
     private javax.swing.JLabel textoMostrarApellido;
-    private javax.swing.JLabel textoMostrarBio;
+    private javax.swing.JTextArea textoMostrarBio;
     private javax.swing.JLabel textoMostrarCorreo;
     private javax.swing.JLabel textoMostrarNacimiento;
     private javax.swing.JLabel textoMostrarNick;
     private javax.swing.JLabel textoMostrarNombre;
     private javax.swing.JLabel textoMostrarWeb;
+    private javax.swing.JLabel textoSeguidores;
     // End of variables declaration//GEN-END:variables
 }

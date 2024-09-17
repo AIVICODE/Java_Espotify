@@ -1,20 +1,20 @@
 
 package GUI;
 
-import Logica.Cliente;
+import Datatypes.DTCliente;
 import Logica.Controlador;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
-
+//NOMBRES DE LISTAS DE REP QUE CREO EL CLIENTE / TODOS SUS FAVORITOS
 public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
 
     
     public ConsultaPerfilCliente() {
         initComponents();
         Controlador controlador= new Controlador();
-        List<Cliente> listaClientes = controlador.listaClientes(); //pido los clientes
-        for (Cliente auxC:listaClientes){//lleno el combobox con los mails
-            comboNicknames.addItem(auxC.getMail());
+        for (String n:controlador.nicksClientes()){
+            comboNicknames.addItem(n);//lleno combobox con nicknames
         }
         //hago que no se vean los textos
         textoMostrarNick.setVisible(false);
@@ -22,6 +22,14 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         textoMostrarApellido.setVisible(false);
         textoMostrarCorreo.setVisible(false);
         textoMostrarNacimiento.setVisible(false);
+        
+        textoSeguidores.setVisible(false);
+        textoSeguidos.setVisible(false);
+        textoListas.setVisible(false);
+        listaSeguidores.setVisible(false);
+        listaSeguidos.setVisible(false);
+        listaListas.setVisible(false);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -35,18 +43,26 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         textoMostrarNick = new javax.swing.JLabel();
         textoMostrarNombre = new javax.swing.JLabel();
         textoMostrarApellido = new javax.swing.JLabel();
         textoMostrarCorreo = new javax.swing.JLabel();
         textoMostrarNacimiento = new javax.swing.JLabel();
         comboNicknames = new javax.swing.JComboBox<>();
+        textoSeguidores = new javax.swing.JLabel();
+        textoSeguidos = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaSeguidores = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaSeguidos = new javax.swing.JList<>();
+        textoListas = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaListas = new javax.swing.JList<>();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Consulta de perfil de cliente");
 
-        jLabel2.setText("Seleccione el nickname del cliente a mostrar:");
+        jLabel2.setText("Seleccione el cliente a mostrar:");
 
         jLabel3.setText("Nickname:");
 
@@ -57,8 +73,6 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         jLabel6.setText("Correo:");
 
         jLabel7.setText("Fecha de nacimiento:");
-
-        jLabel8.setText("imagen / seguidos / seguidores / listas / favoritos");
 
         textoMostrarNick.setText("...");
 
@@ -76,38 +90,64 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        textoSeguidores.setText("Seguidores");
+
+        textoSeguidos.setText("Seguidos");
+
+        jScrollPane1.setViewportView(listaSeguidores);
+
+        jScrollPane2.setViewportView(listaSeguidos);
+
+        textoListas.setText("Listas de Reproducción creadas:");
+
+        jScrollPane3.setViewportView(listaListas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboNicknames, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboNicknames, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textoMostrarNacimiento)
                                     .addComponent(textoMostrarCorreo)
                                     .addComponent(textoMostrarApellido)
                                     .addComponent(textoMostrarNombre)
-                                    .addComponent(textoMostrarNick)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel8)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                                    .addComponent(textoMostrarNick))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addComponent(textoSeguidores)
+                                        .addGap(61, 61, 61)
+                                        .addComponent(textoSeguidos))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textoMostrarNacimiento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoListas)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,42 +158,59 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(comboNicknames, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(textoMostrarNick))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(textoMostrarNombre))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(textoMostrarApellido))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(textoMostrarCorreo))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(textoMostrarNacimiento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(19, 19, 19))
+                    .addComponent(textoSeguidores)
+                    .addComponent(textoSeguidos)
+                    .addComponent(textoListas))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(textoMostrarNick))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(textoMostrarNombre))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(textoMostrarApellido))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(textoMostrarCorreo)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(textoMostrarNacimiento)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 //ItemStateChanged
     private void comboNicknamesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboNicknamesItemStateChanged
-        Controlador controlador= new Controlador();//busco el cliente
-        Cliente cliente = controlador.encontrarCliente((String) comboNicknames.getSelectedItem());
-        //muestro datos
+        Controlador controlador= new Controlador();
+        DTCliente cliente = controlador.encontrarClientePorNickname((String) comboNicknames.getSelectedItem());
+        DefaultListModel modelSeguidores = new DefaultListModel();
+        DefaultListModel modelSeguidos = new DefaultListModel();
+        DefaultListModel modelListas = new DefaultListModel();
+        modelSeguidores.removeAllElements();
+        modelSeguidos.removeAllElements();
+        modelListas.removeAllElements();
+        
+        //cargo datos
         textoMostrarNick.setText(cliente.getNickname());
         textoMostrarNombre.setText(cliente.getNombre());
         textoMostrarApellido.setText(cliente.getApellido());
-        textoMostrarCorreo.setText(cliente.getMail());
+        textoMostrarCorreo.setText(cliente.getCorreo());
         String fecha = cliente.getFechaNac().getDate() + "/" + (cliente.getFechaNac().getMonth() +1) + "/" + (cliente.getFechaNac().getYear() + 1900);
         textoMostrarNacimiento.setText(fecha); //hay q sumarle 1 a mes y 1900 al año
         //hago visible
@@ -162,6 +219,38 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         textoMostrarApellido.setVisible(true);
         textoMostrarCorreo.setVisible(true);
         textoMostrarNacimiento.setVisible(true);
+        
+        //Seguidos y seguidores       
+        for(String s:controlador.seguidoresDelCliente((String) comboNicknames.getSelectedItem())){
+            modelSeguidores.addElement(s);
+        }
+        listaSeguidores.setModel(modelSeguidores);
+        //hacer int
+        int cantidadSeguidores = controlador.seguidoresDelCliente((String) comboNicknames.getSelectedItem()).size();
+        textoSeguidores.setText(cantidadSeguidores + " Seguidores");
+        
+        modelSeguidos.addElement("  Clientes:  ");
+        for(String s:controlador.clientesSeguidosDelCliente((String) comboNicknames.getSelectedItem())){
+            modelSeguidos.addElement(s);
+        }
+        modelSeguidos.addElement("   ");
+        modelSeguidos.addElement("  Artistas:  "); 
+        listaSeguidos.setModel(modelSeguidos);
+        for(String s:controlador.artistasSeguidosDelCliente((String) comboNicknames.getSelectedItem())){
+            modelSeguidos.addElement(s);
+        }
+        //Listas de rep creadas
+        for(String s:controlador.nombresListaRepDeCliente((String) comboNicknames.getSelectedItem())){
+            modelListas.addElement(s);
+        }
+        listaListas.setModel(modelListas);
+        
+        textoSeguidores.setVisible(true);
+        textoSeguidos.setVisible(true);
+        textoListas.setVisible(true);
+        listaSeguidores.setVisible(true);
+        listaSeguidos.setVisible(true);
+        listaListas.setVisible(true);
 
     }//GEN-LAST:event_comboNicknamesItemStateChanged
 
@@ -175,11 +264,19 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> listaListas;
+    private javax.swing.JList<String> listaSeguidores;
+    private javax.swing.JList<String> listaSeguidos;
+    private javax.swing.JLabel textoListas;
     private javax.swing.JLabel textoMostrarApellido;
     private javax.swing.JLabel textoMostrarCorreo;
     private javax.swing.JLabel textoMostrarNacimiento;
     private javax.swing.JLabel textoMostrarNick;
     private javax.swing.JLabel textoMostrarNombre;
+    private javax.swing.JLabel textoSeguidores;
+    private javax.swing.JLabel textoSeguidos;
     // End of variables declaration//GEN-END:variables
 }

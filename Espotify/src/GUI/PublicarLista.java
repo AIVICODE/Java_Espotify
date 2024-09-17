@@ -122,6 +122,7 @@ public class PublicarLista extends javax.swing.JInternalFrame {
             Logger.getLogger(PublicarLista.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(null, "Lista publicada con exito!"); 
+        comboListas.removeAllItems();//limpio el combo para no publicar dos veces la misma lista
     }//GEN-LAST:event_publicarBotonActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed

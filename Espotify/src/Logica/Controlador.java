@@ -2086,5 +2086,99 @@ public List<String> ListaAlbumesParaArtista(String correoArtista) throws Excepti
     return nombresAlbumes; // Devolver la lista de nombres de álbumes
 }
 
+    public List<String> nicknamesDeTodosLosArtistas(){
+    List<String> nicknames = new ArrayList();
+    for(Artista a:controlpersis.listaArtistas()){//para cada artista en la bd
+        nicknames.add(a.getNickname()); //agrego su nickname a la lista de nicks
+    }
+    return nicknames;
+}
 
+    public DTArtista encontrarDTArtistaPorNickname(String nick){
+        for (Artista a:controlpersis.listaArtistas()){//para cada artista en la bd
+            if(a.getNickname().equals(nick)){//si el nick es igual al a del momento
+                DTArtista encontrado = new DTArtista(a.getNickname(), a.getNombre(), a.getApellido(), a.getContrasenia(), a.getImagen(), a.getFechaNac(), a.getMail(), a.getBiografia(), a.getSitioWeb());
+            return encontrado;
+            }
+        }
+        return null;
+    }
+
+    public List<String> nicksClientesSiguenArtista(String nickAr){//lista de clientes q siguen un artista   
+        List<String> clientesQueLoSiguen = new ArrayList();
+        for(Cliente c:controlpersis.listaClientes()){//para cada cliente en bd
+            for (Artista a:c.getArtistasSeguidos()){//para cada artista que C sigue busco si tiene nickAr
+                if (a.getNickname().equals(nickAr)){//si el cliente sigue al artista
+                    clientesQueLoSiguen.add(c.getNickname());//agrego a la lista el nick del cliente q lo sigue
+                }
+            }
+        }  
+        return clientesQueLoSiguen;
+    }
+    
+    public List<String> listaAlbumesArtistaNick(String nick) throws Exception{//devuelve string de albumes de artista encontrado por nick
+        for(Artista a:controlpersis.listaArtistas()){
+            if (a.getNickname().equals(nick)){
+                List<String> albumes = ListaAlbumesParaArtista(a.getMail());
+                return albumes;
+            }
+        }
+        return null;
+    }
+    
+    public List<String> nicksClientes(){
+        List<String> nicknames = new ArrayList();
+        for(Cliente c:controlpersis.listaClientes()){
+            nicknames.add(c.getNickname());
+        }
+        return nicknames;
+    }
+   
+    public List<String> clientesSeguidosDelCliente(String nick){//nicknames de los clientes que sigue nick
+        List<String> seguidos = new ArrayList();
+        for (Cliente c:controlpersis.listaClientes()){
+            if (c.getNickname().equals(nick)){
+               for(Cliente cs:c.getClientesSeguidos()){
+                   seguidos.add(cs.getNickname());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
+               }
+           }
+       }
+       return seguidos;      
+    }
+    
+    public List<String> seguidoresDelCliente(String nick){//nicknames de los que siguen al cliente
+        List<String> seguidores = new ArrayList();
+        for (Cliente c:controlpersis.listaClientes()){
+            for (Cliente cs:c.getClientesSeguidos()){
+                if (cs.getNickname().equals(nick)){
+                    seguidores.add(c.getNickname());//agrego el seguidor del cliente a la lista
+                }
+            }
+        }
+        return seguidores;
+    }
+    
+    public List<String> artistasSeguidosDelCliente(String nick){
+        List<String> seguidos = new ArrayList();
+        for (Cliente c:controlpersis.listaClientes()){
+            if (c.getNickname().equals(nick)){
+                for(Artista a:c.getArtistasSeguidos()){
+                    seguidos.add(a.getNickname());//agrego los nicks que sigue el cliente
+                }
+            }
+        }
+        return seguidos;
+    }
+    
+    public List<String> nombresListaRepDeCliente(String nick){
+        List<String> listas = new ArrayList();
+        for (Cliente c:controlpersis.listaClientes()){
+            if (c.getNickname().equals(nick)){
+                for(ListaRep l:c.getListaReproduccion()){
+                    listas.add(l.getNombre());//para cada lista creada por el cliente agrego el nombre en listas a retornar
+                }
+            }
+        }
+        return listas;
+    }
 }
