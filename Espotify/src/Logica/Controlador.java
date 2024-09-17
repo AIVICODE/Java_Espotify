@@ -20,11 +20,13 @@ import java.util.stream.Collectors;
 import javax.swing.tree.TreeModel;
 
 public class Controlador {
-private Date createDate(int year, int month, int day) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(year, month - 1, day); // month is 0-based in Calendar
-    return calendar.getTime();
-}
+
+    private Date createDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day); // month is 0-based in Calendar
+        return calendar.getTime();
+    }
+
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
 
     public void crearUsuario(DTUsuario user) throws Exception {
@@ -96,10 +98,10 @@ private Date createDate(int year, int month, int day) {
             if (artista == null) {
                 throw new Exception("Artista no encontrado con el correo proporcionado.");
             }
-                  if (listaTemas == null || listaTemas.isEmpty()) {
-            throw new Exception("No se han proporcionado temas para el álbum.");
-        }
-            
+            if (listaTemas == null || listaTemas.isEmpty()) {
+                throw new Exception("No se han proporcionado temas para el álbum.");
+            }
+
             boolean albumExiste = false;
             for (Album album : artista.getAlbumes()) {
                 if (album.getNombre().equals(nuevoAlbum.getNombre())) {
@@ -400,11 +402,11 @@ private Date createDate(int year, int month, int day) {
             }
 
             // Verificar si la lista ya está marcada como favorita por el cliente
-           for (ListaRep listaFavorita : cliente.getListaRepFavoritos()) {
-            if (listaFavorita.getId().equals(listaPorDefecto.getId())) {
-                throw new Exception("La lista ya está marcada como favorita.");
+            for (ListaRep listaFavorita : cliente.getListaRepFavoritos()) {
+                if (listaFavorita.getId().equals(listaPorDefecto.getId())) {
+                    throw new Exception("La lista ya está marcada como favorita.");
+                }
             }
-        }
 
             // Agregar la lista por defecto al cliente como favorita
             cliente.getListaRepFavoritos().add(listaPorDefecto);
@@ -669,173 +671,170 @@ private Date createDate(int year, int month, int day) {
     public void Cargar_Datos_Prueba() throws Exception {
         Cargar_Perfiles();
         Cargar_Generos();
-       Cargar_Albumes();
+        Cargar_Albumes();
         Cargar_Seguidores();
-       Cargar_Listas();
-       CargarFavoritos();
+        Cargar_Listas();
+        CargarFavoritos();
     }
 
+    private void Cargar_Perfiles() {
+        try {
+            // Artistas
+            Artista artista1 = new Artista(
+                    "vpeople", "Village", "People", "pass123",
+                    createDate(1980, 7, 14), "vpeople@tuta.io",
+                    "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.",
+                    "www.officialvillagepeople.com",
+                    "bit.ly/vpeople"
+            );
+            Artista artista2 = new Artista(
+                    "dmode", "Depeche", "Mode", "pass456",
+                    createDate(1980, 7, 14), "dmode@tuta.io",
+                    "",
+                    "www.depechemode.com",
+                    "bit.ly/depecheMode"
+            );
+            Artista artista3 = new Artista(
+                    "clauper", "Cyndi", "Lauper", "pass789",
+                    createDate(1953, 6, 22), "clauper@hotmail.com",
+                    "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participar en el grupo musical Blue Angel, en 1983 firmó con Portrait Records y lanzó su exitoso álbum debut *She's So Unusual* a finales de ese mismo año.",
+                    "cyndilauper.com",
+                    "bit.ly/cLauper"
+            );
+            Artista artista4 = new Artista(
+                    "bruceTheBoss", "Bruce", "Springsteen", "pass101",
+                    createDate(1949, 10, 23), "bruceTheBoss@gmail.com",
+                    "",
+                    "brucespringsteen.net",
+                    "bit.ly/bruceTheBoss"
+            );
+            Artista artista5 = new Artista(
+                    "tripleNelson", "La Triple", "Nelson", "pass202",
+                    createDate(1998, 1, 1), "tripleNelson@tuta.io",
+                    "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998.",
+                    "", // No tiene página web
+                    "bit.ly/tripleNelson"
+            );
+            Artista artista6 = new Artista(
+                    "la_ley", "La", "Ley", "pass303",
+                    createDate(1987, 3, 14), "la_ley@tuta.io",
+                    "", "", // No hay biografía ni sitio web provisto
+                    "bit.ly/laLey"
+            );
+            Artista artista7 = new Artista(
+                    "tigerOfWales", "Tom", "Jones", "pass404",
+                    createDate(1940, 6, 7), "tigerOfWales@tuta.io",
+                    "Sir Thomas John, conocido por su nombre artístico de Tom Jones, es un cantante británico. Ha vendido más de 100 millones de discos en todo el mundo.",
+                    "www.tomjones.com",
+                    "bit.ly/tigerOfWales"
+            );
+            Artista artista8 = new Artista(
+                    "chaiko", "Piotr", "Tchaikovsky", "pass505",
+                    createDate(1840, 5, 25), "chaiko@tuta.io",
+                    "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo.",
+                    "", // No tiene página web
+                    "" // No tiene imagen provista
+            );
+            Artista artista9 = new Artista(
+                    "nicoleneu", "Nicole", "Neumann", "pass606",
+                    createDate(1980, 11, 31), "nicoleneu@hotmail.com",
+                    "", // No hay biografía provista
+                    "", // No tiene página web
+                    "bit.ly/nicoleneu"
+            );
+            Artista artista10 = new Artista(
+                    "lospimpi", "Pimpinela", "", "pass707",
+                    createDate(1981, 9, 13), "lospimpi@gmail.com",
+                    "",
+                    "www.pimpinela.net",
+                    "bit.ly/losPimpinela"
+            );
+            Artista artista11 = new Artista(
+                    "dyangounchained", "Dyango", "", "pass808",
+                    createDate(1940, 4, 5), "dyangounchained@gmail.com",
+                    "José Gómez Romero, conocido artísticamente como Dyango, es un cantante español de música romántica.",
+                    "", // No tiene página web
+                    "" // No tiene imagen provista
+            );
+            Artista artista12 = new Artista(
+                    "alcides", "Alcides", "", "pass909",
+                    createDate(1952, 8, 17), "alcides@tuta.io",
+                    "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano.",
+                    "", // No tiene página web
+                    "" // No tiene imagen provista
+            );
 
+            // Clientes con imágenes
+            Cliente cliente1 = new Cliente(
+                    "cel_padrino", "Vito", "Corleone", "pass789",
+                    "el_padrino@tuta.io", createDate(1972, 4, 8),
+                    "bit.ly/vitoCorleone"
+            );
+            Cliente cliente2 = new Cliente(
+                    "scarlettO", "Scarlett", "O’Hara", "pass101",
+                    "scarlettO@tuta.io", createDate(1984, 12, 27),
+                    "bit.ly/scarlettO"
+            );
+            Cliente cliente3 = new Cliente(
+                    "ppArgento", "Pepe", "Argento", "pass202",
+                    "ppArgento@hotmail.com", createDate(1955, 3, 14),
+                    "bit.ly/ppArgento"
+            );
+            Cliente cliente4 = new Cliente(
+                    "Heisenberg", "Walter", "White", "pass303",
+                    "Heisenberg@tuta.io", createDate(1956, 4, 7),
+                    "bit.ly/heisenbergWW"
+            );
+            Cliente cliente5 = new Cliente(
+                    "benKenobi", "Obi-Wan", "Kenobi", "pass404",
+                    "benKenobi@gmail.com", createDate(1914, 5, 2),
+                    "bit.ly/benKenobi"
+            );
+            Cliente cliente6 = new Cliente(
+                    "lachiqui", "Mirtha", "Legrand", "pass505",
+                    "lachiqui@hotmail.com.ar", createDate(1927, 3, 23),
+                    "bit.ly/laChiqui"
+            );
+            Cliente cliente7 = new Cliente(
+                    "cbochinche", "Cacho", "Bochinche", "pass606",
+                    "cbochinche@vera.com.uy", createDate(1937, 6, 8),
+                    "bit.ly/cbochinche"
+            );
+            Cliente cliente8 = new Cliente(
+                    "Eleven11", "Eleven", "", "pass707",
+                    "Eleven11@gmail.com", createDate(1971, 12, 31),
+                    "bit.ly/11Eleven11"
+            );
 
-private void Cargar_Perfiles() {
-    try {
-        // Artistas
-        Artista artista1 = new Artista(
-                "vpeople", "Village", "People", "pass123",
-                createDate(1980, 7, 14), "vpeople@tuta.io",
-                "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.",
-                "www.officialvillagepeople.com",
-                "bit.ly/vpeople"
-        );
-        Artista artista2 = new Artista(
-                "dmode", "Depeche", "Mode", "pass456",
-                createDate(1980, 7, 14), "dmode@tuta.io",
-                "",
-                "www.depechemode.com",
-                "bit.ly/depecheMode"
-        );
-        Artista artista3 = new Artista(
-                "clauper", "Cyndi", "Lauper", "pass789",
-                createDate(1953, 6, 22), "clauper@hotmail.com",
-                "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participar en el grupo musical Blue Angel, en 1983 firmó con Portrait Records y lanzó su exitoso álbum debut *She's So Unusual* a finales de ese mismo año.",
-                "cyndilauper.com",
-                "bit.ly/cLauper"
-        );
-        Artista artista4 = new Artista(
-                "bruceTheBoss", "Bruce", "Springsteen", "pass101",
-                createDate(1949, 10, 23), "bruceTheBoss@gmail.com",
-                "",
-                "brucespringsteen.net",
-                "bit.ly/bruceTheBoss"
-        );
-        Artista artista5 = new Artista(
-                "tripleNelson", "La Triple", "Nelson", "pass202",
-                createDate(1998, 1, 1), "tripleNelson@tuta.io",
-                "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998.",
-                "", // No tiene página web
-                "bit.ly/tripleNelson"
-        );
-        Artista artista6 = new Artista(
-                "la_ley", "La", "Ley", "pass303",
-                createDate(1987, 3, 14), "la_ley@tuta.io",
-                "", "", // No hay biografía ni sitio web provisto
-                "bit.ly/laLey"
-        );
-        Artista artista7 = new Artista(
-                "tigerOfWales", "Tom", "Jones", "pass404",
-                createDate(1940, 6, 7), "tigerOfWales@tuta.io",
-                "Sir Thomas John, conocido por su nombre artístico de Tom Jones, es un cantante británico. Ha vendido más de 100 millones de discos en todo el mundo.",
-                "www.tomjones.com",
-                "bit.ly/tigerOfWales"
-        );
-        Artista artista8 = new Artista(
-                "chaiko", "Piotr", "Tchaikovsky", "pass505",
-                createDate(1840, 5, 25), "chaiko@tuta.io",
-                "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo.",
-                "", // No tiene página web
-                "" // No tiene imagen provista
-        );
-        Artista artista9 = new Artista(
-                "nicoleneu", "Nicole", "Neumann", "pass606",
-                createDate(1980, 11, 31), "nicoleneu@hotmail.com",
-                "", // No hay biografía provista
-                "", // No tiene página web
-                "bit.ly/nicoleneu"
-        );
-        Artista artista10 = new Artista(
-                "lospimpi", "Pimpinela", "", "pass707",
-                createDate(1981, 9, 13), "lospimpi@gmail.com",
-                "",
-                "www.pimpinela.net",
-                "bit.ly/losPimpinela"
-        );
-        Artista artista11 = new Artista(
-                "dyangounchained", "Dyango", "", "pass808",
-                createDate(1940, 4, 5), "dyangounchained@gmail.com",
-                "José Gómez Romero, conocido artísticamente como Dyango, es un cantante español de música romántica.",
-                "", // No tiene página web
-                "" // No tiene imagen provista
-        );
-        Artista artista12 = new Artista(
-                "alcides", "Alcides", "", "pass909",
-                createDate(1952, 8, 17), "alcides@tuta.io",
-                "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano.",
-                "", // No tiene página web
-                "" // No tiene imagen provista
-        );
+            // Agregar Artistas
+            controlpersis.AddArtista(artista1);
+            controlpersis.AddArtista(artista2);
+            controlpersis.AddArtista(artista3);
+            controlpersis.AddArtista(artista4);
+            controlpersis.AddArtista(artista5);
+            controlpersis.AddArtista(artista6);
+            controlpersis.AddArtista(artista7);
+            controlpersis.AddArtista(artista8);
+            controlpersis.AddArtista(artista9);
+            controlpersis.AddArtista(artista10);
+            controlpersis.AddArtista(artista11);
+            controlpersis.AddArtista(artista12);
 
-        // Clientes con imágenes
-        Cliente cliente1 = new Cliente(
-                "cel_padrino", "Vito", "Corleone", "pass789",
-                "el_padrino@tuta.io", createDate(1972, 4, 8),
-                "bit.ly/vitoCorleone"
-        );
-        Cliente cliente2 = new Cliente(
-                "scarlettO", "Scarlett", "O’Hara", "pass101",
-                "scarlettO@tuta.io", createDate(1984, 12, 27),
-                "bit.ly/scarlettO"
-        );
-        Cliente cliente3 = new Cliente(
-                "ppArgento", "Pepe", "Argento", "pass202",
-                "ppArgento@hotmail.com", createDate(1955, 3, 14),
-                "bit.ly/ppArgento"
-        );
-        Cliente cliente4 = new Cliente(
-                "Heisenberg", "Walter", "White", "pass303",
-                "Heisenberg@tuta.io", createDate(1956, 4, 7),
-                "bit.ly/heisenbergWW"
-        );
-        Cliente cliente5 = new Cliente(
-                "benKenobi", "Obi-Wan", "Kenobi", "pass404",
-                "benKenobi@gmail.com", createDate(1914, 5, 2),
-                "bit.ly/benKenobi"
-        );
-        Cliente cliente6 = new Cliente(
-                "lachiqui", "Mirtha", "Legrand", "pass505",
-                "lachiqui@hotmail.com.ar", createDate(1927, 3, 23),
-                "bit.ly/laChiqui"
-        );
-        Cliente cliente7 = new Cliente(
-                "cbochinche", "Cacho", "Bochinche", "pass606",
-                "cbochinche@vera.com.uy", createDate(1937, 6, 8),
-                "bit.ly/cbochinche"
-        );
-        Cliente cliente8 = new Cliente(
-                "Eleven11", "Eleven", "", "pass707",
-                "Eleven11@gmail.com", createDate(1971, 12, 31),
-                "bit.ly/11Eleven11"
-        );
+            // Agregar Clientes
+            controlpersis.AddCliente(cliente1);
+            controlpersis.AddCliente(cliente2);
+            controlpersis.AddCliente(cliente3);
+            controlpersis.AddCliente(cliente4);
+            controlpersis.AddCliente(cliente5);
+            controlpersis.AddCliente(cliente6);
+            controlpersis.AddCliente(cliente7);
+            controlpersis.AddCliente(cliente8);
 
-        // Agregar Artistas
-        controlpersis.AddArtista(artista1);
-        controlpersis.AddArtista(artista2);
-        controlpersis.AddArtista(artista3);
-        controlpersis.AddArtista(artista4);
-        controlpersis.AddArtista(artista5);
-        controlpersis.AddArtista(artista6);
-        controlpersis.AddArtista(artista7);
-        controlpersis.AddArtista(artista8);
-        controlpersis.AddArtista(artista9);
-        controlpersis.AddArtista(artista10);
-        controlpersis.AddArtista(artista11);
-        controlpersis.AddArtista(artista12);
-
-        // Agregar Clientes
-        controlpersis.AddCliente(cliente1);
-        controlpersis.AddCliente(cliente2);
-        controlpersis.AddCliente(cliente3);
-        controlpersis.AddCliente(cliente4);
-        controlpersis.AddCliente(cliente5);
-        controlpersis.AddCliente(cliente6);
-        controlpersis.AddCliente(cliente7);
-        controlpersis.AddCliente(cliente8);
-
-        System.out.println("Perfiles cargados correctamente con biografías, sitios web e imágenes.");
-    } catch (Exception e) {
-        e.printStackTrace();
+            System.out.println("Perfiles cargados correctamente con biografías, sitios web e imágenes.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
-
 
     private void Cargar_Generos() throws Exception {
         CrearGenero("Rock", "");
@@ -1614,680 +1613,677 @@ private void Cargar_Perfiles() {
 
     private void ListaGeneral1() throws Exception {
 //LISTA 1 GENERAL
-          Artista artista1 = controlpersis.findArtistaByCorreo("vpeople@tuta.io");
-    Artista artista2 = controlpersis.findArtistaByCorreo("clauper@hotmail.com");
-    Artista artista3 = controlpersis.findArtistaByCorreo("bruceTheBoss@gmail.com");
-    Artista artista4 = controlpersis.findArtistaByCorreo("tigerOfWales@tuta.io");
+        Artista artista1 = controlpersis.findArtistaByCorreo("vpeople@tuta.io");
+        Artista artista2 = controlpersis.findArtistaByCorreo("clauper@hotmail.com");
+        Artista artista3 = controlpersis.findArtistaByCorreo("bruceTheBoss@gmail.com");
+        Artista artista4 = controlpersis.findArtistaByCorreo("tigerOfWales@tuta.io");
 
-    // Buscar álbumes en los artistas
-    Album album1 = artista1.buscarAlbumPorNombre("Live and Sleazy");
-    Album album2 = artista2.buscarAlbumPorNombre("She’s So Unusual");
-    Album album3 = artista3.buscarAlbumPorNombre("Born In The U.S.A.");
-    Album album4 = artista4.buscarAlbumPorNombre("It’s Not Unusual");
+        // Buscar álbumes en los artistas
+        Album album1 = artista1.buscarAlbumPorNombre("Live and Sleazy");
+        Album album2 = artista2.buscarAlbumPorNombre("She’s So Unusual");
+        Album album3 = artista3.buscarAlbumPorNombre("Born In The U.S.A.");
+        Album album4 = artista4.buscarAlbumPorNombre("It’s Not Unusual");
 
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema tema1 = album1.buscarTemaPorNombre("YMCA");
-    Tema tema2 = album1.buscarTemaPorNombre("Macho Man");
-    Tema tema3 = album1.buscarTemaPorNombre("In the Navy");
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema tema1 = album1.buscarTemaPorNombre("YMCA");
+        Tema tema2 = album1.buscarTemaPorNombre("Macho Man");
+        Tema tema3 = album1.buscarTemaPorNombre("In the Navy");
 
-    Tema tema4 = album2.buscarTemaPorNombre("Girls Just Want To Have Fun");
-    Tema tema5 = album2.buscarTemaPorNombre("Time After Time");
+        Tema tema4 = album2.buscarTemaPorNombre("Girls Just Want To Have Fun");
+        Tema tema5 = album2.buscarTemaPorNombre("Time After Time");
 
-    Tema tema6 = album3.buscarTemaPorNombre("Born In The U.S.A.");
-    Tema tema7 = album3.buscarTemaPorNombre("Glory Days");
-    Tema tema8 = album3.buscarTemaPorNombre("Dancing In The Dark");
+        Tema tema6 = album3.buscarTemaPorNombre("Born In The U.S.A.");
+        Tema tema7 = album3.buscarTemaPorNombre("Glory Days");
+        Tema tema8 = album3.buscarTemaPorNombre("Dancing In The Dark");
 
-    Tema tema9 = album4.buscarTemaPorNombre("It’s Not Unusual");
+        Tema tema9 = album4.buscarTemaPorNombre("It’s Not Unusual");
 
-    // Crear la lista de reproducción "Noche De La Nostalgia" y añadir los temas
-    ListaRepGeneral listaRep = new ListaRepGeneral("Noche De La Nostalgia", "bit.ly/laNocheNostalgia",buscarGeneroPorNombre("Pop Clásico"));
+        // Crear la lista de reproducción "Noche De La Nostalgia" y añadir los temas
+        ListaRepGeneral listaRep = new ListaRepGeneral("Noche De La Nostalgia", "bit.ly/laNocheNostalgia", buscarGeneroPorNombre("Pop Clásico"));
 
-    listaRep.getListaTemas().add(tema1);
-    listaRep.getListaTemas().add(tema2);
-    listaRep.getListaTemas().add(tema3);
-    listaRep.getListaTemas().add(tema4);
-    listaRep.getListaTemas().add(tema5);
-    listaRep.getListaTemas().add(tema6);
-    listaRep.getListaTemas().add(tema7);
-    listaRep.getListaTemas().add(tema8);
-    listaRep.getListaTemas().add(tema9);
+        listaRep.getListaTemas().add(tema1);
+        listaRep.getListaTemas().add(tema2);
+        listaRep.getListaTemas().add(tema3);
+        listaRep.getListaTemas().add(tema4);
+        listaRep.getListaTemas().add(tema5);
+        listaRep.getListaTemas().add(tema6);
+        listaRep.getListaTemas().add(tema7);
+        listaRep.getListaTemas().add(tema8);
+        listaRep.getListaTemas().add(tema9);
 
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRep);
-  
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRep);
 
-}
-    
-public void ListaGeneral2() throws Exception {
-    // Obtener artistas de la base de datos (suponiendo que tienes un método para esto)
-    Artista artista1 = controlpersis.findArtistaByCorreo("tripleNelson@tuta.io");
-    Artista artista2 = controlpersis.findArtistaByCorreo("la_ley@tuta.io");
-
-    // Buscar álbumes en los artistas
-    Album album1 = artista1.buscarAlbumPorNombre("Agua Y Sal");
-    Album album2 = artista2.buscarAlbumPorNombre("MTV Unplugged");
-
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema tema1 = album1.buscarTemaPorNombre("Adagio De Mi País");
-    Tema tema2 = album2.buscarTemaPorNombre("El Duelo");
-    Tema tema3 = album2.buscarTemaPorNombre("Mentira");
-
-    // Crear la lista de reproducción "Rock En Español" y añadir los temas
-    ListaRepGeneral listaRep = new ListaRepGeneral("Rock En Español", "bit.ly/rockEnEspañol",buscarGeneroPorNombre("Rock Latino"));
-
-    // Inicializar la lista de temas si es necesario
-    if (listaRep.getListaTemas() == null) {
-        listaRep.setListaTemas(new ArrayList<>());
     }
 
-    listaRep.getListaTemas().add(tema1);
-    listaRep.getListaTemas().add(tema2);
-    listaRep.getListaTemas().add(tema3);
+    public void ListaGeneral2() throws Exception {
+        // Obtener artistas de la base de datos (suponiendo que tienes un método para esto)
+        Artista artista1 = controlpersis.findArtistaByCorreo("tripleNelson@tuta.io");
+        Artista artista2 = controlpersis.findArtistaByCorreo("la_ley@tuta.io");
 
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRep);
-}
-public void ListaGeneral3() throws Exception {
-    // Obtener el artista de la base de datos
-    Artista artista = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
+        // Buscar álbumes en los artistas
+        Album album1 = artista1.buscarAlbumPorNombre("Agua Y Sal");
+        Album album2 = artista2.buscarAlbumPorNombre("MTV Unplugged");
 
-    // Buscar álbumes en el artista
-    Album album1 = artista.buscarAlbumPorNombre("El Lago De Los Cisnes");
-    Album album2 = artista.buscarAlbumPorNombre("Concierto Para Piano No. 1");
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema tema1 = album1.buscarTemaPorNombre("Adagio De Mi País");
+        Tema tema2 = album2.buscarTemaPorNombre("El Duelo");
+        Tema tema3 = album2.buscarTemaPorNombre("Mentira");
 
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema tema1 = album1.buscarTemaPorNombre("Acto 2, Número 10, Escena (Moderato)");
-    Tema tema2 = album2.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+        // Crear la lista de reproducción "Rock En Español" y añadir los temas
+        ListaRepGeneral listaRep = new ListaRepGeneral("Rock En Español", "bit.ly/rockEnEspañol", buscarGeneroPorNombre("Rock Latino"));
 
-    // Crear la lista de reproducción "Música Clásica" y añadir los temas
-    ListaRepGeneral listaRep = new ListaRepGeneral("Música Clásica", "bit.ly/musicaCla",buscarGeneroPorNombre("Clásica"));
+        // Inicializar la lista de temas si es necesario
+        if (listaRep.getListaTemas() == null) {
+            listaRep.setListaTemas(new ArrayList<>());
+        }
 
-    // Inicializar la lista de temas si es necesario
-    if (listaRep.getListaTemas() == null) {
-        listaRep.setListaTemas(new ArrayList<>());
+        listaRep.getListaTemas().add(tema1);
+        listaRep.getListaTemas().add(tema2);
+        listaRep.getListaTemas().add(tema3);
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRep);
     }
 
-    listaRep.getListaTemas().add(tema1);
-    listaRep.getListaTemas().add(tema2);
+    public void ListaGeneral3() throws Exception {
+        // Obtener el artista de la base de datos
+        Artista artista = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
 
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRep);
-}
+        // Buscar álbumes en el artista
+        Album album1 = artista.buscarAlbumPorNombre("El Lago De Los Cisnes");
+        Album album2 = artista.buscarAlbumPorNombre("Concierto Para Piano No. 1");
+
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema tema1 = album1.buscarTemaPorNombre("Acto 2, Número 10, Escena (Moderato)");
+        Tema tema2 = album2.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+
+        // Crear la lista de reproducción "Música Clásica" y añadir los temas
+        ListaRepGeneral listaRep = new ListaRepGeneral("Música Clásica", "bit.ly/musicaCla", buscarGeneroPorNombre("Clásica"));
+
+        // Inicializar la lista de temas si es necesario
+        if (listaRep.getListaTemas() == null) {
+            listaRep.setListaTemas(new ArrayList<>());
+        }
+
+        listaRep.getListaTemas().add(tema1);
+        listaRep.getListaTemas().add(tema2);
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRep);
+    }
 
     private void Cargar_Listas() throws Exception {
         ListaGeneral1();
         ListaGeneral2();
         ListaGeneral3();
-        
+
         ListaParticular1();
         ListaParticular2();
         ListaParticular3();
         ListaParticular4();
         ListaParticular5();
         ListaParticular6();
-        
+
     }
 
-   public void ListaParticular1() throws Exception {
-            
-    // Obtener los artistas de la base de datos
-    Artista artistaTchaikovsky = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
-    Artista artistaDMV = controlpersis.findArtistaByCorreo("dmode@tuta.io");
-    Cliente cliente = controlpersis.findClienteByCorreo("el_padrino@tuta.io");
-    // Buscar los álbumes de ambos artistas
-    Album albumTchaikovsky1 = artistaTchaikovsky.buscarAlbumPorNombre("El Lago De Los Cisnes");
-    Album albumTchaikovsky2 = artistaTchaikovsky.buscarAlbumPorNombre("Concierto Para Piano No. 1");
-    Album albumDMV = artistaDMV.buscarAlbumPorNombre("Violator");
+    public void ListaParticular1() throws Exception {
 
-    // Buscar los temas dentro de los álbumes correspondientes de Tchaikovsky
-    Tema temaTchaikovsky1 = albumTchaikovsky1.buscarTemaPorNombre("Acto 2, Número 10, Escena (Moderato)");
-    Tema temaTchaikovsky2 = albumTchaikovsky2.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+        // Obtener los artistas de la base de datos
+        Artista artistaTchaikovsky = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
+        Artista artistaDMV = controlpersis.findArtistaByCorreo("dmode@tuta.io");
+        Cliente cliente = controlpersis.findClienteByCorreo("el_padrino@tuta.io");
+        // Buscar los álbumes de ambos artistas
+        Album albumTchaikovsky1 = artistaTchaikovsky.buscarAlbumPorNombre("El Lago De Los Cisnes");
+        Album albumTchaikovsky2 = artistaTchaikovsky.buscarAlbumPorNombre("Concierto Para Piano No. 1");
+        Album albumDMV = artistaDMV.buscarAlbumPorNombre("Violator");
 
-    // Buscar los temas dentro del álbum "Violator" de Depeche Mode
-    Tema temaDMV1 = albumDMV.buscarTemaPorNombre("Personal Jesus");
+        // Buscar los temas dentro de los álbumes correspondientes de Tchaikovsky
+        Tema temaTchaikovsky1 = albumTchaikovsky1.buscarTemaPorNombre("Acto 2, Número 10, Escena (Moderato)");
+        Tema temaTchaikovsky2 = albumTchaikovsky2.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
 
-    // Crear o buscar la lista de reproducción particular "Para Cocinar" (WW - Walter White)
-    ListaRepParticular listaRepParticular = new ListaRepParticular("Música Inspiradora", "bit.ly/musicInspi", false);
+        // Buscar los temas dentro del álbum "Violator" de Depeche Mode
+        Tema temaDMV1 = albumDMV.buscarTemaPorNombre("Personal Jesus");
 
-    // Inicializar la lista de temas si es necesario
-    if (listaRepParticular.getListaTemas() == null) {
-        listaRepParticular.setListaTemas(new ArrayList<>());
-    }
+        // Crear o buscar la lista de reproducción particular "Para Cocinar" (WW - Walter White)
+        ListaRepParticular listaRepParticular = new ListaRepParticular("Música Inspiradora", "bit.ly/musicInspi", false);
 
-    // Agregar los temas de Tchaikovsky a la lista
-    listaRepParticular.getListaTemas().add(temaTchaikovsky1);
-    listaRepParticular.getListaTemas().add(temaTchaikovsky2);
+        // Inicializar la lista de temas si es necesario
+        if (listaRepParticular.getListaTemas() == null) {
+            listaRepParticular.setListaTemas(new ArrayList<>());
+        }
 
-    // Agregar los temas de Depeche Mode a la lista
-    listaRepParticular.getListaTemas().add(temaDMV1);
-    
-    
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRepParticular);
-    
-    cliente.getListaReproduccion().add(listaRepParticular);
-    controlpersis.editCliente(cliente);
-}
-public void ListaParticular2() throws Exception {
-    // Obtener el artista y el cliente de la base de datos
-    Artista artistaClauper = controlpersis.findArtistaByCorreo("clauper@hotmail.com");
-    Artista artistaChaiko = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
-    Cliente clienteScarlett = controlpersis.findClienteByCorreo("scarlettO@tuta.io");
+        // Agregar los temas de Tchaikovsky a la lista
+        listaRepParticular.getListaTemas().add(temaTchaikovsky1);
+        listaRepParticular.getListaTemas().add(temaTchaikovsky2);
 
-    // Buscar los álbumes en los artistas
-    Album albumClauper = artistaClauper.buscarAlbumPorNombre("She’s So Unusual");
-    Album albumChaiko = artistaChaiko.buscarAlbumPorNombre("El Lago De Los Cisnes");
+        // Agregar los temas de Depeche Mode a la lista
+        listaRepParticular.getListaTemas().add(temaDMV1);
 
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema tema1 = albumClauper.buscarTemaPorNombre("Girls Just Want To Have Fun");
-    Tema tema2 = albumClauper.buscarTemaPorNombre("Time After Time");
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRepParticular);
 
-    Tema tema3 = albumChaiko.buscarTemaPorNombre("Acto 2, Número 10, Escena (Moderato)");
-
-    // Buscar el tema "It’s Not Unusual" en el álbum "It’s Not Unusual" del artista tigerOfWales@tuta.io
-    Artista artistaTiger = controlpersis.findArtistaByCorreo("tigerOfWales@tuta.io");
-    Album albumTiger = artistaTiger.buscarAlbumPorNombre("It’s Not Unusual");
-    Tema tema4 = albumTiger.buscarTemaPorNombre("It’s Not Unusual");
-
-    // Crear la lista de reproducción particular "De Todo Un Poco" y añadir los temas
-    ListaRepParticular listaRepParticular = new ListaRepParticular("De Todo Un Poco", "bit.ly/deTodoUnPoco", false);
-
-    // Inicializar la lista de temas si es necesario
-    if (listaRepParticular.getListaTemas() == null) {
-        listaRepParticular.setListaTemas(new ArrayList<>());
-    }
-
-    listaRepParticular.getListaTemas().add(tema1);
-    listaRepParticular.getListaTemas().add(tema2);
-    listaRepParticular.getListaTemas().add(tema3);
-    listaRepParticular.getListaTemas().add(tema4);
-
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRepParticular);
-
-    // Asignar la lista de reproducción al cliente
-    clienteScarlett.getListaReproduccion().add(listaRepParticular);
-    controlpersis.editCliente(clienteScarlett);
-}
-
-public void ListaParticular3() throws Exception {
-    // Obtener los artistas de la base de datos
-    Artista artistaDM = controlpersis.findArtistaByCorreo("dmode@tuta.io");
-    Artista artistaBruce = controlpersis.findArtistaByCorreo("bruceTheBoss@gmail.com");
-    Cliente cliente = controlpersis.findClienteByCorreo("Heisenberg@tuta.io");
-
-    // Buscar los álbumes de los artistas
-    Album albumDM = artistaDM.buscarAlbumPorNombre("Violator");
-    Album albumBruce = artistaBruce.buscarAlbumPorNombre("Born In The U.S.A.");
-
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema temaDM1 = albumDM.buscarTemaPorNombre("Personal Jesus");
-    Tema temaDM2 = albumDM.buscarTemaPorNombre("Enjoy The Silence");
-    Tema temaBruce = albumBruce.buscarTemaPorNombre("Born In The U.S.A.");
-    Tema temaBruce2 = albumBruce.buscarTemaPorNombre("Glory Days");
-    // Crear la lista de reproducción particular "Para Cocinar"
-    ListaRepParticular listaRepParticular = new ListaRepParticular("Para Cocinar", "bit.ly/ParaCocinar", true);
-
-    // Inicializar la lista de temas si es necesario
-    if (listaRepParticular.getListaTemas() == null) {
-        listaRepParticular.setListaTemas(new ArrayList<>());
-    }
-
-    // Agregar los temas a la lista
-    listaRepParticular.getListaTemas().add(temaDM1);
-    listaRepParticular.getListaTemas().add(temaDM2);
-    listaRepParticular.getListaTemas().add(temaBruce);
-    listaRepParticular.getListaTemas().add(temaBruce2);
-
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRepParticular);
-
-    // Agregar la lista al cliente
-    cliente.getListaReproduccion().add(listaRepParticular);
-    controlpersis.editCliente(cliente);
-}
-public void ListaParticular4() throws Exception {
-    // Obtener los artistas de la base de datos
-    Artista artistaClauper = controlpersis.findArtistaByCorreo("clauper@hotmail.com");
-    Artista artistaTchaikovsky = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
-    Artista artistaNicole = controlpersis.findArtistaByCorreo("nicoleneu@hotmail.com");
-    Artista artistaDyang = controlpersis.findArtistaByCorreo("dyangounchained@gmail.com");
-   Artista artistatiger = controlpersis.findArtistaByCorreo("tigerOfWales@tuta.io") ;
-
-    // Buscar los álbumes de los artistas
-    Album albumSheSoUnusual = artistaClauper.buscarAlbumPorNombre("She’s So Unusual");
-    Album albumConciertoPiano = artistaTchaikovsky.buscarAlbumPorNombre("Concierto Para Piano No. 1");
-    Album albumPrimerAmor = artistaNicole.buscarAlbumPorNombre("Primer Amor");
-    Album albumUnLocoComoYo = artistaDyang.buscarAlbumPorNombre("Un Loco Como Yo");
-    Album albumits = artistatiger.buscarAlbumPorNombre("It’s Not Unusual");
-
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema temaGirlsJustWant = albumSheSoUnusual.buscarTemaPorNombre("Girls Just Want To Have Fun");
-    Tema temaPrimerMovimiento = albumConciertoPiano.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
-    Tema temaNoQuieroEstudiar = albumPrimerAmor.buscarTemaPorNombre("No Quiero Estudiar");
-    Tema temaPorEseHombre = albumUnLocoComoYo.buscarTemaPorNombre("Por Ese Hombre");
-
-    // Crear la lista de reproducción particular "Para Las Chicas" y añadir los temas
-    ListaRepParticular listaRepParticular = new ListaRepParticular("Para Las Chicas", "bit.ly/ParaLasChicas", false);
-
-    // Inicializar la lista de temas si es necesario
-    if (listaRepParticular.getListaTemas() == null) {
-        listaRepParticular.setListaTemas(new ArrayList<>());
-    }
-
-    // Agregar los temas a la lista
-    listaRepParticular.getListaTemas().add(temaGirlsJustWant);
-    listaRepParticular.getListaTemas().add(temaPrimerMovimiento);
-    listaRepParticular.getListaTemas().add(temaNoQuieroEstudiar);
-    listaRepParticular.getListaTemas().add(temaPorEseHombre);
-
-    // Crear el cliente y asignar la lista (si no existe)
-    Cliente cliente = controlpersis.findClienteByCorreo("lachiqui@hotmail.com.ar");
-    if (cliente != null) {
         cliente.getListaReproduccion().add(listaRepParticular);
         controlpersis.editCliente(cliente);
     }
 
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRepParticular);
-}
+    public void ListaParticular2() throws Exception {
+        // Obtener el artista y el cliente de la base de datos
+        Artista artistaClauper = controlpersis.findArtistaByCorreo("clauper@hotmail.com");
+        Artista artistaChaiko = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
+        Cliente clienteScarlett = controlpersis.findClienteByCorreo("scarlettO@tuta.io");
 
-public void ListaParticular5() throws Exception {
-    // Obtener los artistas de la base de datos
-    Artista artistaVpeople = controlpersis.findArtistaByCorreo("vpeople@tuta.io");
-    Artista artistaBruce = controlpersis.findArtistaByCorreo("bruceTheBoss@gmail.com");
-    Artista artistaAlcides = controlpersis.findArtistaByCorreo("alcides@tuta.io");
+        // Buscar los álbumes en los artistas
+        Album albumClauper = artistaClauper.buscarAlbumPorNombre("She’s So Unusual");
+        Album albumChaiko = artistaChaiko.buscarAlbumPorNombre("El Lago De Los Cisnes");
 
-    // Buscar los álbumes de los artistas
-    Album albumLiveAndSleazy = artistaVpeople.buscarAlbumPorNombre("Live and Sleazy");
-    Album albumBornInUSA = artistaBruce.buscarAlbumPorNombre("Born In The U.S.A.");
-    Album album20GrandesExitos = artistaAlcides.buscarAlbumPorNombre("20 Grandes Éxitos");
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema tema1 = albumClauper.buscarTemaPorNombre("Girls Just Want To Have Fun");
+        Tema tema2 = albumClauper.buscarTemaPorNombre("Time After Time");
 
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema temaYMCA = albumLiveAndSleazy.buscarTemaPorNombre("YMCA");
-    Tema temaMachoMan = albumLiveAndSleazy.buscarTemaPorNombre("Macho Man");
-    Tema temaInTheNavy = albumLiveAndSleazy.buscarTemaPorNombre("In the Navy");
-    Tema temaGloryDays = albumBornInUSA.buscarTemaPorNombre("Glory Days");
-    Tema temaVioleta = album20GrandesExitos.buscarTemaPorNombre("Violeta");
+        Tema tema3 = albumChaiko.buscarTemaPorNombre("Acto 2, Número 10, Escena (Moderato)");
 
-    // Crear la lista de reproducción particular "Fiesteras" y añadir los temas
-    ListaRepParticular listaRepParticular = new ListaRepParticular("Fiesteras", "bit.ly/fiestaFiesta ", false);
+        // Buscar el tema "It’s Not Unusual" en el álbum "It’s Not Unusual" del artista tigerOfWales@tuta.io
+        Artista artistaTiger = controlpersis.findArtistaByCorreo("tigerOfWales@tuta.io");
+        Album albumTiger = artistaTiger.buscarAlbumPorNombre("It’s Not Unusual");
+        Tema tema4 = albumTiger.buscarTemaPorNombre("It’s Not Unusual");
 
-    // Inicializar la lista de temas si es necesario
-    if (listaRepParticular.getListaTemas() == null) {
-        listaRepParticular.setListaTemas(new ArrayList<>());
+        // Crear la lista de reproducción particular "De Todo Un Poco" y añadir los temas
+        ListaRepParticular listaRepParticular = new ListaRepParticular("De Todo Un Poco", "bit.ly/deTodoUnPoco", false);
+
+        // Inicializar la lista de temas si es necesario
+        if (listaRepParticular.getListaTemas() == null) {
+            listaRepParticular.setListaTemas(new ArrayList<>());
+        }
+
+        listaRepParticular.getListaTemas().add(tema1);
+        listaRepParticular.getListaTemas().add(tema2);
+        listaRepParticular.getListaTemas().add(tema3);
+        listaRepParticular.getListaTemas().add(tema4);
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRepParticular);
+
+        // Asignar la lista de reproducción al cliente
+        clienteScarlett.getListaReproduccion().add(listaRepParticular);
+        controlpersis.editCliente(clienteScarlett);
     }
 
-    // Agregar los temas a la lista
-    listaRepParticular.getListaTemas().add(temaYMCA);
-    listaRepParticular.getListaTemas().add(temaMachoMan);
-    listaRepParticular.getListaTemas().add(temaInTheNavy);
-    listaRepParticular.getListaTemas().add(temaGloryDays);
-    listaRepParticular.getListaTemas().add(temaVioleta);
+    public void ListaParticular3() throws Exception {
+        // Obtener los artistas de la base de datos
+        Artista artistaDM = controlpersis.findArtistaByCorreo("dmode@tuta.io");
+        Artista artistaBruce = controlpersis.findArtistaByCorreo("bruceTheBoss@gmail.com");
+        Cliente cliente = controlpersis.findClienteByCorreo("Heisenberg@tuta.io");
 
-    // Crear el cliente y asignar la lista (si no existe)
-    Cliente cliente = controlpersis.findClienteByCorreo("cbochinche@vera.com.uy");
-    if (cliente != null) {
+        // Buscar los álbumes de los artistas
+        Album albumDM = artistaDM.buscarAlbumPorNombre("Violator");
+        Album albumBruce = artistaBruce.buscarAlbumPorNombre("Born In The U.S.A.");
+
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema temaDM1 = albumDM.buscarTemaPorNombre("Personal Jesus");
+        Tema temaDM2 = albumDM.buscarTemaPorNombre("Enjoy The Silence");
+        Tema temaBruce = albumBruce.buscarTemaPorNombre("Born In The U.S.A.");
+        Tema temaBruce2 = albumBruce.buscarTemaPorNombre("Glory Days");
+        // Crear la lista de reproducción particular "Para Cocinar"
+        ListaRepParticular listaRepParticular = new ListaRepParticular("Para Cocinar", "bit.ly/ParaCocinar", true);
+
+        // Inicializar la lista de temas si es necesario
+        if (listaRepParticular.getListaTemas() == null) {
+            listaRepParticular.setListaTemas(new ArrayList<>());
+        }
+
+        // Agregar los temas a la lista
+        listaRepParticular.getListaTemas().add(temaDM1);
+        listaRepParticular.getListaTemas().add(temaDM2);
+        listaRepParticular.getListaTemas().add(temaBruce);
+        listaRepParticular.getListaTemas().add(temaBruce2);
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRepParticular);
+
+        // Agregar la lista al cliente
         cliente.getListaReproduccion().add(listaRepParticular);
         controlpersis.editCliente(cliente);
     }
 
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRepParticular);
-}
-public void ListaParticular6() throws Exception {
-    // Obtener los artistas de la base de datos
-    Artista artistaTripleNelson = controlpersis.findArtistaByCorreo("tripleNelson@tuta.io");
-    Artista artistaChaiko = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
-    Artista artistaLospimpi = controlpersis.findArtistaByCorreo("lospimpi@gmail.com");
+    public void ListaParticular4() throws Exception {
+        // Obtener los artistas de la base de datos
+        Artista artistaClauper = controlpersis.findArtistaByCorreo("clauper@hotmail.com");
+        Artista artistaTchaikovsky = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
+        Artista artistaNicole = controlpersis.findArtistaByCorreo("nicoleneu@hotmail.com");
+        Artista artistaDyang = controlpersis.findArtistaByCorreo("dyangounchained@gmail.com");
+        Artista artistatiger = controlpersis.findArtistaByCorreo("tigerOfWales@tuta.io");
 
-    // Buscar los álbumes de los artistas
-    Album albumAguaYSala = artistaTripleNelson.buscarAlbumPorNombre("Agua Y Sal");
-    Album albumConciertoPiano = artistaChaiko.buscarAlbumPorNombre("Concierto Para Piano No. 1");
-    Album albumHayAmoresQueMatan = artistaLospimpi.buscarAlbumPorNombre("Hay Amores Que Matan");
+        // Buscar los álbumes de los artistas
+        Album albumSheSoUnusual = artistaClauper.buscarAlbumPorNombre("She’s So Unusual");
+        Album albumConciertoPiano = artistaTchaikovsky.buscarAlbumPorNombre("Concierto Para Piano No. 1");
+        Album albumPrimerAmor = artistaNicole.buscarAlbumPorNombre("Primer Amor");
+        Album albumUnLocoComoYo = artistaDyang.buscarAlbumPorNombre("Un Loco Como Yo");
+        Album albumits = artistatiger.buscarAlbumPorNombre("It’s Not Unusual");
 
-    // Buscar los temas dentro de los álbumes correspondientes
-    Tema temaAdagioDeMiPais = albumAguaYSala.buscarTemaPorNombre("Adagio De Mi País");
-    Tema temaPrimerMovimiento = albumConciertoPiano.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
-    Tema temaPorEseHombre = albumHayAmoresQueMatan.buscarTemaPorNombre("Por Ese Hombre");
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema temaGirlsJustWant = albumSheSoUnusual.buscarTemaPorNombre("Girls Just Want To Have Fun");
+        Tema temaPrimerMovimiento = albumConciertoPiano.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+        Tema temaNoQuieroEstudiar = albumPrimerAmor.buscarTemaPorNombre("No Quiero Estudiar");
+        Tema temaPorEseHombre = albumUnLocoComoYo.buscarTemaPorNombre("Por Ese Hombre");
 
-    // Crear la lista de reproducción particular "Mis Favoritas" y añadir los temas
-    ListaRepParticular listaRepParticular = new ListaRepParticular("Mis Favoritas", "bit.ly/misFavoritas", true);
+        // Crear la lista de reproducción particular "Para Las Chicas" y añadir los temas
+        ListaRepParticular listaRepParticular = new ListaRepParticular("Para Las Chicas", "bit.ly/ParaLasChicas", false);
 
-    // Inicializar la lista de temas si es necesario
-    if (listaRepParticular.getListaTemas() == null) {
-        listaRepParticular.setListaTemas(new ArrayList<>());
+        // Inicializar la lista de temas si es necesario
+        if (listaRepParticular.getListaTemas() == null) {
+            listaRepParticular.setListaTemas(new ArrayList<>());
+        }
+
+        // Agregar los temas a la lista
+        listaRepParticular.getListaTemas().add(temaGirlsJustWant);
+        listaRepParticular.getListaTemas().add(temaPrimerMovimiento);
+        listaRepParticular.getListaTemas().add(temaNoQuieroEstudiar);
+        listaRepParticular.getListaTemas().add(temaPorEseHombre);
+
+        // Crear el cliente y asignar la lista (si no existe)
+        Cliente cliente = controlpersis.findClienteByCorreo("lachiqui@hotmail.com.ar");
+        if (cliente != null) {
+            cliente.getListaReproduccion().add(listaRepParticular);
+            controlpersis.editCliente(cliente);
+        }
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRepParticular);
     }
 
-    // Agregar los temas a la lista
-    listaRepParticular.getListaTemas().add(temaAdagioDeMiPais);
-    listaRepParticular.getListaTemas().add(temaPrimerMovimiento);
-    listaRepParticular.getListaTemas().add(temaPorEseHombre);
+    public void ListaParticular5() throws Exception {
+        // Obtener los artistas de la base de datos
+        Artista artistaVpeople = controlpersis.findArtistaByCorreo("vpeople@tuta.io");
+        Artista artistaBruce = controlpersis.findArtistaByCorreo("bruceTheBoss@gmail.com");
+        Artista artistaAlcides = controlpersis.findArtistaByCorreo("alcides@tuta.io");
 
-    // Crear el cliente y asignar la lista (si no existe)
-    Cliente cliente = controlpersis.findClienteByCorreo("cbochinche@vera.com.uy");
-    if (cliente != null) {
-        cliente.getListaReproduccion().add(listaRepParticular);
-        controlpersis.editCliente(cliente);
+        // Buscar los álbumes de los artistas
+        Album albumLiveAndSleazy = artistaVpeople.buscarAlbumPorNombre("Live and Sleazy");
+        Album albumBornInUSA = artistaBruce.buscarAlbumPorNombre("Born In The U.S.A.");
+        Album album20GrandesExitos = artistaAlcides.buscarAlbumPorNombre("20 Grandes Éxitos");
+
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema temaYMCA = albumLiveAndSleazy.buscarTemaPorNombre("YMCA");
+        Tema temaMachoMan = albumLiveAndSleazy.buscarTemaPorNombre("Macho Man");
+        Tema temaInTheNavy = albumLiveAndSleazy.buscarTemaPorNombre("In the Navy");
+        Tema temaGloryDays = albumBornInUSA.buscarTemaPorNombre("Glory Days");
+        Tema temaVioleta = album20GrandesExitos.buscarTemaPorNombre("Violeta");
+
+        // Crear la lista de reproducción particular "Fiesteras" y añadir los temas
+        ListaRepParticular listaRepParticular = new ListaRepParticular("Fiesteras", "bit.ly/fiestaFiesta ", false);
+
+        // Inicializar la lista de temas si es necesario
+        if (listaRepParticular.getListaTemas() == null) {
+            listaRepParticular.setListaTemas(new ArrayList<>());
+        }
+
+        // Agregar los temas a la lista
+        listaRepParticular.getListaTemas().add(temaYMCA);
+        listaRepParticular.getListaTemas().add(temaMachoMan);
+        listaRepParticular.getListaTemas().add(temaInTheNavy);
+        listaRepParticular.getListaTemas().add(temaGloryDays);
+        listaRepParticular.getListaTemas().add(temaVioleta);
+
+        // Crear el cliente y asignar la lista (si no existe)
+        Cliente cliente = controlpersis.findClienteByCorreo("cbochinche@vera.com.uy");
+        if (cliente != null) {
+            cliente.getListaReproduccion().add(listaRepParticular);
+            controlpersis.editCliente(cliente);
+        }
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRepParticular);
     }
 
-    // Guardar la lista de reproducción en la base de datos
-    controlpersis.createListaRep(listaRepParticular);
-}
+    public void ListaParticular6() throws Exception {
+        // Obtener los artistas de la base de datos
+        Artista artistaTripleNelson = controlpersis.findArtistaByCorreo("tripleNelson@tuta.io");
+        Artista artistaChaiko = controlpersis.findArtistaByCorreo("chaiko@tuta.io");
+        Artista artistaLospimpi = controlpersis.findArtistaByCorreo("lospimpi@gmail.com");
+
+        // Buscar los álbumes de los artistas
+        Album albumAguaYSala = artistaTripleNelson.buscarAlbumPorNombre("Agua Y Sal");
+        Album albumConciertoPiano = artistaChaiko.buscarAlbumPorNombre("Concierto Para Piano No. 1");
+        Album albumHayAmoresQueMatan = artistaLospimpi.buscarAlbumPorNombre("Hay Amores Que Matan");
+
+        // Buscar los temas dentro de los álbumes correspondientes
+        Tema temaAdagioDeMiPais = albumAguaYSala.buscarTemaPorNombre("Adagio De Mi País");
+        Tema temaPrimerMovimiento = albumConciertoPiano.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+        Tema temaPorEseHombre = albumHayAmoresQueMatan.buscarTemaPorNombre("Por Ese Hombre");
+
+        // Crear la lista de reproducción particular "Mis Favoritas" y añadir los temas
+        ListaRepParticular listaRepParticular = new ListaRepParticular("Mis Favoritas", "bit.ly/misFavoritas", true);
+
+        // Inicializar la lista de temas si es necesario
+        if (listaRepParticular.getListaTemas() == null) {
+            listaRepParticular.setListaTemas(new ArrayList<>());
+        }
+
+        // Agregar los temas a la lista
+        listaRepParticular.getListaTemas().add(temaAdagioDeMiPais);
+        listaRepParticular.getListaTemas().add(temaPrimerMovimiento);
+        listaRepParticular.getListaTemas().add(temaPorEseHombre);
+
+        // Crear el cliente y asignar la lista (si no existe)
+        Cliente cliente = controlpersis.findClienteByCorreo("cbochinche@vera.com.uy");
+        if (cliente != null) {
+            cliente.getListaReproduccion().add(listaRepParticular);
+            controlpersis.editCliente(cliente);
+        }
+
+        // Guardar la lista de reproducción en la base de datos
+        controlpersis.createListaRep(listaRepParticular);
+    }
 
     private void CargarFavoritos() throws Exception {
         //Cliente 1 
-        
-        try{
-      GuardarTemaFavorito("el_padrino@tuta.io", "la_ley@tuta.io", "MTV Unplugged", "El Duelo");
-      GuardarLista_Por_Defecto_Favorito("el_padrino@tuta.io", "Noche De La Nostalgia");
-      GuardarLista_Por_Defecto_Favorito("el_padrino@tuta.io", "Música Clásica");
-      GuardarAlbumFavorito("el_padrino@tuta.io", "dmode@tuta.io", "Violator");
+
+        try {
+            GuardarTemaFavorito("el_padrino@tuta.io", "la_ley@tuta.io", "MTV Unplugged", "El Duelo");
+            GuardarLista_Por_Defecto_Favorito("el_padrino@tuta.io", "Noche De La Nostalgia");
+            GuardarLista_Por_Defecto_Favorito("el_padrino@tuta.io", "Música Clásica");
+            GuardarAlbumFavorito("el_padrino@tuta.io", "dmode@tuta.io", "Violator");
             GuardarAlbumFavorito("el_padrino@tuta.io", "chaiko@tuta.io", "El Lago De Los Cisnes");
-                  GuardarAlbumFavorito("el_padrino@tuta.io", "chaiko@tuta.io", "Concierto Para Piano No. 1");
-                  
-      //Cliente 2 
-      GuardarLista_Por_Defecto_Favorito("scarlettO@tuta.io", "Música Clásica");
-      
-      //Cliente 3
-      
-              GuardarTemaFavorito("ppArgento@hotmail.com", "tripleNelson@tuta.io", "Agua Y Sal", "Adagio De Mi País");
-      GuardarLista_Por_Defecto_Favorito("ppArgento@hotmail.com", "Noche De La Nostalgia");
-      GuardarLista_Por_Defecto_Favorito("ppArgento@hotmail.com", "Rock En Español");
-      
-      //cliente 4
-      GuardarListaFavorito("Heisenberg@tuta.io", "el_padrino@tuta.io", "Música Inspiradora");
-      
-      //cliente 5
+            GuardarAlbumFavorito("el_padrino@tuta.io", "chaiko@tuta.io", "Concierto Para Piano No. 1");
+
+            //Cliente 2 
+            GuardarLista_Por_Defecto_Favorito("scarlettO@tuta.io", "Música Clásica");
+
+            //Cliente 3
+            GuardarTemaFavorito("ppArgento@hotmail.com", "tripleNelson@tuta.io", "Agua Y Sal", "Adagio De Mi País");
+            GuardarLista_Por_Defecto_Favorito("ppArgento@hotmail.com", "Noche De La Nostalgia");
+            GuardarLista_Por_Defecto_Favorito("ppArgento@hotmail.com", "Rock En Español");
+
+            //cliente 4
+            GuardarListaFavorito("Heisenberg@tuta.io", "el_padrino@tuta.io", "Música Inspiradora");
+
+            //cliente 5
             GuardarAlbumFavorito("benKenobi@gmail.com", "chaiko@tuta.io", "El Lago De Los Cisnes");
-              GuardarAlbumFavorito("benKenobi@gmail.com", "chaiko@tuta.io", "Concierto Para Piano No. 1");
-              
-              //cliente 6  VACIO
-              
-      //Cliente 7
-      GuardarTemaFavorito("cbochinche@vera.com.uy", "chaiko@tuta.io", "Concierto Para Piano No. 1", "Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
-              GuardarLista_Por_Defecto_Favorito("cbochinche@vera.com.uy", "Noche De La Nostalgia");
-      GuardarLista_Por_Defecto_Favorito("cbochinche@vera.com.uy", "Rock En Español");
-      GuardarAlbumFavorito("cbochinche@vera.com.uy", "lospimpi@gmail.com", "Hay Amores Que Matan");
-      
-      //cliente 8 
-      GuardarTemaFavorito("Eleven11@gmail.com", "nicoleneu@hotmail.com", "Primer Amor", "No Quiero Estudiar");
-        }
-       catch (Exception e) {
+            GuardarAlbumFavorito("benKenobi@gmail.com", "chaiko@tuta.io", "Concierto Para Piano No. 1");
+
+            //cliente 6  VACIO
+            //Cliente 7
+            GuardarTemaFavorito("cbochinche@vera.com.uy", "chaiko@tuta.io", "Concierto Para Piano No. 1", "Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
+            GuardarLista_Por_Defecto_Favorito("cbochinche@vera.com.uy", "Noche De La Nostalgia");
+            GuardarLista_Por_Defecto_Favorito("cbochinche@vera.com.uy", "Rock En Español");
+            GuardarAlbumFavorito("cbochinche@vera.com.uy", "lospimpi@gmail.com", "Hay Amores Que Matan");
+
+            //cliente 8 
+            GuardarTemaFavorito("Eleven11@gmail.com", "nicoleneu@hotmail.com", "Primer Amor", "No Quiero Estudiar");
+        } catch (Exception e) {
             // Lanza la excepción para que sea gestionada en un nivel superior
             throw new Exception(e.getMessage());
         }
     }
 //nuevo PUBLICAR LISTA
-    public DTCliente encontrarClientePorNickname (String nick){
-       List<Cliente> clientes = listaClientes();
-       DTCliente encontrado = new DTCliente();
-       for (Cliente c:clientes){
-           if (c.getNickname().equals(nick)){
-               encontrado = new DTCliente(c.getNickname(), c.getNombre(), c.getApellido(), c.getMail(), c.fechaNac, c.getContrasenia(), c.getImagen());
-               encontrado.setListaReproduccion(c.getListaReproduccion());// esas son las particulares
-           }
-       }
-       return encontrado;
-   }
+
+    public DTCliente encontrarClientePorNickname(String nick) {
+        List<Cliente> clientes = listaClientes();
+        DTCliente encontrado = new DTCliente();
+        for (Cliente c : clientes) {
+            if (c.getNickname().equals(nick)) {
+                encontrado = new DTCliente(c.getNickname(), c.getNombre(), c.getApellido(), c.getMail(), c.fechaNac, c.getContrasenia(), c.getImagen());
+                encontrado.setListaReproduccion(c.getListaReproduccion());// esas son las particulares
+            }
+        }
+        return encontrado;
+    }
 
     public List<DTCliente> listaClientesDT() {
         List<DTCliente> listaClientesDT = new ArrayList();
         List<Cliente> clientes = controlpersis.listaClientes();
-        for(Cliente c:clientes){
-            DTCliente pasarDT = new DTCliente (c.getNickname(), c.getNombre(), c.getApellido(), c.getMail(), c.fechaNac, c.getContrasenia(), c.getImagen());
+        for (Cliente c : clientes) {
+            DTCliente pasarDT = new DTCliente(c.getNickname(), c.getNombre(), c.getApellido(), c.getMail(), c.fechaNac, c.getContrasenia(), c.getImagen());
             pasarDT.setListaReproduccion(c.getListaReproduccion());
             listaClientesDT.add(pasarDT);
-        }        
+        }
         return listaClientesDT;
     }
-    
-    public List<String> nombreDeListasPrivadasDeCliente (String mail){//devuelve una lista con los nombres de las listas de rep privadas del cliente
-       List<String> lisPrivadas = new ArrayList();
-       Cliente client = controlpersis.encontrarCliente(mail);//busco el cliente
-       List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
-       for(ListaRep l:listasdelcliente){//para cada lista en las del cliente
-           if(l instanceof ListaRepParticular){//si la lista del momento es una instancia de lista particular
-               ListaRepParticular particular = (ListaRepParticular) l;//guardo esa lista en una particular
-               if(particular.isPrivada()==true){//si esa lista es privada
-                   lisPrivadas.add(particular.getNombre());//la sumo a la lista a retornar
-               }
-           }
-       }       
-       return lisPrivadas; 
+
+    public List<String> nombreDeListasPrivadasDeCliente(String mail) {//devuelve una lista con los nombres de las listas de rep privadas del cliente
+        List<String> lisPrivadas = new ArrayList();
+        Cliente client = controlpersis.encontrarCliente(mail);//busco el cliente
+        List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
+        for (ListaRep l : listasdelcliente) {//para cada lista en las del cliente
+            if (l instanceof ListaRepParticular) {//si la lista del momento es una instancia de lista particular
+                ListaRepParticular particular = (ListaRepParticular) l;//guardo esa lista en una particular
+                if (particular.isPrivada() == true) {//si esa lista es privada
+                    lisPrivadas.add(particular.getNombre());//la sumo a la lista a retornar
+                }
+            }
+        }
+        return lisPrivadas;
     }
-    
-    public void publicarListaPrivada(String nick, String nombreLista) throws Exception{
+
+    public void publicarListaPrivada(String nick, String nombreLista) throws Exception {
         List<Cliente> clientes = listaClientes();
         Cliente client = new Cliente();
-        for(Cliente c:clientes){//busco el cliente por nickname
-            if (c.getNickname().equals(nick)){
+        for (Cliente c : clientes) {//busco el cliente por nickname
+            if (c.getNickname().equals(nick)) {
                 client = c;
             }
         }
         //Busco la lista en sus listas
         List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
-        for(ListaRep l:listasdelcliente){
-            if(l.getNombre().equals(nombreLista)){//selecciono la lista a hacer publica
-               ListaRepParticular particular = (ListaRepParticular) l;//la casteo para hacerla publica
-               particular.setPrivada(false);//la hago publica
-               controlpersis.editListaPrivada(particular);//le mando la lista para editarla en la bd
+        for (ListaRep l : listasdelcliente) {
+            if (l.getNombre().equals(nombreLista)) {//selecciono la lista a hacer publica
+                ListaRepParticular particular = (ListaRepParticular) l;//la casteo para hacerla publica
+                particular.setPrivada(false);//la hago publica
+                controlpersis.editListaPrivada(particular);//le mando la lista para editarla en la bd
             }
         }
     }
 
-public List<String> ListaAlbumesParaArtista(String correoArtista) throws Exception {
-    // Obtener el artista por correo
-    Artista artista = buscarArtistaPorCorreo(correoArtista); // Debes implementar este método para buscar al artista
+    public List<String> ListaAlbumesParaArtista(String correoArtista) throws Exception {
+        // Obtener el artista por correo
+        Artista artista = buscarArtistaPorCorreo(correoArtista); // Debes implementar este método para buscar al artista
 
-    // Si no se encuentra el artista, lanzar una excepción
-    if (artista == null) {
-        throw new Exception("Artista con correo " + correoArtista + " no encontrado");
-    }
-
-    // Obtener la lista de álbumes del artista
-    List<Album> albumes = artista.getAlbumes();
-
-    // Crear una lista para almacenar los nombres de los álbumes
-    List<String> nombresAlbumes = new ArrayList<>();
-
-    // Añadir los nombres de los álbumes a la lista
-    for (Album album : albumes) {
-        nombresAlbumes.add(album.getNombre());
-    }
-
-    return nombresAlbumes; // Devolver la lista de nombres de álbumes
-}
-
-public DTAlbum findAlbumPorArtistaYNombre(String correoArtista, String nombreAlbum) throws Exception {
-    // Buscar al artista por correo
-    Artista artista = controlpersis.findArtistaByCorreo(correoArtista);
-    
-    if (artista == null) {
-        throw new Exception("Artista no encontrado con el correo proporcionado.");
-    }
-    
-    // Buscar el álbum por nombre en la lista de álbumes del artista
-    Album albumEncontrado = null;
-    for (Album album : artista.getAlbumes()) {
-        if (album.getNombre().equalsIgnoreCase(nombreAlbum)) {
-            albumEncontrado = album;
-            break;
+        // Si no se encuentra el artista, lanzar una excepción
+        if (artista == null) {
+            throw new Exception("Artista con correo " + correoArtista + " no encontrado");
         }
-    }
-    
-    if (albumEncontrado == null) {
-        throw new Exception("Álbum '" + nombreAlbum + "' no encontrado para el artista '" + artista.getNombre() + "'.");
+
+        // Obtener la lista de álbumes del artista
+        List<Album> albumes = artista.getAlbumes();
+
+        // Crear una lista para almacenar los nombres de los álbumes
+        List<String> nombresAlbumes = new ArrayList<>();
+
+        // Añadir los nombres de los álbumes a la lista
+        for (Album album : albumes) {
+            nombresAlbumes.add(album.getNombre());
+        }
+
+        return nombresAlbumes; // Devolver la lista de nombres de álbumes
     }
 
-    // Crear la lista de géneros del álbum
-    List<String> generosDT = new ArrayList<>();
-    for (Genero auxG : albumEncontrado.getListaGeneros()) {
-        generosDT.add(auxG.getNombre());
-    }
-    
-    // Crear el objeto DTArtista
-    DTArtista dtartista = new DTArtista(
-        artista.getNickname(),
-        artista.getNombre(),
-        artista.getApellido(),
-        artista.getContrasenia(),
-        artista.getImagen(),
-        artista.getFechaNac(),
-        artista.getMail(),
-        artista.getBiografia(),
-        artista.getSitioWeb()
-    );
-    
-    // Crear la lista de temas del álbum
-    List<DTTema> dtTemas = new ArrayList<>();
-    for (Tema auxT : albumEncontrado.getListaTemas()) {
-        long duracionSegundos = auxT.getDuracionSegundos();
-        int minutos = (int) (duracionSegundos / 60);
-        int segundos = (int) (duracionSegundos % 60);
-        
-        DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
-        dtTemas.add(dttema);
-    }
-    
-    // Crear y retornar el DTAlbum
-    return new DTAlbum(
-        albumEncontrado.getNombre(),
-        albumEncontrado.getAnioCreacion(),
-        albumEncontrado.getImagen(),
-        generosDT,
-        dtTemas,
-        dtartista
-    );
-}
+    public DTAlbum findAlbumPorArtistaYNombre(String correoArtista, String nombreAlbum) throws Exception {
+        // Buscar al artista por correo
+        Artista artista = controlpersis.findArtistaByCorreo(correoArtista);
 
-public List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero) {
-    // Supongamos que tienes una lista de listas de reproducción por defecto cargadas en la lógica.
-    List<ListaRepGeneral> listasPorGenero = controlpersis.buscarListasPorGenero(selectedGenero);
+        if (artista == null) {
+            throw new Exception("Artista no encontrado con el correo proporcionado.");
+        }
 
-    // Crear una lista para los DTListaRep
-    List<DTListaRep> dtListas = new ArrayList<>();
+        // Buscar el álbum por nombre en la lista de álbumes del artista
+        Album albumEncontrado = null;
+        for (Album album : artista.getAlbumes()) {
+            if (album.getNombre().equalsIgnoreCase(nombreAlbum)) {
+                albumEncontrado = album;
+                break;
+            }
+        }
 
-    // Itera sobre las listas para obtener el nombre de la lista
-    for (ListaRepGeneral lista : listasPorGenero) {
-        // Usa el constructor de DTListaRep para crear el objeto con solo el nombre de la lista
-        DTListaRep dtListaRep = new DTListaRep(
-            lista.getNombre(),           // nombreListaRep (nombre de la lista)
-            null,                        // nombreCliente (nulo porque es una lista por defecto)
-            selectedGenero,              // género de la lista
-            null,                        // imagen (puedes ajustar esto si necesitas)
-            null                         // no se cargarán los temas
+        if (albumEncontrado == null) {
+            throw new Exception("Álbum '" + nombreAlbum + "' no encontrado para el artista '" + artista.getNombre() + "'.");
+        }
+
+        // Crear la lista de géneros del álbum
+        List<String> generosDT = new ArrayList<>();
+        for (Genero auxG : albumEncontrado.getListaGeneros()) {
+            generosDT.add(auxG.getNombre());
+        }
+
+        // Crear el objeto DTArtista
+        DTArtista dtartista = new DTArtista(
+                artista.getNickname(),
+                artista.getNombre(),
+                artista.getApellido(),
+                artista.getContrasenia(),
+                artista.getImagen(),
+                artista.getFechaNac(),
+                artista.getMail(),
+                artista.getBiografia(),
+                artista.getSitioWeb()
         );
 
-        // Añade a la lista
-        dtListas.add(dtListaRep);
-    }
+        // Crear la lista de temas del álbum
+        List<DTTema> dtTemas = new ArrayList<>();
+        for (Tema auxT : albumEncontrado.getListaTemas()) {
+            long duracionSegundos = auxT.getDuracionSegundos();
+            int minutos = (int) (duracionSegundos / 60);
+            int segundos = (int) (duracionSegundos % 60);
 
-    return dtListas;
-}
+            DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
+            dtTemas.add(dttema);
+        }
 
-   public DTListaRep obtenerDatosDeLista_Por_Defecto(String nombreSeleccionado) throws Exception {
-    // Busca la lista de reproducción por nombre
-    ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreSeleccionado);
-    
-    if (listaPorDefecto == null) {
-        // Maneja el caso en que la lista no se encuentra
-        throw new Exception("Lista no encontrada.");
-    }
-    
-    // Obtén los temas de la lista
-    List<DTTema> temas = listaPorDefecto.getListaTemas().stream()
-        .map(tema -> {
-            // Convertir la duración de tema a minutos y segundos
-            long minutos = tema.getDuracion().toMinutes();
-            long segundos = tema.getDuracion().minusMinutes(minutos).getSeconds();
-            
-            // Crear DTTema usando minutos y segundos separados
-            return new DTTema(tema.getNombre(), (int) minutos, (int) segundos, tema.getDireccion());
-        })
-        .collect(Collectors.toList());
-    
-    // Crea y retorna el DTO con la información de la lista
-    return new DTListaRep(
-        listaPorDefecto.getNombre(),           // nombreListaRep
-        null,                                 // nombreCliente (quedará en null)
-        listaPorDefecto.getGenero().getNombre(), // género (asumiendo que getNombre() devuelve el nombre del género)
-        listaPorDefecto.getImagen(),           // imagen
-        temas                                 // temas
-    );
-}
-
-
-public List<DTListaRep> obtenerDTListaPorCliente(String correoCliente) {
-    // Buscar al cliente por su correo
-    Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
-    
-    // Verificar si el cliente existe
-    if (cliente == null) {
-        throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
-    }
-    
-    // Obtener las listas de reproducción del cliente
-    List<ListaRep> listasPorCliente = cliente.getListaReproduccion();
-    
-    // Crear una lista para los DTListaRep
-    List<DTListaRep> dtListas = new ArrayList<>();
-
-    // Iterar sobre las listas del cliente para obtener la información
-    for (ListaRep lista : listasPorCliente) {
-        // Crear un objeto DTListaRep con el nombre de la lista
-        DTListaRep dtListaRep = new DTListaRep(
-            lista.getNombre(),           // nombreListaRep (nombre de la lista)
-            null,         // nombreCliente (correo del cliente)
-            null,  // género de la lista, si existe
-            null,           // imagen (si es necesario)
-            null                         // no se cargarán los temas en este paso
+        // Crear y retornar el DTAlbum
+        return new DTAlbum(
+                albumEncontrado.getNombre(),
+                albumEncontrado.getAnioCreacion(),
+                albumEncontrado.getImagen(),
+                generosDT,
+                dtTemas,
+                dtartista
         );
-
-        // Añadir la lista a la lista de DTListaRep
-        dtListas.add(dtListaRep);
     }
 
-    return dtListas;
-}
+    public List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero) {
+        // Supongamos que tienes una lista de listas de reproducción por defecto cargadas en la lógica.
+        List<ListaRepGeneral> listasPorGenero = controlpersis.buscarListasPorGenero(selectedGenero);
+
+        // Crear una lista para los DTListaRep
+        List<DTListaRep> dtListas = new ArrayList<>();
+
+        // Itera sobre las listas para obtener el nombre de la lista
+        for (ListaRepGeneral lista : listasPorGenero) {
+            // Usa el constructor de DTListaRep para crear el objeto con solo el nombre de la lista
+            DTListaRep dtListaRep = new DTListaRep(
+                    lista.getNombre(), // nombreListaRep (nombre de la lista)
+                    null, // nombreCliente (nulo porque es una lista por defecto)
+                    selectedGenero, // género de la lista
+                    null, // imagen (puedes ajustar esto si necesitas)
+                    null // no se cargarán los temas
+            );
+
+            // Añade a la lista
+            dtListas.add(dtListaRep);
+        }
+
+        return dtListas;
+    }
+
+    public DTListaRep obtenerDatosDeLista_Por_Defecto(String nombreSeleccionado) throws Exception {
+        // Busca la lista de reproducción por nombre
+        ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreSeleccionado);
+
+        if (listaPorDefecto == null) {
+            // Maneja el caso en que la lista no se encuentra
+            throw new Exception("Lista no encontrada.");
+        }
+
+        // Obtén los temas de la lista
+        List<DTTema> temas = listaPorDefecto.getListaTemas().stream()
+                .map(tema -> {
+                    // Convertir la duración de tema a minutos y segundos
+                    long minutos = tema.getDuracion().toMinutes();
+                    long segundos = tema.getDuracion().minusMinutes(minutos).getSeconds();
+
+                    // Crear DTTema usando minutos y segundos separados
+                    return new DTTema(tema.getNombre(), (int) minutos, (int) segundos, tema.getDireccion());
+                })
+                .collect(Collectors.toList());
+
+        // Crea y retorna el DTO con la información de la lista
+        return new DTListaRep(
+                listaPorDefecto.getNombre(), // nombreListaRep
+                null, // nombreCliente (quedará en null)
+                listaPorDefecto.getGenero().getNombre(), // género (asumiendo que getNombre() devuelve el nombre del género)
+                listaPorDefecto.getImagen(), // imagen
+                temas // temas
+        );
+    }
+
+    public List<DTListaRep> obtenerDTListaPorCliente(String correoCliente) {
+        // Buscar al cliente por su correo
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+
+        // Verificar si el cliente existe
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Obtener las listas de reproducción del cliente
+        List<ListaRep> listasPorCliente = cliente.getListaReproduccion();
+
+        // Crear una lista para los DTListaRep
+        List<DTListaRep> dtListas = new ArrayList<>();
+
+        // Iterar sobre las listas del cliente para obtener la información
+        for (ListaRep lista : listasPorCliente) {
+            // Crear un objeto DTListaRep con el nombre de la lista
+            DTListaRep dtListaRep = new DTListaRep(
+                    lista.getNombre(), // nombreListaRep (nombre de la lista)
+                    null, // nombreCliente (correo del cliente)
+                    null, // género de la lista, si existe
+                    null, // imagen (si es necesario)
+                    null // no se cargarán los temas en este paso
+            );
+
+            // Añadir la lista a la lista de DTListaRep
+            dtListas.add(dtListaRep);
+        }
+
+        return dtListas;
+    }
 
     public DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista) {
-    // Buscar al cliente por su correo
-    Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
-    
-    // Verificar si el cliente existe
-    if (cliente == null) {
-        throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
+        // Buscar al cliente por su correo
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+
+        // Verificar si el cliente existe
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Obtener la lista de reproducción específica por nombre
+        ListaRep listaSeleccionada = cliente.getListaReproduccion().stream()
+                .filter(lista -> lista.getNombre().equals(nombreLista))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Lista de reproducción no encontrada con el nombre: " + nombreLista));
+
+        // Obtener el género y la imagen de la lista
+        String imagen = listaSeleccionada.getImagen();  // Asegúrate de que ListaRep tenga el método getImagen()
+
+        // Obtener los temas de la lista
+        List<DTTema> temas = listaSeleccionada.getListaTemas().stream()
+                .map(tema -> new DTTema(
+                tema.getNombre(),
+                (int) tema.getDuracion().toMinutes(),
+                (int) tema.getDuracion().toSeconds() % 60,
+                tema.getDireccion()))
+                .collect(Collectors.toList());
+
+        // Crear y retornar el DTO con toda la información
+        return new DTListaRep(
+                listaSeleccionada.getNombre(), // nombreListaRep
+                correoCliente, // nombreCliente
+                null, // género (puedes ajustar esto si es necesario)
+                imagen, // imagen
+                temas // temas
+        );
     }
-    
-    // Obtener la lista de reproducción específica por nombre
-    ListaRep listaSeleccionada = cliente.getListaReproduccion().stream()
-        .filter(lista -> lista.getNombre().equals(nombreLista))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("Lista de reproducción no encontrada con el nombre: " + nombreLista));
-    
-    // Obtener el género y la imagen de la lista
-    String imagen = listaSeleccionada.getImagen();  // Asegúrate de que ListaRep tenga el método getImagen()
-    
-    // Obtener los temas de la lista
-    List<DTTema> temas = listaSeleccionada.getListaTemas().stream()
-        .map(tema -> new DTTema(
-            tema.getNombre(), 
-            (int) tema.getDuracion().toMinutes(), 
-            (int) tema.getDuracion().toSeconds() % 60, 
-            tema.getDireccion()))
-        .collect(Collectors.toList());
-    
-    // Crear y retornar el DTO con toda la información
-    return new DTListaRep(
-        listaSeleccionada.getNombre(),           // nombreListaRep
-        correoCliente,                           // nombreCliente
-        null,                                    // género (puedes ajustar esto si es necesario)
-        imagen,                                  // imagen
-        temas                                    // temas
-    );
-}
-
 
 }
-

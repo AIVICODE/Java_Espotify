@@ -39,7 +39,7 @@ private List<String> selectedNodesList = new ArrayList<>();
     public AltaAlbum_FlujoArtista() {
         initComponents();
         setTitle("Crear Album");
-        
+        anioAlbum.setValue(2000); 
         
        
         jTree1.setModel(control.buildGeneroTree());
@@ -309,6 +309,8 @@ try {
     
             // Llamar al controlador para guardar el álbum
             control.CrearAlbum(correo, nuevoAlbum, listaTemas);
+            
+            JOptionPane.showMessageDialog(null, "Álbum creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
@@ -324,7 +326,7 @@ private void limpiarFormulario() {
     txtDIR.setText("");
     
     // Restablecer JSpinners a sus valores por defecto
-    anioAlbum.setValue(0); // O el valor por defecto que desees
+    anioAlbum.setValue(2000); // O el valor por defecto que desees
     DuracionTema.setValue(new Date(0)); // Valor por defecto para duración (00:00)
     
     // Limpiar lista de temas

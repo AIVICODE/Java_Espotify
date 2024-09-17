@@ -271,6 +271,7 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         
         try {
             control.crearUsuario(user);
+             JOptionPane.showMessageDialog(null, "Perfil Artista creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
         }

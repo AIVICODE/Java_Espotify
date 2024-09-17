@@ -237,6 +237,7 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         
          try {
              control.crearUsuario(user);
+             JOptionPane.showMessageDialog(null, "Perfil Cliente creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
          } catch (Exception ex) {
              JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
          }
