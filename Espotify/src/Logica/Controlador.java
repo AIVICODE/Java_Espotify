@@ -96,6 +96,10 @@ private Date createDate(int year, int month, int day) {
             if (artista == null) {
                 throw new Exception("Artista no encontrado con el correo proporcionado.");
             }
+                  if (listaTemas == null || listaTemas.isEmpty()) {
+            throw new Exception("No se han proporcionado temas para el álbum.");
+        }
+            
             boolean albumExiste = false;
             for (Album album : artista.getAlbumes()) {
                 if (album.getNombre().equals(nuevoAlbum.getNombre())) {

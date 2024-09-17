@@ -13,7 +13,7 @@ public class Espotify {
         Principal prin= new Principal();
         prin.setVisible(true);
         
-      control.Cargar_Datos_Prueba();
+      //control.Cargar_Datos_Prueba();
 
 
         
