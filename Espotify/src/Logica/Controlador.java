@@ -3,6 +3,7 @@ package Logica;
 import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
+import Datatypes.DTListaRep;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
@@ -1627,7 +1628,7 @@ public class Controlador {
     Tema tema9 = album4.buscarTemaPorNombre("It’s Not Unusual");
 
     // Crear la lista de reproducción "Noche De La Nostalgia" y añadir los temas
-    ListaRepGeneral listaRep = new ListaRepGeneral("Noche De La Nostalgia", "bit.ly/laNocheNostalgia");
+    ListaRepGeneral listaRep = new ListaRepGeneral("Noche De La Nostalgia", "bit.ly/laNocheNostalgia",buscarGeneroPorNombre("Pop Clásico"));
 
     listaRep.getListaTemas().add(tema1);
     listaRep.getListaTemas().add(tema2);
@@ -1660,7 +1661,7 @@ public void ListaGeneral2() throws Exception {
     Tema tema3 = album2.buscarTemaPorNombre("Mentira");
 
     // Crear la lista de reproducción "Rock En Español" y añadir los temas
-    ListaRepGeneral listaRep = new ListaRepGeneral("Rock En Español", "bit.ly/rockEnEspañol");
+    ListaRepGeneral listaRep = new ListaRepGeneral("Rock En Español", "bit.ly/rockEnEspañol",buscarGeneroPorNombre("Rock Latino"));
 
     // Inicializar la lista de temas si es necesario
     if (listaRep.getListaTemas() == null) {
@@ -1687,7 +1688,7 @@ public void ListaGeneral3() throws Exception {
     Tema tema2 = album2.buscarTemaPorNombre("Primer Movimiento (Allegro non troppo e molto maestoso – Allegro con spirito)");
 
     // Crear la lista de reproducción "Música Clásica" y añadir los temas
-    ListaRepGeneral listaRep = new ListaRepGeneral("Música Clásica", "bit.ly/musicaCla");
+    ListaRepGeneral listaRep = new ListaRepGeneral("Música Clásica", "bit.ly/musicaCla",buscarGeneroPorNombre("Clásica"));
 
     // Inicializar la lista de temas si es necesario
     if (listaRep.getListaTemas() == null) {
@@ -2147,5 +2148,69 @@ public DTAlbum findAlbumPorArtistaYNombre(String correoArtista, String nombreAlb
         dtartista
     );
 }
+
+public List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero) {
+    // Supongamos que tienes una lista de listas de reproducción por defecto cargadas en la lógica.
+    List<ListaRepGeneral> listasPorGenero = controlpersis.buscarListasPorGenero(selectedGenero);
+
+    // Crear una lista para los DTListaRep
+    List<DTListaRep> dtListas = new ArrayList<>();
+
+    // Itera sobre las listas para obtener el nombre de la lista
+    for (ListaRepGeneral lista : listasPorGenero) {
+        // Usa el constructor de DTListaRep para crear el objeto con solo el nombre de la lista
+        DTListaRep dtListaRep = new DTListaRep(
+            lista.getNombre(),           // nombreListaRep (nombre de la lista)
+            null,                        // nombreCliente (nulo porque es una lista por defecto)
+            selectedGenero,              // género de la lista
+            null,                        // imagen (puedes ajustar esto si necesitas)
+            null                         // no se cargarán los temas
+        );
+
+        // Añade a la lista
+        dtListas.add(dtListaRep);
+    }
+
+    return dtListas;
+}
+
+   public DTListaRep obtenerDatosDeLista(String nombreSeleccionado) throws Exception {
+    // Busca la lista de reproducción por nombre
+    ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreSeleccionado);
+    
+    if (listaPorDefecto == null) {
+        // Maneja el caso en que la lista no se encuentra
+        throw new Exception("Lista no encontrada.");
+    }
+    
+    // Obtén los temas de la lista
+    List<DTTema> temas = listaPorDefecto.getListaTemas().stream()
+        .map(tema -> {
+            // Convertir la duración de tema a minutos y segundos
+            long minutos = tema.getDuracion().toMinutes();
+            long segundos = tema.getDuracion().minusMinutes(minutos).getSeconds();
+            
+            // Crear DTTema usando minutos y segundos separados
+            return new DTTema(tema.getNombre(), (int) minutos, (int) segundos, tema.getDireccion());
+        })
+        .collect(Collectors.toList());
+    
+    // Crea y retorna el DTO con la información de la lista
+    return new DTListaRep(
+        listaPorDefecto.getNombre(),           // nombreListaRep
+        null,                                 // nombreCliente (quedará en null)
+        listaPorDefecto.getGenero().getNombre(), // género (asumiendo que getNombre() devuelve el nombre del género)
+        listaPorDefecto.getImagen(),           // imagen
+        temas                                 // temas
+    );
+}
+
+
+
+
+
+   
+
+
 }
 
