@@ -195,5 +195,6 @@ public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede 
     return listjpa.findListasRepGeneralByGenero(genero);
 }
 
+
        
 }

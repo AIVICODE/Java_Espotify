@@ -2174,7 +2174,7 @@ public List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero) {
     return dtListas;
 }
 
-   public DTListaRep obtenerDatosDeLista(String nombreSeleccionado) throws Exception {
+   public DTListaRep obtenerDatosDeLista_Por_Defecto(String nombreSeleccionado) throws Exception {
     // Busca la lista de reproducción por nombre
     ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreSeleccionado);
     
@@ -2206,10 +2206,75 @@ public List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero) {
 }
 
 
+public List<DTListaRep> obtenerDTListaPorCliente(String correoCliente) {
+    // Buscar al cliente por su correo
+    Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+    
+    // Verificar si el cliente existe
+    if (cliente == null) {
+        throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
+    }
+    
+    // Obtener las listas de reproducción del cliente
+    List<ListaRep> listasPorCliente = cliente.getListaReproduccion();
+    
+    // Crear una lista para los DTListaRep
+    List<DTListaRep> dtListas = new ArrayList<>();
 
+    // Iterar sobre las listas del cliente para obtener la información
+    for (ListaRep lista : listasPorCliente) {
+        // Crear un objeto DTListaRep con el nombre de la lista
+        DTListaRep dtListaRep = new DTListaRep(
+            lista.getNombre(),           // nombreListaRep (nombre de la lista)
+            null,         // nombreCliente (correo del cliente)
+            null,  // género de la lista, si existe
+            null,           // imagen (si es necesario)
+            null                         // no se cargarán los temas en este paso
+        );
 
+        // Añadir la lista a la lista de DTListaRep
+        dtListas.add(dtListaRep);
+    }
 
-   
+    return dtListas;
+}
+
+    public DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista) {
+    // Buscar al cliente por su correo
+    Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+    
+    // Verificar si el cliente existe
+    if (cliente == null) {
+        throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
+    }
+    
+    // Obtener la lista de reproducción específica por nombre
+    ListaRep listaSeleccionada = cliente.getListaReproduccion().stream()
+        .filter(lista -> lista.getNombre().equals(nombreLista))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Lista de reproducción no encontrada con el nombre: " + nombreLista));
+    
+    // Obtener el género y la imagen de la lista
+    String imagen = listaSeleccionada.getImagen();  // Asegúrate de que ListaRep tenga el método getImagen()
+    
+    // Obtener los temas de la lista
+    List<DTTema> temas = listaSeleccionada.getListaTemas().stream()
+        .map(tema -> new DTTema(
+            tema.getNombre(), 
+            (int) tema.getDuracion().toMinutes(), 
+            (int) tema.getDuracion().toSeconds() % 60, 
+            tema.getDireccion()))
+        .collect(Collectors.toList());
+    
+    // Crear y retornar el DTO con toda la información
+    return new DTListaRep(
+        listaSeleccionada.getNombre(),           // nombreListaRep
+        correoCliente,                           // nombreCliente
+        null,                                    // género (puedes ajustar esto si es necesario)
+        imagen,                                  // imagen
+        temas                                    // temas
+    );
+}
 
 
 }

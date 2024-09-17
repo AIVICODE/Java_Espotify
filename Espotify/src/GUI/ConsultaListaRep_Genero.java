@@ -74,12 +74,27 @@ jTree1.setModel(control.buildGeneroTree());
                                            .toArray(String[]::new);
 
                 // Actualiza el JList con la nueva información
-                jList1.setListData(listaArray);
+                ListaDeListasDeRep.setListData(listaArray);
             } else {
                 System.out.println("No se ha seleccionado ningún género.");
             }
         }
     });
+    
+    // al seleccionar listadelistasderep se actualizan los tem as
+    ListaDeListasDeRep.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                actualizarTemas();
+            }
+        });
+    
+    
+    DatosDeLista.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+    @Override
+    public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+        actualizarEnlace();
+    }
+});
     }
 
     /**
@@ -94,9 +109,8 @@ jTree1.setModel(control.buildGeneroTree());
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
-        MuestraLista = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        ListaDeListasDeRep = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         DatosDeLista = new javax.swing.JList<>();
         Enlace = new javax.swing.JLabel();
@@ -114,14 +128,7 @@ jTree1.setModel(control.buildGeneroTree());
 
         jScrollPane1.setViewportView(jTree1);
 
-        MuestraLista.setText("Mostrar lista");
-        MuestraLista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MuestraListaActionPerformed(evt);
-            }
-        });
-
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(ListaDeListasDeRep);
 
         jScrollPane3.setViewportView(DatosDeLista);
 
@@ -132,13 +139,8 @@ jTree1.setModel(control.buildGeneroTree());
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(MuestraLista)))
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -157,9 +159,7 @@ jTree1.setModel(control.buildGeneroTree());
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(MuestraLista))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,52 +175,6 @@ jTree1.setModel(control.buildGeneroTree());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void MuestraListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MuestraListaActionPerformed
-        String nombreSeleccionado = jList1.getSelectedValue();
-        
-        if (nombreSeleccionado != null) {
-            try {
-                DTListaRep dtListaRep = control.obtenerDatosDeLista(nombreSeleccionado);
-                
-                if (dtListaRep != null) {
-                    List<String> datosTemas = new ArrayList<>();
-                    
-                    for (DTTema tema : dtListaRep.getTemas()) {
-                        datosTemas.add(String.format("%s - %d:%d",
-                            tema.getNombre(), 
-                            tema.getMinutos(), 
-                            tema.getSegundos()));
-                    }
-                    
-                    DatosDeLista.setListData(datosTemas.toArray(new String[0]));
-
-                    String enlace = dtListaRep.getTemas().get(0).getDirectorio();
-                    if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
-                        enlace = "http://" + enlace; // Asegúrate de que el enlace tenga un esquema
-                    }
-                    
-                    // Almacenar el enlace para usarlo en el MouseListener
-                    Enlace.putClientProperty("directorio", enlace);
-                    
-                    // Mostrar el Enlace
-                    Enlace.setVisible(true);
-                } else {
-                    System.out.println("No se encontraron datos para la lista seleccionada.");
-                    
-                    // Ocultar el Enlace
-                    Enlace.setVisible(false);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(ConsultaListaRep_Genero.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.out.println("No se ha seleccionado ninguna lista.");
-            
-            // Ocultar el Enlace
-            Enlace.setVisible(false);
-        }
-    }//GEN-LAST:event_MuestraListaActionPerformed
 
 private void configurarEnlace() {
     Enlace.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -247,11 +201,91 @@ private void configurarEnlace() {
     });
 }
 
+ private void actualizarTemas() {
+    String nombreSeleccionado = ListaDeListasDeRep.getSelectedValue();
+    
+    if (nombreSeleccionado != null) {
+        try {
+            DTListaRep dtListaRep = control.obtenerDatosDeLista_Por_Defecto(nombreSeleccionado);
+            
+            if (dtListaRep != null) {
+                List<String> datosTemas = new ArrayList<>();
+                
+                for (DTTema tema : dtListaRep.getTemas()) {
+                    datosTemas.add(String.format("%s - %d:%d",
+                        tema.getNombre(), 
+                        tema.getMinutos(), 
+                        tema.getSegundos()));
+                }
+                
+                DatosDeLista.setListData(datosTemas.toArray(new String[0]));
+                
+                // Se oculta el enlace hasta que se seleccione un tema
+                Enlace.setVisible(false);
+            } else {
+                System.out.println("No se encontraron datos para la lista seleccionada.");
+                DatosDeLista.setListData(new String[0]); // Limpia la lista de temas
+                Enlace.setVisible(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaListaRep_Genero.class.getName()).log(Level.SEVERE, null, ex);
+            DatosDeLista.setListData(new String[0]); // Limpia la lista de temas en caso de error
+            Enlace.setVisible(false);
+        }
+    } else {
+        System.out.println("No se ha seleccionado ninguna lista.");
+        DatosDeLista.setListData(new String[0]); // Limpia la lista de temas
+        Enlace.setVisible(false);
+    }
+}
+
+private void actualizarEnlace() {
+    // Obtiene el tema seleccionado en el JList DatosDeLista
+    String temaSeleccionado = DatosDeLista.getSelectedValue();
+    
+    if (temaSeleccionado != null) {
+        try {
+            // Encuentra el DTListaRep que corresponde a la lista seleccionada
+            String nombreLista = ListaDeListasDeRep.getSelectedValue();
+            DTListaRep dtListaRep = control.obtenerDatosDeLista_Por_Defecto(nombreLista);
+            
+            if (dtListaRep != null) {
+                // Busca el tema seleccionado en la lista de temas
+                DTTema tema = dtListaRep.getTemas().stream()
+                                     .filter(t -> (t.getNombre() + " - " + t.getMinutos() + ":" + t.getSegundos()).equals(temaSeleccionado))
+                                     .findFirst()
+                                     .orElse(null);
+                
+                if (tema != null) {
+                    String enlace = tema.getDirectorio();
+                    if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
+                        enlace = "http://" + enlace;
+                    }
+                    
+                    Enlace.putClientProperty("directorio", enlace);
+                    Enlace.setText(enlace); // Mostrar la URL en el JLabel
+                    Enlace.setVisible(true);
+                } else {
+                    System.out.println("No se encontró el tema seleccionado.");
+                    Enlace.setVisible(false);
+                }
+            } else {
+                System.out.println("No se encontraron datos para la lista seleccionada.");
+                Enlace.setVisible(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaListaRep_Genero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } else {
+        System.out.println("No se ha seleccionado ningún tema.");
+        Enlace.setVisible(false);
+    }
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> DatosDeLista;
     private javax.swing.JLabel Enlace;
-    private javax.swing.JButton MuestraLista;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> ListaDeListasDeRep;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

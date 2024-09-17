@@ -290,6 +290,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu13.setText("ConsultaListaRep");
 
         jMenuItem22.setText("Por Cliente");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
         jMenu13.add(jMenuItem22);
 
         jMenuItem23.setText("Por Genero");
@@ -553,6 +558,20 @@ public class Principal extends javax.swing.JFrame {
     consulta_listarepbygenero.toFront();
     consulta_listarepbygenero.show(); 
     }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        ConsultaListaRep_Cliente consulta_listarepbycliente= new ConsultaListaRep_Cliente();
+    
+
+    desktopPane.add(consulta_listarepbycliente ,JLayeredPane.DEFAULT_LAYER);
+   consulta_listarepbycliente .setVisible(true);
+    consulta_listarepbycliente .setClosable(true);
+    consulta_listarepbycliente .setMaximizable(true);
+    consulta_listarepbycliente .setIconifiable(true);
+    consulta_listarepbycliente .setResizable(true);
+    consulta_listarepbycliente.toFront();
+    consulta_listarepbycliente.show(); 
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     /**
      * @param args the command line arguments
