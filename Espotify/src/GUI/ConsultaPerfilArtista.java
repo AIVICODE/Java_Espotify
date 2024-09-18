@@ -248,6 +248,9 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
             textoMostrarNacimiento.setText(fecha); //hay q sumarle 1 a mes y 1900 al año
             textoMostrarBio.setText(artista.getBiografia());
             textoMostrarWeb.setText(artista.getSitioWeb());
+            if(!(artista.getSitioWeb().startsWith("www.")) && !(artista.getSitioWeb().isEmpty())){//control para abrir el enlace
+                textoMostrarWeb.setText("www." + artista.getSitioWeb());
+            }
            
             //Seguidores lista
             int cantSeguidores = controlador.nicksClientesSiguenArtista((String) comboNicks.getSelectedItem()).size();
