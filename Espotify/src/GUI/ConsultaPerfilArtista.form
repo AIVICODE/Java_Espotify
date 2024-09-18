@@ -47,9 +47,9 @@
                                   <Component id="textoMostrarNombre" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="textoMostrarNacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="textoMostrarCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textoMostrarWeb" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textoMostrarWeb" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="281" max="32767" attributes="0"/>
+                              <EmptySpace pref="253" max="32767" attributes="0"/>
                               <Component id="jScrollPane2" min="-2" pref="135" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="jScrollPane3" min="-2" pref="150" max="-2" attributes="0"/>
@@ -223,11 +223,6 @@
         <Property name="text" type="java.lang.String" value="P&#xe1;gina Web:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="textoMostrarWeb">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="..."/>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -291,5 +286,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="textoMostrarWeb">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel2"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

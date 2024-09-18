@@ -26,9 +26,12 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         textoSeguidores.setVisible(false);
         textoSeguidos.setVisible(false);
         textoListas.setVisible(false);
+        textoListass.setVisible(false);
+        textoFavs.setVisible(false);
         listaSeguidores.setVisible(false);
         listaSeguidos.setVisible(false);
         listaListas.setVisible(false);
+        listaFavs.setVisible(false);
 
     }
 
@@ -58,6 +61,10 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         textoListas = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listaListas = new javax.swing.JList<>();
+        textoFavs = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listaFavs = new javax.swing.JList<>();
+        textoListass = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Consulta de perfil de cliente");
@@ -92,15 +99,21 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
 
         textoSeguidores.setText("Seguidores");
 
-        textoSeguidos.setText("Seguidos");
+        textoSeguidos.setText("Seguidos:");
 
         jScrollPane1.setViewportView(listaSeguidores);
 
         jScrollPane2.setViewportView(listaSeguidos);
 
-        textoListas.setText("Listas de Reproducción creadas:");
+        textoListas.setText("Listas de");
 
         jScrollPane3.setViewportView(listaListas);
+
+        textoFavs.setText("Favoritos:");
+
+        jScrollPane4.setViewportView(listaFavs);
+
+        textoListass.setText("Reproducción creadas:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,11 +122,11 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(comboNicknames, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -123,74 +136,83 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel7))
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textoMostrarCorreo)
-                                    .addComponent(textoMostrarApellido)
-                                    .addComponent(textoMostrarNombre)
-                                    .addComponent(textoMostrarNick))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(textoSeguidores)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(textoSeguidos))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(textoMostrarNacimiento)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoListas)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(83, 83, 83))
+                            .addComponent(textoMostrarCorreo)
+                            .addComponent(textoMostrarApellido)
+                            .addComponent(textoMostrarNombre)
+                            .addComponent(textoMostrarNick)
+                            .addComponent(textoMostrarNacimiento))))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoSeguidos))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoSeguidores))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoListas)
+                    .addComponent(textoListass)
+                    .addComponent(textoFavs)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(comboNicknames, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoSeguidores)
-                    .addComponent(textoSeguidos)
-                    .addComponent(textoListas))
-                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(textoMostrarNick))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(textoMostrarNombre))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(textoMostrarApellido))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(textoMostrarCorreo)))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addComponent(textoListas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textoSeguidores)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(textoSeguidos)
+                                        .addGap(153, 153, 153))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textoListass)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(textoFavs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(comboNicknames, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(textoMostrarNick))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(textoMostrarNombre))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(textoMostrarApellido))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(textoMostrarCorreo))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(textoMostrarNacimiento)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                            .addComponent(textoMostrarNacimiento))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -220,38 +242,50 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         textoMostrarCorreo.setVisible(true);
         textoMostrarNacimiento.setVisible(true);
         
-        //Seguidos y seguidores       
+        //Seguidores       
         for(String s:controlador.seguidoresDelCliente((String) comboNicknames.getSelectedItem())){
             modelSeguidores.addElement(s);
         }
         listaSeguidores.setModel(modelSeguidores);
         //hacer int
         int cantidadSeguidores = controlador.seguidoresDelCliente((String) comboNicknames.getSelectedItem()).size();
-        textoSeguidores.setText(cantidadSeguidores + " Seguidores");
+        textoSeguidores.setText(cantidadSeguidores + " Seguidores:");
         
-        modelSeguidos.addElement("  Clientes:  ");
+        //Seguidos
+        modelSeguidos.addElement("   Clientes:  ");
         for(String s:controlador.clientesSeguidosDelCliente((String) comboNicknames.getSelectedItem())){
             modelSeguidos.addElement(s);
         }
         modelSeguidos.addElement("   ");
-        modelSeguidos.addElement("  Artistas:  "); 
-        listaSeguidos.setModel(modelSeguidos);
+        modelSeguidos.addElement("   Artistas:  "); 
+        
         for(String s:controlador.artistasSeguidosDelCliente((String) comboNicknames.getSelectedItem())){
             modelSeguidos.addElement(s);
         }
+        if(controlador.artistasSeguidosDelCliente((String) comboNicknames.getSelectedItem()).isEmpty() && controlador.clientesSeguidosDelCliente((String) comboNicknames.getSelectedItem()).isEmpty()){//si el cliente no sigue artistas y no sigue clientes
+            modelSeguidos.removeAllElements();
+            modelSeguidos.addElement("El cliente no ha seguido a nadie");
+        }
+        listaSeguidos.setModel(modelSeguidos);
+        
         //Listas de rep creadas
         for(String s:controlador.nombresListaRepDeCliente((String) comboNicknames.getSelectedItem())){
             modelListas.addElement(s);
         }
         listaListas.setModel(modelListas);
         
+        //Favoritos albumes temas o listas
+        listaFavs.setModel(controlador.favoritosDeCliente((String) comboNicknames.getSelectedItem()));//le paso el model con todo     
+        
         textoSeguidores.setVisible(true);
         textoSeguidos.setVisible(true);
         textoListas.setVisible(true);
+        textoListass.setVisible(true);
+        textoFavs.setVisible(true);
         listaSeguidores.setVisible(true);
         listaSeguidos.setVisible(true);
         listaListas.setVisible(true);
-
+        listaFavs.setVisible(true);
     }//GEN-LAST:event_comboNicknamesItemStateChanged
 
 
@@ -267,10 +301,14 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JList<String> listaFavs;
     private javax.swing.JList<String> listaListas;
     private javax.swing.JList<String> listaSeguidores;
     private javax.swing.JList<String> listaSeguidos;
+    private javax.swing.JLabel textoFavs;
     private javax.swing.JLabel textoListas;
+    private javax.swing.JLabel textoListass;
     private javax.swing.JLabel textoMostrarApellido;
     private javax.swing.JLabel textoMostrarCorreo;
     private javax.swing.JLabel textoMostrarNacimiento;

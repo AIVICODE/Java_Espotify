@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
 
 public class Controlador {
@@ -2174,6 +2175,9 @@ public List<String> ListaAlbumesParaArtista(String correoArtista) throws Excepti
         List<String> listas = new ArrayList();
         for (Cliente c:controlpersis.listaClientes()){
             if (c.getNickname().equals(nick)){
+                if(c.getListaReproduccion().isEmpty()){
+                    listas.add("El cliente no ha creado ninguna lista");
+                }
                 for(ListaRep l:c.getListaReproduccion()){
                     listas.add(l.getNombre());//para cada lista creada por el cliente agrego el nombre en listas a retornar
                 }
@@ -2181,4 +2185,42 @@ public List<String> ListaAlbumesParaArtista(String correoArtista) throws Excepti
         }
         return listas;
     }
+    
+    public DefaultListModel favoritosDeCliente (String nick){
+        DefaultListModel favoritos = new DefaultListModel();
+        for (Cliente c:controlpersis.listaClientes()){
+            if (c.getNickname().equals(nick)){
+              //Listas
+              if(!c.getListaRepFavoritos().isEmpty()){
+                favoritos.addElement("  Listas:  ");
+                for (ListaRep l:c.getListaRepFavoritos()){
+                    favoritos.addElement(l.getNombre());//para cada lista en sus favs agrego el nombre al modelo
+                } 
+              }
+              //Albumes
+              if(!c.getAlbums().isEmpty()){
+                favoritos.addElement("  ");
+                favoritos.addElement("  Albumes:  ");
+                for(Album a:c.getAlbums()){
+                    favoritos.addElement(a.getNombre());
+                }
+              }
+              //Temas
+              if(!c.getTemas().isEmpty()){
+                favoritos.addElement("  ");
+                favoritos.addElement("  Temas:  ");
+                for(Tema t:c.getTemas()){
+                  favoritos.addElement(t.getNombre());
+                } 
+              }  
+              if(c.getListaRepFavoritos().isEmpty() && c.getAlbums().isEmpty() && c.getTemas().isEmpty()){
+                  favoritos.removeAllElements();
+                  favoritos.addElement("El cliente no tiene preferencias guardadas");
+              }
+            }
+        }
+        return favoritos;
+    }
+    
+    
 }

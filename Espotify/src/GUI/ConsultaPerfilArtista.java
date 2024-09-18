@@ -3,6 +3,14 @@ package GUI;
 
 import Datatypes.DTArtista;
 import Logica.Controlador;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +40,17 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
         textoSeguidores.setVisible(false);
         listaSeguidores.setVisible(false);
         listaAlbumes.setVisible(false);
+        
+        textoMostrarWeb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                Desktop.getDesktop().browse(new URI(textoMostrarWeb.getText()));
+         
+                } catch (IOException | URISyntaxException e1) {
+                    e1.printStackTrace();
+                }    }
+            });
     }
 
     
@@ -54,7 +73,6 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
         textoMostrarNacimiento = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        textoMostrarWeb = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textoMostrarBio = new javax.swing.JTextArea();
         textoSeguidores = new javax.swing.JLabel();
@@ -63,6 +81,7 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
         listaSeguidores = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         listaAlbumes = new javax.swing.JList<>();
+        textoMostrarWeb = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Consulta de perfil de Artista");
@@ -104,8 +123,6 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Página Web:");
 
-        textoMostrarWeb.setText("...");
-
         textoMostrarBio.setColumns(20);
         textoMostrarBio.setRows(5);
         jScrollPane1.setViewportView(textoMostrarBio);
@@ -117,6 +134,8 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(listaSeguidores);
 
         jScrollPane3.setViewportView(listaAlbumes);
+
+        textoMostrarWeb.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,7 +168,7 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
                                     .addComponent(textoMostrarNacimiento)
                                     .addComponent(textoMostrarCorreo)
                                     .addComponent(textoMostrarWeb))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,6 +290,17 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
             textoMostrarWeb.setVisible(true); 
             textoSeguidores.setVisible(true);
             listaAlbumes.setVisible(true);
+            
+            //hyperlink
+            textoMostrarWeb.setForeground(Color.BLUE.darker());//color link
+            textoMostrarWeb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            
+            ///////////////////////////////////7
+            //ARREGLAR LINKS Q NO ANDAN HACER FUNCION
+            
+            
+                       
+            
         }        
     }//GEN-LAST:event_comboNicksItemStateChanged
 
