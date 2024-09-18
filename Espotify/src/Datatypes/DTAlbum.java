@@ -17,6 +17,8 @@ public class DTAlbum {
     protected int anioCreacion;
     protected String imagen;
     protected List<String> listaGeneros;
+    protected List<DTTema> listaTemas;
+    protected DTArtista artista;
 
     public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros) {
         this.nombre = nombre;
@@ -25,6 +27,33 @@ public class DTAlbum {
         this.listaGeneros = listaGeneros;
     }
 
+    
+    public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros,List<DTTema> listaTemas,DTArtista artista) {
+        this.nombre = nombre;
+        this.anioCreacion = anioCreacion;
+        this.imagen = imagen;
+        this.listaGeneros = listaGeneros;
+        this.listaTemas = listaTemas;
+        this.artista = artista;
+    }
+
+    public List<DTTema> getListaTemas() {
+        return listaTemas;
+    }
+
+    public void setListaTemas(List<DTTema> listaTemas) {
+        this.listaTemas = listaTemas;
+    }
+
+    public DTArtista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(DTArtista artista) {
+        this.artista = artista;
+    }
+    
+    
     public String getNombre() {
         return nombre;
     }

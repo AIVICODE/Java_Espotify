@@ -4,6 +4,7 @@
  */
 package Persis;
 
+import Logica.Genero;
 import Logica.ListaRep;
 import Logica.ListaRepGeneral;
 import Persis.exceptions.NonexistentEntityException;
@@ -15,6 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -173,5 +175,17 @@ public class ListaRepJpaController implements Serializable {
         em.close();
     }
 }
+    
+    public List<ListaRepGeneral> findListasRepGeneralByGenero(Genero genero) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<ListaRepGeneral> query = em.createQuery(
+                "SELECT l FROM ListaRepGeneral l WHERE l.genero = :genero", ListaRepGeneral.class);
+            query.setParameter("genero", genero);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
     
 }

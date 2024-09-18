@@ -74,6 +74,12 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenu12 = new javax.swing.JMenu();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenu13 = new javax.swing.JMenu();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -265,6 +271,41 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem17);
+
+        jMenu12.setText("ConsultaAlbum");
+
+        jMenuItem20.setText("Por Artista");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem20);
+
+        jMenuItem21.setText("Por Genero");
+        jMenu12.add(jMenuItem21);
+
+        jMenu2.add(jMenu12);
+
+        jMenu13.setText("ConsultaListaRep");
+
+        jMenuItem22.setText("Por Cliente");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem22);
+
+        jMenuItem23.setText("Por Genero");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem23);
+
+        jMenu2.add(jMenu13);
 
         jMenuBar1.add(jMenu2);
 
@@ -490,6 +531,48 @@ public class Principal extends javax.swing.JFrame {
     publicar_lista .show(); 
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+       ConsultaAlbumxArtista consulta_album= new ConsultaAlbumxArtista();
+    
+
+    desktopPane.add(consulta_album ,JLayeredPane.DEFAULT_LAYER);
+    consulta_album .setVisible(true);
+    consulta_album .setClosable(true);
+    consulta_album .setMaximizable(true);
+    consulta_album .setIconifiable(true);
+    consulta_album .setResizable(true);
+    consulta_album .toFront();
+    consulta_album .show(); 
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        ConsultaListaRep_Genero consulta_listarepbygenero= new ConsultaListaRep_Genero();
+    
+
+    desktopPane.add(consulta_listarepbygenero ,JLayeredPane.DEFAULT_LAYER);
+   consulta_listarepbygenero .setVisible(true);
+    consulta_listarepbygenero .setClosable(true);
+    consulta_listarepbygenero .setMaximizable(true);
+    consulta_listarepbygenero .setIconifiable(true);
+    consulta_listarepbygenero .setResizable(true);
+    consulta_listarepbygenero.toFront();
+    consulta_listarepbygenero.show(); 
+    }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        ConsultaListaRep_Cliente consulta_listarepbycliente= new ConsultaListaRep_Cliente();
+    
+
+    desktopPane.add(consulta_listarepbycliente ,JLayeredPane.DEFAULT_LAYER);
+   consulta_listarepbycliente .setVisible(true);
+    consulta_listarepbycliente .setClosable(true);
+    consulta_listarepbycliente .setMaximizable(true);
+    consulta_listarepbycliente .setIconifiable(true);
+    consulta_listarepbycliente .setResizable(true);
+    consulta_listarepbycliente.toFront();
+    consulta_listarepbycliente.show(); 
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -532,6 +615,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
+    private javax.swing.JMenu jMenu12;
+    private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -555,6 +640,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

@@ -179,7 +179,22 @@ public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede 
         listjpa.edit(lista);//le ando la lista hecha publica
     } 
 
- 
+     public Album findAlbumId(Long id){
+        
+        return albjpa.findAlbum(id);
+    }
+
+   public List<ListaRepGeneral> buscarListasPorGenero(String selectedGenero) {
+    // Obtener el género desde la base de datos
+    Genero genero = genjpa.findGenero(selectedGenero);
+    if (genero == null) {
+        throw new IllegalArgumentException("El género con nombre '" + selectedGenero + "' no existe.");
+    }
+
+    // Buscar listas de reproducción generales asociadas al género
+    return listjpa.findListasRepGeneralByGenero(genero);
+}
+
 
        
 }
