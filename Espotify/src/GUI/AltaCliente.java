@@ -7,7 +7,9 @@ package GUI;
 import java.util.Calendar;
 import javax.swing.JSpinner;
 import Datatypes.DTUsuario;
-import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
+//import Logica.Controlador;
 import static java.awt.SystemColor.control;
 import java.util.Date;
 import java.util.logging.Level;
@@ -20,8 +22,9 @@ import javax.swing.JOptionPane;
  * @author ivan
  */
 public class AltaCliente extends javax.swing.JInternalFrame {
-
-     Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+     //Controlador control= new Controlador();
     public AltaCliente() {
         initComponents();
         setTitle("AltaCliente");

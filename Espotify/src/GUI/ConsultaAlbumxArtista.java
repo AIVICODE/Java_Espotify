@@ -5,7 +5,9 @@
 package GUI;
 
 import Datatypes.DTAlbum;
-import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
+//import Logica.Controlador;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,11 +20,9 @@ import javax.swing.JLayeredPane;
  */
 public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ConsultaAlbumxArtista
-     */
-    
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     
     public ConsultaAlbumxArtista() {
         initComponents();

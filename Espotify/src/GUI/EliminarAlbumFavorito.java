@@ -4,7 +4,9 @@
  */
 package GUI;
 
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,8 +17,9 @@ import javax.swing.JOptionPane;
  * @author ivan
  */
 public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
-
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     public EliminarAlbumFavorito() {
         initComponents();
         actualizarComboBoxClientes() ;

@@ -4,7 +4,9 @@
  */
 package GUI;
 
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -14,11 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form EliminarTemaFavorito
-     */
-    
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();   
+    //Controlador control= new Controlador();
     public EliminarTemaFavorito() {
         initComponents();
         actualizarComboBoxClientes();

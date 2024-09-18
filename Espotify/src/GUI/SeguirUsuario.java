@@ -4,7 +4,9 @@
  */
 package GUI;
 
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,8 +14,9 @@ import javax.swing.JOptionPane;
  * @author topo
  */
 public class SeguirUsuario extends javax.swing.JInternalFrame {
-
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     public SeguirUsuario() {
         initComponents();
         setTitle("Gestion de seguidores");

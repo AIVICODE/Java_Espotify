@@ -4,7 +4,9 @@
  */
 package GUI;
 
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +21,9 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
     /**
      * Creates new form TemaFavorito
      */
-     Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     public TemaFavorito() {
         initComponents();
         actualizarComboBoxClientes();

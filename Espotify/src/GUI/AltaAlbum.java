@@ -5,7 +5,9 @@
 package GUI;
 
 import Logica.Artista;
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.awt.BorderLayout;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,9 +26,9 @@ import javax.swing.SwingUtilities;
  */
 public class AltaAlbum extends javax.swing.JInternalFrame {
 
-    
-    
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     public AltaAlbum() {
         initComponents();
         actualizarComboBoxArtistas() ;

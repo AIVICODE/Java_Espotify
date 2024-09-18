@@ -6,7 +6,9 @@ package GUI;
 
 import Datatypes.DTListaRep;
 import Datatypes.DTTema;
-import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
+//import Logica.Controlador;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -26,11 +28,10 @@ import javax.swing.event.ListSelectionListener;
  */
 public class ConsultaListaRep_Cliente extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ConsultaListaRep_Artista
-     */
     
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     public ConsultaListaRep_Cliente() {
         initComponents();
         actualizarComboBoxCliente() ;

@@ -6,7 +6,9 @@ package GUI;
 
 import Datatypes.DTAlbum;
 import Datatypes.DTTema;
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +36,9 @@ private List<String> selectedNodesList = new ArrayList<>();
         this.correo = correo;
     }
     
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     
     public AltaAlbum_FlujoArtista() {
         initComponents();

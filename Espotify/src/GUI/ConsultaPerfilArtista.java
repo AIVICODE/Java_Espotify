@@ -2,7 +2,9 @@
 package GUI;
 
 import Datatypes.DTArtista;
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -18,10 +20,11 @@ import javax.swing.DefaultListModel;
 
 
 public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
-
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador controlador = fabrica.getIControlador();
     public ConsultaPerfilArtista() {
         initComponents();
-        Controlador controlador= new Controlador();
+        //Controlador controlador= new Controlador();
                
         for (String n:controlador.nicknamesDeTodosLosArtistas()){//por cada string en la lista de nicks
             comboNicks.addItem(n);//le agrego n q ya es un string del nickname
@@ -236,7 +239,7 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboNicksItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboNicksItemStateChanged
-        Controlador controlador= new Controlador();      
+        //Controlador controlador= new Controlador();      
         DTArtista artista = controlador.encontrarDTArtistaPorNickname((String) comboNicks.getSelectedItem());
         if(artista!=null){
             //muestro datos
@@ -296,14 +299,8 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
             
             //hyperlink
             textoMostrarWeb.setForeground(Color.BLUE.darker());//color link
-            textoMostrarWeb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            
-            ///////////////////////////////////7
-            //ARREGLAR LINKS Q NO ANDAN HACER FUNCION
-            
-            
-                       
-            
+            textoMostrarWeb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));        
+                                   
         }        
     }//GEN-LAST:event_comboNicksItemStateChanged
 
