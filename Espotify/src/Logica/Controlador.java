@@ -2492,7 +2492,7 @@ try {
     return seguidos;
 }
   
-public List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception {
+    public List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception {
     Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
     if (cliente == null) {
         throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
@@ -2508,7 +2508,7 @@ public List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throw
 }
 
     
-public List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception {
+    public List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception {
     // Buscar los álbumes con el nombre dado
     List<Album> albumes = controlpersis.findAlbumByNombre(nombreAlbum);
 
@@ -2526,4 +2526,49 @@ public List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exce
     // Retornar la lista con los nombres de los artistas
     return nombreArtistas;
 }
+
+    public List<String> temasDeAlbumDeArtista(String album, String artistaMail){
+        List <String> temas = new ArrayList();
+        for (Artista a:controlpersis.listaArtistas()){
+            if (a.getMail().equals(artistaMail)){
+                for(Album al:a.getAlbumes()){
+                    if(al.getNombre().equals(album)){
+                        for(Tema t:al.getListaTemas()){
+                            temas.add(t.getNombre());//agrego el nombre del tema a lista de strings
+                        }
+                    }
+                }
+            }
+        }
+        return temas;
+    }
+    
+    public List<String> listasPublicasDeCliente (String correo){
+        List<String> lisPublicas = new ArrayList();
+        for(Cliente c:controlpersis.listaClientes()){
+            if(c.getMail().equals(correo)){
+                for(ListaRep l:c.getListaReproduccion()){
+                    if (l instanceof ListaRepParticular){
+                        ListaRepParticular particular = (ListaRepParticular) l;
+                        if(particular.isPrivada() == false){
+                            lisPublicas.add(particular.getNombre());
+                        }
+                    }
+                }
+            }
+        }
+        
+        return lisPublicas;
+    }
+    
+    public List<String> listaAlbumesArtistaMail(String correo) throws Exception{//devuelve string de albumes de artista encontrado por nick
+         List<String> albumes = new ArrayList();
+        for(Artista a:controlpersis.listaArtistas()){
+            if (a.getMail().equals(correo)){
+                albumes = ListaAlbumesParaArtista(a.getMail());
+                return albumes;
+            }
+        }
+        return albumes;
+    }
 }

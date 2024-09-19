@@ -103,8 +103,8 @@ public interface IControlador {
     public abstract DefaultListModel favoritosDeCliente (String nick);
 
     public abstract List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception;
-
-
-
+    public abstract List<String> temasDeAlbumDeArtista(String album, String artistaMail);
+    public abstract List<String> listasPublicasDeCliente (String correo);
+    public abstract List<String> listaAlbumesArtistaMail(String correo) throws Exception;
        
 }
