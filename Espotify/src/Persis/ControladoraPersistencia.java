@@ -195,6 +195,26 @@ public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede 
     return listjpa.findListasRepGeneralByGenero(genero);
 }
 
+    public String NicknameCliente(String string) {
+       Cliente cli = clijpa.findCliente(string);//devuelvo el artista
+        return cli.getNickname();
+    }
 
+    public String NicknameArtista(String string) {
+       Artista art = artjpa.findArtista(string);//devuelvo el artista
+        return art.getNickname();
+    }
+
+    public Cliente findClienteByNickname(String nickname) {
+       return clijpa.findClienteByNickname(nickname);
+    }
+
+    public Artista findArtistaByNickname(String nickname) {
+    return artjpa.findArtistaByNickname(nickname); // Llama al método del controlador de persistencia
+    }
+
+public Artista encontrarArtistaPorNickname(String nickname) {
+    return artjpa.findArtistaByNickname(nickname); // Llama al método del controlador de persistencia
+}
        
 }

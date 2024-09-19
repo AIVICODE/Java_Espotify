@@ -98,6 +98,11 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
                 comboNicknamesItemStateChanged(evt);
             }
         });
+        comboNicknames.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboNicknamesActionPerformed(evt);
+            }
+        });
 
         textoSeguidores.setText("Seguidores");
 
@@ -289,6 +294,10 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         listaListas.setVisible(true);
         listaFavs.setVisible(true);
     }//GEN-LAST:event_comboNicknamesItemStateChanged
+
+    private void comboNicknamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboNicknamesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboNicknamesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

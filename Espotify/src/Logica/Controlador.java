@@ -647,7 +647,7 @@ public class Controlador implements IControlador{
     }
 
     public void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception {
-        try {
+try {
             Cliente seguidor = encontrarCliente(correoSeguidor);
             Cliente cSeguido = encontrarCliente(correoSeguido);
             Artista aSeguido = encontrarArtista(correoSeguido);
@@ -668,7 +668,16 @@ public class Controlador implements IControlador{
             throw new IllegalArgumentException("Error ");
         }
     }
+    
 
+
+    public Cliente encontrarClientePorNicknameTipoCli(String nickname) {
+    return controlpersis.findClienteByNickname(nickname); // Llama al método del controlador de persistencia
+}
+        public Artista encontrarArtistaPorNicknameTipoArt(String nickname) {
+         return controlpersis.findArtistaByNickname(nickname);
+    }
+    
     public void Cargar_Datos_Prueba() throws Exception {
         Cargar_Perfiles();
         Cargar_Generos();
@@ -2341,7 +2350,7 @@ public class Controlador implements IControlador{
         for (Cliente c:controlpersis.listaClientes()){
             if (c.getNickname().equals(nick)){
                for(Cliente cs:c.getClientesSeguidos()){
-                   seguidos.add(cs.getNickname());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
+                   seguidos.add(cs.getMail());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
                }
            }
        }
@@ -2365,7 +2374,7 @@ public class Controlador implements IControlador{
         for (Cliente c:controlpersis.listaClientes()){
             if (c.getNickname().equals(nick)){
                 for(Artista a:c.getArtistasSeguidos()){
-                    seguidos.add(a.getNickname());//agrego los nicks que sigue el cliente
+                    seguidos.add(a.getMail());//agrego los nicks que sigue el cliente
                 }
             }
         }
@@ -2422,6 +2431,38 @@ public class Controlador implements IControlador{
         }
         return favoritos;
     }
+
+    public String encontrarNicknameCliente(String string) {
+        return controlpersis.NicknameCliente(string);
+    }
+
+    public String encontrarNicknameArtista(String string) {
+       return controlpersis.NicknameArtista(string);
+    }
+
+  public List<String> obtenerSeguidos(String correoSeguidor) {
+    // Primero, obtener el nickname del cliente a partir del correo
+    Cliente Seguidor = encontrarCliente(correoSeguidor);
+    
+    if (Seguidor.getNickname() == null) {
+        return new ArrayList<>(); // O manejar el caso cuando no se encuentra el nickname
+    }
+    
+    // Obtener los clientes que sigue el cliente con el nickname encontrado
+    List<String> seguidosClientes = clientesSeguidosDelCliente(Seguidor.getNickname());
+    
+    // Obtener los artistas que sigue el cliente con el nickname encontrado
+    List<String> seguidosArtistas = artistasSeguidosDelCliente(Seguidor.getNickname());
+    
+    // Combinar ambas listas en una sola
+    List<String> seguidos = new ArrayList<>();
+    seguidos.addAll(seguidosClientes);
+    seguidos.addAll(seguidosArtistas);
+    
+    return seguidos;
+}
+
+
     
     
 }

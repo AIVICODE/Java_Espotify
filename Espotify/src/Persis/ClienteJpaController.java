@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -145,5 +146,19 @@ public class ClienteJpaController implements Serializable {
             em.close();
         }
     }
+
+ public Cliente findClienteByNickname(String nickname) {
+    // Aquí asumimos que tienes una consulta JPQL o SQL preparada para buscar por nickname
+    EntityManager em = getEntityManager();
+    try {
+        return em.createQuery("SELECT c FROM Cliente c WHERE c.nickname = :nickname", Cliente.class)
+                 .setParameter("nickname", nickname)
+                 .getSingleResult();
+    } catch (NoResultException e) {
+        return null; // O maneja el caso en que no se encuentre el cliente
+    } finally {
+        em.close();
+    }
+}
     
 }

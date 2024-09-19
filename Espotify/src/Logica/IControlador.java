@@ -45,6 +45,10 @@ public interface IControlador {
     public abstract void seguirUsuario(String correoSeguidor, String correoSeguido) throws Exception;
     public abstract void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception;
     public abstract void Cargar_Datos_Prueba() throws Exception;
+    public abstract  String encontrarNicknameArtista(String string) ;
+    public abstract String encontrarNicknameCliente(String string) ;
+    public abstract Cliente encontrarClientePorNicknameTipoCli(String nickname);
+    public abstract Artista encontrarArtistaPorNicknameTipoArt(String nickname);
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;

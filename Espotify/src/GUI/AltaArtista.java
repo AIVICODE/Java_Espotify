@@ -52,7 +52,7 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         txtNombrecli = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Cancelar = new javax.swing.JButton();
         txtBiografia = new javax.swing.JTextField();
         txtPaginaweb = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -108,10 +108,10 @@ public class AltaArtista extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("Limpiar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Cancelar.setText("Cancelar");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                CancelarActionPerformed(evt);
             }
         });
 
@@ -136,7 +136,7 @@ public class AltaArtista extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(jButton3)
+                        .addComponent(Cancelar)
                         .addGap(29, 29, 29)
                         .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -216,7 +216,7 @@ public class AltaArtista extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(Cancelar))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -281,7 +281,7 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         txtApellido.setText("");
         txtMail.setText("");
         txtBiografia.setText("");
@@ -289,7 +289,9 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         txtNickname.setText("");
         txtNombrecli.setText("");
         txtPaginaweb.setText("");
-    }//GEN-LAST:event_jButton3ActionPerformed
+        
+        this.dispose();
+    }//GEN-LAST:event_CancelarActionPerformed
 
     private void txtBiografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBiografiaActionPerformed
         // TODO add your handling code here:
@@ -297,8 +299,8 @@ public class AltaArtista extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Cancelar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

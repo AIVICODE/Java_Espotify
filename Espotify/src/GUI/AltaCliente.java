@@ -107,7 +107,7 @@ public class AltaCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("Limpiar");
+        jButton3.setText("Cancelar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -253,6 +253,8 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         txtImagen.setText("");
         txtNickname.setText("");
         txtNombrecli.setText("");
+        
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

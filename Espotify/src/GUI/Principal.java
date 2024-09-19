@@ -67,6 +67,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -223,6 +224,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem14);
+
+        jMenuItem24.setText("Dejar de seguir Usuario");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem24);
 
         jMenu10.setText("Eliminar Favorito");
 
@@ -573,6 +582,21 @@ public class Principal extends javax.swing.JFrame {
     consulta_listarepbycliente.show(); 
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        DejarDeSeguirUsuario dejar_seguir= new DejarDeSeguirUsuario();
+    
+
+    desktopPane.add(dejar_seguir,JLayeredPane.DEFAULT_LAYER);
+   dejar_seguir .setVisible(true);
+    dejar_seguir.setClosable(true);
+    dejar_seguir.setMaximizable(true);
+    dejar_seguir.setIconifiable(true);
+    dejar_seguir.setResizable(true);
+    dejar_seguir.toFront();
+    dejar_seguir.show(); 
+                                    
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -644,6 +668,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
