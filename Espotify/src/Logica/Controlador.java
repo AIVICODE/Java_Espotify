@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
@@ -31,12 +33,26 @@ public class Controlador implements IControlador{
     ControladoraPersistencia controlpersis = new ControladoraPersistencia();
 
     public void crearUsuario(DTUsuario user) throws Exception {
+        try{
+       
         if (controlpersis.findClienteByCorreo(user.getCorreo()) != null) {
             throw new Exception("Ya existe un cliente con el correo: " + user.getCorreo());
         }
         if (controlpersis.findArtistaByCorreo(user.getCorreo()) != null) {
             throw new Exception("Ya existe un artista con el correo: " + user.getCorreo());
         }
+        
+         
+    
+        
+ if(controlpersis.findClienteByNickname(user.getNickname())!=null){
+  throw new Exception("Ya existe un cliente con el nickanme: " + user.getNickname());
+ }
+ 
+  if(controlpersis.findArtistaByNickname(user.getNickname())!=null){
+  throw new Exception("Ya existe un artista con el nickanme: " + user.getNickname());
+ }
+
 
         if (user instanceof DTArtista) {
             Artista nuevoUsuario;
@@ -64,6 +80,10 @@ public class Controlador implements IControlador{
             );
             controlpersis.AddCliente((Cliente) nuevoUsuario);
         }
+        }catch (Exception e) {
+
+                    throw new Exception(e.getMessage());
+                }       
     }
 
     public boolean verificarExistenciaArtista(String correo) throws Exception {
@@ -672,10 +692,20 @@ try {
 
 
     public Cliente encontrarClientePorNicknameTipoCli(String nickname) {
-    return controlpersis.findClienteByNickname(nickname); // Llama al método del controlador de persistencia
+        try {
+            return controlpersis.findClienteByNickname(nickname); // Llama al método del controlador de persistencia
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
 }
         public Artista encontrarArtistaPorNicknameTipoArt(String nickname) {
-         return controlpersis.findArtistaByNickname(nickname);
+        try {
+            return controlpersis.findArtistaByNickname(nickname);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public void Cargar_Datos_Prueba() throws Exception {
@@ -2461,8 +2491,39 @@ try {
     
     return seguidos;
 }
+  
+public List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception {
+    Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+    if (cliente == null) {
+        throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
+    }
 
+    // Obtener los nombres de los álbumes favoritos del cliente
+    List<String> nombresAlbumes = new ArrayList<>();
+    for (Album album : cliente.getAlbums()) {
+        nombresAlbumes.add(album.getNombre());
+    }
+
+    return nombresAlbumes;
+}
 
     
-    
+public List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception {
+    // Buscar los álbumes con el nombre dado
+    List<Album> albumes = controlpersis.findAlbumByNombre(nombreAlbum);
+
+    // Lista para almacenar los nombres de los artistas
+    List<String> nombreArtistas = new ArrayList<>();
+
+    // Iterar sobre los álbumes y extraer los nombres de los artistas
+    for (Album album : albumes) {
+        Artista artista = album.getArtista();  // Obtener el artista del álbum
+        if (artista != null) {
+            nombreArtistas.add(artista.getNombre());  // Agregar el nombre del artista a la lista
+        }
+    }
+
+    // Retornar la lista con los nombres de los artistas
+    return nombreArtistas;
+}
 }

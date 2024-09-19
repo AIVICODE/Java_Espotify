@@ -274,6 +274,14 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         
         try {
             control.crearUsuario(user);
+                    txtApellido.setText("");
+        txtMail.setText("");
+        txtBiografia.setText("");
+        txtImagen.setText("");
+        txtNickname.setText("");
+        txtNombrecli.setText("");
+        txtPaginaweb.setText("");
+        jSpinner2.setValue(new Date());
              JOptionPane.showMessageDialog(null, "Perfil Artista creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 

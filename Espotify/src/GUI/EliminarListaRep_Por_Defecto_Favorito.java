@@ -132,6 +132,8 @@ public class EliminarListaRep_Por_Defecto_Favorito extends javax.swing.JInternal
 
         try {
             control.EliminarLista_Por_Defecto_Favorito(NombreCliente,NombreLista);
+                                      JOptionPane.showMessageDialog(null, "Lista de reproduccion por defecto eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

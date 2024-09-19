@@ -148,7 +148,7 @@ public class ClienteJpaController implements Serializable {
     }
 
  public Cliente findClienteByNickname(String nickname) {
-    // Aquí asumimos que tienes una consulta JPQL o SQL preparada para buscar por nickname
+
     EntityManager em = getEntityManager();
     try {
         return em.createQuery("SELECT c FROM Cliente c WHERE c.nickname = :nickname", Cliente.class)

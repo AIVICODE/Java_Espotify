@@ -135,7 +135,7 @@ public void crearAlbum(Album album) throws Exception {
         clijpa.edit(cliente);
     }
 
-    public Album findAlbumByNombre(String recurso) throws Exception{
+    public List<Album> findAlbumByNombre(String recurso) throws Exception{
         
            try {
         return albjpa.findAlbumByName(recurso);
@@ -205,12 +205,25 @@ public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede 
         return art.getNickname();
     }
 
-    public Cliente findClienteByNickname(String nickname) {
+    public Cliente findClienteByNickname(String nickname) throws Exception {
+        try{
        return clijpa.findClienteByNickname(nickname);
+        }
+       catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ocurrio un error con el nickname: "+nickname);
+    }
+        
     }
 
-    public Artista findArtistaByNickname(String nickname) {
+    public Artista findArtistaByNickname(String nickname) throws Exception {
+        try{
     return artjpa.findArtistaByNickname(nickname); // Llama al método del controlador de persistencia
+    }
+       catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ocurrio un error con el nickname: "+nickname);
+    }
     }
 
 public Artista encontrarArtistaPorNickname(String nickname) {

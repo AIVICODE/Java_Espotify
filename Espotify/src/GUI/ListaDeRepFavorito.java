@@ -163,6 +163,8 @@ public class ListaDeRepFavorito extends javax.swing.JInternalFrame {
         
         try {
             control.GuardarListaFavorito(NombreCliente,Cliente_Con_Lista, NombreLista);
+                                      JOptionPane.showMessageDialog(null, "Lista de reproduccion particular guardada como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

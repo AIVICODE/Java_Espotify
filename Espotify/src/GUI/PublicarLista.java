@@ -121,6 +121,8 @@ public class PublicarLista extends javax.swing.JInternalFrame {
         //Controlador controlador= new Controlador();
         try {
             controlador.publicarListaPrivada(((String)comboDT.getSelectedItem()), ((String)comboListas.getSelectedItem()));
+                                                  JOptionPane.showMessageDialog(null, "Lista publicada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
             Logger.getLogger(PublicarLista.class.getName()).log(Level.SEVERE, null, ex);
         }

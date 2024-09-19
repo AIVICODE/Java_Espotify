@@ -22,8 +22,8 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     //Controlador control= new Controlador();
     public EliminarAlbumFavorito() {
         initComponents();
+        setTitle("Eliminar Album Favorito");
         actualizarComboBoxClientes() ;
-        actualizarComboBoxArtistas();
         
     }
 
@@ -36,10 +36,10 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtNombreAlbum = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        AlbumAsociadoCliente = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Nombre del cliente");
 
@@ -54,7 +54,6 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Seleccione artista");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
@@ -66,7 +65,6 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -77,6 +75,12 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        AlbumAsociadoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlbumAsociadoClienteActionPerformed(evt);
             }
         });
 
@@ -104,9 +108,9 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
                                 .addGap(32, 32, 32)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(60, Short.MAX_VALUE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AlbumAsociadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +126,7 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AlbumAsociadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -149,10 +153,11 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
        
        String nombreArtista = (String) jComboBox1.getSelectedItem();
        
-       String nombreAlbum = txtNombreAlbum.getText();
+       String nombreAlbum = (String) AlbumAsociadoCliente.getSelectedItem();
        
         try {
             control.EliminarAlbumFavorito(nombreCliente, nombreArtista, nombreAlbum);
+              JOptionPane.showMessageDialog(null, "Álbum eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -164,7 +169,8 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-
+    String correoCliente = (String) jComboBox2.getSelectedItem();
+    actualizarComboBoxAlbumesFavoritos(correoCliente);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -174,6 +180,14 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void AlbumAsociadoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlbumAsociadoClienteActionPerformed
+            try {
+        actualizarComboBoxArtistas();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_AlbumAsociadoClienteActionPerformed
 private void actualizarComboBoxClientes() {
     List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
     
@@ -183,17 +197,30 @@ private void actualizarComboBoxClientes() {
         jComboBox2.addItem(correo); // Agregamos cada correo al comboBox
     }
 }
-private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+private void actualizarComboBoxArtistas() throws Exception {
+    String albumSeleccionado = (String) AlbumAsociadoCliente.getSelectedItem();
+    List<String> nombresArtistas = control.MostrarNombreArtistasbyAlbum(albumSeleccionado); // Obtener nombres de artistas
     
-    jComboBox1.removeAllItems(); // Limpiamos los ítems actuales del comboBox
+    jComboBox1.removeAllItems(); // Limpiar el comboBox actual
     
-    for (String correo : correosArtistas) {
-        jComboBox1.addItem(correo); // Agregamos cada correo al comboBox
+    for (String artista : nombresArtistas) {
+        jComboBox1.addItem(artista); // Agregar los nombres de artistas
     }
 }
+private void actualizarComboBoxAlbumesFavoritos(String correoCliente) {
+    try {
+        List<String> albumesFavoritos = control.obtenerAlbumesFavoritosDeCliente(correoCliente);
+        AlbumAsociadoCliente.removeAllItems(); // Limpiar el comboBox actual
 
+        for (String album : albumesFavoritos) {
+            AlbumAsociadoCliente.addItem(album); // Agregar los álbumes favoritos
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> AlbumAsociadoCliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -202,6 +229,5 @@ private void actualizarComboBoxArtistas() {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtNombreAlbum;
     // End of variables declaration//GEN-END:variables
 }

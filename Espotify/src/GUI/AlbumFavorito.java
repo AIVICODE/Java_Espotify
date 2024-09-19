@@ -22,6 +22,7 @@ public class AlbumFavorito extends javax.swing.JInternalFrame {
     //Controlador control= new Controlador();
     public AlbumFavorito() {
         initComponents();
+        setTitle("Album Favorito");
         actualizarComboBoxClientes() ;
         actualizarComboBoxArtistas();
         ComboArtistas.addItemListener(new java.awt.event.ItemListener() {
@@ -167,6 +168,8 @@ private void ComboArtistasItemStateChanged(java.awt.event.ItemEvent evt) throws 
        
         try {
             control.GuardarAlbumFavorito(nombreCliente, nombreArtista, nombreAlbum);
+                                                  JOptionPane.showMessageDialog(null, "Album guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

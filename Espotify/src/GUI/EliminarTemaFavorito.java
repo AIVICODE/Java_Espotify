@@ -167,6 +167,8 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
        
         try {
             control.EliminarTemaFavorito(nombreCliente, nombreArtista, nombreAlbum,nombreTema);
+                                      JOptionPane.showMessageDialog(null, "Tema eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

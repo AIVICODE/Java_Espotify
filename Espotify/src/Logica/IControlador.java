@@ -49,6 +49,7 @@ public interface IControlador {
     public abstract String encontrarNicknameCliente(String string) ;
     public abstract Cliente encontrarClientePorNicknameTipoCli(String nickname);
     public abstract Artista encontrarArtistaPorNicknameTipoArt(String nickname);
+    public abstract List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception ;
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;
@@ -100,6 +101,10 @@ public interface IControlador {
     public abstract List<String> artistasSeguidosDelCliente(String nick);
     public abstract List<String> nombresListaRepDeCliente(String nick);
     public abstract DefaultListModel favoritosDeCliente (String nick);
-            
+
+    public abstract List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception;
+
+
+
        
 }

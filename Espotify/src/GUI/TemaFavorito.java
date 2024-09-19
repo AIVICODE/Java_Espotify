@@ -182,6 +182,8 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
        
          try {
              control.GuardarTemaFavorito(nombreCliente, nombreArtista, nombreAlbum, nombreTema);
+                                                   JOptionPane.showMessageDialog(null, "Tema guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
          } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
          }

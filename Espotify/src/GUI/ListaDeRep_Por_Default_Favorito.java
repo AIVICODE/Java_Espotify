@@ -58,7 +58,7 @@ public class ListaDeRep_Por_Default_Favorito extends javax.swing.JInternalFrame 
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Nombre cliente");
 
         jLabel2.setText("Nombre lista");
 
@@ -69,7 +69,7 @@ public class ListaDeRep_Por_Default_Favorito extends javax.swing.JInternalFrame 
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(102, 102, 102))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -118,6 +118,8 @@ public class ListaDeRep_Por_Default_Favorito extends javax.swing.JInternalFrame 
 
         try {
             control.GuardarLista_Por_Defecto_Favorito(NombreCliente, NombreLista);
+                                                  JOptionPane.showMessageDialog(null, "Lista de reproduccion por defecto guardada como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

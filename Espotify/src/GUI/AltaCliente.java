@@ -240,6 +240,12 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         
          try {
              control.crearUsuario(user);
+                     txtApellido.setText("");
+        txtMail.setText("");
+        txtImagen.setText("");
+        txtNickname.setText("");
+        txtNombrecli.setText("");
+        jSpinner1.setValue(new Date());
              JOptionPane.showMessageDialog(null, "Perfil Cliente creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
          } catch (Exception ex) {
              JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
@@ -253,6 +259,7 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         txtImagen.setText("");
         txtNickname.setText("");
         txtNombrecli.setText("");
+        jSpinner1.setValue(new Date());
         
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed

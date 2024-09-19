@@ -176,6 +176,8 @@ public class EliminarListaRepFavorito extends javax.swing.JInternalFrame {
 
         try {
             control.EliminarListaFavorito(NombreCliente,Cliente_Con_Lista, NombreLista);
+                          JOptionPane.showMessageDialog(null, "Lista de reproduccion particular eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
