@@ -2573,7 +2573,7 @@ try {
     for (Album album : albumes) {
         Artista artista = album.getArtista();  // Obtener el artista del álbum
         if (artista != null) {
-            nombreArtistas.add(artista.getNombre());  // Agregar el nombre del artista a la lista
+            nombreArtistas.add(artista.getMail());  // Agregar el nombre del artista a la lista
         }
     }
 

@@ -10,10 +10,13 @@ import javax.swing.DefaultListModel;
 
 public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador controlador = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador controlador = fabrica.getIControlador();
     public ConsultaPerfilCliente() {
+        Fabrica fabrica = Fabrica.getInstance();
+        IControlador controlador = fabrica.getIControlador();
         initComponents();
+        
         //Controlador controlador= new Controlador();
         for (String n:controlador.nicksClientes()){
             comboNicknames.addItem(n);//lleno combobox con nicknames
@@ -226,6 +229,8 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 //ItemStateChanged
     private void comboNicknamesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboNicknamesItemStateChanged
+        Fabrica fabrica = Fabrica.getInstance();
+        IControlador controlador = fabrica.getIControlador();
         //Controlador controlador= new Controlador();
         DTCliente cliente = controlador.encontrarClientePorNickname((String) comboNicknames.getSelectedItem());
         DefaultListModel modelSeguidores = new DefaultListModel();
@@ -248,7 +253,7 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         textoMostrarApellido.setVisible(true);
         textoMostrarCorreo.setVisible(true);
         textoMostrarNacimiento.setVisible(true);
-        
+        listaFavs.removeAll();
         //Seguidores       
         for(String s:controlador.seguidoresDelCliente((String) comboNicknames.getSelectedItem())){
             modelSeguidores.addElement(s);
