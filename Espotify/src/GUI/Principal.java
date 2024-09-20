@@ -292,6 +292,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu12.add(jMenuItem20);
 
         jMenuItem21.setText("Por Genero");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
         jMenu12.add(jMenuItem21);
 
         jMenu2.add(jMenu12);
@@ -596,6 +601,20 @@ public class Principal extends javax.swing.JFrame {
     dejar_seguir.show(); 
                                     
     }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+         ConsultaAlbumxGeneros consulta_album_bygenero= new ConsultaAlbumxGeneros();
+    
+
+    desktopPane.add(consulta_album_bygenero,JLayeredPane.DEFAULT_LAYER);
+   consulta_album_bygenero .setVisible(true);
+    consulta_album_bygenero.setClosable(true);
+    consulta_album_bygenero.setMaximizable(true);
+    consulta_album_bygenero.setIconifiable(true);
+    consulta_album_bygenero.setResizable(true);
+    consulta_album_bygenero.toFront();
+    consulta_album_bygenero.show(); 
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     /**
      * @param args the command line arguments

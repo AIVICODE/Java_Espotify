@@ -235,5 +235,22 @@ public List<Album> findAlbumByName(String nombre) {
         em.close();
     }
 }
+
+       public Album findOneAlbumByName(String nombre) {
+        EntityManager em = getEntityManager();
+        try {
+            // Crear la consulta usando el nombre del álbum
+            TypedQuery<Album> query = em.createQuery("SELECT a FROM Album a WHERE a.nombre = :nombre", Album.class);
+            query.setParameter("nombre", nombre);
+
+            // Intentar obtener un resultado único
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Si no se encuentra un álbum con ese nombre, devolver null
+            return null;
+        } finally {
+            em.close();
+        }
+    }
     
 }

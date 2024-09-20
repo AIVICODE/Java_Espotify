@@ -50,6 +50,9 @@ public interface IControlador {
     public abstract Cliente encontrarClientePorNicknameTipoCli(String nickname);
     public abstract Artista encontrarArtistaPorNicknameTipoArt(String nickname);
     public abstract List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception ;
+    public abstract DTAlbum findAlbumxNombreDT (String string) throws Exception;
+    public abstract List<String> findDTAlbumPorGenero(String string) ;
+    public abstract List<String> MostrarNombreGeneros();
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;

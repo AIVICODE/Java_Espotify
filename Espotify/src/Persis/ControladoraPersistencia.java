@@ -24,6 +24,7 @@ public class ControladoraPersistencia {
     AlbumJpaController albjpa = new AlbumJpaController();
     TemaJpaController temajpa = new TemaJpaController();
     ListaRepJpaController listjpa = new ListaRepJpaController();
+    FavoritosJpaController favjpa = new  FavoritosJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -145,6 +146,8 @@ public void crearAlbum(Album album) throws Exception {
     }
         
     }
+    
+    
 
     public ListaRep findListaRepByNombre(String recurso) throws Exception{
         try {
@@ -154,7 +157,16 @@ public void crearAlbum(Album album) throws Exception {
         throw new Exception("No se encuentra el nombre de la lista de reproduccion: " +recurso, e);
     }
     }
-    
+        public Album findOneAlbumByNombre(String recurso) throws Exception{
+        
+           try {
+        return albjpa.findOneAlbumByName(recurso);
+    }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("No se encuentra el nombre del album: " +recurso, e);
+    }
+        
+    }
     
     public List<Cliente> listaClientes (){
         return clijpa.findClienteEntities(); //me devuelve una lista con todos los clientes de la BD para mostrarlos de ahi
@@ -232,5 +244,16 @@ public Artista encontrarArtistaPorNickname(String nickname) {
      
     public List<ListaRep> listas(){
         return listjpa.findListaRepEntities();
+    }
+    
+    
+    
+        public List<Genero> listaGeneros (){
+        return genjpa.findGeneroEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
+    }
+    
+    
+    public List<Album> listaAlbumes(){
+        return albjpa.findAlbumEntities(); //me devuelve una lista con todos los albumes de la BD para mostrarlos de ahi
     }
 }
