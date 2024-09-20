@@ -2571,4 +2571,17 @@ try {
         }
         return albumes;
     }
+    
+    public List<String> listasDefecto(){
+        List <String> listas = new ArrayList();
+        for (ListaRep l:controlpersis.listas()){
+            if(l instanceof ListaRepGeneral){
+                ListaRepGeneral general = (ListaRepGeneral) l;
+                listas.add(general.getNombre());
+            }
+        }
+        return listas;
+    }
+    
+    
 }

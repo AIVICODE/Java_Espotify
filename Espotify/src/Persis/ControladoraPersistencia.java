@@ -229,5 +229,8 @@ public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede 
 public Artista encontrarArtistaPorNickname(String nickname) {
     return artjpa.findArtistaByNickname(nickname); // Llama al método del controlador de persistencia
 }
-       
+     
+    public List<ListaRep> listas(){
+        return listjpa.findListaRepEntities();
+    }
 }

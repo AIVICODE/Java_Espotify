@@ -106,5 +106,5 @@ public interface IControlador {
     public abstract List<String> temasDeAlbumDeArtista(String album, String artistaMail);
     public abstract List<String> listasPublicasDeCliente (String correo);
     public abstract List<String> listaAlbumesArtistaMail(String correo) throws Exception;
-       
+    public abstract List<String> listasDefecto();
 }
