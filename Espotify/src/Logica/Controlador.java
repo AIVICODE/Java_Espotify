@@ -395,6 +395,11 @@ public class Controlador implements IControlador{
 
                 throw new Exception("Intentas acceder  a una lista privada");
             }
+            for(ListaRep l:cliente.getListaRepFavoritos()){//agregado nuevo 21 del 9
+                if(l.getNombre().equals(nombreLista)){//si quiere agregar una lista que ya esta agregada en los favs del cliente
+                    throw new Exception("La lista: '" + nombreLista + "' ya se encuentra en los favoritos del cliente: " + correoCliente);
+                }
+            }
 
             // Agregar la lista al cliente que la quiere guardar como favorita
             cliente.getListaRepFavoritos().add(listaEncontrada);
