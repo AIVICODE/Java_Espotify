@@ -24,7 +24,7 @@ initComponents();
 
         // Listeners para actualizar el nickname y correo
         comboSeguidor.addActionListener(evt -> actualizarNicknameSeguidor());
-        comboSeguido.addActionListener(evt -> actualizarNicknameSeguido());
+//        comboSeguido.addActionListener(evt -> actualizarNicknameSeguido());
 
         txtSeguidor.setVisible(false);
         txtSeguido.setVisible(false);
@@ -58,17 +58,17 @@ initComponents();
         }
     }
 
-    private void actualizarNicknameSeguido() {
-        String correoSeguido = (String) comboSeguido.getSelectedItem();
-        if (correoSeguido != null) {
-            String nicknameSeguido = control.encontrarNicknameCliente(correoSeguido);
-            if (nicknameSeguido == null) {
-                nicknameSeguido = control.encontrarNicknameArtista(correoSeguido);
-            }
-            txtSeguido.setText(nicknameSeguido != null ? nicknameSeguido : "Desconocido");
-            txtSeguido.setVisible(true);
-        }
-    }
+//    private void actualizarNicknameSeguido() {
+//        String correoSeguido = (String) comboSeguido.getSelectedItem();
+//        if (correoSeguido != null) {
+//            String nicknameSeguido = control.encontrarNicknameCliente(correoSeguido);
+//            if (nicknameSeguido == null) {
+//                nicknameSeguido = control.encontrarNicknameArtista(correoSeguido);
+//            }
+//            txtSeguido.setText(nicknameSeguido != null ? nicknameSeguido : "Desconocido");
+//            txtSeguido.setVisible(true);
+//        }
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

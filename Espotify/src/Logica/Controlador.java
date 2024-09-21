@@ -602,41 +602,61 @@ public void EliminarListaFavorito(String correoCliente, String correo_Cliente_Co
 }
 
 
-
-
-
-
-
-    public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nombreLista) throws Exception {
-        try {
-            // Buscar el cliente que quiere eliminar la lista por defecto de sus favoritos
-            Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
-            if (cliente == null) {
-                throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
-            }
-
-            // Buscar la lista por defecto (ListaRepGeneral) por nombre directamente desde la base de datos
-            ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreLista);
-            if (listaPorDefecto == null) {
-                throw new Exception("Lista por defecto no encontrada con el nombre: " + nombreLista);
-            }
-
-            // Verificar si la lista está marcada como favorita por el cliente
-            if (!cliente.getListaRepFavoritos().contains(listaPorDefecto)) {
-                throw new Exception("La lista no está marcada como favorita.");
-            }
-
-            // Eliminar la lista por defecto de los favoritos del cliente
-            cliente.getListaRepFavoritos().remove(listaPorDefecto);
-
-            // Guardar los cambios en la base de datos
-            controlpersis.editCliente(cliente);
-
-        } catch (Exception e) {
-            // Lanza la excepción para que sea gestionada en un nivel superior
-            throw new Exception(e.getMessage());
+public void EliminarLista_Por_Defecto_Favorito(String correoCliente, String nombreLista) throws Exception {
+    try {
+        // Buscar el cliente que quiere eliminar la lista por defecto de sus favoritos
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
         }
+
+        // Buscar la lista por defecto (ListaRepGeneral) por nombre dentro de las listas del cliente
+        ListaRepGeneral listaPorDefecto = null;
+        for (ListaRep lista : cliente.getListaRepFavoritos()) {
+
+                ListaRepGeneral listaGeneral = (ListaRepGeneral) lista;
+                
+                // Imprimir la lista que está siendo evaluada y el nombre que se busca
+                System.out.println("Comparando lista: " + listaGeneral.getNombre() + " con: " + nombreLista);
+                
+                if (listaGeneral.getNombre().equals(nombreLista)) {
+                    listaPorDefecto = listaGeneral;
+                    break;
+                }
+            
+        }
+
+        if (listaPorDefecto == null) {
+            throw new Exception("Lista por defecto no encontrada con el nombre: " + nombreLista);
+        }
+
+        // Verificar si la lista por defecto está en los favoritos del cliente
+        final String nombreListaEncontrada = listaPorDefecto.getNombre(); // Hacerla final para usar en la lambda
+        boolean esFavorita = cliente.getListaRepFavoritos().stream()
+            .anyMatch(listaFavorita -> {
+                // Imprimir las listas favoritas que se comparan
+                System.out.println("Comparando favorito: " + listaFavorita.getNombre() + " con: " + nombreListaEncontrada);
+                return listaFavorita.getNombre().equals(nombreListaEncontrada);
+            });
+
+        if (!esFavorita) {
+            throw new Exception("La lista no está marcada como favorita.");
+        }
+
+        // Eliminar la lista por defecto de los favoritos del cliente comparando por nombre
+        cliente.getListaRepFavoritos().removeIf(listaFavorita -> 
+            listaFavorita.getNombre().equals(nombreListaEncontrada)); // Compara por nombre
+
+        // Guardar los cambios en la base de datos
+        controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        // Lanza la excepción para que sea gestionada en un nivel superior
+        throw new Exception(e.getMessage());
     }
+}
+
+
 
     public List<String> MostrarNombreClientes() {
         List<Cliente> listaClientes = listaClientes(); // Supongamos que este método devuelve todos los clientes
@@ -2749,5 +2769,29 @@ try {
     
     
     }
+    
+ public String ConvierteNick_A_Correo(String nickname) throws Exception {
+    try {
+        // Intentar encontrar un cliente con el nickname
+        Cliente cliente = encontrarClientePorNicknameTipoCli(nickname);
+        if (cliente != null) {
+            return cliente.getMail(); // Si el cliente es encontrado, devolver su correo
+        }
+
+        // Si no se encuentra un cliente, intentar encontrar un artista con el nickname
+        Artista artista = encontrarArtistaPorNicknameTipoArt(nickname);
+        if (artista != null) {
+            return artista.getMail(); // Si el artista es encontrado, devolver su correo
+        }
+
+        // Si no se encuentra ni cliente ni artista, lanzar una excepción
+        throw new Exception("No se encontró ningún cliente o artista con el nickname: " + nickname);
+
+    } catch (Exception ex) {
+        throw new Exception("Error al convertir el nickname a correo: " + ex.getMessage());
+    }
+}
+
+    
     
 }
