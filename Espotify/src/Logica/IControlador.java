@@ -53,6 +53,7 @@ public interface IControlador {
     public abstract DTAlbum findAlbumxNombreDT (String string) throws Exception;
     public abstract List<String> findDTAlbumPorGenero(String string) ;
     public abstract List<String> MostrarNombreGeneros();
+    public abstract String ConvierteNick_A_Correo(String nickname) throws Exception ;
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;
