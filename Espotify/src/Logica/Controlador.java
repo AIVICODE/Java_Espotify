@@ -670,6 +670,19 @@ public void EliminarListaFavorito(String correoCliente, String correo_Cliente_Co
         Cliente cSeguido = encontrarCliente(correoSeguido);
         Artista aSeguido = encontrarArtista(correoSeguido);
         if (seguidor != null) {
+            if(correoSeguidor.equals(correoSeguido)){
+                throw new IllegalArgumentException("El cliente " + correoSeguidor + " no puede seguirse a si mismo ");
+            }
+            for(Cliente c:seguidor.getClientesSeguidos()){//21/9 nuevo
+                if(c.getMail().equals(correoSeguido)){
+                    throw new IllegalArgumentException("El cliente " + correoSeguidor + " ya sigue al cliente " + correoSeguido);
+                }
+            }
+            for(Artista a:seguidor.getArtistasSeguidos()){
+                if(a.getMail().equals(correoSeguido)){
+                    throw new IllegalArgumentException("El cliente " + correoSeguidor + " ya sigue al artista " + correoSeguido);
+                }
+            }//////////////
             if (cSeguido != null) {
                 seguidor.seguirCliente(cSeguido);
                 controlpersis.editCliente(seguidor);
@@ -679,6 +692,7 @@ public void EliminarListaFavorito(String correoCliente, String correo_Cliente_Co
             } else {
                 throw new IllegalArgumentException("No se encontró Cliente o Artista con el correo: " + correoSeguido);
             }
+                        
         } else {
             throw new IllegalArgumentException("No se encontró el seguidor con el correo: " + correoSeguidor);
         }
@@ -2130,6 +2144,9 @@ try {
                 particular.setPrivada(false);//la hago publica
                 controlpersis.editListaPrivada(particular);//le mando la lista para editarla en la bd
             }
+        }
+        if(nombreLista==null){//21 del 9
+            throw new Exception("El cliente no tiene listas a publicar");
         }
     }
 

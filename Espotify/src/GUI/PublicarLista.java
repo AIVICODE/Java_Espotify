@@ -121,12 +121,12 @@ public class PublicarLista extends javax.swing.JInternalFrame {
         //Controlador controlador= new Controlador();
         try {
             controlador.publicarListaPrivada(((String)comboDT.getSelectedItem()), ((String)comboListas.getSelectedItem()));
-                                                  JOptionPane.showMessageDialog(null, "Lista publicada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Lista publicada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception ex) {
-            Logger.getLogger(PublicarLista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JOptionPane.showMessageDialog(null, "Lista publicada con exito!"); 
+            //Logger.getLogger(PublicarLista.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
         comboListas.removeAllItems();//limpio el combo para no publicar dos veces la misma lista
     }//GEN-LAST:event_publicarBotonActionPerformed
 

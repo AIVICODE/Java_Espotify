@@ -221,6 +221,8 @@ private void actualizarNicknameSeguidor() {
     try {
         control.dejarSeguirUsuario(mailSeguidor, mailSeguido); // Asegúrate de que el nombre del método es correcto
         JOptionPane.showMessageDialog(this, "Ahora " + txtSeguidor.getText() + " ya no sigue al usuario " + mailSeguido, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        comboSeguido.removeAllItems();// recargarlo igual
+        cargarSeguidos();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }

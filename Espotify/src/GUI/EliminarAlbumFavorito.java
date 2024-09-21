@@ -163,6 +163,9 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
         try {
             control.EliminarAlbumFavorito(nombreCliente, nombreArtista, nombreAlbum);
               JOptionPane.showMessageDialog(null, "Álbum eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+              //cargar de vuelta los albumes q sigue
+              String correoCliente = (String) jComboBox2.getSelectedItem();
+              actualizarComboBoxAlbumesFavoritos(correoCliente);
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
