@@ -135,33 +135,39 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerificarArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerificarArtistaActionPerformed
-        String correo= (String) comboMails.getSelectedItem();
-    
-    try {
-        if (control.verificarExistenciaArtista(correo)) {
-         AltaAlbum_FlujoArtista altaAlbum = new AltaAlbum_FlujoArtista();
-         altaAlbum.setCorreo(correo);
-        JDesktopPane desktopPan=getDesktopPane();
-    desktopPan.add(altaAlbum,JLayeredPane.DEFAULT_LAYER);
-    altaAlbum.setVisible(true);
-    altaAlbum.setClosable(true);
-    altaAlbum.setMaximizable(true);
-    altaAlbum.setIconifiable(true);
-    altaAlbum.setResizable(true);
-    altaAlbum.toFront();
-    altaAlbum.show();
-        } else {
-            // Si el artista no existe, lanzar una excepción
-            throw new Exception("El artista con el correo " + correo + " no fue encontrado.");
+    try {                                                 
+        String nickname= (String) comboMails.getSelectedItem();
+        String correo = control.ConvierteNick_A_Correo(nickname);
+        
+        try {
+            if (control.verificarExistenciaArtista(correo)) {
+                AltaAlbum_FlujoArtista altaAlbum = new AltaAlbum_FlujoArtista();
+                altaAlbum.setCorreo(correo);
+                JDesktopPane desktopPan=getDesktopPane();
+                desktopPan.add(altaAlbum,JLayeredPane.DEFAULT_LAYER);
+                altaAlbum.setVisible(true);
+                altaAlbum.setClosable(true);
+                altaAlbum.setMaximizable(true);
+                altaAlbum.setIconifiable(true);
+                altaAlbum.setResizable(true);
+                altaAlbum.toFront();
+                altaAlbum.show();
+            } else {
+                // Si el artista no existe, lanzar una excepción
+                throw new Exception("El artista con el correo " + correo + " no fue encontrado.");
+            }
+        } catch (Exception ex) {
+            // Mostrar la excepción al usuario en un cuadro de diálogo
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
     } catch (Exception ex) {
-        // Mostrar la excepción al usuario en un cuadro de diálogo
-        JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al convertir nick a correo", JOptionPane.ERROR_MESSAGE);
     }
         
     }//GEN-LAST:event_VerificarArtistaActionPerformed
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+    List<String> correosArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
     
 comboMails.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     

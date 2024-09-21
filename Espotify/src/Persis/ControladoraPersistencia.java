@@ -120,8 +120,13 @@ public void crearAlbum(Album album) throws Exception {
         albjpa.edit(album);
     }
 
-    public Artista findArtistaByCorreo(String correo) {
+    public Artista findArtistaByCorreo(String correo) throws Exception {
+        try{
         return artjpa.findArtista(correo);
+        }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("No se encuentra el Artista: " + correo, e);
+    }
     }
 
     public Cliente findClienteByCorreo(String correoCliente) {

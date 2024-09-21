@@ -214,7 +214,7 @@ public class ConsultaAlbumxGeneros extends javax.swing.JInternalFrame {
 
     private void comboAlbumesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboAlbumesItemStateChanged
         
-        
+       if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {  
         DTAlbum album = null;
         try {
             // Convierto en datatype al album seleccionado en el combo box
@@ -235,7 +235,7 @@ public class ConsultaAlbumxGeneros extends javax.swing.JInternalFrame {
         txtNombreAlbum.setVisible(true);
         txtAñoCreacion.setVisible(true);
 
-        
+       }
         
     }//GEN-LAST:event_comboAlbumesItemStateChanged
 
