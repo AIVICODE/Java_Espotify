@@ -2,7 +2,6 @@
 package GUI;
 
 import Datatypes.DTArtista;
-//import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.awt.Color;
@@ -24,7 +23,6 @@ public class ConsultaPerfilArtista extends javax.swing.JInternalFrame {
     IControlador controlador = fabrica.getIControlador();
     public ConsultaPerfilArtista() {
         initComponents();
-        //Controlador controlador= new Controlador();
                
         for (String n:controlador.nicknamesDeTodosLosArtistas()){//por cada string en la lista de nicks
             comboNicks.addItem(n);//le agrego n q ya es un string del nickname

@@ -4,7 +4,6 @@ package GUI;
 import Datatypes.DTCliente;
 import Logica.Fabrica;
 import Logica.IControlador;
-//import Logica.Controlador;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
@@ -248,7 +247,6 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
     private void comboNicknamesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboNicknamesItemStateChanged
         Fabrica fabrica = Fabrica.getInstance();
         IControlador controlador = fabrica.getIControlador();
-        //Controlador controlador= new Controlador();
         DTCliente cliente = controlador.encontrarClientePorNickname((String) comboNicknames.getSelectedItem());
         DefaultListModel modelSeguidores = new DefaultListModel();
         DefaultListModel modelSeguidos = new DefaultListModel();

@@ -8,7 +8,6 @@ import Datatypes.DTListaRep;
 import Datatypes.DTTema;
 import Logica.Fabrica;
 import Logica.IControlador;
-//import Logica.Controlador;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -27,7 +26,6 @@ import javax.swing.tree.TreeSelectionModel;
 public class ConsultaListaRep_Genero extends javax.swing.JInternalFrame {
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    //Controlador control= new Controlador();
     
     public ConsultaListaRep_Genero() {
         initComponents();

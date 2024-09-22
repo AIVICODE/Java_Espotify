@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package GUI;
 
-//import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.util.List;
@@ -19,7 +15,7 @@ import javax.swing.JOptionPane;
 public class AlbumFavorito extends javax.swing.JInternalFrame {
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    //Controlador control= new Controlador();
+    
     public AlbumFavorito() {
         initComponents();
         setTitle("Album Favorito");
