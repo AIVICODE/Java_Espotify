@@ -51,7 +51,7 @@ public class Controlador implements IControlador {
             }
             
                             if(user.getCorreo().isEmpty() || user.getNickname().isEmpty() ){
-                 throw new Exception("Correo o nickname vacios" + user.getNickname());
+                 throw new Exception("Correo o nickname vacios ");
                 }
                 
             
