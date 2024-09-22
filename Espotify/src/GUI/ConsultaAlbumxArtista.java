@@ -223,43 +223,56 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ComboArtistasActionPerformed
 
     private void ComboAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboAlbumActionPerformed
-        String correoArtista = (String) ComboArtistas.getSelectedItem();
-        String nombreAlbum = (String) ComboAlbum.getSelectedItem();
-                
-        try {
-            if(correoArtista !=null && nombreAlbum !=null){
-            DTAlbum album = control.findAlbumPorArtistaYNombre(correoArtista, nombreAlbum);
-            if(album!=null){
-           txtNombreAlbum.setText(album.getNombre());
-           txtAnioCreacion.setText(String.valueOf(album.getAnioCreacion()));
-           List<String> generos = album.getListaGeneros();
-            listGenero.setListData(generos.toArray(String[]::new));
+        try {                                           
+            String nicknameArtista = (String) ComboArtistas.getSelectedItem();
+            String nombreAlbum = (String) ComboAlbum.getSelectedItem();
+            String correoArtista = control.ConvierteNick_A_Correo(nicknameArtista);
+            
+            try {
+                if(correoArtista !=null && nombreAlbum !=null){
+                    DTAlbum album = control.findAlbumPorArtistaYNombre(correoArtista, nombreAlbum);
+                    if(album!=null){
+                        txtNombreAlbum.setText(album.getNombre());
+                        txtAnioCreacion.setText(String.valueOf(album.getAnioCreacion()));
+                        List<String> generos = album.getListaGeneros();
+                        listGenero.setListData(generos.toArray(String[]::new));
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
         } catch (Exception ex) {
             Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ComboAlbumActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String correoArtista = (String) ComboArtistas.getSelectedItem();
-                String nombreAlbum = (String) ComboAlbum.getSelectedItem();
-                  
-        try {
-            DTAlbum album; 
-            album = control.findAlbumPorArtistaYNombre(correoArtista, nombreAlbum);
-             MostrarTemas pantalla_tema = new MostrarTemas();
-        
-       pantalla_tema.setTemas(album.getListaTemas());
-        JDesktopPane desktopPan=getDesktopPane();
-    desktopPan.add(pantalla_tema,JLayeredPane.DEFAULT_LAYER);
-    pantalla_tema.setVisible(true);
-    pantalla_tema.setClosable(true);
-    pantalla_tema.setMaximizable(true);
-    pantalla_tema.setIconifiable(true);
-    pantalla_tema.setResizable(true);
-    pantalla_tema.toFront();
-    pantalla_tema.show();
+        try {                                         
+            String nicknameArtista = (String) ComboArtistas.getSelectedItem();
+            String nombreAlbum = (String) ComboAlbum.getSelectedItem();
+            
+            String correoArtista = control.ConvierteNick_A_Correo(nicknameArtista);
+            
+            
+            try {
+                DTAlbum album;
+                album = control.findAlbumPorArtistaYNombre(correoArtista, nombreAlbum);
+                MostrarTemas pantalla_tema = new MostrarTemas();
+                
+                pantalla_tema.setTemas(album.getListaTemas());
+                JDesktopPane desktopPan=getDesktopPane();
+                desktopPan.add(pantalla_tema,JLayeredPane.DEFAULT_LAYER);
+                pantalla_tema.setVisible(true);
+                pantalla_tema.setClosable(true);
+                pantalla_tema.setMaximizable(true);
+                pantalla_tema.setIconifiable(true);
+                pantalla_tema.setResizable(true);
+                pantalla_tema.toFront();
+                pantalla_tema.show();
+            } catch (Exception ex) {
+                Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -268,9 +281,15 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
 
     private void ComboArtistasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboArtistasItemStateChanged
             if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-        String correoArtista = (String) ComboArtistas.getSelectedItem(); // Obtiene el correo del artista seleccionado
                 try {
-                    actualizarComboBoxAlbumes(correoArtista); // Actualiza el comboBox3 con los álbumes
+                    String nicknameArtista = (String) ComboArtistas.getSelectedItem(); // Obtiene el correo del artista seleccionado
+                    String correo = control.ConvierteNick_A_Correo(nicknameArtista);
+                    
+                    try {
+                        actualizarComboBoxAlbumes(correo); // Actualiza el comboBox3 con los álbumes
+                    } catch (Exception ex) {
+                        Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(ConsultaAlbumxArtista.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -289,7 +308,7 @@ private void actualizarComboBoxAlbumes(String correoArtista) throws Exception {
 }
 
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+    List<String> correosArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
     
     ComboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     

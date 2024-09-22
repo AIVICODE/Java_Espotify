@@ -179,18 +179,25 @@ private void ComboArtistasItemStateChanged(java.awt.event.ItemEvent evt) throws 
 }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String nombreCliente = (String) ComboCorreoCliente.getSelectedItem();
-       
-       String nombreArtista = (String) ComboArtistas.getSelectedItem();
-       
-       String nombreAlbum = (String) ComboAlbum.getSelectedItem();
-       
-        try {
-            control.GuardarAlbumFavorito(nombreCliente, nombreArtista, nombreAlbum);
-                                                  JOptionPane.showMessageDialog(null, "Album guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
+        try {                                         
+            String nombreCliente = (String) ComboCorreoCliente.getSelectedItem();
+            
+            String nombreArtista = (String) ComboArtistas.getSelectedItem();
+            
+            String nombreAlbum = (String) ComboAlbum.getSelectedItem();
+            
+            String correoCli = control.ConvierteNick_A_Correo(nombreCliente);
+            String correoArt = control.ConvierteNick_A_Correo(nombreArtista);
+            try {
+                control.GuardarAlbumFavorito(correoCli, correoArt, nombreAlbum);
+                JOptionPane.showMessageDialog(null, "Album guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+             Logger.getLogger(AlbumFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -216,25 +223,34 @@ private void ComboArtistasItemStateChanged(java.awt.event.ItemEvent evt) throws 
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 private void actualizarComboBoxClientes() {
-    List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     
     ComboCorreoCliente.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
-    for (String correo : correosClientes) {
-        ComboCorreoCliente.addItem(correo); // Agregamos cada correo al comboBox
+    for (String nickname : correosClientes) {
+        try {
+            ComboCorreoCliente.addItem(nickname); // Agregamos cada correo al comboBox
+        } catch (Exception ex) {
+            Logger.getLogger(AlbumFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+    List<String> correosArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
     
     ComboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
-    for (String correo : correosArtistas) {
-        ComboArtistas.addItem(correo); // Agregamos cada correo al comboBox
+    for (String nickname : correosArtistas) {
+        try {
+            ComboArtistas.addItem(nickname); // Agregamos cada correo al comboBox
+        } catch (Exception ex) {
+            Logger.getLogger(AlbumFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 
-private void actualizarComboBoxAlbumes(String correoArtista) throws Exception {
+private void actualizarComboBoxAlbumes(String nicknameArtista) throws Exception {
+    String correoArtista = control.ConvierteNick_A_Correo(nicknameArtista);
     List<String> nombresAlbumes = control.ListaAlbumesParaArtista(correoArtista); // Obtenemos la lista de álbumes
     
     ComboAlbum.removeAllItems(); // Limpiamos los ítems actuales del comboBox

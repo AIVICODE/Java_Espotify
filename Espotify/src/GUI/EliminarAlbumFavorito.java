@@ -154,20 +154,28 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String nombreCliente = (String) jComboBox2.getSelectedItem();
-       
-       String nombreArtista = (String) jComboBox1.getSelectedItem();
-       
-       String nombreAlbum = (String) AlbumAsociadoCliente.getSelectedItem();
-       
-        try {
-            control.EliminarAlbumFavorito(nombreCliente, nombreArtista, nombreAlbum);
-              JOptionPane.showMessageDialog(null, "Álbum eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-              //cargar de vuelta los albumes q sigue
-              String correoCliente = (String) jComboBox2.getSelectedItem();
-              actualizarComboBoxAlbumesFavoritos(correoCliente);
+        try {                                         
+            String nicknameCliente = (String) jComboBox2.getSelectedItem();
+            
+            String nicknameArtista = (String) jComboBox1.getSelectedItem();
+            
+            String nombreAlbum = (String) AlbumAsociadoCliente.getSelectedItem();
+            String correoCliente= control.ConvierteNick_A_Correo(nicknameCliente);
+            String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+            
+            try {
+                control.EliminarAlbumFavorito(correoCliente, correoArtista, nombreAlbum);
+                JOptionPane.showMessageDialog(null, "Álbum eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                //cargar de vuelta los albumes q sigue
+                String correoCliente2 = (String) jComboBox2.getSelectedItem();
+                
+                actualizarComboBoxAlbumesFavoritos(correoCliente2);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+             Logger.getLogger(EliminarAlbumFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -177,8 +185,13 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-    String correoCliente = (String) jComboBox2.getSelectedItem();
-    actualizarComboBoxAlbumesFavoritos(correoCliente);
+        try {
+            String nicknameCliente = (String) jComboBox2.getSelectedItem();
+            
+            actualizarComboBoxAlbumesFavoritos(nicknameCliente);
+        } catch (Exception ex) {
+            Logger.getLogger(EliminarAlbumFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -197,7 +210,7 @@ public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     }
     }//GEN-LAST:event_AlbumAsociadoClienteActionPerformed
 private void actualizarComboBoxClientes() {
-    List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     
     jComboBox2.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
@@ -215,8 +228,11 @@ private void actualizarComboBoxArtistas() throws Exception {
         jComboBox1.addItem(artista); // Agregar los nombres de artistas
     }
 }
-private void actualizarComboBoxAlbumesFavoritos(String correoCliente) {
+private void actualizarComboBoxAlbumesFavoritos(String nicknameCliente) {
     try {
+        
+                    String correoCliente= control.ConvierteNick_A_Correo(nicknameCliente);
+
         List<String> albumesFavoritos = control.obtenerAlbumesFavoritosDeCliente(correoCliente);
         AlbumAsociadoCliente.removeAllItems(); // Limpiar el comboBox actual
 
