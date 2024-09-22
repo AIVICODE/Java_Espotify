@@ -13,6 +13,10 @@ public abstract class Usuario {
     protected String nickname;
     protected String nombre, apellido, contrasenia;
     protected String imagen;
+
+    public String getImagen() {
+        return imagen;
+    }
     @Temporal(TemporalType.DATE)
     protected Date fechaNac;
     

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
@@ -196,5 +197,21 @@ public class ArtistaJpaController implements Serializable {
             em.close();
         }
     }
+
+   public Artista findArtistaByNickname(String nickname) {
+    // Aquí asumimos que tienes una consulta JPQL o SQL preparada para buscar por nickname
+    EntityManager em = getEntityManager();
+    try {
+        return em.createQuery("SELECT a FROM Artista a WHERE a.nickname = :nickname", Artista.class)
+                 .setParameter("nickname", nickname)
+                 .getSingleResult();
+    } catch (NoResultException e) {
+        return null; // O maneja el caso en que no se encuentre el artista
+    } finally {
+        em.close();
+    }
+}
+
+
     
 }

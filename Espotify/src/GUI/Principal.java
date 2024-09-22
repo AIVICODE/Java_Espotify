@@ -57,6 +57,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -67,6 +68,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -152,6 +154,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.add(jMenu3);
 
+        jMenuItem25.setText("Alta de Genero");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem25);
+
         AltaAlbum.setText("AltaAlbum");
         AltaAlbum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +234,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem14);
 
+        jMenuItem24.setText("Dejar de seguir Usuario");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem24);
+
         jMenu10.setText("Eliminar Favorito");
 
         jMenuItem15.setText("Album");
@@ -283,6 +301,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu12.add(jMenuItem20);
 
         jMenuItem21.setText("Por Genero");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
         jMenu12.add(jMenuItem21);
 
         jMenu2.add(jMenu12);
@@ -573,6 +596,49 @@ public class Principal extends javax.swing.JFrame {
     consulta_listarepbycliente.show(); 
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        DejarDeSeguirUsuario dejar_seguir= new DejarDeSeguirUsuario();
+    
+
+    desktopPane.add(dejar_seguir,JLayeredPane.DEFAULT_LAYER);
+   dejar_seguir .setVisible(true);
+    dejar_seguir.setClosable(true);
+    dejar_seguir.setMaximizable(true);
+    dejar_seguir.setIconifiable(true);
+    dejar_seguir.setResizable(true);
+    dejar_seguir.toFront();
+    dejar_seguir.show(); 
+                                    
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+         ConsultaAlbumxGeneros consulta_album_bygenero= new ConsultaAlbumxGeneros();
+    
+
+    desktopPane.add(consulta_album_bygenero,JLayeredPane.DEFAULT_LAYER);
+   consulta_album_bygenero .setVisible(true);
+    consulta_album_bygenero.setClosable(true);
+    consulta_album_bygenero.setMaximizable(true);
+    consulta_album_bygenero.setIconifiable(true);
+    consulta_album_bygenero.setResizable(true);
+    consulta_album_bygenero.toFront();
+    consulta_album_bygenero.show(); 
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+       AltaGenero alta_genero= new AltaGenero();
+    
+
+    desktopPane.add(alta_genero,JLayeredPane.DEFAULT_LAYER);
+   alta_genero .setVisible(true);
+    alta_genero.setClosable(true);
+    alta_genero.setMaximizable(true);
+    alta_genero.setIconifiable(true);
+    alta_genero.setResizable(true);
+    alta_genero.toFront();
+    alta_genero.show(); 
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -644,6 +710,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

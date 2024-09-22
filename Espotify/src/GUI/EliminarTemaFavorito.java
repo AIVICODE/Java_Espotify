@@ -4,8 +4,12 @@
  */
 package GUI;
 
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,11 +18,9 @@ import javax.swing.JOptionPane;
  */
 public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form EliminarTemaFavorito
-     */
-    
-    Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();   
+    //Controlador control= new Controlador();
     public EliminarTemaFavorito() {
         initComponents();
         actualizarComboBoxClientes();
@@ -36,14 +38,16 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboArtistas = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtNombreAlbum = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        txtNombreTema = new javax.swing.JTextField();
+        comboAlbumes = new javax.swing.JComboBox<>();
+        comboTemas = new javax.swing.JComboBox<>();
+        botonC = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
@@ -57,7 +61,12 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboArtistas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboArtistas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboArtistasItemStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Nombre del cliente");
 
@@ -74,64 +83,86 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
             }
         });
 
+        comboAlbumes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboAlbumesItemStateChanged(evt);
+            }
+        });
+        comboAlbumes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAlbumesActionPerformed(evt);
+            }
+        });
+
+        botonC.setText("Cancelar");
+        botonC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel5.setText("Eliminar tema de favoritos");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addGap(184, 184, 184)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(33, 33, 33))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(85, 85, 85)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox2, 0, 147, Short.MAX_VALUE)
+                                    .addComponent(comboArtistas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboAlbumes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboTemas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(124, 124, 124)
+                                .addComponent(botonC)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addComponent(jButton1)))
+                        .addContainerGap(64, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(comboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(27, 27, 27)))
+                            .addComponent(comboAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addComponent(comboTemas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jButton1)
-                .addContainerGap())
+                    .addComponent(botonC)
+                    .addComponent(jButton1))
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,22 +188,71 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         String nombreCliente = (String) jComboBox2.getSelectedItem();
-       
-       String nombreArtista = (String) jComboBox1.getSelectedItem();
-       
-       String nombreAlbum = txtNombreAlbum.getText();
-       
-       String nombreTema = txtNombreTema.getText();
-       
-        try {
-            control.EliminarTemaFavorito(nombreCliente, nombreArtista, nombreAlbum,nombreTema);
+        try {                                         
+            String nicknameCliente = (String) jComboBox2.getSelectedItem();
+            
+            String nicknameArtista = (String) comboArtistas.getSelectedItem();
+            
+            String nombreAlbum = (String)comboAlbumes.getSelectedItem();
+            
+            String nombreTema = (String) comboTemas.getSelectedItem();
+            String correoCliente= control.ConvierteNick_A_Correo(nicknameCliente);
+            String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+            try {
+                control.EliminarTemaFavorito(correoCliente, correoArtista, nombreAlbum,nombreTema);
+                JOptionPane.showMessageDialog(null, "Tema eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            comboTemas.removeAllItems();
+            comboAlbumes.removeAllItems();
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+             Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboArtistasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboArtistasItemStateChanged
+        comboAlbumes.removeAllItems();
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+        try {
+            
+             String correoArtista= control.ConvierteNick_A_Correo((String) comboArtistas.getSelectedItem());
+            //llenar combo albumes
+            for(String s:control.listaAlbumesArtistaMail(correoArtista)){
+                comboAlbumes.addItem(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_comboArtistasItemStateChanged
+
+    private void comboAlbumesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboAlbumesItemStateChanged
+      if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+        try {
+            
+            //llenar combo temas
+            String correoArtista= control.ConvierteNick_A_Correo((String) comboArtistas.getSelectedItem());
+            comboTemas.removeAllItems();
+            for(String s:control.temasDeAlbumDeArtista((String)comboAlbumes.getSelectedItem(), correoArtista)){
+                comboTemas.addItem(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+    }//GEN-LAST:event_comboAlbumesItemStateChanged
+
+    private void botonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_botonCActionPerformed
+
+    private void comboAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlbumesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboAlbumesActionPerformed
 private void actualizarComboBoxClientes() {
-    List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     
     jComboBox2.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
@@ -181,24 +261,32 @@ private void actualizarComboBoxClientes() {
     }
 }
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
-    
-    jComboBox1.removeAllItems(); // Limpiamos los ítems actuales del comboBox
-    
-    for (String correo : correosArtistas) {
-        jComboBox1.addItem(correo); // Agregamos cada correo al comboBox
-    }
+        try {
+            String correoCliente= control.ConvierteNick_A_Correo((String) jComboBox2.getSelectedItem());
+            
+            
+            List<String> correosArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
+            
+            comboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
+            
+            for (String correo : correosArtistas) {
+                comboArtistas.addItem(correo); // Agregamos cada correo al comboBox
+            }   } catch (Exception ex) {
+            Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonC;
+    private javax.swing.JComboBox<String> comboAlbumes;
+    private javax.swing.JComboBox<String> comboArtistas;
+    private javax.swing.JComboBox<String> comboTemas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtNombreAlbum;
-    private javax.swing.JTextField txtNombreTema;
     // End of variables declaration//GEN-END:variables
 }

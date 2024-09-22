@@ -2,17 +2,20 @@
 package GUI;
 
 import Datatypes.DTCliente;
-import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
+//import Logica.Controlador;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class PublicarLista extends javax.swing.JInternalFrame {
-
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador controlador = fabrica.getIControlador();
     public PublicarLista() {
         initComponents();
-        Controlador controlador= new Controlador();  
+        //Controlador controlador= new Controlador();  
         List<DTCliente> listaClientesDT = controlador.listaClientesDT(); //pido los clientes
         for (DTCliente auxCd:listaClientesDT){//lleno el combobox con los nicks
             comboDT.addItem(auxCd.getNickname());
@@ -97,14 +100,14 @@ public class PublicarLista extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelar)
                     .addComponent(publicarBoton))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboDTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboDTItemStateChanged
-        Controlador controlador= new Controlador();        
+        //Controlador controlador= new Controlador();        
         comboListas.removeAllItems();//para que no se sumen en el combobox si se seleccionan varios clientes        
         DTCliente cliente = controlador.encontrarClientePorNickname((String) comboDT.getSelectedItem());//busco cliente seleccionado      
         //Guardo en una lista string los nombres de las listas privadas del cliente
@@ -115,13 +118,16 @@ public class PublicarLista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboDTItemStateChanged
 
     private void publicarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarBotonActionPerformed
-        Controlador controlador= new Controlador();
+        //Controlador controlador= new Controlador();
         try {
             controlador.publicarListaPrivada(((String)comboDT.getSelectedItem()), ((String)comboListas.getSelectedItem()));
+            JOptionPane.showMessageDialog(null, "Lista publicada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception ex) {
-            Logger.getLogger(PublicarLista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JOptionPane.showMessageDialog(null, "Lista publicada con exito!"); 
+            //Logger.getLogger(PublicarLista.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        comboListas.removeAllItems();//limpio el combo para no publicar dos veces la misma lista
     }//GEN-LAST:event_publicarBotonActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed

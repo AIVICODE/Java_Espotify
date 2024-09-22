@@ -7,6 +7,7 @@ public class DTArtista extends DTUsuario {
     private String biografia;
     private String sitioWeb;
 
+    public DTArtista(){ }
     public DTArtista(String nickname, String nombre, String apellido, String contrasenia, String imagen, Date fechaNac, String correo, String biografia, String sitioWeb) {
         super(nickname, nombre, apellido, correo, fechaNac, contrasenia,imagen);
         this.biografia = biografia;

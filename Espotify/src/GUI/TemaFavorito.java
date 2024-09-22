@@ -4,7 +4,9 @@
  */
 package GUI;
 
-import Logica.Controlador;
+//import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +21,9 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
     /**
      * Creates new form TemaFavorito
      */
-     Controlador control= new Controlador();
+    Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
+    //Controlador control= new Controlador();
     public TemaFavorito() {
         initComponents();
         actualizarComboBoxClientes();
@@ -50,10 +54,12 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        txtNombreTema = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         ComboArtistas = new javax.swing.JComboBox<>();
         ComboAlbum = new javax.swing.JComboBox<>();
+        comboTemas = new javax.swing.JComboBox<>();
+        botonCancelar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         jLabel1.setText("Nombre del Cliente");
 
@@ -89,51 +95,84 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
             }
         });
 
+        ComboAlbum.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboAlbumItemStateChanged(evt);
+            }
+        });
+
+        comboTemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTemasActionPerformed(evt);
+            }
+        });
+
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel5.setText("Agregar tema a favorito");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonCancelar)
+                .addGap(41, 41, 41)
+                .addComponent(jButton1)
+                .addGap(80, 80, 80))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(3, 3, 3)))
                         .addGap(82, 82, 82)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                            .addComponent(ComboAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboTemas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(ComboAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                    .addComponent(ComboAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                    .addComponent(comboTemas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(botonCancelar))
                 .addGap(20, 20, 20))
         );
 
@@ -168,26 +207,64 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
 }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombreCliente = (String) jComboBox2.getSelectedItem();
-       
-       String nombreArtista = (String) ComboArtistas.getSelectedItem();
-       
-       String nombreAlbum = (String) ComboAlbum.getSelectedItem();
-       
-       String nombreTema = txtNombreTema.getText();
-       
-         try {
-             control.GuardarTemaFavorito(nombreCliente, nombreArtista, nombreAlbum, nombreTema);
-         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        try {                                         
+            String nicknameCliente = (String) jComboBox2.getSelectedItem();
+            
+            String nicknameArtista = (String) ComboArtistas.getSelectedItem();
+            
+            String nombreAlbum = (String) ComboAlbum.getSelectedItem();
+            
+            String nombreTema = (String) comboTemas.getSelectedItem();
+            
+            
+            String correoCliente= control.ConvierteNick_A_Correo(nicknameCliente);
+            
+            String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+            
+            
+            try {
+                control.GuardarTemaFavorito(correoCliente, correoArtista, nombreAlbum, nombreTema);
+                JOptionPane.showMessageDialog(null, "Tema guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            //limpio ultimos combos despues de agregar fav
+            actualizarComboBoxArtistas();
+            ComboAlbum.removeAllItems();
+            comboTemas.removeAllItems();
+        } catch (Exception ex) {
+            Logger.getLogger(TemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
          }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ComboArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboArtistasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboArtistasActionPerformed
+
+    private void ComboAlbumItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboAlbumItemStateChanged
+        try {
+            comboTemas.removeAllItems();
+            
+            String correoArtista= control.ConvierteNick_A_Correo((String) ComboArtistas.getSelectedItem());
+            
+            for(String s:control.temasDeAlbumDeArtista((String) ComboAlbum.getSelectedItem(), correoArtista)){
+                comboTemas.addItem(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ComboAlbumItemStateChanged
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        this.dispose();//cierra la ventana 
+    }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void comboTemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTemasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTemasActionPerformed
 private void actualizarComboBoxClientes() {
-    List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     
     jComboBox2.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
@@ -196,15 +273,17 @@ private void actualizarComboBoxClientes() {
     }
 }
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+    List<String> nickArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
     
     ComboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
-    for (String correo : correosArtistas) {
-        ComboArtistas.addItem(correo); // Agregamos cada correo al comboBox
+    for (String nick : nickArtistas) {
+        ComboArtistas.addItem(nick); // Agregamos cada correo al comboBox
     }
 }
-private void actualizarComboBoxAlbumes(String correoArtista) throws Exception {
+private void actualizarComboBoxAlbumes(String nicknameArtista) throws Exception {
+                String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+
     List<String> nombresAlbumes = control.ListaAlbumesParaArtista(correoArtista); // Obtenemos la lista de álbumes
     
     ComboAlbum.removeAllItems(); // Limpiamos los ítems actuales del comboBox
@@ -216,13 +295,15 @@ private void actualizarComboBoxAlbumes(String correoArtista) throws Exception {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboAlbum;
     private javax.swing.JComboBox<String> ComboArtistas;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.JComboBox<String> comboTemas;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtNombreTema;
     // End of variables declaration//GEN-END:variables
 }

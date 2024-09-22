@@ -105,7 +105,7 @@ public class Cliente extends Usuario implements Serializable {
 
    
     public List<ListaRep> getListaRepFavoritos() {
-        return listaRepFavoritos;
+        return this.listaRepFavoritos;
     }
 
     public void setListaRepFavoritos(List<ListaRep> listaRepFavoritos) {

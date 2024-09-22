@@ -10,7 +10,8 @@ public class DTUsuario {
     protected String correo, imagen;
     protected Date fechaNac;
     private List<String> listaUsuariosFavoritos;
-
+    
+    public DTUsuario() {}
     public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia,String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
@@ -19,9 +20,6 @@ public class DTUsuario {
         this.fechaNac = fechaNac;
         this.contrasenia = contrasenia;
         this.imagen= imagen;
-    }
-
-    public DTUsuario() {
     }
 
     public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia, List<String> listaUsuariosFavoritos) {
