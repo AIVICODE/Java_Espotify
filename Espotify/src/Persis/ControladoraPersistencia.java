@@ -35,7 +35,12 @@ public class ControladoraPersistencia {
     }
     
     public void AddGenero(Genero gen) throws Exception {
+        try{
         genjpa.create(gen);
+        }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ha ocurrido un error al intentar crear el Genero: " + gen.getNombre(), e);
+    }
     }
     
     public Genero findGenerobynombre(String nombre)  {

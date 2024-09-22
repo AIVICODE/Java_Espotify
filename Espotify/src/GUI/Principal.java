@@ -57,6 +57,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -152,6 +153,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem4);
 
         jMenu2.add(jMenu3);
+
+        jMenuItem25.setText("Alta de Genero");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem25);
 
         AltaAlbum.setText("AltaAlbum");
         AltaAlbum.addActionListener(new java.awt.event.ActionListener() {
@@ -616,6 +625,20 @@ public class Principal extends javax.swing.JFrame {
     consulta_album_bygenero.show(); 
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+       AltaGenero alta_genero= new AltaGenero();
+    
+
+    desktopPane.add(alta_genero,JLayeredPane.DEFAULT_LAYER);
+   alta_genero .setVisible(true);
+    alta_genero.setClosable(true);
+    alta_genero.setMaximizable(true);
+    alta_genero.setIconifiable(true);
+    alta_genero.setResizable(true);
+    alta_genero.toFront();
+    alta_genero.show(); 
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -688,6 +711,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

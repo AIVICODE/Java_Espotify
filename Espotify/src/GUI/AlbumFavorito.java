@@ -70,7 +70,6 @@ public class AlbumFavorito extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Seleccione artista");
 
-        ComboCorreoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboCorreoCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ComboCorreoClienteItemStateChanged(evt);
@@ -82,7 +81,6 @@ public class AlbumFavorito extends javax.swing.JInternalFrame {
             }
         });
 
-        ComboArtistas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboArtistas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboArtistasActionPerformed(evt);

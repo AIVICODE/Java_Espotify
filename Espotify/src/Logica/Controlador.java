@@ -95,6 +95,10 @@ public class Controlador implements IControlador {
 
     public void CrearGenero(String nombre, String nombrePadre) throws Exception {
         // Buscar el género padre en la base de datos
+        
+        if(controlpersis.findGenerobynombre(nombre)!=null){
+        throw new Exception("El género con nombre : " + nombre+" Ya existe");
+        }
         Genero padre = null;
         if (nombrePadre != null && !nombrePadre.isEmpty()) {
             padre = controlpersis.findGenerobynombre(nombrePadre);
