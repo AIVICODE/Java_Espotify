@@ -168,18 +168,23 @@ public class ConsultaListaRep_Cliente extends javax.swing.JInternalFrame {
 
     private void comboCliItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCliItemStateChanged
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-        String correoSeleccionado = (String) comboCli.getSelectedItem();
-        
-        // Invocar la operación para obtener las listas del cliente
-        List<DTListaRep> listasCliente = control.obtenerDTListaPorCliente(correoSeleccionado);
-        
-        // Crear un array con los nombres de las listas
-        String[] nombresListas = listasCliente.stream()
-                                .map(DTListaRep::getNombreListaRep) // Obtener el nombre de cada lista
-                                .toArray(String[]::new);
-        
-        // Actualizar el JList con los nombres de las listas
-        ListasDeRep.setListData(nombresListas);
+            try {
+                String nicknameSeleccionado = (String) comboCli.getSelectedItem();
+                String correoSeleccionado= control.ConvierteNick_A_Correo(nicknameSeleccionado);
+                
+                // Invocar la operación para obtener las listas del cliente
+                List<DTListaRep> listasCliente = control.obtenerDTListaPorCliente(correoSeleccionado);
+                
+                // Crear un array con los nombres de las listas
+                String[] nombresListas = listasCliente.stream()
+                        .map(DTListaRep::getNombreListaRep) // Obtener el nombre de cada lista
+                        .toArray(String[]::new);
+                
+                // Actualizar el JList con los nombres de las listas
+                ListasDeRep.setListData(nombresListas);
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(ConsultaListaRep_Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
     }
     }//GEN-LAST:event_comboCliItemStateChanged
 
@@ -192,52 +197,58 @@ public class ConsultaListaRep_Cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
 private void actualizarComboBoxCliente() {
-    List<String> correosArtistas= control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosCli= control.nicksClientes(); // Obtenemos la lista de correos
     
 comboCli.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
-    for (String correo : correosArtistas) {
+    for (String correo : correosCli) {
        comboCli.addItem(correo); // Agregamos cada correo al comboBox
     }
 }
 
 
   private void actualizarTemas() {
-    String nombreListaSeleccionada = ListasDeRep.getSelectedValue();
-    String correoSeleccionado = (String) comboCli.getSelectedItem();
-
-    if (nombreListaSeleccionada != null && correoSeleccionado != null) {
         try {
-            DTListaRep dtListaRep = control.obtenerDatosDeLista_Por_Cliente(correoSeleccionado, nombreListaSeleccionada);
-
-            if (dtListaRep != null) {
-                List<String> datosTemas = new ArrayList<>();
-                for (DTTema tema : dtListaRep.getTemas()) {
-                    datosTemas.add(String.format("%s - %d:%d", tema.getNombre(), tema.getMinutos(), tema.getSegundos()));
+            String nombreListaSeleccionada = ListasDeRep.getSelectedValue();
+            String nicknameSeleccionado = (String) comboCli.getSelectedItem();
+            
+            String correoSeleccionado= control.ConvierteNick_A_Correo(nicknameSeleccionado);
+            
+            
+            if (nombreListaSeleccionada != null && correoSeleccionado != null) {
+                try {
+                    DTListaRep dtListaRep = control.obtenerDatosDeLista_Por_Cliente(correoSeleccionado, nombreListaSeleccionada);
+                    
+                    if (dtListaRep != null) {
+                        List<String> datosTemas = new ArrayList<>();
+                        for (DTTema tema : dtListaRep.getTemas()) {
+                            datosTemas.add(String.format("%s - %d:%d", tema.getNombre(), tema.getMinutos(), tema.getSegundos()));
+                        }
+                        TemasDeLista.setListData(datosTemas.toArray(new String[0]));
+                        
+                        // Actualizar el enlace del primer tema al inicio
+                        String enlace = dtListaRep.getTemas().get(0).getDirectorio();
+                        if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
+                            enlace = "http://" + enlace;
+                        }
+                        Enlace.putClientProperty("directorio", enlace);
+                        Enlace.setText(enlace);
+                        Enlace.setVisible(true);
+                    } else {
+                        System.out.println("No se encontraron datos para la lista seleccionada.");
+                        TemasDeLista.setListData(new String[0]); // Limpiar la lista de temas
+                        Enlace.setVisible(false);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-                TemasDeLista.setListData(datosTemas.toArray(new String[0]));
-
-                // Actualizar el enlace del primer tema al inicio
-                String enlace = dtListaRep.getTemas().get(0).getDirectorio();
-                if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
-                    enlace = "http://" + enlace;
-                }
-                Enlace.putClientProperty("directorio", enlace);
-                Enlace.setText(enlace);
-                Enlace.setVisible(true);
             } else {
-                System.out.println("No se encontraron datos para la lista seleccionada.");
+                System.out.println("No se ha seleccionado ninguna lista o cliente.");
                 TemasDeLista.setListData(new String[0]); // Limpiar la lista de temas
                 Enlace.setVisible(false);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            }   } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(ConsultaListaRep_Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } else {
-        System.out.println("No se ha seleccionado ninguna lista o cliente.");
-        TemasDeLista.setListData(new String[0]); // Limpiar la lista de temas
-        Enlace.setVisible(false);
-    }
 }
 
 

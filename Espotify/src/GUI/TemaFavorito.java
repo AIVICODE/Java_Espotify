@@ -101,6 +101,12 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
             }
         });
 
+        comboTemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTemasActionPerformed(evt);
+            }
+        });
+
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,25 +207,35 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
 }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombreCliente = (String) jComboBox2.getSelectedItem();
-       
-        String nombreArtista = (String) ComboArtistas.getSelectedItem();
-       
-        String nombreAlbum = (String) ComboAlbum.getSelectedItem();
-       
-        String nombreTema = (String) comboTemas.getSelectedItem();
-       
-        try {
-            control.GuardarTemaFavorito(nombreCliente, nombreArtista, nombreAlbum, nombreTema);
-                                                   JOptionPane.showMessageDialog(null, "Tema guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        try {                                         
+            String nicknameCliente = (String) jComboBox2.getSelectedItem();
+            
+            String nicknameArtista = (String) ComboArtistas.getSelectedItem();
+            
+            String nombreAlbum = (String) ComboAlbum.getSelectedItem();
+            
+            String nombreTema = (String) comboTemas.getSelectedItem();
+            
+            
+            String correoCliente= control.ConvierteNick_A_Correo(nicknameCliente);
+            
+            String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+            
+            
+            try {
+                control.GuardarTemaFavorito(correoCliente, correoArtista, nombreAlbum, nombreTema);
+                JOptionPane.showMessageDialog(null, "Tema guardado como favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            //limpio ultimos combos despues de agregar fav
+            actualizarComboBoxArtistas();
+            ComboAlbum.removeAllItems();
+            comboTemas.removeAllItems();
+        } catch (Exception ex) {
+            Logger.getLogger(TemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
          }
-        //limpio ultimos combos despues de agregar fav
-        actualizarComboBoxArtistas();
-        ComboAlbum.removeAllItems();
-        comboTemas.removeAllItems();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ComboArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboArtistasActionPerformed
@@ -227,17 +243,28 @@ public class TemaFavorito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ComboArtistasActionPerformed
 
     private void ComboAlbumItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboAlbumItemStateChanged
-        comboTemas.removeAllItems();
-        for(String s:control.temasDeAlbumDeArtista((String) ComboAlbum.getSelectedItem(), (String) ComboArtistas.getSelectedItem())){
-            comboTemas.addItem(s);
+        try {
+            comboTemas.removeAllItems();
+            
+            String correoArtista= control.ConvierteNick_A_Correo((String) ComboArtistas.getSelectedItem());
+            
+            for(String s:control.temasDeAlbumDeArtista((String) ComboAlbum.getSelectedItem(), correoArtista)){
+                comboTemas.addItem(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ComboAlbumItemStateChanged
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         this.dispose();//cierra la ventana 
     }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void comboTemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTemasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTemasActionPerformed
 private void actualizarComboBoxClientes() {
-    List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     
     jComboBox2.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
@@ -246,15 +273,17 @@ private void actualizarComboBoxClientes() {
     }
 }
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
+    List<String> nickArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
     
     ComboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
-    for (String correo : correosArtistas) {
-        ComboArtistas.addItem(correo); // Agregamos cada correo al comboBox
+    for (String nick : nickArtistas) {
+        ComboArtistas.addItem(nick); // Agregamos cada correo al comboBox
     }
 }
-private void actualizarComboBoxAlbumes(String correoArtista) throws Exception {
+private void actualizarComboBoxAlbumes(String nicknameArtista) throws Exception {
+                String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+
     List<String> nombresAlbumes = control.ListaAlbumesParaArtista(correoArtista); // Obtenemos la lista de álbumes
     
     ComboAlbum.removeAllItems(); // Limpiamos los ítems actuales del comboBox

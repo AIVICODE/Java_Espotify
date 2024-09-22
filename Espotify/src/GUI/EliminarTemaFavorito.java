@@ -88,6 +88,11 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
                 comboAlbumesItemStateChanged(evt);
             }
         });
+        comboAlbumes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAlbumesActionPerformed(evt);
+            }
+        });
 
         botonC.setText("Cancelar");
         botonC.addActionListener(new java.awt.event.ActionListener() {
@@ -183,50 +188,71 @@ public class EliminarTemaFavorito extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         String nombreCliente = (String) jComboBox2.getSelectedItem();
-       
-       String nombreArtista = (String) comboArtistas.getSelectedItem();
-       
-       String nombreAlbum = (String)comboAlbumes.getSelectedItem();
-       
-       String nombreTema = (String) comboTemas.getSelectedItem();
-       
-        try {
-            control.EliminarTemaFavorito(nombreCliente, nombreArtista, nombreAlbum,nombreTema);
-                                      JOptionPane.showMessageDialog(null, "Tema eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
+        try {                                         
+            String nicknameCliente = (String) jComboBox2.getSelectedItem();
+            
+            String nicknameArtista = (String) comboArtistas.getSelectedItem();
+            
+            String nombreAlbum = (String)comboAlbumes.getSelectedItem();
+            
+            String nombreTema = (String) comboTemas.getSelectedItem();
+            String correoCliente= control.ConvierteNick_A_Correo(nicknameCliente);
+            String correoArtista= control.ConvierteNick_A_Correo(nicknameArtista);
+            try {
+                control.EliminarTemaFavorito(correoCliente, correoArtista, nombreAlbum,nombreTema);
+                JOptionPane.showMessageDialog(null, "Tema eliminado de favorito exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            comboTemas.removeAllItems();
+            comboAlbumes.removeAllItems();
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+             Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
-        comboTemas.removeAllItems();
-        comboAlbumes.removeAllItems();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboArtistasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboArtistasItemStateChanged
         comboAlbumes.removeAllItems();
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
         try {
+            
+             String correoArtista= control.ConvierteNick_A_Correo((String) comboArtistas.getSelectedItem());
             //llenar combo albumes
-            for(String s:control.listaAlbumesArtistaMail((String) comboArtistas.getSelectedItem())){
+            for(String s:control.listaAlbumesArtistaMail(correoArtista)){
                 comboAlbumes.addItem(s);
             }
         } catch (Exception ex) {
             Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
     }//GEN-LAST:event_comboArtistasItemStateChanged
 
     private void comboAlbumesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboAlbumesItemStateChanged
-//llenar combo temas
-        comboTemas.removeAllItems();
-        for(String s:control.temasDeAlbumDeArtista((String)comboAlbumes.getSelectedItem(), (String)comboArtistas.getSelectedItem())){
-            comboTemas.addItem(s);
+      if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+        try {
+            
+            //llenar combo temas
+            String correoArtista= control.ConvierteNick_A_Correo((String) comboArtistas.getSelectedItem());
+            comboTemas.removeAllItems();
+            for(String s:control.temasDeAlbumDeArtista((String)comboAlbumes.getSelectedItem(), correoArtista)){
+                comboTemas.addItem(s);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
         }
+      }
     }//GEN-LAST:event_comboAlbumesItemStateChanged
 
     private void botonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCActionPerformed
         this.dispose();
     }//GEN-LAST:event_botonCActionPerformed
+
+    private void comboAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAlbumesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboAlbumesActionPerformed
 private void actualizarComboBoxClientes() {
-    List<String> correosClientes = control.MostrarNombreClientes(); // Obtenemos la lista de correos
+    List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     
     jComboBox2.removeAllItems(); // Limpiamos los ítems actuales del comboBox
     
@@ -235,13 +261,19 @@ private void actualizarComboBoxClientes() {
     }
 }
 private void actualizarComboBoxArtistas() {
-    List<String> correosArtistas= control.MostrarNombreArtistas(); // Obtenemos la lista de correos
-    
-    comboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
-    
-    for (String correo : correosArtistas) {
-        comboArtistas.addItem(correo); // Agregamos cada correo al comboBox
-    }
+        try {
+            String correoCliente= control.ConvierteNick_A_Correo((String) jComboBox2.getSelectedItem());
+            
+            
+            List<String> correosArtistas= control.nicknamesDeTodosLosArtistas(); // Obtenemos la lista de correos
+            
+            comboArtistas.removeAllItems(); // Limpiamos los ítems actuales del comboBox
+            
+            for (String correo : correosArtistas) {
+                comboArtistas.addItem(correo); // Agregamos cada correo al comboBox
+            }   } catch (Exception ex) {
+            Logger.getLogger(EliminarTemaFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonC;

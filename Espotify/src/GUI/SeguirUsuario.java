@@ -7,6 +7,8 @@ package GUI;
 
 import Logica.Controlador;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,12 +28,11 @@ initComponents();
         comboSeguidor.addActionListener(evt -> actualizarNicknameSeguidor());
 //        comboSeguido.addActionListener(evt -> actualizarNicknameSeguido());
 
-        txtSeguidor.setVisible(false);
-        txtSeguido.setVisible(false);
+
     }
     private void cargaComboSeguidor() {
         comboSeguidor.removeAllItems();
-        List<String> correosClientes = control.MostrarNombreClientes();
+        List<String> correosClientes = control.nicksClientes();
         for (String correo : correosClientes) {
             comboSeguidor.addItem(correo);
         }
@@ -39,8 +40,8 @@ initComponents();
 
     private void cargaComboSeguido() {
         comboSeguido.removeAllItems();
-        List<String> correosClientes = control.MostrarNombreClientes();
-        List<String> correosArtistas = control.MostrarNombreArtistas();
+        List<String> correosClientes = control.nicksClientes();
+        List<String> correosArtistas = control.nicknamesDeTodosLosArtistas();
 
         for (String correo : correosClientes) {
             comboSeguido.addItem(correo);
@@ -50,11 +51,15 @@ initComponents();
         }
     }
   private void actualizarNicknameSeguidor() {
-        String correoSeguidor = (String) comboSeguidor.getSelectedItem();
-        if (correoSeguidor != null) {
-            String nicknameSeguidor = control.encontrarNicknameCliente(correoSeguidor);
-            txtSeguidor.setText(nicknameSeguidor != null ? nicknameSeguidor : "Desconocido");
-            txtSeguidor.setVisible(true);
+        try {
+            String correoSeguidor= control.ConvierteNick_A_Correo((String) comboSeguidor.getSelectedItem());
+            if (correoSeguidor != null) {
+               
+                String nicknameSeguidor = control.encontrarNicknameCliente(correoSeguidor);
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SeguirUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -81,10 +86,6 @@ initComponents();
         comboSeguido = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        txtSeguidor = new javax.swing.JLabel();
-        txtSeguido = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         label_Seguidor.setText("Seguidor");
@@ -123,14 +124,6 @@ initComponents();
             }
         });
 
-        jLabel1.setText("Nickname");
-
-        txtSeguidor.setText("...");
-
-        txtSeguido.setText("...");
-
-        jLabel3.setText("Nickname");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel2.setText("Seguir usuario");
 
@@ -138,16 +131,6 @@ initComponents();
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtSeguidor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSeguido)
-                    .addComponent(jLabel3))
-                .addGap(134, 134, 134))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addComponent(label_Seguidor)
@@ -184,15 +167,7 @@ initComponents();
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboSeguidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboSeguido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSeguidor)
-                    .addComponent(txtSeguido))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
@@ -236,13 +211,20 @@ initComponents();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String mailSeguidor = (String) comboSeguidor.getSelectedItem();
-        String mailSeguido = (String) comboSeguido.getSelectedItem();
-        try {
-            control.seguirUsuario(mailSeguidor, mailSeguido);
-            JOptionPane.showMessageDialog(this, "Ahora " + txtSeguidor.getText() + " sigue al usuario " + txtSeguido.getText() + " ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        try {                                           
+            String mailSeguidor = (String) comboSeguidor.getSelectedItem();
+            String mailSeguido = (String) comboSeguido.getSelectedItem();
+            
+            String correoSeguidor= control.ConvierteNick_A_Correo((String) comboSeguidor.getSelectedItem());
+            String correoSeguido= control.ConvierteNick_A_Correo((String) comboSeguido.getSelectedItem());
+            try {
+                control.seguirUsuario(correoSeguidor, correoSeguido);
+                JOptionPane.showMessageDialog(this, "Ahora " +(String) comboSeguidor.getSelectedItem() + " sigue al usuario " + (String) comboSeguido.getSelectedItem() + " ", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SeguirUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -252,13 +234,9 @@ initComponents();
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> comboSeguido;
     private javax.swing.JComboBox<String> comboSeguidor;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label_Seguido;
     private javax.swing.JLabel label_Seguidor;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JLabel txtSeguido;
-    private javax.swing.JLabel txtSeguidor;
     // End of variables declaration//GEN-END:variables
 }
