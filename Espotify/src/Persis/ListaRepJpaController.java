@@ -4,7 +4,9 @@
  */
 package Persis;
 
+import Logica.Genero;
 import Logica.ListaRep;
+import Logica.ListaRepGeneral;
 import Persis.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -155,5 +158,34 @@ public class ListaRepJpaController implements Serializable {
         em.close();
     }
 }
+    
+    public ListaRepGeneral findListaRep_Por_Defecto_ByNombre(String nombreLista) throws Exception {
+    EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL para buscar solo listas generales (ListaRepGeneral) por nombre
+        Query query = em.createQuery("SELECT l FROM ListaRepGeneral l WHERE l.nombre = :nombre");
+        query.setParameter("nombre", nombreLista);
+
+        // Utilizamos getSingleResult() para obtener la lista general
+        return (ListaRepGeneral) query.getSingleResult();
+    } catch (NoResultException e) {
+        // Si no se encuentra la lista, lanzamos una excepción específica
+        throw new Exception("No se encuentra la lista general con el nombre: " + nombreLista, e);
+    } finally {
+        em.close();
+    }
+}
+    
+    public List<ListaRepGeneral> findListasRepGeneralByGenero(Genero genero) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<ListaRepGeneral> query = em.createQuery(
+                "SELECT l FROM ListaRepGeneral l WHERE l.genero = :genero", ListaRepGeneral.class);
+            query.setParameter("genero", genero);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
     
 }

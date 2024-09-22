@@ -5,6 +5,8 @@ import Logica.Artista;
 import Logica.Cliente;
 import Logica.Genero;
 import Logica.ListaRep;
+import Logica.ListaRepGeneral;
+import Logica.ListaRepParticular;
 import Logica.Tema;
 import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class ControladoraPersistencia {
     AlbumJpaController albjpa = new AlbumJpaController();
     TemaJpaController temajpa = new TemaJpaController();
     ListaRepJpaController listjpa = new ListaRepJpaController();
+    FavoritosJpaController favjpa = new  FavoritosJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -32,7 +35,12 @@ public class ControladoraPersistencia {
     }
     
     public void AddGenero(Genero gen) throws Exception {
+        try{
         genjpa.create(gen);
+        }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ha ocurrido un error al intentar crear el Genero: " + gen.getNombre(), e);
+    }
     }
     
     public Genero findGenerobynombre(String nombre)  {
@@ -117,8 +125,13 @@ public void crearAlbum(Album album) throws Exception {
         albjpa.edit(album);
     }
 
-    public Artista findArtistaByCorreo(String correo) {
+    public Artista findArtistaByCorreo(String correo) throws Exception {
+        try{
         return artjpa.findArtista(correo);
+        }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("No se encuentra el Artista: " + correo, e);
+    }
     }
 
     public Cliente findClienteByCorreo(String correoCliente) {
@@ -133,7 +146,7 @@ public void crearAlbum(Album album) throws Exception {
         clijpa.edit(cliente);
     }
 
-    public Album findAlbumByNombre(String recurso) throws Exception{
+    public List<Album> findAlbumByNombre(String recurso) throws Exception{
         
            try {
         return albjpa.findAlbumByName(recurso);
@@ -143,6 +156,8 @@ public void crearAlbum(Album album) throws Exception {
     }
         
     }
+    
+    
 
     public ListaRep findListaRepByNombre(String recurso) throws Exception{
         try {
@@ -152,7 +167,16 @@ public void crearAlbum(Album album) throws Exception {
         throw new Exception("No se encuentra el nombre de la lista de reproduccion: " +recurso, e);
     }
     }
-    
+        public Album findOneAlbumByNombre(String recurso) throws Exception{
+        
+           try {
+        return albjpa.findOneAlbumByName(recurso);
+    }catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("No se encuentra el nombre del album: " +recurso, e);
+    }
+        
+    }
     
     public List<Cliente> listaClientes (){
         return clijpa.findClienteEntities(); //me devuelve una lista con todos los clientes de la BD para mostrarlos de ahi
@@ -169,4 +193,77 @@ public void crearAlbum(Album album) throws Exception {
         return artjpa.findArtista(mail);//devuelvo el artista
     }
 
+    public ListaRepGeneral findListaRep_Por_Defecto_ByNombre(String nombreLista) throws Exception {
+        return listjpa.findListaRep_Por_Defecto_ByNombre(nombreLista);
+    }
+
+public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede ser que la tenga q cambiar a particular
+        listjpa.edit(lista);//le ando la lista hecha publica
+    } 
+
+     public Album findAlbumId(Long id){
+        
+        return albjpa.findAlbum(id);
+    }
+
+   public List<ListaRepGeneral> buscarListasPorGenero(String selectedGenero) {
+    // Obtener el género desde la base de datos
+    Genero genero = genjpa.findGenero(selectedGenero);
+    if (genero == null) {
+        throw new IllegalArgumentException("El género con nombre '" + selectedGenero + "' no existe.");
+    }
+
+    // Buscar listas de reproducción generales asociadas al género
+    return listjpa.findListasRepGeneralByGenero(genero);
+}
+
+    public String NicknameCliente(String string) {
+       Cliente cli = clijpa.findCliente(string);//devuelvo el artista
+        return cli.getNickname();
+    }
+
+    public String NicknameArtista(String string) {
+       Artista art = artjpa.findArtista(string);//devuelvo el artista
+        return art.getNickname();
+    }
+
+    public Cliente findClienteByNickname(String nickname) throws Exception {
+        try{
+       return clijpa.findClienteByNickname(nickname);
+        }
+       catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ocurrio un error con el nickname: "+nickname);
+    }
+        
+    }
+
+    public Artista findArtistaByNickname(String nickname) throws Exception {
+        try{
+    return artjpa.findArtistaByNickname(nickname); // Llama al método del controlador de persistencia
+    }
+       catch (Exception e) {
+        // Captura cualquier otra excepción y lanza una nueva excepción general
+        throw new Exception("Ocurrio un error con el nickname: "+nickname);
+    }
+    }
+
+public Artista encontrarArtistaPorNickname(String nickname) {
+    return artjpa.findArtistaByNickname(nickname); // Llama al método del controlador de persistencia
+}
+     
+    public List<ListaRep> listas(){
+        return listjpa.findListaRepEntities();
+    }
+    
+    
+    
+        public List<Genero> listaGeneros (){
+        return genjpa.findGeneroEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
+    }
+    
+    
+    public List<Album> listaAlbumes(){
+        return albjpa.findAlbumEntities(); //me devuelve una lista con todos los albumes de la BD para mostrarlos de ahi
+    }
 }

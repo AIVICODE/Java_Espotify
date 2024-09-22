@@ -3,6 +3,7 @@ package Logica;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.OneToMany;
@@ -39,6 +40,24 @@ public class Artista extends Usuario implements Serializable {
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
         this.imagen = imagen;
+    }
+
+
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public Date getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
     }
 
     
@@ -117,5 +136,25 @@ public class Artista extends Usuario implements Serializable {
 
     public List<Album> getAlbumes() {
         return albumes;
+    }
+    
+     @Override
+    public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Artista artista = (Artista) o;
+    return Objects.equals(mail, artista.mail);  // Compara por correo
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(mail);  // Utiliza el correo como base para el hash
+    }
+    
+    
+        public Album buscarAlbumPorNombre(String nombreAlbum) throws Exception {
+        return albumes.stream()
+            .filter(album -> album.getNombre().equalsIgnoreCase(nombreAlbum))
+            .findFirst()
+            .orElseThrow(() -> new Exception("Álbum '" + nombreAlbum + "' no encontrado para el artista " + this.getNombre()));
     }
 }

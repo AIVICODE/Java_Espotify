@@ -39,6 +39,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -47,14 +57,53 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenu11 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenu12 = new javax.swing.JMenu();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenu13 = new javax.swing.JMenu();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
         jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem8.setText("jMenuItem8");
+
+        jMenuItem9.setText("jMenuItem9");
+
+        jMenu4.setText("File");
+        jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("Edit");
+        jMenuBar2.add(jMenu5);
+
+        jMenuItem10.setText("jMenuItem10");
+
+        jMenu6.setText("File");
+        jMenuBar3.add(jMenu6);
+
+        jMenu7.setText("Edit");
+        jMenuBar3.add(jMenu7);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +154,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.add(jMenu3);
 
+        jMenuItem25.setText("Alta de Genero");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem25);
+
         AltaAlbum.setText("AltaAlbum");
         AltaAlbum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,13 +170,45 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(AltaAlbum);
 
-        jMenuItem5.setText("AltaFavoritos");
+        jMenu8.setText("Agregar Favorito");
+
+        jMenuItem11.setText("Album");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem11);
+
+        jMenuItem12.setText("Tema");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem12);
+
+        jMenu9.setText("Lista de reproduccion");
+
+        jMenuItem13.setText("Lista de Rep particular");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem13);
+
+        jMenuItem5.setText("Lista por defecto");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu9.add(jMenuItem5);
+
+        jMenu8.add(jMenu9);
+
+        jMenu2.add(jMenu8);
 
         jMenuItem6.setText("Consulta Artista");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -136,6 +225,110 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
+
+        jMenuItem14.setText("Seguir Usuario");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem14);
+
+        jMenuItem24.setText("Dejar de seguir Usuario");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem24);
+
+        jMenu10.setText("Eliminar Favorito");
+
+        jMenuItem15.setText("Album");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem15);
+
+        jMenuItem16.setText("Tema");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem16);
+
+        jMenu11.setText("Lista de rep");
+
+        jMenuItem18.setText("Particular");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem18);
+
+        jMenuItem19.setText("Por Defecto");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem19);
+
+        jMenu10.add(jMenu11);
+
+        jMenu2.add(jMenu10);
+
+        jMenuItem17.setText("Publicar Lista");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem17);
+
+        jMenu12.setText("ConsultaAlbum");
+
+        jMenuItem20.setText("Por Artista");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem20);
+
+        jMenuItem21.setText("Por Genero");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem21);
+
+        jMenu2.add(jMenu12);
+
+        jMenu13.setText("ConsultaListaRep");
+
+        jMenuItem22.setText("Por Cliente");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem22);
+
+        jMenuItem23.setText("Por Genero");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem23);
+
+        jMenu2.add(jMenu13);
 
         jMenuBar1.add(jMenu2);
 
@@ -193,20 +386,6 @@ public class Principal extends javax.swing.JFrame {
     altaAlbum.show();
     }//GEN-LAST:event_AltaAlbumActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        GuardarTema_Lista_Album altafav = new GuardarTema_Lista_Album();
-    
-
-    desktopPane.add(altafav,JLayeredPane.DEFAULT_LAYER);
-    altafav.setVisible(true);
-    altafav.setClosable(true);
-    altafav.setMaximizable(true);
-    altafav.setIconifiable(true);
-    altafav.setResizable(true);
-    altafav.toFront();
-    altafav.show(); 
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         ConsultaPerfilArtista consulta_artista = new ConsultaPerfilArtista();
     
@@ -234,6 +413,231 @@ public class Principal extends javax.swing.JFrame {
     consulta_cliente.toFront();
     consulta_cliente.show(); 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        TemaFavorito tema_favorito = new TemaFavorito();
+    
+
+    desktopPane.add(tema_favorito,JLayeredPane.DEFAULT_LAYER);
+    tema_favorito.setVisible(true);
+    tema_favorito.setClosable(true);
+    tema_favorito.setMaximizable(true);
+    tema_favorito.setIconifiable(true);
+    tema_favorito.setResizable(true);
+    tema_favorito.toFront();
+    tema_favorito.show(); 
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        AlbumFavorito album_favorito = new AlbumFavorito();
+    
+
+    desktopPane.add(album_favorito,JLayeredPane.DEFAULT_LAYER);
+    album_favorito.setVisible(true);
+    album_favorito.setClosable(true);
+    album_favorito.setMaximizable(true);
+    album_favorito.setIconifiable(true);
+    album_favorito.setResizable(true);
+    album_favorito.toFront();
+    album_favorito.show(); 
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        ListaDeRepFavorito lista_favorito = new ListaDeRepFavorito();
+    
+
+    desktopPane.add(lista_favorito,JLayeredPane.DEFAULT_LAYER);
+    lista_favorito.setVisible(true);
+    lista_favorito.setClosable(true);
+    lista_favorito.setMaximizable(true);
+    lista_favorito.setIconifiable(true);
+    lista_favorito.setResizable(true);
+    lista_favorito.toFront();
+    lista_favorito.show(); 
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       ListaDeRep_Por_Default_Favorito lista_favorito = new ListaDeRep_Por_Default_Favorito();
+    
+
+    desktopPane.add(lista_favorito,JLayeredPane.DEFAULT_LAYER);
+    lista_favorito.setVisible(true);
+    lista_favorito.setClosable(true);
+    lista_favorito.setMaximizable(true);
+    lista_favorito.setIconifiable(true);
+    lista_favorito.setResizable(true);
+    lista_favorito.toFront();
+    lista_favorito.show(); 
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        SeguirUsuario seguir_user = new SeguirUsuario();
+    
+
+    desktopPane.add(seguir_user ,JLayeredPane.DEFAULT_LAYER);
+    seguir_user .setVisible(true);
+    seguir_user .setClosable(true);
+    seguir_user .setMaximizable(true);
+    seguir_user .setIconifiable(true);
+    seguir_user .setResizable(true);
+    seguir_user .toFront();
+    seguir_user .show(); 
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        EliminarAlbumFavorito eliminar_album = new EliminarAlbumFavorito();
+    
+
+    desktopPane.add(eliminar_album ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_album .setVisible(true);
+    eliminar_album .setClosable(true);
+    eliminar_album .setMaximizable(true);
+    eliminar_album .setIconifiable(true);
+    eliminar_album .setResizable(true);
+    eliminar_album .toFront();
+    eliminar_album .show(); 
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        EliminarTemaFavorito eliminar_tema = new EliminarTemaFavorito();
+    
+
+    desktopPane.add(eliminar_tema ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_tema .setVisible(true);
+    eliminar_tema .setClosable(true);
+    eliminar_tema .setMaximizable(true);
+    eliminar_tema .setIconifiable(true);
+    eliminar_tema .setResizable(true);
+    eliminar_tema .toFront();
+    eliminar_tema .show(); 
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+         EliminarListaRepFavorito eliminar_listarep = new EliminarListaRepFavorito();
+    
+
+    desktopPane.add(eliminar_listarep ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_listarep .setVisible(true);
+    eliminar_listarep .setClosable(true);
+    eliminar_listarep .setMaximizable(true);
+    eliminar_listarep .setIconifiable(true);
+    eliminar_listarep .setResizable(true);
+    eliminar_listarep .toFront();
+    eliminar_listarep .show(); 
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        EliminarListaRep_Por_Defecto_Favorito eliminar_listarep_por_defecto = new EliminarListaRep_Por_Defecto_Favorito();
+    
+
+    desktopPane.add(eliminar_listarep_por_defecto ,JLayeredPane.DEFAULT_LAYER);
+    eliminar_listarep_por_defecto .setVisible(true);
+    eliminar_listarep_por_defecto .setClosable(true);
+    eliminar_listarep_por_defecto .setMaximizable(true);
+    eliminar_listarep_por_defecto .setIconifiable(true);
+    eliminar_listarep_por_defecto .setResizable(true);
+    eliminar_listarep_por_defecto .toFront();
+    eliminar_listarep_por_defecto .show(); 
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        PublicarLista publicar_lista= new PublicarLista();
+    
+
+    desktopPane.add(publicar_lista ,JLayeredPane.DEFAULT_LAYER);
+    publicar_lista .setVisible(true);
+    publicar_lista .setClosable(true);
+    publicar_lista .setMaximizable(true);
+    publicar_lista .setIconifiable(true);
+    publicar_lista .setResizable(true);
+    publicar_lista .toFront();
+    publicar_lista .show(); 
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+       ConsultaAlbumxArtista consulta_album= new ConsultaAlbumxArtista();
+    
+
+    desktopPane.add(consulta_album ,JLayeredPane.DEFAULT_LAYER);
+    consulta_album .setVisible(true);
+    consulta_album .setClosable(true);
+    consulta_album .setMaximizable(true);
+    consulta_album .setIconifiable(true);
+    consulta_album .setResizable(true);
+    consulta_album .toFront();
+    consulta_album .show(); 
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        ConsultaListaRep_Genero consulta_listarepbygenero= new ConsultaListaRep_Genero();
+    
+
+    desktopPane.add(consulta_listarepbygenero ,JLayeredPane.DEFAULT_LAYER);
+   consulta_listarepbygenero .setVisible(true);
+    consulta_listarepbygenero .setClosable(true);
+    consulta_listarepbygenero .setMaximizable(true);
+    consulta_listarepbygenero .setIconifiable(true);
+    consulta_listarepbygenero .setResizable(true);
+    consulta_listarepbygenero.toFront();
+    consulta_listarepbygenero.show(); 
+    }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        ConsultaListaRep_Cliente consulta_listarepbycliente= new ConsultaListaRep_Cliente();
+    
+
+    desktopPane.add(consulta_listarepbycliente ,JLayeredPane.DEFAULT_LAYER);
+   consulta_listarepbycliente .setVisible(true);
+    consulta_listarepbycliente .setClosable(true);
+    consulta_listarepbycliente .setMaximizable(true);
+    consulta_listarepbycliente .setIconifiable(true);
+    consulta_listarepbycliente .setResizable(true);
+    consulta_listarepbycliente.toFront();
+    consulta_listarepbycliente.show(); 
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        DejarDeSeguirUsuario dejar_seguir= new DejarDeSeguirUsuario();
+    
+
+    desktopPane.add(dejar_seguir,JLayeredPane.DEFAULT_LAYER);
+   dejar_seguir .setVisible(true);
+    dejar_seguir.setClosable(true);
+    dejar_seguir.setMaximizable(true);
+    dejar_seguir.setIconifiable(true);
+    dejar_seguir.setResizable(true);
+    dejar_seguir.toFront();
+    dejar_seguir.show(); 
+                                    
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+         ConsultaAlbumxGeneros consulta_album_bygenero= new ConsultaAlbumxGeneros();
+    
+
+    desktopPane.add(consulta_album_bygenero,JLayeredPane.DEFAULT_LAYER);
+   consulta_album_bygenero .setVisible(true);
+    consulta_album_bygenero.setClosable(true);
+    consulta_album_bygenero.setMaximizable(true);
+    consulta_album_bygenero.setIconifiable(true);
+    consulta_album_bygenero.setResizable(true);
+    consulta_album_bygenero.toFront();
+    consulta_album_bygenero.show(); 
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+       AltaGenero alta_genero= new AltaGenero();
+    
+
+    desktopPane.add(alta_genero,JLayeredPane.DEFAULT_LAYER);
+   alta_genero .setVisible(true);
+    alta_genero.setClosable(true);
+    alta_genero.setMaximizable(true);
+    alta_genero.setIconifiable(true);
+    alta_genero.setResizable(true);
+    alta_genero.toFront();
+    alta_genero.show(); 
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,17 +679,48 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem AltaAlbum;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
+    private javax.swing.JMenu jMenu12;
+    private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     // End of variables declaration//GEN-END:variables
 
     JDesktopPane getDesktopPane() {
