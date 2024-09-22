@@ -20,40 +20,38 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         initComponents();
         setTitle("Dejar de seguir usuario");
         cargarComboSeguidor();
-        txtSeguidor.setVisible(false);
     }
 private void cargarComboSeguidor() {
         comboSeguidor.removeAllItems();
-        List<String> listaClientes = control.MostrarNombreClientes(); // Obtener los correos de los clientes
+        List<String> listaClientes = control.nicksClientes();
         for (String correo : listaClientes) {
             comboSeguidor.addItem(correo);
         }
     }
 
-private void actualizarNicknameSeguidor() {
-    String correoSeguidor = (String) comboSeguidor.getSelectedItem();
-    if (correoSeguidor != null) {
-        String nickname = control.encontrarNicknameCliente(correoSeguidor); // Cambiar a la operación correcta
-        if (nickname != null) {
-            txtSeguidor.setText(nickname);
-            txtSeguidor.setVisible(true);
-            cargarSeguidos();
-        } else {
-            txtSeguidor.setText("Desconocido");
-        }
-    }
-}
 
     private void cargarSeguidos() {
     comboSeguido.removeAllItems();
-    String correoSeguidor = (String) comboSeguidor.getSelectedItem();
-    if (correoSeguidor == null) {
+    String cSeguidor = (String) comboSeguidor.getSelectedItem();
+    List<String> clientesSeguidos = control.clientesSeguidosDelCliente(cSeguidor);
+    List<String> artistasSeguidos = control.artistasSeguidosDelCliente(cSeguidor);
+    for(String cSeguido : clientesSeguidos){
+        comboSeguido.addItem(control.encontrarNicknameCliente(cSeguido));
+    }
+    for(String aSeguido : artistasSeguidos){
+        comboSeguido.addItem(control.encontrarNicknameArtista(aSeguido));
+    }
+
+    /*String correoSeguidor;
+    if (cSeguidor == null) {
         return;
+    }else{
+        correoSeguidor = control.encontrarClientePorNickname(cSeguidor).getCorreo();
     }
     List<String> seguidos = control.obtenerSeguidos(correoSeguidor);
     for (String seguido : seguidos) {
         comboSeguido.addItem(seguido);
-    }
+    }*/
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,8 +69,6 @@ private void actualizarNicknameSeguidor() {
         comboSeguido = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        txtSeguidor = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         label_Seguidor.setText("Seguidor");
@@ -111,10 +107,6 @@ private void actualizarNicknameSeguidor() {
             }
         });
 
-        jLabel1.setText("Nickname");
-
-        txtSeguidor.setText("...");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel2.setText("Dejar de seguir usuario");
 
@@ -123,15 +115,8 @@ private void actualizarNicknameSeguidor() {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel2))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtSeguidor)))
+                .addGap(15, 15, 15)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
@@ -168,11 +153,7 @@ private void actualizarNicknameSeguidor() {
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboSeguidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboSeguido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtSeguidor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
@@ -207,7 +188,7 @@ private void actualizarNicknameSeguidor() {
 
     private void comboSeguidorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboSeguidorItemStateChanged
     if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-        actualizarNicknameSeguidor();
+        cargarSeguidos();
     }
     }//GEN-LAST:event_comboSeguidorItemStateChanged
 
@@ -220,7 +201,7 @@ private void actualizarNicknameSeguidor() {
     String mailSeguido = (String) comboSeguido.getSelectedItem();
     try {
         control.dejarSeguirUsuario(mailSeguidor, mailSeguido); // Asegúrate de que el nombre del método es correcto
-        JOptionPane.showMessageDialog(this, "Ahora " + txtSeguidor.getText() + " ya no sigue al usuario " + mailSeguido, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ahora " + mailSeguidor + " ya no sigue al usuario " + mailSeguido, "Éxito", JOptionPane.INFORMATION_MESSAGE);
         comboSeguido.removeAllItems();// recargarlo igual
         cargarSeguidos();
     } catch (Exception ex) {
@@ -234,11 +215,9 @@ private void actualizarNicknameSeguidor() {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> comboSeguido;
     private javax.swing.JComboBox<String> comboSeguidor;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel label_Seguido;
     private javax.swing.JLabel label_Seguidor;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JLabel txtSeguidor;
     // End of variables declaration//GEN-END:variables
 }

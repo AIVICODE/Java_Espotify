@@ -688,20 +688,20 @@ public class Controlador implements IControlador {
     }
 
     public void seguirUsuario(String correoSeguidor, String correoSeguido) throws Exception {
-        Cliente seguidor = encontrarCliente(correoSeguidor);
-        Cliente cSeguido = encontrarCliente(correoSeguido);
-        Artista aSeguido = encontrarArtista(correoSeguido);
+        Cliente seguidor = encontrarClientePorNicknameTipoCli(correoSeguidor);
+        Cliente cSeguido = encontrarClientePorNicknameTipoCli(correoSeguido);
+        Artista aSeguido = encontrarArtistaPorNicknameTipoArt(correoSeguido);
         if (seguidor != null) {
             if (correoSeguidor.equals(correoSeguido)) {
                 throw new IllegalArgumentException("El cliente " + correoSeguidor + " no puede seguirse a si mismo ");
             }
             for (Cliente c : seguidor.getClientesSeguidos()) {//21/9 nuevo
-                if (c.getMail().equals(correoSeguido)) {
+                if (c.getNickname().equals(correoSeguido)) {
                     throw new IllegalArgumentException("El cliente " + correoSeguidor + " ya sigue al cliente " + correoSeguido);
                 }
             }
             for (Artista a : seguidor.getArtistasSeguidos()) {
-                if (a.getMail().equals(correoSeguido)) {
+                if (a.getNickname().equals(correoSeguido)) {
                     throw new IllegalArgumentException("El cliente " + correoSeguidor + " ya sigue al artista " + correoSeguido);
                 }
             }//////////////
@@ -712,19 +712,19 @@ public class Controlador implements IControlador {
                 seguidor.seguirArtista(aSeguido);
                 controlpersis.editCliente(seguidor);
             } else {
-                throw new IllegalArgumentException("No se encontró Cliente o Artista con el correo: " + correoSeguido);
+                throw new IllegalArgumentException("No se encontró Cliente o Artista de nickname " + correoSeguido);
             }
 
         } else {
-            throw new IllegalArgumentException("No se encontró el seguidor con el correo: " + correoSeguidor);
+            throw new IllegalArgumentException("No se encontró el seguidor con nickname: " + correoSeguidor);
         }
     }
 
     public void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception {
         try {
-            Cliente seguidor = encontrarCliente(correoSeguidor);
-            Cliente cSeguido = encontrarCliente(correoSeguido);
-            Artista aSeguido = encontrarArtista(correoSeguido);
+            Cliente seguidor = encontrarClientePorNicknameTipoCli(correoSeguidor);
+            Cliente cSeguido = encontrarClientePorNicknameTipoCli(correoSeguido);
+            Artista aSeguido = encontrarArtistaPorNicknameTipoArt(correoSeguido);
             if (seguidor != null) {
                 if (cSeguido != null) {
                     seguidor.dejarDeSeguirCliente(cSeguido);
