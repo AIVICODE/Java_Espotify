@@ -625,7 +625,6 @@ public class Controlador implements IControlador {
                 ListaRepGeneral listaGeneral = (ListaRepGeneral) lista;
 
                 // Imprimir la lista que está siendo evaluada y el nombre que se busca
-                System.out.println("Comparando lista: " + listaGeneral.getNombre() + " con: " + nombreLista);
 
                 if (listaGeneral.getNombre().equals(nombreLista)) {
                     listaPorDefecto = listaGeneral;
@@ -643,7 +642,6 @@ public class Controlador implements IControlador {
             boolean esFavorita = cliente.getListaRepFavoritos().stream()
                     .anyMatch(listaFavorita -> {
                         // Imprimir las listas favoritas que se comparan
-                        System.out.println("Comparando favorito: " + listaFavorita.getNombre() + " con: " + nombreListaEncontrada);
                         return listaFavorita.getNombre().equals(nombreListaEncontrada);
                     });
 
@@ -927,7 +925,6 @@ public class Controlador implements IControlador {
             controlpersis.AddCliente(cliente7);
             controlpersis.AddCliente(cliente8);
 
-            System.out.println("Perfiles cargados correctamente con biografías, sitios web e imágenes.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2505,11 +2502,9 @@ public class Controlador implements IControlador {
                 // Listas de reproducción favoritas
                 if (!c.getListaRepFavoritos().isEmpty()) {
                     favoritos.addElement("  Listas:  ");
-                    System.out.println("Cliente tiene listas de reproducción favoritas:");
 
                     for (ListaRep l : c.getListaRepFavoritos()) {
                         favoritos.addElement(l.getNombre()); // Agregar el nombre de la lista
-                        System.out.println("  Lista: " + l.getNombre());// ACA Es el error me mustra cualquier cosa
                     }
                 }
 
@@ -2517,11 +2512,9 @@ public class Controlador implements IControlador {
                 if (!c.getAlbums().isEmpty()) {
                     favoritos.addElement("  ");
                     favoritos.addElement("  Albumes:  ");
-                    System.out.println("Cliente tiene álbumes favoritos:");
 
                     for (Album a : c.getAlbums()) {
                         favoritos.addElement(a.getNombre()); // Agregar el nombre del álbum
-                        System.out.println("  Álbum: " + a.getNombre());
                     }
                 }
 
@@ -2529,11 +2522,9 @@ public class Controlador implements IControlador {
                 if (!c.getTemas().isEmpty()) {
                     favoritos.addElement("  ");
                     favoritos.addElement("  Temas:  ");
-                    System.out.println("Cliente tiene temas favoritos:");
 
                     for (Tema t : c.getTemas()) {
                         favoritos.addElement(t.getNombre()); // Agregar el nombre del tema
-                        System.out.println("  Tema: " + t.getNombre());
                     }
                 }
 
@@ -2541,12 +2532,10 @@ public class Controlador implements IControlador {
                 if (c.getListaRepFavoritos().isEmpty() && c.getAlbums().isEmpty() && c.getTemas().isEmpty()) {
                     favoritos.removeAllElements();
                     favoritos.addElement("El cliente no tiene preferencias guardadas");
-                    System.out.println("El cliente no tiene listas, álbumes ni temas favoritos.");
                 }
             } else {
                 // Si no se encontró el cliente
                 favoritos.addElement("No se encontró al cliente con el nickname proporcionado.");
-                System.out.println("Cliente no encontrado: " + nick);
             }
 
         } catch (Exception ex) {
@@ -2703,6 +2692,7 @@ public class Controlador implements IControlador {
             for (Genero g : auxA.getListaGeneros()) {
                 if (g.getNombre().equals(string)) {
                     nombreAlbumes.add(auxA.getNombre());
+
                 }
             }
         }
@@ -2713,50 +2703,67 @@ public class Controlador implements IControlador {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public DTAlbum findAlbumxNombreDT(String string) throws Exception {
+    public DTAlbum findAlbumxNombreDT(String nombreAlbum,String correoArtista) throws Exception {
 
-        //Me llega el album seleccionado en el combo box y lo convierto en DTAlbum
-        Album albumEncontrado = controlpersis.findOneAlbumByNombre(string);
-        Artista artista = albumEncontrado.getArtista();
-        List<String> generosDT = new ArrayList<>();
-        for (Genero auxG : albumEncontrado.getListaGeneros()) {
-            generosDT.add(auxG.getNombre());
+        // Buscar el artista por correo
+    Artista art = controlpersis.encontrarArtista(correoArtista);
+    if (art == null) {
+        throw new Exception("Artista no encontrado con el correo: " + correoArtista);
+    }
+    
+    // Buscar el álbum dentro de la lista de álbumes del artista
+    Album albumEncontrado = null;
+    for (Album album : art.getAlbumes()) {
+        if (album.getNombre().equals(nombreAlbum)) {
+            albumEncontrado = album;
+            break;
         }
+    }
+ 
+    // Si no se encuentra el álbum, lanzamos una excepción
+    if (albumEncontrado == null) {
+        throw new Exception("Álbum no encontrado o no seleccionado, intente nuevamente ");
+    }
 
-        // Crear el objeto DTArtista
-        DTArtista dtartista = new DTArtista(
-                artista.getNickname(),
-                artista.getNombre(),
-                artista.getApellido(),
-                artista.getContrasenia(),
-                artista.getImagen(),
-                artista.getFechaNac(),
-                artista.getMail(),
-                artista.getBiografia(),
-                artista.getSitioWeb()
-        );
+    // Crear la lista de géneros del álbum
+    List<String> generosDT = new ArrayList<>();
+    for (Genero auxG : albumEncontrado.getListaGeneros()) {
+        generosDT.add(auxG.getNombre());
+    }
 
-        // Crear la lista de temas del álbum
-        List<DTTema> dtTemas = new ArrayList<>();
-        for (Tema auxT : albumEncontrado.getListaTemas()) {
-            long duracionSegundos = auxT.getDuracionSegundos();
-            int minutos = (int) (duracionSegundos / 60);
-            int segundos = (int) (duracionSegundos % 60);
+    // Crear el objeto DTArtista
+    DTArtista dtartista = new DTArtista(
+            art.getNickname(),
+            art.getNombre(),
+            art.getApellido(),
+            art.getContrasenia(),
+            art.getImagen(),
+            art.getFechaNac(),
+            art.getMail(),
+            art.getBiografia(),
+            art.getSitioWeb()
+    );
 
-            DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
-            dtTemas.add(dttema);
-        }
+    // Crear la lista de temas del álbum
+    List<DTTema> dtTemas = new ArrayList<>();
+    for (Tema auxT : albumEncontrado.getListaTemas()) {
+        long duracionSegundos = auxT.getDuracionSegundos();
+        int minutos = (int) (duracionSegundos / 60);
+        int segundos = (int) (duracionSegundos % 60);
 
-        // Crear y retornar el DTAlbum
-        return new DTAlbum(
-                albumEncontrado.getNombre(),
-                albumEncontrado.getAnioCreacion(),
-                albumEncontrado.getImagen(),
-                generosDT,
-                dtTemas,
-                dtartista
-        );
+        DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
+        dtTemas.add(dttema);
+    }
 
+    // Crear y retornar el DTAlbum
+    return new DTAlbum(
+            albumEncontrado.getNombre(),
+            albumEncontrado.getAnioCreacion(),
+            albumEncontrado.getImagen(),
+            generosDT,
+            dtTemas,
+            dtartista
+    );
     }
 
     public String ConvierteNick_A_Correo(String nickname) throws Exception {
