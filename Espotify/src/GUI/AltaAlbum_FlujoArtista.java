@@ -6,7 +6,6 @@ package GUI;
 
 import Datatypes.DTAlbum;
 import Datatypes.DTTema;
-//import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.time.Year;
@@ -38,12 +37,13 @@ private List<String> selectedNodesList = new ArrayList<>();
     
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    //Controlador control= new Controlador();
     
     public AltaAlbum_FlujoArtista() {
         initComponents();
         setTitle("Crear Album");
-        anioAlbum.setValue(2000); 
+        anioAlbum.setValue(2000);
+        jLabel4.setVisible(false);//no visible imagen 
+        txtImagen.setVisible(false);//hace invisible la opcion de poner imagen
         
        
         jTree1.setModel(control.buildGeneroTree());

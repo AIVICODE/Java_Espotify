@@ -4,7 +4,6 @@
  */
 package GUI;
 
-//import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.util.List;
@@ -19,7 +18,7 @@ import javax.swing.JOptionPane;
 public class EliminarAlbumFavorito extends javax.swing.JInternalFrame {
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    //Controlador control= new Controlador();
+    
     public EliminarAlbumFavorito() {
         initComponents();
         setTitle("Eliminar Album Favorito");

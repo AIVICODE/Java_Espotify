@@ -723,6 +723,9 @@ public class Controlador implements IControlador {
     }
 
     public void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception {
+        if (correoSeguido == null){//si se quiere dejar de seguir con la lista vacia
+            throw new IllegalArgumentException("No se encontraron seguidos para el usuario " + correoSeguidor);
+        }
         try {
             Cliente seguidor = encontrarCliente(correoSeguidor);
             Cliente cSeguido = encontrarCliente(correoSeguido);
@@ -2433,7 +2436,7 @@ public class Controlador implements IControlador {
         for (Cliente c : controlpersis.listaClientes()) {
             if (c.getNickname().equals(nick)) {
                 for (Cliente cs : c.getClientesSeguidos()) {
-                    seguidos.add(cs.getMail());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
+                    seguidos.add(cs.getNickname());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
                 }
             }
         }
@@ -2457,7 +2460,7 @@ public class Controlador implements IControlador {
         for (Cliente c : controlpersis.listaClientes()) {
             if (c.getNickname().equals(nick)) {
                 for (Artista a : c.getArtistasSeguidos()) {
-                    seguidos.add(a.getMail());//agrego los nicks que sigue el cliente
+                    seguidos.add(a.getNickname());//agrego los nicks que sigue el cliente
                 }
             }
         }
@@ -2563,10 +2566,10 @@ public class Controlador implements IControlador {
         }
 
         // Obtener los clientes que sigue el cliente con el nickname encontrado
-        List<String> seguidosClientes = clientesSeguidosDelCliente(Seguidor.getNickname());
+        List<String> seguidosClientes = clientesSeguidosDelCliente(Seguidor.getNickname());//esto tiene nicks
 
         // Obtener los artistas que sigue el cliente con el nickname encontrado
-        List<String> seguidosArtistas = artistasSeguidosDelCliente(Seguidor.getNickname());
+        List<String> seguidosArtistas = artistasSeguidosDelCliente(Seguidor.getNickname());//esto tiene nicks
 
         // Combinar ambas listas en una sola
         List<String> seguidos = new ArrayList<>();

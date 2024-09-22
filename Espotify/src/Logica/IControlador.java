@@ -105,7 +105,7 @@ public interface IControlador {
     public abstract List<String> artistasSeguidosDelCliente(String nick);
     public abstract List<String> nombresListaRepDeCliente(String nick);
     public abstract DefaultListModel favoritosDeCliente (String nick);
-
+    public abstract List<String> obtenerSeguidos(String correoSeguidor);
     public abstract List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception;
     public abstract List<String> temasDeAlbumDeArtista(String album, String artistaMail);
     public abstract List<String> listasPublicasDeCliente (String correo);
