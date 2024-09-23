@@ -273,27 +273,32 @@ private List<String> selectedNodesList = new ArrayList<>();
     }//GEN-LAST:event_txtNombreAlbumActionPerformed
 private List<DTTema> listaTemas = new ArrayList<>();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         String nombreTema = txtNombreTema.getText();
-    Date duracion = (Date) DuracionTema.getValue();
-    String directorio = txtDIR.getText();
-    // Convertir la duración a un formato más manejable (por ejemplo, minutos y segundos)
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(duracion);
-    int minutos = cal.get(Calendar.MINUTE);
-    int segundos = cal.get(Calendar.SECOND);
+        if (nombreTema.equals("")){//si ingresan un nombre vacio
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre del tema no puede ser vacio", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
+            Date duracion = (Date) DuracionTema.getValue();
+            String directorio = txtDIR.getText();
+            // Convertir la duración a un formato más manejable (por ejemplo, minutos y segundos)
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(duracion);
+            int minutos = cal.get(Calendar.MINUTE);
+            int segundos = cal.get(Calendar.SECOND);
 
-    // Crear un nuevo tema y agregarlo a la lista
-    DTTema nuevoTema = new DTTema(nombreTema, minutos, segundos,directorio);
-    listaTemas.add(nuevoTema);
+            // Crear un nuevo tema y agregarlo a la lista
+            DTTema nuevoTema = new DTTema(nombreTema, minutos, segundos,directorio);
+            listaTemas.add(nuevoTema);
 
-    // Limpiar los campos de texto para el siguiente tema
-    txtNombreTema.setText("");
-    txtDIR.setText("");
-    DuracionTema.setValue(new Date(0));
+            // Limpiar los campos de texto para el siguiente tema
+            txtNombreTema.setText("");
+            txtDIR.setText("");
+            DuracionTema.setValue(new Date(0));
+
+            JOptionPane.showMessageDialog(null, "Tema agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Tema agregado: " + nombreTema + " (" + minutos + ":" + segundos + ")");
+        }
     
-    JOptionPane.showMessageDialog(null, "Tema agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println("Tema agregado: " + nombreTema + " (" + minutos + ":" + segundos + ")");
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

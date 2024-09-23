@@ -129,9 +129,9 @@ public class AltaGenero extends javax.swing.JInternalFrame {
                         .addGap(65, 65, 65)
                         .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addGap(40, 40, 40))
         );
 
@@ -144,23 +144,26 @@ public class AltaGenero extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombreGenero = txtGenero.getText();
-        
-        //si selectedGenero es el genero primero entonces va a ser null, sino da error y dice que no existe el genero géneros
-        if((selectedGenero != null) && (selectedGenero.equals("Géneros"))){
-            selectedGenero = null;//este control daria error si se hiciera un genero de nombre Géneros y se seleccionara como padre
-        }
-    try {
-        // Llamar al método CrearGenero
-        control.CrearGenero(nombreGenero, selectedGenero);
-        
-        // Mostrar mensaje de éxito
-        javax.swing.JOptionPane.showMessageDialog(this, "El género fue creado exitosamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        jTree1.setModel(control.buildGeneroTree());//actualizar los generos luego de agregar uno
-        txtGenero.setText("");//limpio el coso del nombre al ingresar el genero
-    } catch (Exception e) {
-        // Mostrar mensaje de error
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al crear el género: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+        if(nombreGenero.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre del genero no puede ser vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
+            //si selectedGenero es el genero primero entonces va a ser null, sino da error y dice que no existe el genero géneros
+            if((selectedGenero != null) && (selectedGenero.equals("Géneros"))){
+                selectedGenero = null;//este control daria error si se hiciera un genero de nombre Géneros y se seleccionara como padre
+            }
+            try {
+                // Llamar al método CrearGenero
+                control.CrearGenero(nombreGenero, selectedGenero);
+
+                // Mostrar mensaje de éxito
+                javax.swing.JOptionPane.showMessageDialog(this, "El género fue creado exitosamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                jTree1.setModel(control.buildGeneroTree());//actualizar los generos luego de agregar uno
+                txtGenero.setText("");//limpio el coso del nombre al ingresar el genero
+            } catch (Exception e) {
+                // Mostrar mensaje de error
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al crear el género: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

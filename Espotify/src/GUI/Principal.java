@@ -53,6 +53,7 @@ public class Principal extends javax.swing.JFrame {
         desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        cargarDatosMenu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -129,7 +130,16 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(desktopPane)
         );
 
-        jMenu1.setText("Inicio");
+        jMenu1.setText("Datos de Prueba");
+
+        cargarDatosMenu.setText("Cargar datos");
+        cargarDatosMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarDatosMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(cargarDatosMenu);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Casos de uso");
@@ -639,6 +649,19 @@ public class Principal extends javax.swing.JFrame {
     alta_genero.show(); 
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
+    private void cargarDatosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosMenuActionPerformed
+        //Cargar datos
+        CargarDatosDePrueba datosPrueba= new CargarDatosDePrueba();
+        desktopPane.add(datosPrueba,JLayeredPane.DEFAULT_LAYER);
+        datosPrueba .setVisible(true);
+        datosPrueba.setClosable(true);
+        datosPrueba.setMaximizable(true);
+        datosPrueba.setIconifiable(true);
+        datosPrueba.setResizable(true);
+        datosPrueba.toFront();
+        datosPrueba.show();
+    }//GEN-LAST:event_cargarDatosMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -677,6 +700,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AltaAlbum;
+    private javax.swing.JMenuItem cargarDatosMenu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;

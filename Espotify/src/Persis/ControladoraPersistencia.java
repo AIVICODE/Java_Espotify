@@ -256,14 +256,15 @@ public Artista encontrarArtistaPorNickname(String nickname) {
         return listjpa.findListaRepEntities();
     }
     
-    
-    
         public List<Genero> listaGeneros (){
         return genjpa.findGeneroEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
     }
     
-    
     public List<Album> listaAlbumes(){
         return albjpa.findAlbumEntities(); //me devuelve una lista con todos los albumes de la BD para mostrarlos de ahi
+    }
+    
+    public void modificarBiografiaArtista(){
+        artjpa.modificarBiografiaArtista();
     }
 }

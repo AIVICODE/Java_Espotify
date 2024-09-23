@@ -3,22 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/GUI/AltaAlbum.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/GUI/AltaAlbum_FlujoArtista.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Persis/ControladoraPersistencia.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Album.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Genero.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Cliente.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/GUI/Principal.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/espotify/Espotify.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Usuario.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Persis/ArtistaJpaController.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/GUI/AltaCliente.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Artista.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Tema.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Persis/ClienteJpaController.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/Logica/Controlador.java</file>
-            <file>file:/home/ivan/NetBeansProjects/ProgApps-/Espotify/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/GUI/SeguirUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/IControlador.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ProgApps-/Espotify/src/Logica/Controlador.java</file>
         </group>
     </open-files>
 </project-private>

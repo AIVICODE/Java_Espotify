@@ -767,6 +767,9 @@ public class Controlador implements IControlador {
     }
 
     public void Cargar_Datos_Prueba() throws Exception {
+        //modifico la tabla de artista
+        controlpersis.modificarBiografiaArtista();
+        
         Cargar_Perfiles();
         Cargar_Generos();
         Cargar_Albumes();
@@ -780,14 +783,14 @@ public class Controlador implements IControlador {
             // Artistas
             Artista artista1 = new Artista(
                     "vpeople", "Village", "People", "pass123",
-                    createDate(1980, 7, 14), "vpeople@tuta.io",
+                    createDate(1977, 1, 1), "vpeople@tuta.io",
                     "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.",
                     "www.officialvillagepeople.com",
                     "bit.ly/vpeople"
             );
             Artista artista2 = new Artista(
                     "dmode", "Depeche", "Mode", "pass456",
-                    createDate(1980, 7, 14), "dmode@tuta.io",
+                    createDate(1980, 6, 14), "dmode@tuta.io",
                     "",
                     "www.depechemode.com",
                     "bit.ly/depecheMode"
@@ -801,7 +804,7 @@ public class Controlador implements IControlador {
             );
             Artista artista4 = new Artista(
                     "bruceTheBoss", "Bruce", "Springsteen", "pass101",
-                    createDate(1949, 10, 23), "bruceTheBoss@gmail.com",
+                    createDate(1949, 9, 23), "bruceTheBoss@gmail.com",
                     "",
                     "brucespringsteen.net",
                     "bit.ly/bruceTheBoss"
@@ -815,7 +818,7 @@ public class Controlador implements IControlador {
             );
             Artista artista6 = new Artista(
                     "la_ley", "La", "Ley", "pass303",
-                    createDate(1987, 3, 14), "la_ley@tuta.io",
+                    createDate(1987, 2, 14), "la_ley@tuta.io",
                     "", "", // No hay biografía ni sitio web provisto
                     "bit.ly/laLey"
             );
@@ -828,35 +831,35 @@ public class Controlador implements IControlador {
             );
             Artista artista8 = new Artista(
                     "chaiko", "Piotr", "Tchaikovsky", "pass505",
-                    createDate(1840, 5, 25), "chaiko@tuta.io",
+                    createDate(1840, 4, 25), "chaiko@tuta.io",
                     "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo.",
                     "", // No tiene página web
                     "" // No tiene imagen provista
             );
             Artista artista9 = new Artista(
                     "nicoleneu", "Nicole", "Neumann", "pass606",
-                    createDate(1980, 11, 31), "nicoleneu@hotmail.com",
+                    createDate(1980, 10, 31), "nicoleneu@hotmail.com",
                     "", // No hay biografía provista
                     "", // No tiene página web
                     "bit.ly/nicoleneu"
             );
             Artista artista10 = new Artista(
                     "lospimpi", "Pimpinela", "", "pass707",
-                    createDate(1981, 9, 13), "lospimpi@gmail.com",
+                    createDate(1981, 8, 13), "lospimpi@gmail.com",
                     "",
                     "www.pimpinela.net",
                     "bit.ly/losPimpinela"
             );
             Artista artista11 = new Artista(
                     "dyangounchained", "Dyango", "", "pass808",
-                    createDate(1940, 4, 5), "dyangounchained@gmail.com",
+                    createDate(1940, 3, 5), "dyangounchained@gmail.com",
                     "José Gómez Romero, conocido artísticamente como Dyango, es un cantante español de música romántica.",
                     "", // No tiene página web
                     "" // No tiene imagen provista
             );
             Artista artista12 = new Artista(
                     "alcides", "Alcides", "", "pass909",
-                    createDate(1952, 8, 17), "alcides@tuta.io",
+                    createDate(1952, 7, 17), "alcides@tuta.io",
                     "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano.",
                     "", // No tiene página web
                     "" // No tiene imagen provista
@@ -865,37 +868,37 @@ public class Controlador implements IControlador {
             // Clientes con imágenes
             Cliente cliente1 = new Cliente(
                     "cel_padrino", "Vito", "Corleone", "pass789",
-                    "el_padrino@tuta.io", createDate(1972, 4, 8),
+                    "el_padrino@tuta.io", createDate(1972, 3, 8),
                     "bit.ly/vitoCorleone"
             );
             Cliente cliente2 = new Cliente(
                     "scarlettO", "Scarlett", "O’Hara", "pass101",
-                    "scarlettO@tuta.io", createDate(1984, 12, 27),
+                    "scarlettO@tuta.io", createDate(1984, 11, 27),
                     "bit.ly/scarlettO"
             );
             Cliente cliente3 = new Cliente(
                     "ppArgento", "Pepe", "Argento", "pass202",
-                    "ppArgento@hotmail.com", createDate(1955, 3, 14),
+                    "ppArgento@hotmail.com", createDate(1955, 2, 14),
                     "bit.ly/ppArgento"
             );
             Cliente cliente4 = new Cliente(
                     "Heisenberg", "Walter", "White", "pass303",
-                    "Heisenberg@tuta.io", createDate(1956, 4, 7),
+                    "Heisenberg@tuta.io", createDate(1956, 3, 7),
                     "bit.ly/heisenbergWW"
             );
             Cliente cliente5 = new Cliente(
                     "benKenobi", "Obi-Wan", "Kenobi", "pass404",
-                    "benKenobi@gmail.com", createDate(1914, 5, 2),
+                    "benKenobi@gmail.com", createDate(1914, 4, 2),
                     "bit.ly/benKenobi"
             );
             Cliente cliente6 = new Cliente(
                     "lachiqui", "Mirtha", "Legrand", "pass505",
-                    "lachiqui@hotmail.com.ar", createDate(1927, 3, 23),
+                    "lachiqui@hotmail.com.ar", createDate(1927, 2, 23),
                     "bit.ly/laChiqui"
             );
             Cliente cliente7 = new Cliente(
                     "cbochinche", "Cacho", "Bochinche", "pass606",
-                    "cbochinche@vera.com.uy", createDate(1937, 6, 8),
+                    "cbochinche@vera.com.uy", createDate(1937, 5, 8),
                     "bit.ly/cbochinche"
             );
             Cliente cliente8 = new Cliente(
@@ -2791,4 +2794,9 @@ public class Controlador implements IControlador {
         }
     }
 
+    public boolean sePuedenCargarLosDatos(){
+        //is empty retorna true si la lista esta vacia (se pueden cargar), si es false es porque hay artistas osea no se puede cargar
+        return controlpersis.listaArtistas().isEmpty();
+    }
+    
 }
