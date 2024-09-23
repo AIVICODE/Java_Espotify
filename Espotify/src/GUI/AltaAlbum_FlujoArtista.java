@@ -275,8 +275,16 @@ private List<DTTema> listaTemas = new ArrayList<>();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         String nombreTema = txtNombreTema.getText();
-        if (nombreTema.equals("")){//si ingresan un nombre vacio
-            javax.swing.JOptionPane.showMessageDialog(this, "El nombre del tema no puede ser vacio", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        //si hay repetido es true y no se puede, si no hay repetido es false y si se puede
+        boolean hayRepetido = false; //para comprobar si hay algun tema que sea igual al q quiero poner
+        for(DTTema t:listaTemas){
+            if(t.getNombre().equals(nombreTema)){
+                hayRepetido = true;// si hay un tema que se llama como el nuevo tema cambia a true
+            }
+        }
+        
+        if ((nombreTema.equals("")) || hayRepetido == true){//si ingresan un nombre vacio o repetido
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre del tema no puede ser vacio o igual a otro en el album", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }else{
             Date duracion = (Date) DuracionTema.getValue();
             String directorio = txtDIR.getText();
