@@ -2153,6 +2153,26 @@ public class Controlador implements IControlador {
         }
         return lisPrivadas;
     }
+    
+    public List<String> nombreDeListasDeCliente(String mail) throws Exception{//devuelve una lista con los nombres de las listas de rep privadas del cliente
+      try{
+        List<String> listas= new ArrayList();
+        Cliente client = controlpersis.findClienteByNickname(mail);//busco el cliente
+        List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
+        for (ListaRep l : listasdelcliente) {//para cada lista en las del cliente
+
+
+                   listas.add(l.getNombre());//la sumo a la lista a retornar
+                
+            
+        }
+        return listas;
+      }
+        catch (Exception e) {
+            throw new Exception("Error al obtener listas de cliente: " + e.getMessage());
+        }
+    }
+    
 
     public void publicarListaPrivada(String nick, String nombreLista) throws Exception {
         List<Cliente> clientes = listaClientes();
@@ -2800,4 +2820,49 @@ public class Controlador implements IControlador {
         return controlpersis.listaArtistas().isEmpty();
     }
     
+    public List<String> Lista_Albumes(){
+    List<String> listalbum = new ArrayList<>();
+    List<Album> albumes = controlpersis.listaAlbumes();
+    for (Album album : albumes){
+        
+        listalbum.add(album.getNombre());
+        
+    }
+    return listalbum;
+    }
+    
+    public List<String>FindListasRep_Duenios(String nombrelista) throws Exception{
+            List<String> duenios = new ArrayList<>();
+    
+    try {
+        // Obtenemos la lista de clientes desde el sistema
+        List<Cliente> clientes = listaClientes(); // Método que devuelve la lista de clientes
+        
+        // Recorremos cada cliente
+        for (Cliente cliente : clientes) {
+            // Obtenemos las listas de reproducción del cliente
+            List<ListaRep> listasRep = cliente.getListaReproduccion();
+            
+            // Recorremos las listas de reproducción del cliente
+            for (ListaRep lista : listasRep) {
+                // Si el nombre de la lista coincide con el nombre proporcionado
+                if (lista.getNombre().equalsIgnoreCase(nombrelista)) {
+                    // Añadimos el nombre del cliente a la lista de dueños
+                    duenios.add(cliente.getNombre());
+                }
+            }
+        }
+
+        return duenios; // Devuelve la lista de nombres de clientes que tienen una lista con el nombre dado
+    } catch (Exception e) {
+        throw new Exception("Error buscando dueños de las listas de reproducción", e);
+    }
+    
+    
+    }
+    public List<String> FindListas(){
+    
+    return controlpersis.NombreListasRepParticular();
+    
+    }
 }

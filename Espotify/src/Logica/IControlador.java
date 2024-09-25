@@ -54,6 +54,9 @@ public interface IControlador {
     public abstract List<String> findDTAlbumPorGenero(String string) ;
     public abstract List<String> MostrarNombreGeneros();
     public abstract String ConvierteNick_A_Correo(String nickname) throws Exception ;
+     public abstract List<String> nombreDeListasDeCliente(String mail)throws Exception ;
+     public abstract  List<String> Lista_Albumes() ;
+     public List<String>FindListasRep_Duenios(String nombrelista) throws Exception;
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;
@@ -112,5 +115,7 @@ public interface IControlador {
     public abstract List<String> listaAlbumesArtistaMail(String correo) throws Exception;
     public abstract List<String> listasDefecto();
     public abstract boolean sePuedenCargarLosDatos();
+
+    public abstract List<String> FindListas();
     
 }

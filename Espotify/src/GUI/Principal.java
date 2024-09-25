@@ -49,6 +49,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
+        jMenuItem32 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -63,6 +64,12 @@ public class Principal extends javax.swing.JFrame {
         jMenu14 = new javax.swing.JMenu();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenu15 = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
+        jMenu16 = new javax.swing.JMenu();
+        jMenuItem30 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -108,6 +115,8 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu7.setText("Edit");
         jMenuBar3.add(jMenu7);
+
+        jMenuItem32.setText("jMenuItem32");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,6 +211,36 @@ public class Principal extends javax.swing.JFrame {
         jMenu14.add(jMenuItem28);
 
         jMenu2.add(jMenu14);
+
+        jMenu15.setText("Agregar Tema a Lista");
+
+        jMenuItem26.setText("Agregar a Lista Particular");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem26);
+
+        jMenuItem29.setText("Agregar a Lista Por Defecto");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem29);
+
+        jMenu2.add(jMenu15);
+
+        jMenu16.setText("Eliminar Tema de Lista");
+
+        jMenuItem30.setText("Eliminar de lista particular");
+        jMenu16.add(jMenuItem30);
+
+        jMenuItem31.setText("Eliminar de lista por defecto");
+        jMenu16.add(jMenuItem31);
+
+        jMenu2.add(jMenu16);
 
         jMenu8.setText("Agregar Favorito");
 
@@ -709,6 +748,30 @@ public class Principal extends javax.swing.JFrame {
     alta_listarep.show(); 
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        AgregarTema_A_Lista_Part alta_tema_listarep= new AgregarTema_A_Lista_Part ();
+    desktopPane.add(alta_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_tema_listarep.setVisible(true);
+    alta_tema_listarep.setClosable(true);
+    alta_tema_listarep.setMaximizable(true);
+    alta_tema_listarep.setIconifiable(true);
+    alta_tema_listarep.setResizable(true);
+    alta_tema_listarep.toFront();
+    alta_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        AgregarTema_A_Lista_Defecto alta_tema_listarep= new AgregarTema_A_Lista_Defecto ();
+    desktopPane.add(alta_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_tema_listarep.setVisible(true);
+    alta_tema_listarep.setClosable(true);
+    alta_tema_listarep.setMaximizable(true);
+    alta_tema_listarep.setIconifiable(true);
+    alta_tema_listarep.setResizable(true);
+    alta_tema_listarep.toFront();
+    alta_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -755,6 +818,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu14;
+    private javax.swing.JMenu jMenu15;
+    private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -784,9 +849,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

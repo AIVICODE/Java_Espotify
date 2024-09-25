@@ -159,7 +159,7 @@ public void crearAlbum(Album album) throws Exception {
     
     
 
-    public ListaRep findListaRepByNombre(String recurso) throws Exception{
+    public List<ListaRep> findListaRepByNombre(String recurso) throws Exception{
         try {
         return listjpa.findListaRepByNombre(recurso);
     }catch (Exception e) {
@@ -167,6 +167,12 @@ public void crearAlbum(Album album) throws Exception {
         throw new Exception("No se encuentra el nombre de la lista de reproduccion: " +recurso, e);
     }
     }
+    
+    public List<String> NombreListasRepParticular(){
+        return listjpa.NombreDeListasParticulares();
+}
+    
+    
         public Album findOneAlbumByNombre(String recurso) throws Exception{
         
            try {
