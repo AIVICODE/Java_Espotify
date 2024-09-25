@@ -11,11 +11,11 @@
     <class>Logica.ListaRepParticular</class>
     <class>Logica.Tema</class>
     <properties>
-      <property name="eclipselink.cache.type.default" value="None"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Espotify?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.user" value="sammy"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.password" value="1973"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>

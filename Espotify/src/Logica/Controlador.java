@@ -221,13 +221,14 @@ public class Controlador implements IControlador {
         }
     }
 
-    public void CrearListaRepGeneral(String nombreLista, String imagen) {
+    public void CrearListaRepGeneral(String nombreLista, String imagen,String nomGenero) {
 // Encuentra al cliente por su correo
         try {
             // Crear una nueva instancia de ListaRep
-            ListaRep nuevaLista = new ListaRepGeneral();
+            ListaRepGeneral nuevaLista = new ListaRepGeneral();
             nuevaLista.setNombre(nombreLista);  // Asigna el nombre de la lista
             nuevaLista.setImagen(imagen);  // Asigna la imagen a la lista (si la propiedad existe)
+            nuevaLista.setGenero(buscarGeneroPorNombre(nomGenero));
 
             // Guardar la nueva lista en la base de datos
             controlpersis.createListaRep(nuevaLista);

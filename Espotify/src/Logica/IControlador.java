@@ -27,7 +27,7 @@ public interface IControlador {
     //private abstract Artista buscarArtistaPorCorreo(String correo) throws Exception;
     //@SuppressWarnings("empty-statement")
     //private abstract Genero buscarGeneroPorNombre(String nombreGenero) throws Exception;
-    public abstract void CrearListaRepGeneral(String nombreLista, String imagen);
+    public abstract void CrearListaRepGeneral(String nombreLista, String imagen,String nomGenero);
     public abstract void CrearListaRepParticular(String nombreLista, String correoCliente, String imagen, boolean privada) throws Exception;
     public abstract void GuardarTemaFavorito(String correoCliente, String correoArtista, String nombreAlbum, String nombreTema) throws Exception;
     public abstract void GuardarAlbumFavorito(String correoCliente, String correoArtista, String nombreAlbum) throws Exception;
@@ -40,7 +40,7 @@ public interface IControlador {
     public abstract List<String> MostrarNombreClientes();
     public abstract List<Cliente> listaClientes();
     public abstract Cliente encontrarCliente(String mail);
-    public abstract List<Artista> listaArtistas();
+   public abstract List<Artista> listaArtistas();
     public abstract Artista encontrarArtista(String mail);
     public abstract void seguirUsuario(String correoSeguidor, String correoSeguido) throws Exception;
     public abstract void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception;

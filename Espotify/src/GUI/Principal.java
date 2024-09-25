@@ -60,6 +60,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
+        jMenu14 = new javax.swing.JMenu();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -179,6 +182,26 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(AltaAlbum);
+
+        jMenu14.setText("Crear Lista");
+
+        jMenuItem27.setText("Crear Lista Particular");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem27);
+
+        jMenuItem28.setText("Crear Lista Por Defecto");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem28);
+
+        jMenu2.add(jMenu14);
 
         jMenu8.setText("Agregar Favorito");
 
@@ -662,6 +685,30 @@ public class Principal extends javax.swing.JFrame {
         datosPrueba.show();
     }//GEN-LAST:event_cargarDatosMenuActionPerformed
 
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+                AltaListaRep alta_listarep= new AltaListaRep();
+    desktopPane.add(alta_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_listarep.setVisible(true);
+    alta_listarep.setClosable(true);
+    alta_listarep.setMaximizable(true);
+    alta_listarep.setIconifiable(true);
+    alta_listarep.setResizable(true);
+    alta_listarep.toFront();
+    alta_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        AltaListaRepPorDefecto alta_listarep= new AltaListaRepPorDefecto();
+    desktopPane.add(alta_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_listarep.setVisible(true);
+    alta_listarep.setClosable(true);
+    alta_listarep.setMaximizable(true);
+    alta_listarep.setIconifiable(true);
+    alta_listarep.setResizable(true);
+    alta_listarep.toFront();
+    alta_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -707,6 +754,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
+    private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -736,6 +784,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
