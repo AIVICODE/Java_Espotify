@@ -2645,6 +2645,8 @@ public class Controlador implements IControlador {
                     if (al.getNombre().equals(album)) {
                         for (Tema t : al.getListaTemas()) {
                             temas.add(t.getNombre());//agrego el nombre del tema a lista de strings
+                                                System.out.println(t.getNombre());
+
                         }
                     }
                 }
@@ -2863,6 +2865,12 @@ public class Controlador implements IControlador {
     public List<String> FindListas(){
     
     return controlpersis.NombreListasRepParticular();
+    
+    }
+    
+        public List<String> FindListasDefault(){
+    
+    return controlpersis.NombreListasRep_Defecto();
     
     }
 }

@@ -202,5 +202,20 @@ public class ListaRepJpaController implements Serializable {
         em.close();
     }
 }
+
+    List<String> NombreDeListasDefault() {
+            EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL para obtener los nombres de las listas de reproducción particulares
+        TypedQuery<String> query = em.createQuery(
+            "SELECT DISTINCT l.nombre FROM ListaRepGeneral l", String.class
+        );
+        
+        // Retornamos la lista de nombres de las listas de reproducción particulares, sin duplicados
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+    }
     
 }

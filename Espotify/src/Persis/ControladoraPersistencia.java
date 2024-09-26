@@ -273,4 +273,8 @@ public Artista encontrarArtistaPorNickname(String nickname) {
     public void modificarBiografiaArtista(){
         artjpa.modificarBiografiaArtista();
     }
+
+    public List<String> NombreListasRep_Defecto() {
+       return listjpa.NombreDeListasDefault();
+    }
 }

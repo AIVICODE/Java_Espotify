@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import Datatypes.DTAlbum;
 import Datatypes.DTListaRep;
 import Datatypes.DTTema;
 import Logica.Fabrica;
@@ -50,6 +51,8 @@ Fabrica fabrica = Fabrica.getInstance();
         Fuente_Con_Temas = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         ComboArtistas = new javax.swing.JComboBox<>();
+        ComboTemas = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         ComboBoxClientes.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -109,6 +112,8 @@ Fabrica fabrica = Fabrica.getInstance();
             }
         });
 
+        jLabel5.setText("Tema");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,30 +121,33 @@ Fabrica fabrica = Fabrica.getInstance();
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(104, 104, 104)
-                        .addComponent(ComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ComboOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ComboListas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(104, 104, 104)
+                            .addComponent(ComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ComboOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel4)
+                                .addGap(43, 43, 43)
+                                .addComponent(Fuente_Con_Temas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(129, 129, 129))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ComboListas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Fuente_Con_Temas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                .addGap(105, 105, 105)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ComboTemas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 48, 48)
                         .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,20 +156,24 @@ Fabrica fabrica = Fabrica.getInstance();
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(71, 71, 71)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ComboListas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(45, 45, 45)
+                    .addComponent(jLabel2)
+                    .addComponent(ComboListas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(49, 49, 49)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Fuente_Con_Temas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
+                    .addComponent(Fuente_Con_Temas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGap(48, 48, 48)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboTemas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -206,10 +218,11 @@ Fabrica fabrica = Fabrica.getInstance();
         try {
             
         Fuente_Con_Temas.removeAllItems();
-        List<String> albumes=control.Lista_Albumes();
+        List<String> albumes =control.Lista_Albumes();
         
-        List<String> nombrelistas= control.FindListas();
+        List<String> nombrelistas = control.FindListas();
         
+        List<String> listasdef = control.FindListasDefault();
         
         
         
@@ -228,6 +241,9 @@ Fabrica fabrica = Fabrica.getInstance();
         
         if(ComboOpcion.getSelectedItem()=="LISTAS POR DEFECTO"){
             ComboArtistas.removeAllItems();
+            for(String nombreli : listasdef){
+                Fuente_Con_Temas.addItem(nombreli);
+            }
             
         }
     } catch (Exception ex) {
@@ -261,24 +277,51 @@ ComboOpcion.addItem("LISTAS POR DEFECTO");
     private void Fuente_Con_TemasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Fuente_Con_TemasItemStateChanged
     if(ComboOpcion.getSelectedItem()=="ALBUM"){
         try {
+            
         actualizarComboBoxArtistas();
+        
+        actualizarComboTemas();
     } catch (Exception ex) {
         Logger.getLogger(AgregarTema_A_Lista_Part.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
          if(ComboOpcion.getSelectedItem()=="LISTAS PARTICULARES"){
         try {
-            actualizarcomboboxartistas_con_lista();
+            actualizarcomboboxartistas_con_lista_part();
         } catch (Exception ex) {
             Logger.getLogger(AgregarTema_A_Lista_Part.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
          
          }
     
     if(ComboOpcion.getSelectedItem()=="LISTAS POR DEFECTO"){
+        
             }
     }//GEN-LAST:event_Fuente_Con_TemasItemStateChanged
-private void actualizarcomboboxartistas_con_lista() throws Exception{
+
+     private void actualizarComboTemas() {
+                 
+    try {
+        ComboTemas.removeAllItems();
+        List<String> temas;
+        String album = (String) Fuente_Con_Temas.getSelectedItem();
+        
+        String NickArtist= (String) ComboArtistas.getSelectedItem();
+        String Artist=control.ConvierteNick_A_Correo(NickArtist);
+        temas =  control.temasDeAlbumDeArtista(album,Artist);
+        
+        for(String tema:temas){
+            System.out.println(tema);
+            ComboTemas.addItem(tema);
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(AgregarTema_A_Lista_Part.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+    
+    private void actualizarcomboboxartistas_con_lista_part() throws Exception{
     
     List <String> artistas =  control.FindListasRep_Duenios((String) Fuente_Con_Temas.getSelectedItem());
   ComboArtistas.removeAllItems(); // Limpiar el comboBox actual
@@ -287,7 +330,15 @@ private void actualizarcomboboxartistas_con_lista() throws Exception{
         ComboArtistas.addItem(artista); // Agregar los nombres de artistas
     }
 }
+    private void actualizarcomboboxartistas_con_lista_def() throws Exception{
     
+    List <String> artistas =  control.FindListasRep_Duenios((String) Fuente_Con_Temas.getSelectedItem());
+  ComboArtistas.removeAllItems(); // Limpiar el comboBox actual
+    
+    for (String artista: artistas) {
+        ComboArtistas.addItem(artista); // Agregar los nombres de artistas
+    }
+}
     
     
     
@@ -317,11 +368,15 @@ private void actualizarComboBoxClientes() {
     private javax.swing.JComboBox<String> ComboBoxClientes;
     private javax.swing.JComboBox<String> ComboListas;
     private javax.swing.JComboBox<String> ComboOpcion;
+    private javax.swing.JComboBox<String> ComboTemas;
     private javax.swing.JComboBox<String> Fuente_Con_Temas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+   
 }

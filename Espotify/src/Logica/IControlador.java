@@ -117,5 +117,5 @@ public interface IControlador {
     public abstract boolean sePuedenCargarLosDatos();
 
     public abstract List<String> FindListas();
-    
+    public abstract List<String> FindListasDefault();
 }
