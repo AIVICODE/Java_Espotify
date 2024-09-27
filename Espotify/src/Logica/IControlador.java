@@ -118,4 +118,21 @@ public interface IControlador {
 
     public abstract List<String> FindListas();
     public abstract List<String> FindListasDefault();
+
+    public abstract List<String>ListaTemas_De_Lista(String lista, String NickArtist);
+
+    public abstract List<String> ListaTemas_De_Lista_Def(String lista);
+
+    public abstract void AgregarTema_De_Album_A_Lista(String cliente, String lista_de_cliente, String album, String artista_de_album, String tema_selected) throws Exception;
+
+    public abstract void AgregarTema_De_ListaPart_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String cliente_con_lista, String tema_selected)throws Exception;
+
+    public abstract void AgregarTema_De_ListaDef_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String tema_selected) throws Exception;
+
+    public abstract void AgregarTema_De_Album_A_ListaDef(String lista, String album,String artista_de_album, String tema_selected)throws Exception;
+
+    public abstract void AgregarTema_De_ListaPart_A_ListaDef(String lista, String lista_where_temais, String cliente_con_lista, String tema_selected)throws Exception;
+
+    public abstract void AgregarTema_De_ListaDef_A_ListaDef(String lista, String lista_where_temais, String tema_selected)throws Exception;
+
 }

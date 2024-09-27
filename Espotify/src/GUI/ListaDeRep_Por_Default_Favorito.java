@@ -69,6 +69,12 @@ public class ListaDeRep_Por_Default_Favorito extends javax.swing.JInternalFrame 
 
         jLabel2.setText("Nombre lista");
 
+        comboListadefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboListadefaultActionPerformed(evt);
+            }
+        });
+
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +168,10 @@ public class ListaDeRep_Por_Default_Favorito extends javax.swing.JInternalFrame 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void comboListadefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListadefaultActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboListadefaultActionPerformed
 private void actualizarComboBoxClientes() {
     List<String> correosClientes = control.nicksClientes(); // Obtenemos la lista de correos
     

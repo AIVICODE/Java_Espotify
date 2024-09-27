@@ -272,32 +272,38 @@ comboCli.removeAllItems(); // Limpiamos los ítems actuales del comboBox
 
     
 private void actualizarEnlace() {
-        String nombreTemaSeleccionado = TemasDeLista.getSelectedValue();
-        String correoSeleccionado = (String) comboCli.getSelectedItem();
-
-        if (nombreTemaSeleccionado != null && correoSeleccionado != null) {
-            try {
-                DTListaRep dtListaRep = control.obtenerDatosDeLista_Por_Cliente(correoSeleccionado, ListasDeRep.getSelectedValue());
-
-                if (dtListaRep != null) {
-                    for (DTTema tema : dtListaRep.getTemas()) {
-                        if (tema.getNombre().equals(nombreTemaSeleccionado.split(" - ")[0])) {
-                            String enlace = tema.getDirectorio();
-                            if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
-                                enlace = "http://" + enlace;
+        try {
+            String nombreTemaSeleccionado = TemasDeLista.getSelectedValue();
+            
+            String correoSeleccionado= control.ConvierteNick_A_Correo((String) comboCli.getSelectedItem());
+            
+            
+            if (nombreTemaSeleccionado != null && correoSeleccionado != null) {
+                try {
+                    DTListaRep dtListaRep = control.obtenerDatosDeLista_Por_Cliente(correoSeleccionado, ListasDeRep.getSelectedValue());
+                    
+                    if (dtListaRep != null) {
+                        for (DTTema tema : dtListaRep.getTemas()) {
+                            if (tema.getNombre().equals(nombreTemaSeleccionado.split(" - ")[0])) {
+                                String enlace = tema.getDirectorio();
+                                if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
+                                    enlace = "http://" + enlace;
+                                }
+                                Enlace.putClientProperty("directorio", enlace);
+                                Enlace.setText(enlace);
+                                break;
                             }
-                            Enlace.putClientProperty("directorio", enlace);
-                            Enlace.setText(enlace);
-                            break;
                         }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } else {
+                System.out.println("No se ha seleccionado ningún tema o cliente.");
+                Enlace.setVisible(false);
             }
-        } else {
-            System.out.println("No se ha seleccionado ningún tema o cliente.");
-            Enlace.setVisible(false);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(ConsultaListaRep_Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
 

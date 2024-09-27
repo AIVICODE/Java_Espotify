@@ -2638,6 +2638,7 @@ public class Controlador implements IControlador {
     }
 
     public List<String> temasDeAlbumDeArtista(String album, String artistaMail) {
+        
         List<String> temas = new ArrayList();
         for (Artista a : controlpersis.listaArtistas()) {
             if (a.getMail().equals(artistaMail)) {
@@ -2850,7 +2851,7 @@ public class Controlador implements IControlador {
                 // Si el nombre de la lista coincide con el nombre proporcionado
                 if (lista.getNombre().equalsIgnoreCase(nombrelista)) {
                     // Añadimos el nombre del cliente a la lista de dueños
-                    duenios.add(cliente.getNombre());
+                    duenios.add(cliente.getNickname());
                 }
             }
         }
@@ -2873,4 +2874,446 @@ public class Controlador implements IControlador {
     return controlpersis.NombreListasRep_Defecto();
     
     }
+        
+        
+        
+        public List<String> ListaTemas_De_Lista(String lista, String NickCliente) {
+    List<String> temas = new ArrayList<>(); // Inicializar la lista de temas
+    try {
+        // Buscar al cliente por su nickname
+        Cliente cli = controlpersis.findClienteByNickname(NickCliente);
+        
+        // Verificar si el cliente existe
+        if (cli == null) {
+            throw new IllegalArgumentException("Cliente no encontrado con el nickname: " + NickCliente);
+        }
+        
+        // Obtener las listas de reproducción del cliente
+        List<ListaRep> listasDeCli = cli.getListaReproduccion();
+        
+        // Buscar la lista de reproducción por nombre
+        ListaRep listaReproduccion = listasDeCli.stream()
+                .filter(lr -> lr.getNombre().equals(lista))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Lista de reproducción no encontrada con el nombre: " + lista));
+        
+        // Obtener los temas de la lista de reproducción
+        List<Tema> temasDeLista = listaReproduccion.getListaTemas();
+        
+        // Verificar si hay temas en la lista
+        if (temasDeLista.isEmpty()) {
+            throw new IllegalArgumentException("No hay temas en la lista de reproducción.");
+        }
+        
+        // Agregar los nombres de los temas a la lista de cadenas
+        for (Tema tema : temasDeLista) {
+            temas.add(tema.getNombre());
+            
+            
+        }
+        
+    } catch (Exception ex) {
+        Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, "Error al obtener los temas de la lista", ex);
+    }
+    
+    return temas; // Devolver la lista de temas
 }
+public List<String> ListaTemas_De_Lista_Def(String lista){
+    List<String> temas= new ArrayList<>(); 
+        try {
+            ListaRep listarep = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+            
+            for(Tema tema: listarep.getListaTemas()){
+                temas.add(tema.getNombre());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+return temas;
+}
+
+
+
+public void AgregarTema_De_Album_A_Lista(String cliente, String lista_de_cliente, String album, String artista_de_album, String tema_selected) throws Exception{
+    try {
+        // Obtener cliente por nickname
+        Cliente cli = controlpersis.findClienteByNickname(cliente);
+        List<ListaRep> listascli = cli.getListaReproduccion();
+
+        // Buscar la lista de reproducción específica del cliente
+        ListaRep lista = null;
+        for (ListaRep l : listascli) {
+            if (l.getNombre().equals(lista_de_cliente)) {
+                if (l instanceof ListaRepParticular) {
+                    lista = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (lista == null) {
+            throw new Exception("No se encontró la lista de reproducción particular del cliente: " + lista_de_cliente);
+        }
+
+        // Obtener artista por su nickname
+        Artista art = controlpersis.findArtistaByNickname(artista_de_album);
+        List<Album> albumesArtista = art.getAlbumes();
+
+        // Buscar el álbum específico del artista
+        Album albumEncontrado = null;
+        for (Album alb : albumesArtista) {
+            if (alb.getNombre().equals(album)) {
+                albumEncontrado = alb;
+                break;
+            }
+        }
+
+        if (albumEncontrado == null) {
+            throw new Exception("No se encontró el álbum: " + album);
+        }
+
+        // Buscar el tema en el álbum
+        Tema temaSeleccionado = null;
+        for (Tema tema : albumEncontrado.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en el álbum: " + album);
+        }
+
+        // Asignar el tema a la lista de reproducción particular del cliente
+        ListaRepParticular listaParticular = (ListaRepParticular) lista;
+        
+        
+        for (Tema t : listaParticular.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista_de_cliente);
+            }
+        }
+        listaParticular.getListaTemas().add(temaSeleccionado);
+        
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticular);
+
+        System.out.println("El tema " + tema_selected + " fue agregado a la lista " + lista_de_cliente + " del cliente " + cliente);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: "+ ex.getMessage(), ex);
+    }
+}
+
+    public void AgregarTema_De_ListaPart_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String cliente_con_lista, String tema_selected) throws Exception {
+    try {
+        // Obtener cliente propietario de la lista destino
+        Cliente cliDestino = controlpersis.findClienteByNickname(cliente);
+        List<ListaRep> listascliDestino = cliDestino.getListaReproduccion();
+
+        // Buscar la lista de reproducción destino
+        ListaRep listaDestino = null;
+        for (ListaRep l : listascliDestino) {
+            if (l.getNombre().equals(lista_de_cliente)) {
+                if (l instanceof ListaRepParticular) {
+                    listaDestino = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción particular destino del cliente: " + lista_de_cliente);
+        }
+
+        // Obtener cliente propietario de la lista donde está el tema
+        Cliente cliOrigen = controlpersis.findClienteByNickname(cliente_con_lista);
+        List<ListaRep> listascliOrigen = cliOrigen.getListaReproduccion();
+
+        // Buscar la lista de reproducción de donde se obtendrá el tema
+        ListaRep listaOrigen = null;
+        for (ListaRep l : listascliOrigen) {
+            if (l.getNombre().equals(lista_where_temais)) {
+                if (l instanceof ListaRepParticular) {
+                    listaOrigen = l;
+                    break;
+                } else {
+                    throw new Exception("La lista origen seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaOrigen == null) {
+            throw new Exception("No se encontró la lista de reproducción particular origen: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista de origen
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaOrigen.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        ListaRepParticular listaParticularDestino = (ListaRepParticular) listaDestino;
+        for (Tema t : listaParticularDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista_de_cliente);
+            }
+        }
+
+        // Agregar el tema a la lista destino
+        listaParticularDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticularDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista " + lista_where_temais + " a la lista " + lista_de_cliente + " del cliente " + cliente);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+    public void AgregarTema_De_ListaDef_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String tema_selected) throws Exception {
+    try {
+        // Obtener el cliente propietario de la lista destino
+        Cliente cliDestino = controlpersis.findClienteByNickname(cliente);
+        List<ListaRep> listascliDestino = cliDestino.getListaReproduccion();
+
+        // Buscar la lista de reproducción destino
+        ListaRep listaDestino = null;
+        for (ListaRep l : listascliDestino) {
+            if (l.getNombre().equals(lista_de_cliente)) {
+                if (l instanceof ListaRepParticular) {
+                    listaDestino = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción particular del cliente: " + lista_de_cliente);
+        }
+
+        // Obtener la lista de reproducción por defecto
+        ListaRepGeneral listaGeneral = controlpersis.findListaRep_Por_Defecto_ByNombre(lista_where_temais);
+        if (listaGeneral == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista por defecto
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaGeneral.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista por defecto: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        ListaRepParticular listaParticularDestino = (ListaRepParticular) listaDestino;
+        for (Tema t : listaParticularDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista_de_cliente);
+            }
+        }
+
+        // Agregar el tema a la lista destino
+        listaParticularDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticularDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista por defecto " + lista_where_temais + " a la lista " + lista_de_cliente + " del cliente " + cliente);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+
+// Método para agregar un tema de un álbum a una lista por defecto
+public void AgregarTema_De_Album_A_ListaDef(String lista, String album, String artista_de_album, String tema_selected) throws Exception {
+    try {
+        // Obtener la lista por defecto
+        ListaRepGeneral listaDestino = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista);
+        }
+
+        // Obtener artista por su nickname
+        Artista art = controlpersis.findArtistaByNickname(artista_de_album);
+        List<Album> albumesArtista = art.getAlbumes();
+
+        // Buscar el álbum específico del artista
+        Album albumEncontrado = null;
+        for (Album alb : albumesArtista) {
+            if (alb.getNombre().equals(album)) {
+                albumEncontrado = alb;
+                break;
+            }
+        }
+
+        if (albumEncontrado == null) {
+            throw new Exception("No se encontró el álbum: " + album);
+        }
+
+        // Buscar el tema en el álbum
+        Tema temaSeleccionado = null;
+        for (Tema tema : albumEncontrado.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en el álbum: " + album);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        for (Tema t : listaDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista);
+            }
+        }
+
+        // Agregar el tema a la lista por defecto
+        listaDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista por defecto en la base de datos
+        controlpersis.editListaPorDefecto(listaDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado del álbum " + album + " a la lista por defecto " + lista);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+// Método para agregar un tema de una lista particular a una lista por defecto
+public void AgregarTema_De_ListaPart_A_ListaDef(String lista, String lista_where_temais, String cliente_con_lista, String tema_selected) throws Exception {
+    try {
+        // Obtener la lista por defecto
+        ListaRepGeneral listaDestino = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista);
+        }
+
+        // Obtener el cliente propietario de la lista particular
+        Cliente cliente = controlpersis.findClienteByNickname(cliente_con_lista);
+        ListaRepParticular listaParticular = null;
+        for (ListaRep l : cliente.getListaReproduccion()) {
+            if (l instanceof ListaRepParticular && l.getNombre().equals(lista_where_temais)) {
+                listaParticular = (ListaRepParticular) l;
+                break;
+            }
+        }
+
+        if (listaParticular == null) {
+            throw new Exception("No se encontró la lista particular: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista particular
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaParticular.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista particular: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        for (Tema t : listaDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista);
+            }
+        }
+
+        // Agregar el tema a la lista por defecto
+        listaDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista por defecto en la base de datos
+        controlpersis.editListaPorDefecto(listaDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista particular " + lista_where_temais + " a la lista por defecto " + lista);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+// Método para agregar un tema de una lista por defecto a otra lista por defecto
+public void AgregarTema_De_ListaDef_A_ListaDef(String lista, String lista_where_temais, String tema_selected) throws Exception {
+    try {
+        // Obtener la lista por defecto de destino
+        ListaRepGeneral listaDestino = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista);
+        }
+
+        // Obtener la lista por defecto origen
+        ListaRepGeneral listaOrigen = controlpersis.findListaRep_Por_Defecto_ByNombre(lista_where_temais);
+        if (listaOrigen == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto origen: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista por defecto origen
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaOrigen.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista por defecto: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        for (Tema t : listaDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista);
+            }
+        }
+
+        // Agregar el tema a la lista por defecto destino
+        listaDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista por defecto en la base de datos
+        controlpersis.editListaPorDefecto(listaDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista por defecto " + lista_where_temais + " a la lista por defecto " + lista);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+    
+    
+}
+

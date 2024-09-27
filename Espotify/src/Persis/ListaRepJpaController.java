@@ -193,7 +193,7 @@ public class ListaRepJpaController implements Serializable {
     try {
         // Usamos JPQL para obtener los nombres de las listas de reproducción particulares
         TypedQuery<String> query = em.createQuery(
-            "SELECT DISTINCT l.nombre FROM ListaRepParticular l", String.class
+            "SELECT DISTINCT l.nombre FROM ListaRepParticular l where l.privada = false", String.class
         );
         
         // Retornamos la lista de nombres de las listas de reproducción particulares, sin duplicados

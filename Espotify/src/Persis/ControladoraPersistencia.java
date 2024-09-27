@@ -206,7 +206,9 @@ public void crearAlbum(Album album) throws Exception {
 public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede ser que la tenga q cambiar a particular
         listjpa.edit(lista);//le ando la lista hecha publica
     } 
-
+public void editListaPorDefecto(ListaRepGeneral lista) throws Exception{
+    listjpa.edit(lista);
+}
      public Album findAlbumId(Long id){
         
         return albjpa.findAlbum(id);
@@ -277,4 +279,6 @@ public Artista encontrarArtistaPorNickname(String nickname) {
     public List<String> NombreListasRep_Defecto() {
        return listjpa.NombreDeListasDefault();
     }
+    
+  
 }
