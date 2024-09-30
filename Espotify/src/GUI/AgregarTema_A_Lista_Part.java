@@ -72,6 +72,11 @@ public class AgregarTema_A_Lista_Part extends javax.swing.JInternalFrame {
                 ComboListasItemStateChanged(evt);
             }
         });
+        ComboListas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboListasActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Seleccione cliente");
 
@@ -392,6 +397,10 @@ public class AgregarTema_A_Lista_Part extends javax.swing.JInternalFrame {
     private void ComboTemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTemasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboTemasActionPerformed
+
+    private void ComboListasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboListasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboListasActionPerformed
     private void actualizarComboTemasDef() {
         try {
             ComboTemas.removeAllItems();

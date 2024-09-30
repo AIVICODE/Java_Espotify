@@ -135,4 +135,10 @@ public interface IControlador {
 
     public abstract void AgregarTema_De_ListaDef_A_ListaDef(String lista, String lista_where_temais, String tema_selected)throws Exception;
 
+    public abstract void EliminarTemaDeLista_Part(String NomLista, String nickCli, Long idTema) throws Exception;
+
+    public abstract List<Long> GetIdTemas(String nomTema) throws Exception;
+
+    public abstract void EliminarTemaDeLista_Def(String nombreLista, String nombreTema)throws Exception;
+
 }

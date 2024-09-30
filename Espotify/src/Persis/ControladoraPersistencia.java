@@ -279,6 +279,11 @@ public Artista encontrarArtistaPorNickname(String nickname) {
     public List<String> NombreListasRep_Defecto() {
        return listjpa.NombreDeListasDefault();
     }
+
+    public List<Tema> findTemaEntities() {
+        
+        return temajpa.findTemaEntities();
+    }
     
   
 }

@@ -3313,7 +3313,96 @@ public void AgregarTema_De_ListaDef_A_ListaDef(String lista, String lista_where_
     }
 }
 
+public void EliminarTemaDeLista_Part(String NomLista, String nickCli, Long idTema) throws Exception {
+    try {
+        // Obtener el cliente propietario de la lista
+        Cliente cli = controlpersis.findClienteByNickname(nickCli);
+        List<ListaRep> listasCli = cli.getListaReproduccion();
+
+        // Buscar la lista de reproducción particular donde eliminar el tema
+        ListaRep listaParticular = null;
+        for (ListaRep l : listasCli) {
+            if (l.getNombre().equals(NomLista)) {
+                if (l instanceof ListaRepParticular) {
+                    listaParticular = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaParticular == null) {
+            throw new Exception("No se encontró la lista de reproducción particular: " + NomLista);
+        }
+
+        // Buscar el tema en la lista de reproducción por su ID
+        ListaRepParticular listaParticularDestino = (ListaRepParticular) listaParticular;
+
+        // Agregar más detalles de depuración para asegurarnos de que estamos iterando correctamente
+        System.out.println("Lista de temas en la lista seleccionada:");
+        for (Tema tema : listaParticularDestino.getListaTemas()) {
+            System.out.println("- Tema: " + tema.getNombre() + ", ID: " + tema.getId());  // Mostrar todos los temas en la lista con su ID
+        }
+
+        // Eliminar el tema usando removeIf, que elimina si el ID coincide
+        boolean eliminado = listaParticularDestino.getListaTemas().removeIf(tema -> tema.getId() == idTema);
+
+        if (!eliminado) {
+            throw new Exception("No se encontró el tema con ID: " + idTema + " en la lista " + NomLista);
+        }
+
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticularDestino);
+
+        System.out.println("El tema con ID " + idTema + " fue eliminado de la lista " + NomLista + " del cliente " + nickCli);
+
+    } catch (Exception ex) {
+        throw new Exception("Error al eliminar el tema: " + ex.getMessage(), ex);
+    }
+}
+
+
+public List<Long> GetIdTemas(String nomTema) throws Exception {
+    List<Tema> temas = controlpersis.findTemaEntities();
+    List<Long> ids = new ArrayList<>(); // Inicializa la lista aquí
+
+    for (Tema tema : temas) {
+        // Compara el nombre del tema
+        if (tema.getNombre() == null ? nomTema == null : tema.getNombre().equals(nomTema)) {
+            ids.add(tema.getId()); // Agrega el ID a la lista
+        }
+    }
+
+    return ids; // Retorna la lista de IDs
+}
+
+
+public void EliminarTemaDeLista_Def(String nombreLista, String nombreTema) throws Exception {
+    // Buscar la lista de reproducción por defecto por su nombre
+    ListaRepGeneral lista = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreLista);
     
+    if (lista == null) {
+        throw new Exception("No se encontró la lista de reproducción por defecto: " + nombreLista);
+    }
+    
+    // Obtener los temas de la lista
+    List<Tema> temas = lista.getListaTemas();
+    
+    // Comprobar si el tema existe y eliminarlo
+    boolean eliminado = temas.removeIf(tema -> tema.getNombre().equals(nombreTema));
+    
+    if (!eliminado) {
+        throw new Exception("No se encontró el tema: " + nombreTema + " en la lista " + nombreLista);
+    }
+
+    // Actualizar la lista en la base de datos
+    controlpersis.editListaPorDefecto(lista); // Asumiendo que este método se encarga de la persistencia
+
+    System.out.println("El tema " + nombreTema + " fue eliminado de la lista " + nombreLista);
+}
+
+
     
 }
 

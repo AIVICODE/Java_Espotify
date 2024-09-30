@@ -235,9 +235,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu16.setText("Eliminar Tema de Lista");
 
         jMenuItem30.setText("Eliminar de lista particular");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
         jMenu16.add(jMenuItem30);
 
         jMenuItem31.setText("Eliminar de lista por defecto");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
         jMenu16.add(jMenuItem31);
 
         jMenu2.add(jMenu16);
@@ -771,6 +781,30 @@ public class Principal extends javax.swing.JFrame {
     alta_tema_listarep.toFront();
     alta_tema_listarep.show(); 
     }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+ QuitarTemaDeLista_Part quitar_tema_listarep= new QuitarTemaDeLista_Part ();
+    desktopPane.add(quitar_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   quitar_tema_listarep.setVisible(true);
+    quitar_tema_listarep.setClosable(true);
+    quitar_tema_listarep.setMaximizable(true);
+    quitar_tema_listarep.setIconifiable(true);
+    quitar_tema_listarep.setResizable(true);
+    quitar_tema_listarep.toFront();
+    quitar_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        QuitarTemaDeLista_Def quitar_tema_listarep= new QuitarTemaDeLista_Def ();
+    desktopPane.add(quitar_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   quitar_tema_listarep.setVisible(true);
+    quitar_tema_listarep.setClosable(true);
+    quitar_tema_listarep.setMaximizable(true);
+    quitar_tema_listarep.setIconifiable(true);
+    quitar_tema_listarep.setResizable(true);
+    quitar_tema_listarep.toFront();
+    quitar_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     /**
      * @param args the command line arguments
