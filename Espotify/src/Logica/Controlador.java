@@ -54,11 +54,21 @@ public class Controlador implements IControlador {
                  throw new Exception("Correo o nickname vacios ");
                 }
                 
+            if(!(user.getContrasenia().equals(user.getConfirmacion()))){
+            throw new Exception("La contrasenia no coincide con su confirmacion");
             
+            }
+            
+             if((user.getContrasenia().isEmpty())){
+            throw new Exception("La contrasenia no puede estar vacia");
+            
+            }
+                    
 
             if (user instanceof DTArtista) {
                 Artista nuevoUsuario;
                 DTArtista artista = (DTArtista) user;
+                
                 nuevoUsuario = new Artista(
                         artista.getNickname(),
                         artista.getNombre(),
