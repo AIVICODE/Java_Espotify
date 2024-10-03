@@ -16,3 +16,4 @@ Espotify Web/nbproject/ant-deploy.xml
 Espotify Web/web/META-INF/context.xml
 Espotify Web/src/conf/MANIFEST.MF
 Espotify Web/build.xml
+/Espotify Web/dist/
