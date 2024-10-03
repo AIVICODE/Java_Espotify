@@ -5,6 +5,7 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTListaRep;
+import Datatypes.DTSub;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
@@ -140,5 +141,15 @@ public interface IControlador {
     public abstract List<Long> GetIdTemas(String nomTema) throws Exception;
 
     public abstract void EliminarTemaDeLista_Def(String nombreLista, String nombreTema)throws Exception;
+    
+    public abstract double calculaMontoSubscripcion(String tipo) throws Exception;
+    
+    public abstract void crearSubscripcion(String nicknameCliente, String tipoSub) throws Exception;
+    
+    public abstract void PruebaSubs() throws Exception;
 
+    
+    public abstract List<DTSub> listarSubscripciones() throws Exception;
+
+    public abstract void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
 }

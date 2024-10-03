@@ -7,6 +7,7 @@ import Logica.Genero;
 import Logica.ListaRep;
 import Logica.ListaRepGeneral;
 import Logica.ListaRepParticular;
+import Logica.Subscripcion;
 import Logica.Tema;
 import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ControladoraPersistencia {
     TemaJpaController temajpa = new TemaJpaController();
     ListaRepJpaController listjpa = new ListaRepJpaController();
     FavoritosJpaController favjpa = new  FavoritosJpaController();
+    SubscripcionJpaController subjpa = new SubscripcionJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -283,6 +285,23 @@ public Artista encontrarArtistaPorNickname(String nickname) {
     public List<Tema> findTemaEntities() {
         
         return temajpa.findTemaEntities();
+    }
+
+    public void crearSubscripcion(Subscripcion nuevaSubscripcion) {
+       subjpa.create(nuevaSubscripcion);
+    }
+
+    public List<Subscripcion> getAllSubscripciones() {
+       return subjpa.findSubscripcionEntities();
+
+    }
+
+    public Subscripcion findSubscripcion(Long id) {
+       return subjpa.findSubscripcion(id);
+    }
+
+    public void updateSubscripcion(Subscripcion sub) throws Exception {
+      subjpa.edit(sub);
     }
     
   

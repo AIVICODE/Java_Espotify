@@ -4,11 +4,14 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTListaRep;
+import Datatypes.DTSub;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
+import Logica.Subscripcion.Estado;
 import Persis.ControladoraPersistencia;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -787,6 +790,7 @@ public class Controlador implements IControlador {
         Cargar_Seguidores();
         Cargar_Listas();
         CargarFavoritos();
+        PruebaSubs();
     }
 
     private void Cargar_Perfiles() {
@@ -3412,7 +3416,112 @@ public void EliminarTemaDeLista_Def(String nombreLista, String nombreTema) throw
     System.out.println("El tema " + nombreTema + " fue eliminado de la lista " + nombreLista);
 }
 
+public double calculaMontoSubscripcion(String tipo) throws Exception {
+    switch (tipo.toLowerCase()) { // Convertir a minúsculas para evitar problemas con mayúsculas/minúsculas
+        case "semanal":
+            return 5.0; // Monto para suscripción semanal
+        case "mensual":
+            return 19.0; // Monto para suscripción mensual
+        case "anual":
+            return 120.0; // Monto para suscripción anual
+        default:
+            throw new IllegalArgumentException("Tipo de suscripción no válido: " + tipo);
+    }
+}
 
+public void crearSubscripcion(String nicknameCliente, String tipoSub) throws Exception {
+    try {
+        // Validar el tipo de suscripción
+        if (tipoSub == null || tipoSub.isEmpty()) {
+            throw new Exception("Tipo de suscripción no proporcionado.");
+        }
+
+        double monto;
+        switch (tipoSub.toLowerCase()) {
+            case "semanal":
+                monto = 5.0;
+                break;
+            case "mensual":
+                monto = 19.0;
+                break;
+            case "anual":
+                monto = 120.0;
+                break;
+            default:
+                throw new Exception("Tipo de suscripción no válido.");
+        }
+
+        // Buscar el cliente por su nickname
+        Cliente cliente = controlpersis.findClienteByNickname(nicknameCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el nickname proporcionado.");
+        }
+
+        // Crear la nueva suscripción con el cliente
+   
+        Subscripcion nuevaSubscripcion = new Subscripcion(cliente.getNickname(), tipoSub, new Date(), Subscripcion.Estado.PENDIENTE, monto);
+
+        // Aquí puedes agregar la lógica para guardar la subscripción en la base de datos
+        controlpersis.crearSubscripcion(nuevaSubscripcion); // Ejemplo de método para persistir la suscripción
+cliente.getSubs().add(nuevaSubscripcion);
+controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        throw new Exception("Error al crear la suscripción: " + e.getMessage());
+    }
+}
+
+public void PruebaSubs() throws Exception{
+crearSubscripcion("cel_padrino", "mensual");
+crearSubscripcion("cel_padrino", "anual");
+crearSubscripcion("lachiqui", "semanal");
+
+
+
+}
+
+public List<DTSub> listarSubscripciones() throws Exception {
+    // Obtener todas las suscripciones desde la base de datos
+    List<DTSub> listsubs = new ArrayList<>();
+    List<Subscripcion> subs = controlpersis.getAllSubscripciones(); // Implementa este método en tu capa de persistencia
     
+    for (Subscripcion sub : subs) {
+        // Crear un objeto DTSub a partir de cada suscripción
+        DTSub dtSub = new DTSub(
+                sub.getId(), // Suponiendo que la suscripción tiene un método getId()
+                sub.getCliente(), // Suponiendo que la suscripción tiene un método getCliente() que devuelve el cliente
+                sub.getTipo(), // Suponiendo que la suscripción tiene un método getTipo()
+                sub.getEstado().name(), // Suponiendo que la suscripción tiene un método getEstado()
+                sub.getFechaInicio()// Suponiendo que la suscripción tiene un método getFechaActivacion()
+        );
+        listsubs.add(dtSub);
+    }
+    
+    return listsubs; 
+}
+
+public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception{
+    Subscripcion sub = controlpersis.findSubscripcion(id);
+    
+    if (sub != null) {
+        
+        if (sub.getEstado() != Estado.PENDIENTE) {
+            throw new Exception("Solo se pueden modificar las suscripciones en estado PENDIENTE.");
+        }
+
+        try {
+            Estado estado = Estado.valueOf(nuevoEstado.toUpperCase()); // Convierte a mayúsculas para la comparación
+            sub.setEstado(estado); // Asigna el nuevo estado
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado no válido: " + nuevoEstado);
+        }
+        sub.setFechaInicio(new Date());
+        // Persistir la modificación en la base de datos
+        controlpersis.updateSubscripcion(sub); // Asegúrate de tener este método en tu capa de persistencia
+    } else {
+        throw new Exception("Suscripción no encontrada con ID: " + id);
+    }
+}
+
 }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -33,10 +34,24 @@ public class Cliente extends Usuario implements Serializable {
     )
     private List<Cliente> clientesSeguidos;
 
+   @OneToMany(cascade = CascadeType.ALL)
+@JoinColumn(name = "cliente_id")
+private List<Subscripcion> subs;
+
+    public List<Subscripcion> getSubs() {
+        return subs;
+    }
+
+    public void setSubs(List<Subscripcion> subs) {
+        this.subs = subs;
+    }
+    
     public List<Artista> getArtistasSeguidos() {
         return artistasSeguidos;
     }
 
+    
+    
     public void setArtistasSeguidos(List<Artista> artistasSeguidos) {
         this.artistasSeguidos = artistasSeguidos;
     }

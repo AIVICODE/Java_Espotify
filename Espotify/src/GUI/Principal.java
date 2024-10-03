@@ -93,6 +93,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu13 = new javax.swing.JMenu();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -411,6 +412,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu13.add(jMenuItem23);
 
         jMenu2.add(jMenu13);
+
+        jMenuItem33.setText("Modificar subscripcion");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem33);
 
         jMenuBar1.add(jMenu2);
 
@@ -806,6 +815,18 @@ public class Principal extends javax.swing.JFrame {
     quitar_tema_listarep.show(); 
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+       ActualizarSubscripcion quitar_tema_listarep= new ActualizarSubscripcion();
+    desktopPane.add(quitar_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   quitar_tema_listarep.setVisible(true);
+    quitar_tema_listarep.setClosable(true);
+    quitar_tema_listarep.setMaximizable(true);
+    quitar_tema_listarep.setIconifiable(true);
+    quitar_tema_listarep.setResizable(true);
+    quitar_tema_listarep.toFront();
+    quitar_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -891,6 +912,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
