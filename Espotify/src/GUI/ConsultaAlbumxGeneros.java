@@ -44,7 +44,7 @@ public class ConsultaAlbumxGeneros extends javax.swing.JInternalFrame {
 
  
     private void actualizarComboBoxAlbum(String genero) throws Exception{
-        List<String> albumes = control.findDTAlbumPorGenero(genero);
+        List<String> albumes = control.findstringAlbumPorGenero(genero);
         comboAlbumes.removeAllItems();
         
         for (String auxA : albumes){

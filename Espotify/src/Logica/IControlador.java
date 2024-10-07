@@ -52,12 +52,13 @@ public interface IControlador {
     public abstract Artista encontrarArtistaPorNicknameTipoArt(String nickname);
     public abstract List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception ;
     public abstract DTAlbum findAlbumxNombreDT(String nombreAlbum,String correoArtista) throws Exception;
-    public abstract List<String> findDTAlbumPorGenero(String string) ;
+    public abstract List<String> findstringAlbumPorGenero(String string) ;
     public abstract List<String> MostrarNombreGeneros();
     public abstract String ConvierteNick_A_Correo(String nickname) throws Exception ;
      public abstract List<String> nombreDeListasDeCliente(String mail)throws Exception ;
      public abstract  List<String> Lista_Albumes() ;
      public List<String>FindListasRep_Duenios(String nombrelista) throws Exception;
+     public abstract List<DTAlbum> findDTAlbum(String generopertenece) throws Exception;
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;

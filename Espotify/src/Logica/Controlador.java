@@ -2724,7 +2724,7 @@ public class Controlador implements IControlador {
         return nombreG;
     }
 
-    public List<String> findDTAlbumPorGenero(String string) {
+    public List<String> findstringAlbumPorGenero(String string) {
 
         //Le paso una lista de albumes que tengan al genero pasado por parametro, en su lista de generos
         List<Album> albumes = controlpersis.listaAlbumes(); //Obtengo todos los albumes
@@ -2742,6 +2742,73 @@ public class Controlador implements IControlador {
         }
         return nombreAlbumes;
     }
+    
+  public List<DTAlbum> findDTAlbum(String generopertenece) throws Exception {
+    // Verificar si el parámetro de género es nulo o vacío
+    if (generopertenece == null || generopertenece.trim().isEmpty()) {
+        throw new IllegalArgumentException("El parámetro 'generopertenece' no puede ser nulo o vacío.");
+    }
+
+    // Obtener la lista de álbumes desde el controlador de persistencia
+    List<Album> albumes = controlpersis.listaAlbumes(); 
+    List<DTAlbum> nombreAlbumes = new ArrayList<>();
+    
+    // Verificar si la lista de álbumes está vacía
+    if (albumes == null || albumes.isEmpty()) {
+        System.out.println("No se encontraron álbumes en la base de datos.");
+        return nombreAlbumes; // Retornar lista vacía
+    }
+
+    // Recorrer la lista de objetos de álbumes y averiguar si el género pasado por parámetro pertenece a su lista de géneros
+    for (Album auxA : albumes) {
+        // Verificar si el álbum es nulo
+        if (auxA == null) {
+            System.out.println("Álbum nulo encontrado en la lista.");
+            continue; // Continuar con el siguiente álbum
+        }
+
+        // Si el género por parámetro pertenece a la lista de géneros del álbum
+        for (Genero g : auxA.getListaGeneros()) {
+            // Verificar si el género es nulo
+            if (g == null) {
+                System.out.println("Género nulo encontrado en el álbum: " + auxA.getNombre());
+                continue; // Continuar con el siguiente género
+            }
+
+            if (g.getNombre().equals(generopertenece)) {
+                // Crear el objeto DTAlbum y agregarlo a la lista
+                DTAlbum dtAlbum = new DTAlbum(
+                    auxA.getNombre(),
+                    auxA.getAnioCreacion(),
+                    auxA.getImagen(),
+                    // Crear la lista de géneros para el DTAlbum
+                    auxA.getListaGeneros().stream().map(Genero::getNombre).collect(Collectors.toList()),
+                    // Crear la lista de temas del álbum
+                    auxA.getListaTemas().stream().map(t -> new DTTema(t.getNombre(), (int) (t.getDuracionSegundos() / 60), (int) (t.getDuracionSegundos() % 60), t.getDireccion())).collect(Collectors.toList()),
+                    // Obtener el artista asociado
+                    new DTArtista(
+                        auxA.getArtista().getNickname(),
+                        auxA.getArtista().getNombre(),
+                        auxA.getArtista().getApellido(),
+                        auxA.getArtista().getContrasenia(),
+                        auxA.getArtista().getImagen(),
+                        auxA.getArtista().getFechaNac(),
+                        auxA.getArtista().getMail(),
+                        auxA.getArtista().getBiografia(),
+                        auxA.getArtista().getSitioWeb()
+                    )
+                );
+                nombreAlbumes.add(dtAlbum);
+            }
+        }
+    }
+
+    // Retornar la lista de DTAlbum
+    return nombreAlbumes;
+}
+
+
+    
 
     private DTAlbum DTAlbum(String nombre, int anioCreacion, String imagen, List<String> generosDT, List<DTTema> dtTemas, DTArtista dtArtista) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

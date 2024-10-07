@@ -242,3 +242,24 @@
             cursor: pointer;
             border-radius: 50%;
         }
+        
+  
+.genre-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.genre-item {
+    background-color: #1db954; /* Color verde de Spotify */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.genre-item:hover {
+    background-color: #1aa34a; /* Color más oscuro al hacer hover */
+}
