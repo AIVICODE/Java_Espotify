@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif; /* Estilo de fuente */
+    margin: 0;
+    padding: 20px;
+    background-color: #121212; /* Fondo oscuro similar a Spotify */
+    color: #ffffff; /* Color de texto blanco */
+}
+
+h1 {
+    color: #ffffff; /* Color del título en blanco */
+    text-align: center; /* Centrar el título */
+}
+
+.album-list {
+    display: flex; /* Usar flexbox para disposición */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten */
+    justify-content: center; /* Centrar los álbumes */
+    list-style-type: none; /* Eliminar viñetas */
+    padding: 0; /* Sin padding */
+}
+
+.album-item {
+    margin: 15px; /* Espacio entre álbumes */
+    text-align: center; /* Centrar texto dentro del elemento */
+    background-color: #1c1c1c; /* Fondo oscuro para cada álbum */
+    border: 1px solid #333; /* Borde gris oscuro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px; /* Espacio interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+    transition: transform 0.2s; /* Transición para hover */
+}
+
+.album-item:hover {
+    transform: scale(1.05); /* Efecto hover */
+}
+
+.album-item img {
+    width: 50px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 4px; /* Bordes redondeados en la imagen */
+}
+
+.album-name {
+    font-weight: bold; /* Nombre del álbum en negrita */
+    color: #ffffff; /* Nombre del álbum en blanco */
+}
+
+.album-artist {
+    color: #aaaaaa; /* Color del nombre del artista en gris claro */
+}

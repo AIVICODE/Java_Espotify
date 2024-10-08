@@ -8,6 +8,7 @@ import Logica.Fabrica;
 import Logica.IControlador;
 import Datatypes.DTAlbum;
 import com.google.gson.Gson;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,34 +33,31 @@ public class SvObtenerAlbumxGenero extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
- String genero = request.getParameter("genero");
-    System.out.println("Valor de genero recibido: " + genero);
+     String genero = request.getParameter("genero");
+        System.out.println("Valor de género recibido: " + genero);
     
-    if (genero != null && !genero.isEmpty()) {
-        try {
-            // Llamar al método del controlador para obtener la lista de DTAlbum
-            List<DTAlbum> nombresAlbumes = control.findDTAlbum(genero);
-            System.out.println("Número de álbumes encontrados: " + nombresAlbumes.size());
-            
-            // Configurar la respuesta como JSON
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            
-            // Convertir la lista de DTAlbum a JSON
-            Gson gson = new Gson();
-            String jsonNombresAlbumes = gson.toJson(nombresAlbumes);
-            
-            // Escribir el JSON en la respuesta
-            response.getWriter().write(jsonNombresAlbumes);
-        } catch (Exception e) {
-            // Manejo de errores al obtener los álbumes
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al obtener los álbumes: " + e.getMessage());
+        if (genero != null && !genero.isEmpty()) {
+            try {
+                // Llamar al método del controlador para obtener la lista de DTAlbum
+                List<DTAlbum> nombresAlbumes = control.findDTAlbum(genero);
+                System.out.println("Número de álbumes encontrados: " + nombresAlbumes.size());
+
+                // Guardar la lista de álbumes en el request para enviarla a la JSP
+                request.setAttribute("listaAlbumes", nombresAlbumes);
+
+                // Redirigir a la página JSP para mostrar los álbumes
+                RequestDispatcher dispatcher = request.getRequestDispatcher("mostrarAlbumes.jsp");
+                dispatcher.forward(request, response);
+                
+            } catch (Exception e) {
+                // Manejo de errores al obtener los álbumes
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al obtener los álbumes: " + e.getMessage());
+            }
+        } else {
+            // Si no se proporcionó el parámetro de género, enviar un error
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "El parámetro 'genero' es requerido.");
         }
-    } else {
-        // Si no se proporcionó el parámetro de género, enviar un error
-        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "El parámetro 'genero' es requerido.");
-    }
+    
     
         
     }
