@@ -1,0 +1,101 @@
+body {
+    background-color: #121212; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+    font-family: 'Roboto', sans-serif; /* Fuente más elegante */
+    margin: 0;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 2em; /* Reduce el tamaño del encabezado */
+    font-weight: 300;
+}
+
+.album-list ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.album-item {
+    margin: 10px; /* Reduce el margen */
+    text-align: center;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px; /* Reduce el padding */
+    transition: transform 0.2s;
+    width: 100%;
+    max-width: 500px; /* Reduce el ancho máximo */
+}
+
+.album-item:hover {
+    transform: scale(1.03); /* Reduce el efecto de escala al pasar el mouse */
+    cursor: pointer;
+}
+
+.album-item img {
+    width: 80px; /* Reduce el tamaño de la imagen */
+    height: auto;
+    border-radius: 4px;
+}
+
+.album-name {
+    font-weight: bold;
+    font-size: 1.1em; /* Reduce el tamaño del nombre del álbum */
+    color: white;
+    margin-top: 8px; /* Reduce el margen superior */
+}
+
+.album-artist {
+    color: #b3b3b3;
+    font-size: 0.8em; /* Reduce el tamaño de la fuente del artista */
+}
+
+.album-temas {
+    display: none;
+    margin-top: 15px; /* Reduce el margen superior */
+}
+
+.album-temas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 1em; /* Reduce el tamaño de letra de la tabla */
+}
+
+.album-temas th, .album-temas td {
+    padding: 8px 10px; /* Reduce el padding */
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.album-temas th {
+    background-color: #2b2b2b;
+    color: white;
+    font-weight: bold;
+    font-size: 0.6em; /* Reduce el tamaño de la fuente del encabezado */
+    text-transform: uppercase;
+    letter-spacing: 0.1px;
+}
+
+.album-temas td {
+    color: #b3b3b3;
+    font-size: 0.9em; /* Reduce el tamaño de la fuente */
+    transition: background-color 0.3s;
+}
+
+.album-temas tr:hover td {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.album-temas td:nth-child(1) {
+    font-weight: bold;
+    color: #fff;
+}
+
+.album-temas td:nth-child(2) {
+    font-style: italic;
+}

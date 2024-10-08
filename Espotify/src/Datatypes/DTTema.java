@@ -13,12 +13,21 @@ public class DTTema {
     private int minutos;
     private int segundos;
     private String directorio;
+    private int orden;
 
     public DTTema(String nombre, int minutos, int segundos, String directorio) {
         this.nombre = nombre;
         this.minutos = minutos;
         this.segundos = segundos;
         this.directorio = directorio;
+    }
+    
+     public DTTema(String nombre, int minutos, int segundos, String directorio,int orden) {
+        this.nombre = nombre;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.directorio = directorio;
+        this.orden = orden;
     }
 
     public String getNombre() {
@@ -38,7 +47,10 @@ public class DTTema {
     }
 
     
-    
+     public int getOrden() {
+        return orden;
+    }
+
     
     
     

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
@@ -212,6 +213,21 @@ public class ArtistaJpaController implements Serializable {
     }
 }
 
-
-    
+     
+   public void modificarBiografiaArtista() {//NUEVO, le saque el em de parametro y lopuse en la primera linea de abajo
+       EntityManager em = getEntityManager(); 
+       EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            String query = "ALTER TABLE ARTISTA MODIFY COLUMN BIOGRAFIA VARCHAR(1000)";
+            em.createNativeQuery(query).executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            // Manejo de errores
+        }
+    }
 }

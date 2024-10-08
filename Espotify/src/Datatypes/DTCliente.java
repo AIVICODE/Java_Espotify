@@ -13,6 +13,10 @@ public class DTCliente extends DTUsuario{
     public DTCliente(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia, String imagen) {
         super(nickname, nombre, apellido, correo, fechaNac, contrasenia, imagen);
     }
+    
+     public DTCliente(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia,String confirmacion, String imagen) {
+        super(nickname, nombre, apellido, correo, fechaNac, contrasenia,confirmacion, imagen);
+    }
     private List<ListaRep> listaReproduccion;
     
     public String getNickname() {

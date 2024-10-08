@@ -5,7 +5,6 @@
 package GUI;
 
 import Logica.Artista;
-//import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.awt.BorderLayout;
@@ -28,12 +27,11 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
 
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    //Controlador control= new Controlador();
     public AltaAlbum() {
         initComponents();
         actualizarComboBoxArtistas() ;
         setTitle("AltaAlbum");
-        setSize(600, 500);
+        //setSize(600, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
         setVisible(true);
     }

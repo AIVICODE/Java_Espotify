@@ -13,6 +13,12 @@ public class DTArtista extends DTUsuario {
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
     }
+    
+     public DTArtista(String nickname, String nombre, String apellido, String contrasenia,String confirmacion, String imagen, Date fechaNac, String correo, String biografia, String sitioWeb) {
+        super(nickname, nombre, apellido, correo, fechaNac, contrasenia,confirmacion,imagen);
+        this.biografia = biografia;
+        this.sitioWeb = sitioWeb;
+    }
 
     public DTArtista(String nickname, String nombre, String apellido, String contrasenia, Date fechaNac, String correo, String biografia, String sitioWeb, List<String> listaUsuariosFavoritos) {
         super(nickname, nombre, apellido, correo, fechaNac, contrasenia, listaUsuariosFavoritos);

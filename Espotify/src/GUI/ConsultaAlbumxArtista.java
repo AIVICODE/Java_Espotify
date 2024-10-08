@@ -5,7 +5,8 @@
 package GUI;
 
 import Datatypes.DTAlbum;
-import Logica.Controlador;
+import Logica.Fabrica;
+import Logica.IControlador;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +24,8 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
      * Creates new form ConsultaAlbumxArtista
      */
     
-    Controlador control= new Controlador();
+        Fabrica fabrica = Fabrica.getInstance();
+    IControlador control = fabrica.getIControlador();
     
     public ConsultaAlbumxArtista() {
         initComponents();
@@ -68,6 +70,7 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
         NombreAlbum = new javax.swing.JLabel();
         AnioCreacion = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         ComboArtistas.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -113,6 +116,13 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
         AnioCreacion.setText(" ");
 
         jLabel6.setText("Presion para ver los temas:");
+
+        jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,6 +173,10 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
                                     .addGap(117, 117, 117)
                                     .addComponent(ComboArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(172, 172, 172))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +215,8 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(30, 30, 30))
+                .addGap(7, 7, 7)
+                .addComponent(jButton3))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,7 +225,7 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,6 +315,10 @@ public class ConsultaAlbumxArtista extends javax.swing.JInternalFrame {
     }
     }//GEN-LAST:event_ComboArtistasItemStateChanged
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
  
 private void actualizarComboBoxAlbumes(String correoArtista) throws Exception {
     List<String> nombresAlbumes = control.ListaAlbumesParaArtista(correoArtista); // Obtenemos la lista de álbumes
@@ -327,6 +346,7 @@ private void actualizarComboBoxArtistas() {
     private javax.swing.JComboBox<String> ComboArtistas;
     private javax.swing.JLabel NombreAlbum;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

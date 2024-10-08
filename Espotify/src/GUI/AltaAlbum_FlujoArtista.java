@@ -6,7 +6,6 @@ package GUI;
 
 import Datatypes.DTAlbum;
 import Datatypes.DTTema;
-//import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.time.Year;
@@ -38,12 +37,13 @@ private List<String> selectedNodesList = new ArrayList<>();
     
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    //Controlador control= new Controlador();
     
     public AltaAlbum_FlujoArtista() {
         initComponents();
         setTitle("Crear Album");
-        anioAlbum.setValue(2000); 
+        anioAlbum.setValue(2000);
+        jLabel4.setVisible(false);//no visible imagen 
+        txtImagen.setVisible(false);//hace invisible la opcion de poner imagen
         
        
         jTree1.setModel(control.buildGeneroTree());
@@ -88,7 +88,6 @@ private List<String> selectedNodesList = new ArrayList<>();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         DuracionTema = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtNombreTema = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -98,6 +97,8 @@ private List<String> selectedNodesList = new ArrayList<>();
         jButton3 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setText("Ingrese nombre del album");
 
@@ -119,13 +120,6 @@ private List<String> selectedNodesList = new ArrayList<>();
 
         DuracionTema.setModel(new SpinnerDateModel(new Date(0), null, null, Calendar.SECOND));
 
-        jButton1.setText("Agregar Tema");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jButton2.setText("Confirmar Album");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,7 +129,7 @@ private List<String> selectedNodesList = new ArrayList<>();
 
         jLabel8.setText("Duracion");
 
-        jLabel9.setText("DIR");
+        jLabel9.setText("URL del tema o seleccione archivo");
 
         jButton3.setText("Cancelar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -150,37 +144,31 @@ private List<String> selectedNodesList = new ArrayList<>();
         jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 17)); // NOI18N
         jLabel5.setText("Temas del Album");
 
+        jButton4.setText("Agregar archivo");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Agregar Tema");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(DuracionTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDIR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -193,17 +181,44 @@ private List<String> selectedNodesList = new ArrayList<>();
                                     .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(anioAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addGap(91, 91, 91))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(87, 87, 87)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(185, 185, 185))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(189, 189, 189)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(139, 139, 139)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(txtDIR, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel8)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DuracionTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,18 +250,27 @@ private List<String> selectedNodesList = new ArrayList<>();
                 .addComponent(jLabel5)
                 .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
                     .addComponent(DuracionTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
                     .addComponent(txtNombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(txtDIR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                    .addComponent(jLabel2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtDIR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton4)))
+                        .addGap(64, 64, 64))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
 
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(DuracionTema, "mm:ss");
@@ -258,7 +282,7 @@ private List<String> selectedNodesList = new ArrayList<>();
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(0, 245, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,27 +297,40 @@ private List<String> selectedNodesList = new ArrayList<>();
     }//GEN-LAST:event_txtNombreAlbumActionPerformed
 private List<DTTema> listaTemas = new ArrayList<>();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         String nombreTema = txtNombreTema.getText();
-    Date duracion = (Date) DuracionTema.getValue();
-    String directorio = txtDIR.getText();
-    // Convertir la duración a un formato más manejable (por ejemplo, minutos y segundos)
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(duracion);
-    int minutos = cal.get(Calendar.MINUTE);
-    int segundos = cal.get(Calendar.SECOND);
+        //si hay repetido es true y no se puede, si no hay repetido es false y si se puede
+        boolean hayRepetido = false; //para comprobar si hay algun tema que sea igual al q quiero poner
+        for(DTTema t:listaTemas){
+            if(t.getNombre().equals(nombreTema)){
+                hayRepetido = true;// si hay un tema que se llama como el nuevo tema cambia a true
+            }
+        }
+        
+        if ((nombreTema.equals("")) || hayRepetido == true){//si ingresan un nombre vacio o repetido
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre del tema no puede ser vacio o igual a otro en el album", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
+            Date duracion = (Date) DuracionTema.getValue();
+            String directorio = txtDIR.getText();
+            // Convertir la duración a un formato más manejable (por ejemplo, minutos y segundos)
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(duracion);
+            int minutos = cal.get(Calendar.MINUTE);
+            int segundos = cal.get(Calendar.SECOND);
 
-    // Crear un nuevo tema y agregarlo a la lista
-    DTTema nuevoTema = new DTTema(nombreTema, minutos, segundos,directorio);
-    listaTemas.add(nuevoTema);
+            // Crear un nuevo tema y agregarlo a la lista
+            DTTema nuevoTema = new DTTema(nombreTema, minutos, segundos,directorio);
+            listaTemas.add(nuevoTema);
 
-    // Limpiar los campos de texto para el siguiente tema
-    txtNombreTema.setText("");
-    txtDIR.setText("");
-    DuracionTema.setValue(new Date(0));
+            // Limpiar los campos de texto para el siguiente tema
+            txtNombreTema.setText("");
+            txtDIR.setText("");
+            DuracionTema.setValue(new Date(0));
+
+            JOptionPane.showMessageDialog(null, "Tema agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Tema agregado: " + nombreTema + " (" + minutos + ":" + segundos + ")");
+        }
     
-    JOptionPane.showMessageDialog(null, "Tema agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println("Tema agregado: " + nombreTema + " (" + minutos + ":" + segundos + ")");
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -326,6 +363,26 @@ try {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
       this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+           javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+
+    // Establecer el modo de selección de archivos
+    fileChooser.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY);
+
+    // Mostrar el cuadro de diálogo para la selección de archivos
+    int returnValue = fileChooser.showOpenDialog(this);
+
+    // Si el usuario selecciona un archivo
+    if (returnValue == javax.swing.JFileChooser.APPROVE_OPTION) {
+        // Obtener la ruta del archivo seleccionado
+        java.io.File selectedFile = fileChooser.getSelectedFile();
+        String filePath = selectedFile.getAbsolutePath();
+
+        // Mostrar la ruta en el campo de texto o guardarla
+        txtDIR.setText(filePath);
+    }
+    }//GEN-LAST:event_jButton4ActionPerformed
 private void limpiarFormulario() {
         // Limpiar campos de texto
     txtNombreAlbum.setText("");
@@ -354,6 +411,7 @@ private void limpiarFormulario() {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

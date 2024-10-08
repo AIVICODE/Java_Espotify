@@ -4,11 +4,14 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTListaRep;
+import Datatypes.DTSub;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
+import Logica.Subscripcion.Estado;
 import Persis.ControladoraPersistencia;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,11 +57,21 @@ public class Controlador implements IControlador {
                  throw new Exception("Correo o nickname vacios ");
                 }
                 
+            if(!(user.getContrasenia().equals(user.getConfirmacion()))){
+            throw new Exception("La contrasenia no coincide con su confirmacion");
             
+            }
+            
+             if((user.getContrasenia().isEmpty())){
+            throw new Exception("La contrasenia no puede estar vacia");
+            
+            }
+                    
 
             if (user instanceof DTArtista) {
                 Artista nuevoUsuario;
                 DTArtista artista = (DTArtista) user;
+                
                 nuevoUsuario = new Artista(
                         artista.getNickname(),
                         artista.getNombre(),
@@ -221,13 +234,14 @@ public class Controlador implements IControlador {
         }
     }
 
-    public void CrearListaRepGeneral(String nombreLista, String imagen) {
+    public void CrearListaRepGeneral(String nombreLista, String imagen,String nomGenero) {
 // Encuentra al cliente por su correo
         try {
             // Crear una nueva instancia de ListaRep
-            ListaRep nuevaLista = new ListaRepGeneral();
+            ListaRepGeneral nuevaLista = new ListaRepGeneral();
             nuevaLista.setNombre(nombreLista);  // Asigna el nombre de la lista
             nuevaLista.setImagen(imagen);  // Asigna la imagen a la lista (si la propiedad existe)
+            nuevaLista.setGenero(buscarGeneroPorNombre(nomGenero));
 
             // Guardar la nueva lista en la base de datos
             controlpersis.createListaRep(nuevaLista);
@@ -625,7 +639,6 @@ public class Controlador implements IControlador {
                 ListaRepGeneral listaGeneral = (ListaRepGeneral) lista;
 
                 // Imprimir la lista que está siendo evaluada y el nombre que se busca
-                System.out.println("Comparando lista: " + listaGeneral.getNombre() + " con: " + nombreLista);
 
                 if (listaGeneral.getNombre().equals(nombreLista)) {
                     listaPorDefecto = listaGeneral;
@@ -643,7 +656,6 @@ public class Controlador implements IControlador {
             boolean esFavorita = cliente.getListaRepFavoritos().stream()
                     .anyMatch(listaFavorita -> {
                         // Imprimir las listas favoritas que se comparan
-                        System.out.println("Comparando favorito: " + listaFavorita.getNombre() + " con: " + nombreListaEncontrada);
                         return listaFavorita.getNombre().equals(nombreListaEncontrada);
                     });
 
@@ -725,6 +737,9 @@ public class Controlador implements IControlador {
     }
 
     public void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception {
+        if (correoSeguido == null){//si se quiere dejar de seguir con la lista vacia
+            throw new IllegalArgumentException("No se encontraron seguidos para el usuario " + correoSeguidor);
+        }
         try {
             Cliente seguidor = encontrarCliente(correoSeguidor);
             Cliente cSeguido = encontrarCliente(correoSeguido);
@@ -766,12 +781,16 @@ public class Controlador implements IControlador {
     }
 
     public void Cargar_Datos_Prueba() throws Exception {
+        //modifico la tabla de artista
+        controlpersis.modificarBiografiaArtista();
+        
         Cargar_Perfiles();
         Cargar_Generos();
         Cargar_Albumes();
         Cargar_Seguidores();
         Cargar_Listas();
         CargarFavoritos();
+        PruebaSubs();
     }
 
     private void Cargar_Perfiles() {
@@ -779,14 +798,14 @@ public class Controlador implements IControlador {
             // Artistas
             Artista artista1 = new Artista(
                     "vpeople", "Village", "People", "pass123",
-                    createDate(1980, 7, 14), "vpeople@tuta.io",
+                    createDate(1977, 1, 1), "vpeople@tuta.io",
                     "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.",
                     "www.officialvillagepeople.com",
                     "bit.ly/vpeople"
             );
             Artista artista2 = new Artista(
                     "dmode", "Depeche", "Mode", "pass456",
-                    createDate(1980, 7, 14), "dmode@tuta.io",
+                    createDate(1980, 6, 14), "dmode@tuta.io",
                     "",
                     "www.depechemode.com",
                     "bit.ly/depecheMode"
@@ -800,7 +819,7 @@ public class Controlador implements IControlador {
             );
             Artista artista4 = new Artista(
                     "bruceTheBoss", "Bruce", "Springsteen", "pass101",
-                    createDate(1949, 10, 23), "bruceTheBoss@gmail.com",
+                    createDate(1949, 9, 23), "bruceTheBoss@gmail.com",
                     "",
                     "brucespringsteen.net",
                     "bit.ly/bruceTheBoss"
@@ -814,7 +833,7 @@ public class Controlador implements IControlador {
             );
             Artista artista6 = new Artista(
                     "la_ley", "La", "Ley", "pass303",
-                    createDate(1987, 3, 14), "la_ley@tuta.io",
+                    createDate(1987, 2, 14), "la_ley@tuta.io",
                     "", "", // No hay biografía ni sitio web provisto
                     "bit.ly/laLey"
             );
@@ -827,35 +846,35 @@ public class Controlador implements IControlador {
             );
             Artista artista8 = new Artista(
                     "chaiko", "Piotr", "Tchaikovsky", "pass505",
-                    createDate(1840, 5, 25), "chaiko@tuta.io",
+                    createDate(1840, 4, 25), "chaiko@tuta.io",
                     "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo.",
                     "", // No tiene página web
                     "" // No tiene imagen provista
             );
             Artista artista9 = new Artista(
                     "nicoleneu", "Nicole", "Neumann", "pass606",
-                    createDate(1980, 11, 31), "nicoleneu@hotmail.com",
+                    createDate(1980, 10, 31), "nicoleneu@hotmail.com",
                     "", // No hay biografía provista
                     "", // No tiene página web
                     "bit.ly/nicoleneu"
             );
             Artista artista10 = new Artista(
                     "lospimpi", "Pimpinela", "", "pass707",
-                    createDate(1981, 9, 13), "lospimpi@gmail.com",
+                    createDate(1981, 8, 13), "lospimpi@gmail.com",
                     "",
                     "www.pimpinela.net",
                     "bit.ly/losPimpinela"
             );
             Artista artista11 = new Artista(
                     "dyangounchained", "Dyango", "", "pass808",
-                    createDate(1940, 4, 5), "dyangounchained@gmail.com",
+                    createDate(1940, 3, 5), "dyangounchained@gmail.com",
                     "José Gómez Romero, conocido artísticamente como Dyango, es un cantante español de música romántica.",
                     "", // No tiene página web
                     "" // No tiene imagen provista
             );
             Artista artista12 = new Artista(
                     "alcides", "Alcides", "", "pass909",
-                    createDate(1952, 8, 17), "alcides@tuta.io",
+                    createDate(1952, 7, 17), "alcides@tuta.io",
                     "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano.",
                     "", // No tiene página web
                     "" // No tiene imagen provista
@@ -864,37 +883,37 @@ public class Controlador implements IControlador {
             // Clientes con imágenes
             Cliente cliente1 = new Cliente(
                     "cel_padrino", "Vito", "Corleone", "pass789",
-                    "el_padrino@tuta.io", createDate(1972, 4, 8),
+                    "el_padrino@tuta.io", createDate(1972, 3, 8),
                     "bit.ly/vitoCorleone"
             );
             Cliente cliente2 = new Cliente(
                     "scarlettO", "Scarlett", "O’Hara", "pass101",
-                    "scarlettO@tuta.io", createDate(1984, 12, 27),
+                    "scarlettO@tuta.io", createDate(1984, 11, 27),
                     "bit.ly/scarlettO"
             );
             Cliente cliente3 = new Cliente(
                     "ppArgento", "Pepe", "Argento", "pass202",
-                    "ppArgento@hotmail.com", createDate(1955, 3, 14),
+                    "ppArgento@hotmail.com", createDate(1955, 2, 14),
                     "bit.ly/ppArgento"
             );
             Cliente cliente4 = new Cliente(
                     "Heisenberg", "Walter", "White", "pass303",
-                    "Heisenberg@tuta.io", createDate(1956, 4, 7),
+                    "Heisenberg@tuta.io", createDate(1956, 3, 7),
                     "bit.ly/heisenbergWW"
             );
             Cliente cliente5 = new Cliente(
                     "benKenobi", "Obi-Wan", "Kenobi", "pass404",
-                    "benKenobi@gmail.com", createDate(1914, 5, 2),
+                    "benKenobi@gmail.com", createDate(1914, 4, 2),
                     "bit.ly/benKenobi"
             );
             Cliente cliente6 = new Cliente(
                     "lachiqui", "Mirtha", "Legrand", "pass505",
-                    "lachiqui@hotmail.com.ar", createDate(1927, 3, 23),
+                    "lachiqui@hotmail.com.ar", createDate(1927, 2, 23),
                     "bit.ly/laChiqui"
             );
             Cliente cliente7 = new Cliente(
                     "cbochinche", "Cacho", "Bochinche", "pass606",
-                    "cbochinche@vera.com.uy", createDate(1937, 6, 8),
+                    "cbochinche@vera.com.uy", createDate(1937, 5, 8),
                     "bit.ly/cbochinche"
             );
             Cliente cliente8 = new Cliente(
@@ -927,7 +946,6 @@ public class Controlador implements IControlador {
             controlpersis.AddCliente(cliente7);
             controlpersis.AddCliente(cliente8);
 
-            System.out.println("Perfiles cargados correctamente con biografías, sitios web e imágenes.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2149,6 +2167,26 @@ public class Controlador implements IControlador {
         }
         return lisPrivadas;
     }
+    
+    public List<String> nombreDeListasDeCliente(String mail) throws Exception{//devuelve una lista con los nombres de las listas de rep privadas del cliente
+      try{
+        List<String> listas= new ArrayList();
+        Cliente client = controlpersis.findClienteByNickname(mail);//busco el cliente
+        List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
+        for (ListaRep l : listasdelcliente) {//para cada lista en las del cliente
+
+
+                   listas.add(l.getNombre());//la sumo a la lista a retornar
+                
+            
+        }
+        return listas;
+      }
+        catch (Exception e) {
+            throw new Exception("Error al obtener listas de cliente: " + e.getMessage());
+        }
+    }
+    
 
     public void publicarListaPrivada(String nick, String nombreLista) throws Exception {
         List<Cliente> clientes = listaClientes();
@@ -2436,7 +2474,7 @@ public class Controlador implements IControlador {
         for (Cliente c : controlpersis.listaClientes()) {
             if (c.getNickname().equals(nick)) {
                 for (Cliente cs : c.getClientesSeguidos()) {
-                    seguidos.add(cs.getMail());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
+                    seguidos.add(cs.getNickname());//agrego a la lista los nicks de los clientes que sigue el cliente osea agrego sus seguidos
                 }
             }
         }
@@ -2460,7 +2498,7 @@ public class Controlador implements IControlador {
         for (Cliente c : controlpersis.listaClientes()) {
             if (c.getNickname().equals(nick)) {
                 for (Artista a : c.getArtistasSeguidos()) {
-                    seguidos.add(a.getMail());//agrego los nicks que sigue el cliente
+                    seguidos.add(a.getNickname());//agrego los nicks que sigue el cliente
                 }
             }
         }
@@ -2505,11 +2543,9 @@ public class Controlador implements IControlador {
                 // Listas de reproducción favoritas
                 if (!c.getListaRepFavoritos().isEmpty()) {
                     favoritos.addElement("  Listas:  ");
-                    System.out.println("Cliente tiene listas de reproducción favoritas:");
 
                     for (ListaRep l : c.getListaRepFavoritos()) {
                         favoritos.addElement(l.getNombre()); // Agregar el nombre de la lista
-                        System.out.println("  Lista: " + l.getNombre());// ACA Es el error me mustra cualquier cosa
                     }
                 }
 
@@ -2517,11 +2553,9 @@ public class Controlador implements IControlador {
                 if (!c.getAlbums().isEmpty()) {
                     favoritos.addElement("  ");
                     favoritos.addElement("  Albumes:  ");
-                    System.out.println("Cliente tiene álbumes favoritos:");
 
                     for (Album a : c.getAlbums()) {
                         favoritos.addElement(a.getNombre()); // Agregar el nombre del álbum
-                        System.out.println("  Álbum: " + a.getNombre());
                     }
                 }
 
@@ -2529,11 +2563,9 @@ public class Controlador implements IControlador {
                 if (!c.getTemas().isEmpty()) {
                     favoritos.addElement("  ");
                     favoritos.addElement("  Temas:  ");
-                    System.out.println("Cliente tiene temas favoritos:");
 
                     for (Tema t : c.getTemas()) {
                         favoritos.addElement(t.getNombre()); // Agregar el nombre del tema
-                        System.out.println("  Tema: " + t.getNombre());
                     }
                 }
 
@@ -2541,12 +2573,10 @@ public class Controlador implements IControlador {
                 if (c.getListaRepFavoritos().isEmpty() && c.getAlbums().isEmpty() && c.getTemas().isEmpty()) {
                     favoritos.removeAllElements();
                     favoritos.addElement("El cliente no tiene preferencias guardadas");
-                    System.out.println("El cliente no tiene listas, álbumes ni temas favoritos.");
                 }
             } else {
                 // Si no se encontró el cliente
                 favoritos.addElement("No se encontró al cliente con el nickname proporcionado.");
-                System.out.println("Cliente no encontrado: " + nick);
             }
 
         } catch (Exception ex) {
@@ -2574,10 +2604,10 @@ public class Controlador implements IControlador {
         }
 
         // Obtener los clientes que sigue el cliente con el nickname encontrado
-        List<String> seguidosClientes = clientesSeguidosDelCliente(Seguidor.getNickname());
+        List<String> seguidosClientes = clientesSeguidosDelCliente(Seguidor.getNickname());//esto tiene nicks
 
         // Obtener los artistas que sigue el cliente con el nickname encontrado
-        List<String> seguidosArtistas = artistasSeguidosDelCliente(Seguidor.getNickname());
+        List<String> seguidosArtistas = artistasSeguidosDelCliente(Seguidor.getNickname());//esto tiene nicks
 
         // Combinar ambas listas en una sola
         List<String> seguidos = new ArrayList<>();
@@ -2622,6 +2652,7 @@ public class Controlador implements IControlador {
     }
 
     public List<String> temasDeAlbumDeArtista(String album, String artistaMail) {
+        
         List<String> temas = new ArrayList();
         for (Artista a : controlpersis.listaArtistas()) {
             if (a.getMail().equals(artistaMail)) {
@@ -2629,6 +2660,8 @@ public class Controlador implements IControlador {
                     if (al.getNombre().equals(album)) {
                         for (Tema t : al.getListaTemas()) {
                             temas.add(t.getNombre());//agrego el nombre del tema a lista de strings
+                                                System.out.println(t.getNombre());
+
                         }
                     }
                 }
@@ -2691,7 +2724,7 @@ public class Controlador implements IControlador {
         return nombreG;
     }
 
-    public List<String> findDTAlbumPorGenero(String string) {
+    public List<String> findstringAlbumPorGenero(String string) {
 
         //Le paso una lista de albumes que tengan al genero pasado por parametro, en su lista de generos
         List<Album> albumes = controlpersis.listaAlbumes(); //Obtengo todos los albumes
@@ -2703,60 +2736,145 @@ public class Controlador implements IControlador {
             for (Genero g : auxA.getListaGeneros()) {
                 if (g.getNombre().equals(string)) {
                     nombreAlbumes.add(auxA.getNombre());
+
                 }
             }
         }
         return nombreAlbumes;
     }
+    
+  public List<DTAlbum> findDTAlbum(String generopertenece) throws Exception {
+    // Verificar si el parámetro de género es nulo o vacío
+    if (generopertenece == null || generopertenece.trim().isEmpty()) {
+        throw new IllegalArgumentException("El parámetro 'generopertenece' no puede ser nulo o vacío.");
+    }
+
+    // Obtener la lista de álbumes desde el controlador de persistencia
+    List<Album> albumes = controlpersis.listaAlbumes(); 
+    List<DTAlbum> nombreAlbumes = new ArrayList<>();
+    
+    // Verificar si la lista de álbumes está vacía
+    if (albumes == null || albumes.isEmpty()) {
+        System.out.println("No se encontraron álbumes en la base de datos.");
+        return nombreAlbumes; // Retornar lista vacía
+    }
+
+    // Recorrer la lista de objetos de álbumes y averiguar si el género pasado por parámetro pertenece a su lista de géneros
+    for (Album auxA : albumes) {
+        // Verificar si el álbum es nulo
+        if (auxA == null) {
+            System.out.println("Álbum nulo encontrado en la lista.");
+            continue; // Continuar con el siguiente álbum
+        }
+
+        // Si el género por parámetro pertenece a la lista de géneros del álbum
+        for (Genero g : auxA.getListaGeneros()) {
+            // Verificar si el género es nulo
+            if (g == null) {
+                System.out.println("Género nulo encontrado en el álbum: " + auxA.getNombre());
+                continue; // Continuar con el siguiente género
+            }
+
+            if (g.getNombre().equals(generopertenece)) {
+                // Crear el objeto DTAlbum y agregarlo a la lista
+                DTAlbum dtAlbum = new DTAlbum(
+                    auxA.getNombre(),
+                    auxA.getAnioCreacion(),
+                    auxA.getImagen(),
+                    // Crear la lista de géneros para el DTAlbum
+                    auxA.getListaGeneros().stream().map(Genero::getNombre).collect(Collectors.toList()),
+                    // Crear la lista de temas del álbum
+                    auxA.getListaTemas().stream().map(t -> new DTTema(t.getNombre(), (int) (t.getDuracionSegundos() / 60), (int) (t.getDuracionSegundos() % 60), t.getDireccion(),t.getOrden())).collect(Collectors.toList()),
+                    // Obtener el artista asociado
+                    new DTArtista(
+                        auxA.getArtista().getNickname(),
+                        auxA.getArtista().getNombre(),
+                        auxA.getArtista().getApellido(),
+                        auxA.getArtista().getContrasenia(),
+                        auxA.getArtista().getImagen(),
+                        auxA.getArtista().getFechaNac(),
+                        auxA.getArtista().getMail(),
+                        auxA.getArtista().getBiografia(),
+                        auxA.getArtista().getSitioWeb()
+                    )
+                );
+                nombreAlbumes.add(dtAlbum);
+            }
+        }
+    }
+
+    // Retornar la lista de DTAlbum
+    return nombreAlbumes;
+}
+
+
+    
 
     private DTAlbum DTAlbum(String nombre, int anioCreacion, String imagen, List<String> generosDT, List<DTTema> dtTemas, DTArtista dtArtista) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public DTAlbum findAlbumxNombreDT(String string) throws Exception {
+    public DTAlbum findAlbumxNombreDT(String nombreAlbum,String correoArtista) throws Exception {
 
-        //Me llega el album seleccionado en el combo box y lo convierto en DTAlbum
-        Album albumEncontrado = controlpersis.findOneAlbumByNombre(string);
-        Artista artista = albumEncontrado.getArtista();
-        List<String> generosDT = new ArrayList<>();
-        for (Genero auxG : albumEncontrado.getListaGeneros()) {
-            generosDT.add(auxG.getNombre());
+        // Buscar el artista por correo
+    Artista art = controlpersis.encontrarArtista(correoArtista);
+    if (art == null) {
+        throw new Exception("Artista no encontrado con el correo: " + correoArtista);
+    }
+    
+    // Buscar el álbum dentro de la lista de álbumes del artista
+    Album albumEncontrado = null;
+    for (Album album : art.getAlbumes()) {
+        if (album.getNombre().equals(nombreAlbum)) {
+            albumEncontrado = album;
+            break;
         }
+    }
+ 
+    // Si no se encuentra el álbum, lanzamos una excepción
+    if (albumEncontrado == null) {
+        throw new Exception("Álbum no encontrado o no seleccionado, intente nuevamente ");
+    }
 
-        // Crear el objeto DTArtista
-        DTArtista dtartista = new DTArtista(
-                artista.getNickname(),
-                artista.getNombre(),
-                artista.getApellido(),
-                artista.getContrasenia(),
-                artista.getImagen(),
-                artista.getFechaNac(),
-                artista.getMail(),
-                artista.getBiografia(),
-                artista.getSitioWeb()
-        );
+    // Crear la lista de géneros del álbum
+    List<String> generosDT = new ArrayList<>();
+    for (Genero auxG : albumEncontrado.getListaGeneros()) {
+        generosDT.add(auxG.getNombre());
+    }
 
-        // Crear la lista de temas del álbum
-        List<DTTema> dtTemas = new ArrayList<>();
-        for (Tema auxT : albumEncontrado.getListaTemas()) {
-            long duracionSegundos = auxT.getDuracionSegundos();
-            int minutos = (int) (duracionSegundos / 60);
-            int segundos = (int) (duracionSegundos % 60);
+    // Crear el objeto DTArtista
+    DTArtista dtartista = new DTArtista(
+            art.getNickname(),
+            art.getNombre(),
+            art.getApellido(),
+            art.getContrasenia(),
+            art.getImagen(),
+            art.getFechaNac(),
+            art.getMail(),
+            art.getBiografia(),
+            art.getSitioWeb()
+    );
 
-            DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
-            dtTemas.add(dttema);
-        }
+    // Crear la lista de temas del álbum
+    List<DTTema> dtTemas = new ArrayList<>();
+    for (Tema auxT : albumEncontrado.getListaTemas()) {
+        long duracionSegundos = auxT.getDuracionSegundos();
+        int minutos = (int) (duracionSegundos / 60);
+        int segundos = (int) (duracionSegundos % 60);
 
-        // Crear y retornar el DTAlbum
-        return new DTAlbum(
-                albumEncontrado.getNombre(),
-                albumEncontrado.getAnioCreacion(),
-                albumEncontrado.getImagen(),
-                generosDT,
-                dtTemas,
-                dtartista
-        );
+        DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion(),auxT.getOrden());
+        dtTemas.add(dttema);
+    }
 
+    // Crear y retornar el DTAlbum
+    return new DTAlbum(
+            albumEncontrado.getNombre(),
+            albumEncontrado.getAnioCreacion(),
+            albumEncontrado.getImagen(),
+            generosDT,
+            dtTemas,
+            dtartista
+    );
     }
 
     public String ConvierteNick_A_Correo(String nickname) throws Exception {
@@ -2781,4 +2899,696 @@ public class Controlador implements IControlador {
         }
     }
 
+    public boolean sePuedenCargarLosDatos(){
+        //is empty retorna true si la lista esta vacia (se pueden cargar), si es false es porque hay artistas osea no se puede cargar
+        return controlpersis.listaArtistas().isEmpty();
+    }
+    
+    public List<String> Lista_Albumes(){
+    List<String> listalbum = new ArrayList<>();
+    List<Album> albumes = controlpersis.listaAlbumes();
+    for (Album album : albumes){
+        
+        listalbum.add(album.getNombre());
+        
+    }
+    return listalbum;
+    }
+    
+    public List<String>FindListasRep_Duenios(String nombrelista) throws Exception{
+            List<String> duenios = new ArrayList<>();
+    
+    try {
+        // Obtenemos la lista de clientes desde el sistema
+        List<Cliente> clientes = listaClientes(); // Método que devuelve la lista de clientes
+        
+        // Recorremos cada cliente
+        for (Cliente cliente : clientes) {
+            // Obtenemos las listas de reproducción del cliente
+            List<ListaRep> listasRep = cliente.getListaReproduccion();
+            
+            // Recorremos las listas de reproducción del cliente
+            for (ListaRep lista : listasRep) {
+                // Si el nombre de la lista coincide con el nombre proporcionado
+                if (lista.getNombre().equalsIgnoreCase(nombrelista)) {
+                    // Añadimos el nombre del cliente a la lista de dueños
+                    duenios.add(cliente.getNickname());
+                }
+            }
+        }
+
+        return duenios; // Devuelve la lista de nombres de clientes que tienen una lista con el nombre dado
+    } catch (Exception e) {
+        throw new Exception("Error buscando dueños de las listas de reproducción", e);
+    }
+    
+    
+    }
+    public List<String> FindListas(){
+    
+    return controlpersis.NombreListasRepParticular();
+    
+    }
+    
+        public List<String> FindListasDefault(){
+    
+    return controlpersis.NombreListasRep_Defecto();
+    
+    }
+        
+        
+        
+        public List<String> ListaTemas_De_Lista(String lista, String NickCliente) {
+    List<String> temas = new ArrayList<>(); // Inicializar la lista de temas
+    try {
+        // Buscar al cliente por su nickname
+        Cliente cli = controlpersis.findClienteByNickname(NickCliente);
+        
+        // Verificar si el cliente existe
+        if (cli == null) {
+            throw new IllegalArgumentException("Cliente no encontrado con el nickname: " + NickCliente);
+        }
+        
+        // Obtener las listas de reproducción del cliente
+        List<ListaRep> listasDeCli = cli.getListaReproduccion();
+        
+        // Buscar la lista de reproducción por nombre
+        ListaRep listaReproduccion = listasDeCli.stream()
+                .filter(lr -> lr.getNombre().equals(lista))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Lista de reproducción no encontrada con el nombre: " + lista));
+        
+        // Obtener los temas de la lista de reproducción
+        List<Tema> temasDeLista = listaReproduccion.getListaTemas();
+        
+        // Verificar si hay temas en la lista
+        if (temasDeLista.isEmpty()) {
+            throw new IllegalArgumentException("No hay temas en la lista de reproducción.");
+        }
+        
+        // Agregar los nombres de los temas a la lista de cadenas
+        for (Tema tema : temasDeLista) {
+            temas.add(tema.getNombre());
+            
+            
+        }
+        
+    } catch (Exception ex) {
+        Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, "Error al obtener los temas de la lista", ex);
+    }
+    
+    return temas; // Devolver la lista de temas
 }
+public List<String> ListaTemas_De_Lista_Def(String lista){
+    List<String> temas= new ArrayList<>(); 
+        try {
+            ListaRep listarep = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+            
+            for(Tema tema: listarep.getListaTemas()){
+                temas.add(tema.getNombre());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+return temas;
+}
+
+
+
+public void AgregarTema_De_Album_A_Lista(String cliente, String lista_de_cliente, String album, String artista_de_album, String tema_selected) throws Exception{
+    try {
+        // Obtener cliente por nickname
+        Cliente cli = controlpersis.findClienteByNickname(cliente);
+        List<ListaRep> listascli = cli.getListaReproduccion();
+
+        // Buscar la lista de reproducción específica del cliente
+        ListaRep lista = null;
+        for (ListaRep l : listascli) {
+            if (l.getNombre().equals(lista_de_cliente)) {
+                if (l instanceof ListaRepParticular) {
+                    lista = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (lista == null) {
+            throw new Exception("No se encontró la lista de reproducción particular del cliente: " + lista_de_cliente);
+        }
+
+        // Obtener artista por su nickname
+        Artista art = controlpersis.findArtistaByNickname(artista_de_album);
+        List<Album> albumesArtista = art.getAlbumes();
+
+        // Buscar el álbum específico del artista
+        Album albumEncontrado = null;
+        for (Album alb : albumesArtista) {
+            if (alb.getNombre().equals(album)) {
+                albumEncontrado = alb;
+                break;
+            }
+        }
+
+        if (albumEncontrado == null) {
+            throw new Exception("No se encontró el álbum: " + album);
+        }
+
+        // Buscar el tema en el álbum
+        Tema temaSeleccionado = null;
+        for (Tema tema : albumEncontrado.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en el álbum: " + album);
+        }
+
+        // Asignar el tema a la lista de reproducción particular del cliente
+        ListaRepParticular listaParticular = (ListaRepParticular) lista;
+        
+        
+        for (Tema t : listaParticular.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista_de_cliente);
+            }
+        }
+        listaParticular.getListaTemas().add(temaSeleccionado);
+        
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticular);
+
+        System.out.println("El tema " + tema_selected + " fue agregado a la lista " + lista_de_cliente + " del cliente " + cliente);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: "+ ex.getMessage(), ex);
+    }
+}
+
+    public void AgregarTema_De_ListaPart_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String cliente_con_lista, String tema_selected) throws Exception {
+    try {
+        // Obtener cliente propietario de la lista destino
+        Cliente cliDestino = controlpersis.findClienteByNickname(cliente);
+        List<ListaRep> listascliDestino = cliDestino.getListaReproduccion();
+
+        // Buscar la lista de reproducción destino
+        ListaRep listaDestino = null;
+        for (ListaRep l : listascliDestino) {
+            if (l.getNombre().equals(lista_de_cliente)) {
+                if (l instanceof ListaRepParticular) {
+                    listaDestino = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción particular destino del cliente: " + lista_de_cliente);
+        }
+
+        // Obtener cliente propietario de la lista donde está el tema
+        Cliente cliOrigen = controlpersis.findClienteByNickname(cliente_con_lista);
+        List<ListaRep> listascliOrigen = cliOrigen.getListaReproduccion();
+
+        // Buscar la lista de reproducción de donde se obtendrá el tema
+        ListaRep listaOrigen = null;
+        for (ListaRep l : listascliOrigen) {
+            if (l.getNombre().equals(lista_where_temais)) {
+                if (l instanceof ListaRepParticular) {
+                    listaOrigen = l;
+                    break;
+                } else {
+                    throw new Exception("La lista origen seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaOrigen == null) {
+            throw new Exception("No se encontró la lista de reproducción particular origen: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista de origen
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaOrigen.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        ListaRepParticular listaParticularDestino = (ListaRepParticular) listaDestino;
+        for (Tema t : listaParticularDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista_de_cliente);
+            }
+        }
+
+        // Agregar el tema a la lista destino
+        listaParticularDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticularDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista " + lista_where_temais + " a la lista " + lista_de_cliente + " del cliente " + cliente);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+    public void AgregarTema_De_ListaDef_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String tema_selected) throws Exception {
+    try {
+        // Obtener el cliente propietario de la lista destino
+        Cliente cliDestino = controlpersis.findClienteByNickname(cliente);
+        List<ListaRep> listascliDestino = cliDestino.getListaReproduccion();
+
+        // Buscar la lista de reproducción destino
+        ListaRep listaDestino = null;
+        for (ListaRep l : listascliDestino) {
+            if (l.getNombre().equals(lista_de_cliente)) {
+                if (l instanceof ListaRepParticular) {
+                    listaDestino = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción particular del cliente: " + lista_de_cliente);
+        }
+
+        // Obtener la lista de reproducción por defecto
+        ListaRepGeneral listaGeneral = controlpersis.findListaRep_Por_Defecto_ByNombre(lista_where_temais);
+        if (listaGeneral == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista por defecto
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaGeneral.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista por defecto: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        ListaRepParticular listaParticularDestino = (ListaRepParticular) listaDestino;
+        for (Tema t : listaParticularDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista_de_cliente);
+            }
+        }
+
+        // Agregar el tema a la lista destino
+        listaParticularDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticularDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista por defecto " + lista_where_temais + " a la lista " + lista_de_cliente + " del cliente " + cliente);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+
+// Método para agregar un tema de un álbum a una lista por defecto
+public void AgregarTema_De_Album_A_ListaDef(String lista, String album, String artista_de_album, String tema_selected) throws Exception {
+    try {
+        // Obtener la lista por defecto
+        ListaRepGeneral listaDestino = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista);
+        }
+
+        // Obtener artista por su nickname
+        Artista art = controlpersis.findArtistaByNickname(artista_de_album);
+        List<Album> albumesArtista = art.getAlbumes();
+
+        // Buscar el álbum específico del artista
+        Album albumEncontrado = null;
+        for (Album alb : albumesArtista) {
+            if (alb.getNombre().equals(album)) {
+                albumEncontrado = alb;
+                break;
+            }
+        }
+
+        if (albumEncontrado == null) {
+            throw new Exception("No se encontró el álbum: " + album);
+        }
+
+        // Buscar el tema en el álbum
+        Tema temaSeleccionado = null;
+        for (Tema tema : albumEncontrado.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en el álbum: " + album);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        for (Tema t : listaDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista);
+            }
+        }
+
+        // Agregar el tema a la lista por defecto
+        listaDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista por defecto en la base de datos
+        controlpersis.editListaPorDefecto(listaDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado del álbum " + album + " a la lista por defecto " + lista);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+// Método para agregar un tema de una lista particular a una lista por defecto
+public void AgregarTema_De_ListaPart_A_ListaDef(String lista, String lista_where_temais, String cliente_con_lista, String tema_selected) throws Exception {
+    try {
+        // Obtener la lista por defecto
+        ListaRepGeneral listaDestino = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista);
+        }
+
+        // Obtener el cliente propietario de la lista particular
+        Cliente cliente = controlpersis.findClienteByNickname(cliente_con_lista);
+        ListaRepParticular listaParticular = null;
+        for (ListaRep l : cliente.getListaReproduccion()) {
+            if (l instanceof ListaRepParticular && l.getNombre().equals(lista_where_temais)) {
+                listaParticular = (ListaRepParticular) l;
+                break;
+            }
+        }
+
+        if (listaParticular == null) {
+            throw new Exception("No se encontró la lista particular: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista particular
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaParticular.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista particular: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        for (Tema t : listaDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista);
+            }
+        }
+
+        // Agregar el tema a la lista por defecto
+        listaDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista por defecto en la base de datos
+        controlpersis.editListaPorDefecto(listaDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista particular " + lista_where_temais + " a la lista por defecto " + lista);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+// Método para agregar un tema de una lista por defecto a otra lista por defecto
+public void AgregarTema_De_ListaDef_A_ListaDef(String lista, String lista_where_temais, String tema_selected) throws Exception {
+    try {
+        // Obtener la lista por defecto de destino
+        ListaRepGeneral listaDestino = controlpersis.findListaRep_Por_Defecto_ByNombre(lista);
+        if (listaDestino == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto: " + lista);
+        }
+
+        // Obtener la lista por defecto origen
+        ListaRepGeneral listaOrigen = controlpersis.findListaRep_Por_Defecto_ByNombre(lista_where_temais);
+        if (listaOrigen == null) {
+            throw new Exception("No se encontró la lista de reproducción por defecto origen: " + lista_where_temais);
+        }
+
+        // Buscar el tema en la lista por defecto origen
+        Tema temaSeleccionado = null;
+        for (Tema tema : listaOrigen.getListaTemas()) {
+            if (tema.getNombre().equals(tema_selected)) {
+                temaSeleccionado = tema;
+                break;
+            }
+        }
+
+        if (temaSeleccionado == null) {
+            throw new Exception("No se encontró el tema: " + tema_selected + " en la lista por defecto: " + lista_where_temais);
+        }
+
+        // Comprobar si el tema ya está en la lista destino
+        for (Tema t : listaDestino.getListaTemas()) {
+            if (t.getNombre().equals(tema_selected)) {
+                throw new Exception("El tema " + tema_selected + " ya está en la lista " + lista);
+            }
+        }
+
+        // Agregar el tema a la lista por defecto destino
+        listaDestino.getListaTemas().add(temaSeleccionado);
+
+        // Actualizar la lista por defecto en la base de datos
+        controlpersis.editListaPorDefecto(listaDestino);
+
+        System.out.println("El tema " + tema_selected + " fue agregado de la lista por defecto " + lista_where_temais + " a la lista por defecto " + lista);
+
+    } catch (Exception ex) {
+        throw new Exception("Error: " + ex.getMessage(), ex);
+    }
+}
+
+public void EliminarTemaDeLista_Part(String NomLista, String nickCli, Long idTema) throws Exception {
+    try {
+        // Obtener el cliente propietario de la lista
+        Cliente cli = controlpersis.findClienteByNickname(nickCli);
+        List<ListaRep> listasCli = cli.getListaReproduccion();
+
+        // Buscar la lista de reproducción particular donde eliminar el tema
+        ListaRep listaParticular = null;
+        for (ListaRep l : listasCli) {
+            if (l.getNombre().equals(NomLista)) {
+                if (l instanceof ListaRepParticular) {
+                    listaParticular = l;
+                    break;
+                } else {
+                    throw new Exception("La lista seleccionada no es una lista particular.");
+                }
+            }
+        }
+
+        if (listaParticular == null) {
+            throw new Exception("No se encontró la lista de reproducción particular: " + NomLista);
+        }
+
+        // Buscar el tema en la lista de reproducción por su ID
+        ListaRepParticular listaParticularDestino = (ListaRepParticular) listaParticular;
+
+        // Agregar más detalles de depuración para asegurarnos de que estamos iterando correctamente
+        System.out.println("Lista de temas en la lista seleccionada:");
+        for (Tema tema : listaParticularDestino.getListaTemas()) {
+            System.out.println("- Tema: " + tema.getNombre() + ", ID: " + tema.getId());  // Mostrar todos los temas en la lista con su ID
+        }
+
+        // Eliminar el tema usando removeIf, que elimina si el ID coincide
+        boolean eliminado = listaParticularDestino.getListaTemas().removeIf(tema -> tema.getId() == idTema);
+
+        if (!eliminado) {
+            throw new Exception("No se encontró el tema con ID: " + idTema + " en la lista " + NomLista);
+        }
+
+        // Actualizar la lista en la base de datos
+        controlpersis.editListaPrivada(listaParticularDestino);
+
+        System.out.println("El tema con ID " + idTema + " fue eliminado de la lista " + NomLista + " del cliente " + nickCli);
+
+    } catch (Exception ex) {
+        throw new Exception("Error al eliminar el tema: " + ex.getMessage(), ex);
+    }
+}
+
+
+public List<Long> GetIdTemas(String nomTema) throws Exception {
+    List<Tema> temas = controlpersis.findTemaEntities();
+    List<Long> ids = new ArrayList<>(); // Inicializa la lista aquí
+
+    for (Tema tema : temas) {
+        // Compara el nombre del tema
+        if (tema.getNombre() == null ? nomTema == null : tema.getNombre().equals(nomTema)) {
+            ids.add(tema.getId()); // Agrega el ID a la lista
+        }
+    }
+
+    return ids; // Retorna la lista de IDs
+}
+
+
+public void EliminarTemaDeLista_Def(String nombreLista, String nombreTema) throws Exception {
+    // Buscar la lista de reproducción por defecto por su nombre
+    ListaRepGeneral lista = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreLista);
+    
+    if (lista == null) {
+        throw new Exception("No se encontró la lista de reproducción por defecto: " + nombreLista);
+    }
+    
+    // Obtener los temas de la lista
+    List<Tema> temas = lista.getListaTemas();
+    
+    // Comprobar si el tema existe y eliminarlo
+    boolean eliminado = temas.removeIf(tema -> tema.getNombre().equals(nombreTema));
+    
+    if (!eliminado) {
+        throw new Exception("No se encontró el tema: " + nombreTema + " en la lista " + nombreLista);
+    }
+
+    // Actualizar la lista en la base de datos
+    controlpersis.editListaPorDefecto(lista); // Asumiendo que este método se encarga de la persistencia
+
+    System.out.println("El tema " + nombreTema + " fue eliminado de la lista " + nombreLista);
+}
+
+public double calculaMontoSubscripcion(String tipo) throws Exception {
+    switch (tipo.toLowerCase()) { // Convertir a minúsculas para evitar problemas con mayúsculas/minúsculas
+        case "semanal":
+            return 5.0; // Monto para suscripción semanal
+        case "mensual":
+            return 19.0; // Monto para suscripción mensual
+        case "anual":
+            return 120.0; // Monto para suscripción anual
+        default:
+            throw new IllegalArgumentException("Tipo de suscripción no válido: " + tipo);
+    }
+}
+
+public void crearSubscripcion(String nicknameCliente, String tipoSub) throws Exception {
+    try {
+        // Validar el tipo de suscripción
+        if (tipoSub == null || tipoSub.isEmpty()) {
+            throw new Exception("Tipo de suscripción no proporcionado.");
+        }
+
+        double monto;
+        switch (tipoSub.toLowerCase()) {
+            case "semanal":
+                monto = 5.0;
+                break;
+            case "mensual":
+                monto = 19.0;
+                break;
+            case "anual":
+                monto = 120.0;
+                break;
+            default:
+                throw new Exception("Tipo de suscripción no válido.");
+        }
+
+        // Buscar el cliente por su nickname
+        Cliente cliente = controlpersis.findClienteByNickname(nicknameCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con el nickname proporcionado.");
+        }
+
+        // Crear la nueva suscripción con el cliente
+   
+        Subscripcion nuevaSubscripcion = new Subscripcion(cliente.getNickname(), tipoSub, new Date(), Subscripcion.Estado.PENDIENTE, monto);
+
+        // Aquí puedes agregar la lógica para guardar la subscripción en la base de datos
+        controlpersis.crearSubscripcion(nuevaSubscripcion); // Ejemplo de método para persistir la suscripción
+cliente.getSubs().add(nuevaSubscripcion);
+controlpersis.editCliente(cliente);
+
+    } catch (Exception e) {
+        throw new Exception("Error al crear la suscripción: " + e.getMessage());
+    }
+}
+
+public void PruebaSubs() throws Exception{
+crearSubscripcion("cel_padrino", "mensual");
+crearSubscripcion("cel_padrino", "anual");
+crearSubscripcion("lachiqui", "semanal");
+
+
+
+}
+
+public List<DTSub> listarSubscripciones() throws Exception {
+    // Obtener todas las suscripciones desde la base de datos
+    List<DTSub> listsubs = new ArrayList<>();
+    List<Subscripcion> subs = controlpersis.getAllSubscripciones(); // Implementa este método en tu capa de persistencia
+    
+    for (Subscripcion sub : subs) {
+        // Crear un objeto DTSub a partir de cada suscripción
+        DTSub dtSub = new DTSub(
+                sub.getId(), // Suponiendo que la suscripción tiene un método getId()
+                sub.getCliente(), // Suponiendo que la suscripción tiene un método getCliente() que devuelve el cliente
+                sub.getTipo(), // Suponiendo que la suscripción tiene un método getTipo()
+                sub.getEstado().name(), // Suponiendo que la suscripción tiene un método getEstado()
+                sub.getFechaInicio()// Suponiendo que la suscripción tiene un método getFechaActivacion()
+        );
+        listsubs.add(dtSub);
+    }
+    
+    return listsubs; 
+}
+
+public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception{
+    Subscripcion sub = controlpersis.findSubscripcion(id);
+    
+    if (sub != null) {
+        
+        if (sub.getEstado() != Estado.PENDIENTE) {
+            throw new Exception("Solo se pueden modificar las suscripciones en estado PENDIENTE.");
+        }
+
+        try {
+            Estado estado = Estado.valueOf(nuevoEstado.toUpperCase()); // Convierte a mayúsculas para la comparación
+            sub.setEstado(estado); // Asigna el nuevo estado
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado no válido: " + nuevoEstado);
+        }
+        sub.setFechaInicio(new Date());
+        // Persistir la modificación en la base de datos
+        controlpersis.updateSubscripcion(sub); // Asegúrate de tener este método en tu capa de persistencia
+    } else {
+        throw new Exception("Suscripción no encontrada con ID: " + id);
+    }
+}
+
+}
+
