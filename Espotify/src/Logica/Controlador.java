@@ -2784,7 +2784,7 @@ public class Controlador implements IControlador {
                     // Crear la lista de géneros para el DTAlbum
                     auxA.getListaGeneros().stream().map(Genero::getNombre).collect(Collectors.toList()),
                     // Crear la lista de temas del álbum
-                    auxA.getListaTemas().stream().map(t -> new DTTema(t.getNombre(), (int) (t.getDuracionSegundos() / 60), (int) (t.getDuracionSegundos() % 60), t.getDireccion())).collect(Collectors.toList()),
+                    auxA.getListaTemas().stream().map(t -> new DTTema(t.getNombre(), (int) (t.getDuracionSegundos() / 60), (int) (t.getDuracionSegundos() % 60), t.getDireccion(),t.getOrden())).collect(Collectors.toList()),
                     // Obtener el artista asociado
                     new DTArtista(
                         auxA.getArtista().getNickname(),
@@ -2862,7 +2862,7 @@ public class Controlador implements IControlador {
         int minutos = (int) (duracionSegundos / 60);
         int segundos = (int) (duracionSegundos % 60);
 
-        DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion());
+        DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion(),auxT.getOrden());
         dtTemas.add(dttema);
     }
 

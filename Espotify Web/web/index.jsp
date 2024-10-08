@@ -41,49 +41,15 @@
 
         <!-- Dynamic Content -->
         <div id="dynamicContent">
-            <iframe src="" width="100%" height="500px" frameborder="0"></iframe>
+            <iframe src="" width="50%" height="100px" frameborder="0" scrolling="auto" sandbox="allow-same-origin allow-scripts">></iframe>
         </div>
+            <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
+
+        
     </div>
 
     <!-- Footer (Player) -->
-    <footer class="footer">
-        <div class="container player-container">
-            <div class="track-info">
-                <img src="https://via.placeholder.com/40" alt="Album cover" class="album-cover">
-                <div class="track-details">
-                    <p>Song Name</p>
-                    <p class="artist">Artist Name</p>
-                </div>
-            </div>
-            <div class="player-controls">
-                <button id="prevBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="19 20 9 12 19 4 19 20"></polygon>
-                    <line x1="5" y1="19" x2="5" y2="5"></line>
-                    </svg>
-                </button>
-                <button id="playPauseBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                    </svg>
-                </button>
-                <button id="nextBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="5 4 15 12 5 20 5 4"></polygon>
-                    <line x1="19" y1="5" x2="19" y2="19"></line>
-                    </svg>
-                </button>
-            </div>
-            <div class="volume-control">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
-                <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
-            </div>
-        </div>
-    </footer>
+  
 
     <script>
          function toggleTemas(albumId) {
@@ -125,32 +91,46 @@
                             genreItem.textContent = genre;
 
      genreItem.addEventListener('click', () => {
-    console.log('Género seleccionado:', genre);
-    const variableurl = encodeURIComponent(genre);
-    const url = "SvObtenerAlbumxGenero?genero=" + variableurl;
+        console.log('Género seleccionado:', genre);
+        const variableurl = encodeURIComponent(genre);
+        const url = "SvObtenerAlbumxGenero?genero=" + variableurl;
 
-  fetch(url)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al obtener álbumes: ' + response.statusText);
-        }
-        return response.text(); // Cambia a .text() para obtener el HTML
-    })
-    .then(html => {
-        const dynamicContent = document.getElementById('dynamicContent');
-        dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener álbumes: ' + response.statusText);
+                }
+                return response.text(); // Cambia a .text() para obtener el HTML
+            })
+            .then(html => {
+                const dynamicContent = document.getElementById('dynamicContent');
+                dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
 
-        // Vuelve a asociar el evento de clic a cada elemento de álbum
-        const albumItems = dynamicContent.querySelectorAll('.album-item');
-        iframe.src = url;
-        albumItems.forEach(item => {
-            const albumId = item.id; // Suponiendo que el ID está presente en el elemento
-            item.onclick = () => toggleTemas(albumId); // Asociar la función
-        });
-    })
-    .catch(error => console.error('Error al obtener álbumes:', error));
+                // Vuelve a asociar el evento de clic a cada elemento de álbum
+                const albumItems = dynamicContent.querySelectorAll('.album-item');
+                albumItems.forEach(item => {
+                    
+ // Obtener el nombre del álbum y del artista directamente del DOM
+        const albumName = item.querySelector('.album-name').textContent.trim();
+        const artistName = item.querySelector('.album-artist').textContent.trim();
+console.log('Género seleccionado:', genre);
+        // Verificar que se obtienen correctamente los nombres
+        console.log(`Album: `,albumName);
 
-});
+        item.onclick = () => {
+            const encodedAlbumName = encodeURIComponent(albumName);
+            const encodedArtistName = encodeURIComponent(artistName);
+const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
+            // Log de la URL generada
+            console.log(servletUrl);
+
+           const iframe = document.getElementById('dynamicIframe');
+            iframe.src = servletUrl; // Establece la URL del iframe
+        };
+                });
+            })
+            .catch(error => console.error('Error al obtener álbumes:', error));
+    });
 
 genreList.appendChild(genreItem);
 

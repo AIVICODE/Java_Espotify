@@ -1,249 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #18181b;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+/* Navbar styles */
+.navbar {
+    background-color: #22c55e;
+    padding: 1rem;
+}
 
-        /* Navbar styles */
-        .navbar {
-            background-color: #22c55e;
-            padding: 1rem;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
+.logo svg {
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.5rem;
+}
 
-        .logo svg {
-            height: 2rem;
-            width: 2rem;
-            margin-right: 0.5rem;
-        }
+.search-container {
+    flex: 1;
+    margin: 0 1rem;
+    position: relative;
+}
 
-        .search-container {
-            flex: 1;
-            margin: 0 1rem;
-            position: relative;
-        }
+.search-input {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border-radius: 9999px;
+    border: none;
+    outline: none;
+}
 
-        .search-input {
-            width: 100%;
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
-            border-radius: 9999px;
-            border: none;
-            outline: none;
-        }
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+}
 
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6b7280;
-        }
+.profile-section {
+    display: flex;
+    align-items: center;
+}
 
-        .profile-section {
-            display: flex;
-            align-items: center;
-        }
+.profile-img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
 
-        .profile-img {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            margin-right: 1rem;
-        }
+.profile-info button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
 
-        .profile-info button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 0.875rem;
-            display: inline-flex;
-            align-items: center;
-            margin-right: 0.5rem;
-        }
+.profile-info button:hover {
+    text-decoration: underline;
+}
 
-        .profile-info button:hover {
-            text-decoration: underline;
-        }
+/* Main content styles */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 
-        /* Main content styles */
-        .main-content {
-            display: flex;
-            flex: 1;
-            margin-top: 2rem;
-        }
+.sidebar {
+    width: 20%;
+    padding: 10px;
+    background-color: #121212;
+}
 
-        .sidebar {
-            width: 16rem;
-            background-color: #27272a;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-right: 2rem;
-        }
+.sidebar button {
+    width: 100%;
+    text-align: left;
+    padding: 0.4rem 0.8rem;
+    margin-bottom: 0.3rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #121212;
+    cursor: pointer;
+    border-radius: 0.2rem;
+}
 
-        .sidebar button {
-            width: 100%;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            margin-bottom: 0.5rem;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 0.25rem;
-        }
+.sidebar button:hover {
+    background-color: #e7ebda;
+}
 
-        .sidebar button:hover {
-            background-color: #3f3f46;
-        }
+.sidebar button.active {
+    background-color: #e7ebda;
+}
 
-        .sidebar button.active {
-            background-color: #3f3f46;
-        }
+.sidebar button:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.3);
+}
 
-        .content {
-            flex: 1;
-            background-color: #27272a;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-        }
+.content {
+    flex: 1;
+    background-color: #27272a;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
 
-        .content h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
 
-        /* Footer (Player) styles */
-        .footer {
-            background-color: #1a1a1a;
-            padding: 1rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
+/* Footer (Player) styles */
+.footer {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
-        .player-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .track-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .album-cover {
-            width: 2.5rem;
-            height: 2.5rem;
-            margin-right: 1rem;
-        }
-
-        .track-details p {
-            margin: 0;
-        }
-
-        .track-details .artist {
-            font-size: 0.875rem;
-            color: #9ca3af;
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-        }
-
-        .player-controls button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin: 0 0.5rem;
-        }
-
-        .player-controls button:hover {
-            color: #22c55e;
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-        }
-
-        .volume-slider {
-            -webkit-appearance: none;
-            width: 100px;
-            height: 4px;
-            background: #4a4a4a;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity .2s;
-            margin-left: 0.5rem;
-        }
-
-        .volume-slider:hover {
-            opacity: 1;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #22c55e;
-            cursor: pointer;
-            border-radius: 50%;
-        }
 .auth-links a {
-            color: #ffffff;
-            text-decoration: none;
-            margin-left: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background-color: #1a1a1a;
-            transition: background-color 0.3s ease;
-        }
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background-color: #1a1a1a;
+    transition: background-color 0.3s ease;
+}
 
-        .auth-links a:hover {
-            background-color: #000000;
-        }
-        .volume-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            background: #22c55e;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        
-  
+.auth-links a:hover {
+    background-color: #e7ebda;
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #22c55e;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
 .genre-list {
     display: flex;
     flex-wrap: wrap;
@@ -251,54 +181,29 @@
 }
 
 .genre-item {
-    background-color: #1db954; /* Color verde de Spotify */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    margin: 5px;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50px; /* Botones curvos */
+    color: black;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-style: italic; /* Fuente cursiva */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px; /* Espacio entre los géneros horizontalmente */
+    margin-bottom: 10px; /* Espacio entre los géneros verticalmente */
 }
 
 .genre-item:hover {
-    background-color: #1aa34a; /* Color más oscuro al hacer hover */
+    background-color: #e7ebda; /* Color más oscuro al hacer hover */
 }
 
-.album-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+#dynamicContent {
+    width: 75%;
+    margin-right: 20px;
 }
 
-.album-item {
-    width: 180px; /* Ajusta el ancho del contenedor del álbum */
-    border: 2px solid transparent;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: border 0.3s ease, transform 0.3s ease;
-}
-
-.album-item:hover {
-    transform: scale(1.05);
-}
-
-.album-item.selected {
-    border-color: #1db954; /* Color verde similar a Spotify */
-    transform: scale(1.1);
-}
-
-.album-image {
-    width: 100%; /* La imagen ocupará el 100% del contenedor */
-    height: auto; /* Mantiene la relación de aspecto de la imagen */
-    max-height: 150px; /* Ajusta la altura máxima de la imagen */
-    object-fit: cover; /* Asegura que la imagen se ajuste sin deformarse */
-    border-radius: 8px;
-}
-
-.album-item p {
-    margin: 5px 0;
-    font-size: 14px;
-    word-wrap: break-word; /* Permite que el texto se ajuste dentro del contenedor */
+#iframe {
+    width: 100%;
+    height: 400px;
+    border: none;
 }

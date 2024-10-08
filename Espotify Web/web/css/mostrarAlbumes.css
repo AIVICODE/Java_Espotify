@@ -1,50 +1,101 @@
 body {
-    font-family: Arial, sans-serif; /* Estilo de fuente */
+    background-color: #121212; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+    font-family: 'Roboto', sans-serif; /* Fuente más elegante */
     margin: 0;
-    padding: 20px;
-    background-color: #121212; /* Fondo oscuro similar a Spotify */
-    color: #ffffff; /* Color de texto blanco */
 }
 
 h1 {
-    color: #ffffff; /* Color del título en blanco */
-    text-align: center; /* Centrar el título */
+    color: white;
+    text-align: center;
+    font-size: 2em; /* Reduce el tamaño del encabezado */
+    font-weight: 300;
 }
 
-.album-list {
-    display: flex; /* Usar flexbox para disposición */
-    flex-wrap: wrap; /* Permitir que los elementos se ajusten */
-    justify-content: center; /* Centrar los álbumes */
-    list-style-type: none; /* Eliminar viñetas */
-    padding: 0; /* Sin padding */
+.album-list ul {
+    padding: 0;
+    list-style-type: none;
 }
 
 .album-item {
-    margin: 15px; /* Espacio entre álbumes */
-    text-align: center; /* Centrar texto dentro del elemento */
-    background-color: #1c1c1c; /* Fondo oscuro para cada álbum */
-    border: 1px solid #333; /* Borde gris oscuro */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 10px; /* Espacio interno */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
-    transition: transform 0.2s; /* Transición para hover */
+    margin: 10px; /* Reduce el margen */
+    text-align: center;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px; /* Reduce el padding */
+    transition: transform 0.2s;
+    width: 100%;
+    max-width: 500px; /* Reduce el ancho máximo */
 }
 
 .album-item:hover {
-    transform: scale(1.05); /* Efecto hover */
+    transform: scale(1.03); /* Reduce el efecto de escala al pasar el mouse */
+    cursor: pointer;
 }
 
 .album-item img {
-    width: 50px; /* Ajusta el tamaño de la imagen */
-    height: auto; /* Mantiene la proporción */
-    border-radius: 4px; /* Bordes redondeados en la imagen */
+    width: 80px; /* Reduce el tamaño de la imagen */
+    height: auto;
+    border-radius: 4px;
 }
 
 .album-name {
-    font-weight: bold; /* Nombre del álbum en negrita */
-    color: #ffffff; /* Nombre del álbum en blanco */
+    font-weight: bold;
+    font-size: 1.1em; /* Reduce el tamaño del nombre del álbum */
+    color: white;
+    margin-top: 8px; /* Reduce el margen superior */
 }
 
 .album-artist {
-    color: #aaaaaa; /* Color del nombre del artista en gris claro */
+    color: #b3b3b3;
+    font-size: 0.8em; /* Reduce el tamaño de la fuente del artista */
+}
+
+.album-temas {
+    display: none;
+    margin-top: 15px; /* Reduce el margen superior */
+}
+
+.album-temas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 1em; /* Reduce el tamaño de letra de la tabla */
+}
+
+.album-temas th, .album-temas td {
+    padding: 8px 10px; /* Reduce el padding */
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.album-temas th {
+    background-color: #2b2b2b;
+    color: white;
+    font-weight: bold;
+    font-size: 0.6em; /* Reduce el tamaño de la fuente del encabezado */
+    text-transform: uppercase;
+    letter-spacing: 0.1px;
+}
+
+.album-temas td {
+    color: #b3b3b3;
+    font-size: 0.9em; /* Reduce el tamaño de la fuente */
+    transition: background-color 0.3s;
+}
+
+.album-temas tr:hover td {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.album-temas td:nth-child(1) {
+    font-weight: bold;
+    color: #fff;
+}
+
+.album-temas td:nth-child(2) {
+    font-style: italic;
 }

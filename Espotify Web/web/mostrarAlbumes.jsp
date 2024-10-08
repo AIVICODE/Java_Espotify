@@ -16,13 +16,13 @@
         }
     </style>
     <script>
-        function toggleTemas(albumId) {
-            const temasDiv = document.getElementById(albumId);
-            if (temasDiv.style.display === "none") {
-                temasDiv.style.display = "block"; // Muestra los temas
-            } else {
-                temasDiv.style.display = "none"; // Oculta los temas
-            }
+  
+
+        
+        function seleccionarTema(event,tema) {
+            event.stopPropagation();
+            event.preventDefault();
+            alert("Tema seleccionado: " + tema); // Esto se puede cambiar por la funcionalidad que desees
         }
     </script>
 </head>
@@ -37,51 +37,31 @@
     %>
         <div class="album-list">
             <ul>
-                <%
-                    // Itera sobre los Ã¡lbumes y los muestra
-                    for (DTAlbum album : albumes) {
-                        // Generar un ID Ãºnico para cada Ã¡lbum basado en su nombre y artista
-                        String albumId = album.getNombre().replaceAll(" ", "_") + "_" + album.getArtista().getNickname().replaceAll(" ", "_");
-                %>
-                    <li class="album-item" onclick="toggleTemas('<%= albumId %>')">
-                        <img src="<%= album.getImagen() %>" alt="Portada de <%= album.getNombre() %>" />
-                        <div class="album-name"><%= album.getNombre() %></div>
-                        <div class="album-artist"><%= album.getArtista().getNickname() %></div>
-                        
-                        <div class="album-temas" id="<%= albumId %>">
-                            <strong>Temas:</strong>
-                            <ul>
-                                <%
-                                    // Obtiene la lista de temas del Ã¡lbum
-                                    List<DTTema> temas = album.getListaTemas();
-                                    if (temas != null && !temas.isEmpty()) {
-                                        for (DTTema tema : temas) {
-                                %>
-                                            <li><%= tema.getNombre() %></li>
-                                <%
-                                        }
-                                    } else {
-                                %>
-                                        <li>No hay temas disponibles.</li>
-                                <%
-                                    }
-                                %>
-                            </ul>
-                        </div>
-                    </li>
-                <%
-                    }
-                %>
-            </ul>
+    <%
+        // Itera sobre los álbumes y los muestra
+        for (DTAlbum album : albumes) {
+            // Generar un ID único para cada álbum basado en su nombre y artista
+            String albumId = album.getNombre().replaceAll(" ", "_") + "_" + album.getArtista().getNickname().replaceAll(" ", "_");
+    %>
+        <li class="album-item" onclick="toggleTemas('<%= album.getNombre() %>', '<%= album.getArtista().getNickname() %>')">
+            <img src="<%= album.getImagen() %>" alt="Portada de <%= album.getNombre() %>" />
+            <div class="album-name"><%= album.getNombre() %></div>
+            <div class="album-artist"><%= album.getArtista().getCorreo() %></div>
+        </li>
+    <%
+        }
+    %>
+</ul>
         </div>
     <%
         } else {
     %>
-        <p>No se encontraron Ã¡lbumes para el gÃ©nero seleccionado.</p>
+        <p>No se encontraron Albumes para el genero seleccionado.</p>
     <%
         }
     %>
     
 
 </body>
+
 </html>
