@@ -207,3 +207,38 @@ body {
     height: 400px;
     border: none;
 }
+
+.artist-list {
+    display: flex;
+    flex-wrap: wrap;
+    
+    margin: 10px 0;
+}
+
+.artist-item {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50px; /* Botones curvos */
+    color: black;
+    cursor: pointer;
+    font-style: italic; /* Fuente cursiva */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px; /* Espacio entre los géneros horizontalmente */
+    margin-bottom: 10px; /* Espacio entre los géneros verticalmente */
+}
+
+.artist-item:hover {
+    background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
+}
+
+.artist-item:active {
+    background-color: #e0e0e0; /* Color de fondo al hacer clic */
+}
+
+.artist-item.selected {
+    background-color: #3f3f46; /* Color de fondo para el artista seleccionado */
+    color: white; /* Color de texto para el artista seleccionado */
+}
+
+

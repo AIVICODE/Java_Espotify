@@ -54,6 +54,9 @@
             <source id="audioSource" src="" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
+            <a id="downloadLink" href="" download>Descargar</a>
+
+            
     </div>
 </footer>
 
@@ -83,6 +86,12 @@ function seleccionarTema(nombreTema, directorio, orden) {
   var audioPlayer = document.getElementById("audioPlayer");
   audioPlayer.load();
   audioPlayer.play();
+  
+  //LA OPCION DE DESCARGA SOLO DISONIBLE PARA USUARIOS REGISTRADOS (PRECISO SESION PARA PODER CONFIGURAR)
+  let downloadLink = document.getElementById("downloadLink");
+    downloadLink.href = directorio; // URL del archivo
+    downloadLink.download = nombreTema; // Nombre del archivo al descargar
+  
 
   // Encuentra el índice real en el array 'temas' basado en el 'orden'
   currentIndex = temas.findIndex(tema => tema.orden === orden); 
@@ -101,6 +110,7 @@ function nextTema() {
 
   currentIndex = (currentIndex + 1) % temas.length; // Ajusta el índice
   playTemaActual();
+  
 }
 
 function playTemaActual() {
@@ -140,5 +150,6 @@ function updatePlayPauseButton() {
 // Función para cambiar el volumen
 volumeSlider.addEventListener("input", function() {
     audioPlayer.volume = this.value / 100;
+    audioPlayer
 });
 </script>

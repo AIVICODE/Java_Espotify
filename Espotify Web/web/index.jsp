@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espotify - Dashboard</title>
-    <link rel="stylesheet" href="css/index.css?v=1.1"> <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="css/index.css"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
 <body>
     <!-- Navbar -->
@@ -141,35 +141,74 @@ genreList.appendChild(genreItem);
 
 
         btnArtistas.addEventListener('click', () => {
-            setActiveButton(btnArtistas);
-            dynamicContent.innerHTML = '<h3>Artistas</h3><p>Grid con artistas populares</p>';
-        });
-
-        let isPlaying = false;
-        playPauseBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if (isPlaying) {
-                playPauseBtn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="10" y1="15" x2="10" y2="9"></line>
-                    <line x1="14" y1="15" x2="14" y2="9"></line>
-                </svg>
-            `;
-            } else {
-                playPauseBtn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                </svg>
-            `;
+    setActiveButton(btnArtistas);
+    
+    // Realizar la solicitud AJAX para obtener los artistas
+    fetch('SvObtenerArtistas') // Asegúrate de que esta ruta sea correcta
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener artistas: ' + response.statusText);
             }
-        });
+            return response.json(); // Parsear la respuesta como JSON
+        })
+        .then(data => {
+            // Limpiar el contenido dinámico y crear una nueva lista de artistas
+            dynamicContent.innerHTML = '<div class="artist-list"></div>';
+            const artistList = document.querySelector('.artist-list');
+            
+            // Recorrer los artistas obtenidos y agregarlos a la lista
+            data.forEach(artist => {
+                const artistItem = document.createElement('div');
+                artistItem.className = 'artist-item';
+                artistItem.textContent = artist;
 
-        volumeSlider.addEventListener('input', (e) => {
-            // Aquí normalmente establecerías el volumen del audio
-            console.log('Volume set to:', e.target.value);
-        });
+                // Agregar el artista a la lista
+                artistList.appendChild(artistItem);
+
+                // Agregar el evento de clic para obtener álbumes del artista
+                artistItem.addEventListener('click', () => {
+                    console.log('Artista seleccionado:', artist);
+                    const variableUrl = encodeURIComponent(artist);
+                    const url = "SvObtenerAlbumxArtista?artista=" + variableUrl;
+
+                    // Realiza la solicitud AJAX al servlet para obtener álbumes del artista
+                    fetch(url)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error al obtener álbumes: ' + response.statusText);
+                            }
+                            return response.text(); // Cambia a .text() para obtener el HTML
+                        })
+                        .then(html => {
+                            const dynamicContent = document.getElementById('dynamicContent');
+                            dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
+
+                            // Vuelve a asociar el evento de clic a cada elemento de álbum
+                            const albumItems = dynamicContent.querySelectorAll('.album-item');
+                            albumItems.forEach(item => {
+                                const albumName = item.querySelector('.album-name').textContent.trim();
+                                const artistName = item.querySelector('.album-artist').textContent.trim();
+                                console.log(`Album: `, albumName);
+
+                                item.onclick = () => {
+                                    const encodedAlbumName = encodeURIComponent(albumName);
+                                    const encodedArtistName = encodeURIComponent(artistName);
+                                    const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
+                                    console.log(servletUrl);
+
+                                    const iframe = document.getElementById('dynamicIframe');
+                                    iframe.src = servletUrl; // Establece la URL del iframe
+                                };
+                            });
+                        })
+                        .catch(error => console.error('Error al obtener álbumes:', error));
+                });
+            });
+        })
+        .catch(error => console.error('Error al obtener artistas:', error));
+});
+
+     
     </script>
 
 </body>

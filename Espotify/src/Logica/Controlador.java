@@ -2876,6 +2876,61 @@ public class Controlador implements IControlador {
             dtartista
     );
     }
+    public List<DTAlbum> findAlbumesPorArtista(String nickArtista) throws Exception {
+    // Buscar el artista por correo
+    Artista art = controlpersis.encontrarArtistaPorNickname(nickArtista);
+    if (art == null) {
+        throw new Exception("Artista no encontrado con el correo: " + nickArtista);
+    }
+
+    // Lista para almacenar los DTAlbum
+    List<DTAlbum> dtAlbumes = new ArrayList<>();
+
+    // Iterar sobre la lista de álbumes del artista
+    for (Album album : art.getAlbumes()) {
+        // Crear la lista de géneros del álbum
+        List<String> generosDT = new ArrayList<>();
+        for (Genero auxG : album.getListaGeneros()) {
+            generosDT.add(auxG.getNombre());
+        }
+
+        // Crear la lista de temas del álbum
+        List<DTTema> dtTemas = new ArrayList<>();
+        for (Tema auxT : album.getListaTemas()) {
+            long duracionSegundos = auxT.getDuracionSegundos();
+            int minutos = (int) (duracionSegundos / 60);
+            int segundos = (int) (duracionSegundos % 60);
+
+            DTTema dttema = new DTTema(auxT.getNombre(), minutos, segundos, auxT.getDireccion(), auxT.getOrden());
+            dtTemas.add(dttema);
+        }
+
+        // Crear y agregar el DTAlbum a la lista
+        DTAlbum dtAlbum = new DTAlbum(
+                album.getNombre(),
+                album.getAnioCreacion(),
+                album.getImagen(),
+                generosDT,
+                dtTemas,
+                new DTArtista(
+                        art.getNickname(),
+                        art.getNombre(),
+                        art.getApellido(),
+                        art.getContrasenia(),
+                        art.getImagen(),
+                        art.getFechaNac(),
+                        art.getMail(),
+                        art.getBiografia(),
+                        art.getSitioWeb()
+                )
+        );
+
+        dtAlbumes.add(dtAlbum);
+    }
+
+    return dtAlbumes; // Devolver la lista de DTAlbum
+}
+
 
     public String ConvierteNick_A_Correo(String nickname) throws Exception {
         try {

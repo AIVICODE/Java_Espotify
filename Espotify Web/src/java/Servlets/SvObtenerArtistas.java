@@ -6,50 +6,39 @@ package Servlets;
 
 import Logica.Fabrica;
 import Logica.IControlador;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import jakarta.servlet.ServletException;
+import java.util.List;
 
 
-
-
-/**
- *
- * @author ivan
- */
-@WebServlet(name = "SvObtenerGeneros", urlPatterns = {"/SvObtenerGeneros"})
-public class SvObtenerGeneros extends HttpServlet {
+@WebServlet(name = "SvObtenerArtistas", urlPatterns = {"/SvObtenerArtistas"})
+public class SvObtenerArtistas extends HttpServlet {
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
-    
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
-  
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        List<String> nombreGeneros = control.MostrarNombreGeneros();
-        
+                List<String> nombreArtistas = control.nicknamesDeTodosLosArtistas();
+      
         // Debug: imprimir la lista en la consola
-        System.out.println("Géneros obtenidos: " + nombreGeneros);
+        System.out.println("Géneros obtenidos: " + nombreArtistas);
 
         // Convertir la lista a formato JSON usando Gson
         Gson gson = new Gson();
-        String json = gson.toJson(nombreGeneros);
+        String json = gson.toJson(nombreArtistas);
 
         // Establecer el tipo de contenido como JSON
         response.setContentType("application/json");
@@ -60,7 +49,9 @@ public class SvObtenerGeneros extends HttpServlet {
             out.print(json);
             out.flush();
         }
+    
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

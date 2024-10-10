@@ -153,4 +153,6 @@ public interface IControlador {
     public abstract List<DTSub> listarSubscripciones() throws Exception;
 
     public abstract void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
+    
+    public abstract List<DTAlbum> findAlbumesPorArtista(String nickArtista) throws Exception;
 }
