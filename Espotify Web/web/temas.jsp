@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<link rel="stylesheet" href="css/temas.css">
+<link rel="stylesheet" href="css/temas.css?v=1.1">
 <% 
     String album = (String) request.getAttribute("album");
     String artista = (String) request.getAttribute("artista");
@@ -14,7 +14,10 @@
     <% for (DTTema tema : temas) { %>
         <li onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= tema.getDirectorio() %>", <%= tema.getOrden() %>)'>
             <span class="orden"><%= tema.getOrden() %></span>
-            <span><%= tema.getNombre()%></span>
+            <span ><%= tema.getNombre()%></span>
+            <span class="duracion"><%= tema.getMinutos()+":"+tema.getSegundos()%></span>
+            
+            
         </li>
     <% } %>
 </ul>
@@ -50,7 +53,7 @@
         <div class="volume-control">
             <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
         </div>
-        <audio id="audioPlayer" controls>
+        <audio id="audioPlayer">
             <source id="audioSource" src="" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>

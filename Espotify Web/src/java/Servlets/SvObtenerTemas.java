@@ -52,7 +52,8 @@ public class SvObtenerTemas extends HttpServlet {
         }
 
         // Busca el álbum utilizando la lógica de negocio
-        DTAlbum dtalbum = control.findAlbumxNombreDT(album, artista);
+        String correo= control.ConvierteNick_A_Correo(artista);
+        DTAlbum dtalbum = control.findAlbumxNombreDT(album, correo);
 
         if (dtalbum != null) {
             List<DTTema> temas = dtalbum.getListaTemas();

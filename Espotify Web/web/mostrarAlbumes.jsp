@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.1">
     <style>
         .album-temas {
+            
             display: none; /* Inicialmente oculta la lista de temas */
             margin-top: 10px;
         }
@@ -46,7 +47,10 @@
         <li class="album-item" onclick="toggleTemas('<%= album.getNombre() %>', '<%= album.getArtista().getNickname() %>')">
             <img src="<%= album.getImagen() %>" alt="Portada de <%= album.getNombre() %>" />
             <div class="album-name"><%= album.getNombre() %></div>
-            <div class="album-artist"><%= album.getArtista().getCorreo() %></div>
+            <div><%= album.getAnioCreacion()%></div>
+            
+            <div class="album-artist"><%= album.getArtista().getNickname() %></div>
+            
         </li>
     <%
         }

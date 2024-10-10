@@ -5,6 +5,7 @@ body {
     color: #ffffff; /* Texto blanco */
     margin: 0;
     padding: 20px;
+    
 }
 
 h2 {
@@ -108,4 +109,8 @@ li:hover {
     background: #22c55e;
     cursor: pointer;
     border-radius: 50%;
+}
+.duracion {
+    margin-left: auto; /* Empuja el tiempo hacia la derecha */
+    color: #b3b3b3; /* Color gris para la duración */
 }
