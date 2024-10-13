@@ -9,11 +9,15 @@ import javax.swing.JSpinner;
 import Datatypes.DTUsuario;
 import Logica.Fabrica;
 import Logica.IControlador;
+import java.awt.Image;
 //import Logica.Controlador;
 import static java.awt.SystemColor.control;
+import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -31,8 +35,8 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // No cerrar al hacer clic en la X
         setVisible(true);
-        txtImagen.setVisible(false);//imagen opcion invisible
-        jLabel6.setVisible(false);
+        txtImagen.setVisible(true);//imagen opcion invisible
+        jLabel6.setVisible(true);
     }
 
     /**
@@ -64,6 +68,8 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         txtContrasenia = new javax.swing.JTextField();
         txtConfirmacion = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        btnSeleccionarImagen = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
 
         jLabel1.setText("Nickname");
 
@@ -136,6 +142,13 @@ public class AltaCliente extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Confirmacion");
 
+        btnSeleccionarImagen.setText("Seleccionar");
+        btnSeleccionarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImagenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -179,14 +192,21 @@ public class AltaCliente extends javax.swing.JInternalFrame {
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                             .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(12, 12, 12))))))
-                        .addGap(63, 63, 63)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                            .addComponent(txtContrasenia))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(63, 63, 63)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtConfirmacion, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                                    .addComponent(txtContrasenia)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSeleccionarImagen)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -219,19 +239,25 @@ public class AltaCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSeleccionarImagen))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         JSpinner.DateEditor editor = new JSpinner.DateEditor(jSpinner1, "dd/MM/yyyy");
@@ -282,22 +308,25 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         Date fechaSeleccionada = (Date) jSpinner1.getValue();
         String contrasenia = txtContrasenia.getText();
         String confirmacion = txtConfirmacion.getText();
-
-        //faltan los atributos propios de cliente
-        DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, contrasenia,confirmacion,imagen);
         
          try {
-             control.crearUsuario(user);
-                     txtApellido.setText("");
-        txtMail.setText("");
-        txtImagen.setText("");
-        txtNickname.setText("");
-        txtNombrecli.setText("");
-        jSpinner1.setValue(new Date());
-             JOptionPane.showMessageDialog(null, "Perfil Cliente creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-         }
+            if (!imagen.isEmpty()) {
+                File archivoImagen = new File(imagen);
+                imagen = control.guardarImagenesEnCarpeta(archivoImagen, nickname);
+
+            }
+            DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, contrasenia,confirmacion,imagen);
+            control.crearUsuario(user);
+            txtApellido.setText("");
+            txtMail.setText("");
+            txtImagen.setText("");
+            txtNickname.setText("");
+            txtNombrecli.setText("");
+            jSpinner1.setValue(new Date());
+            JOptionPane.showMessageDialog(null, "Perfil Cliente creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
      
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -316,11 +345,36 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtConfirmacionActionPerformed
 
+    private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar Imagen de Perfil");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de imagen", "jpg", "jpeg"));
+        int resultado = fileChooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+
+            String extension = control.obtenerExtensionArchivo(archivoSeleccionado.getName());
+            if (extension.equals("png") || extension.equals("jpg") || extension.equals("jpeg")) {
+                ImageIcon icono = new ImageIcon(archivoSeleccionado.getAbsolutePath());
+                Image imagen = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH); //escalar la imagen para mostrarla en JLabel8
+                jLabel10.setIcon(new ImageIcon(imagen));
+
+                txtImagen.setText(archivoSeleccionado.getAbsolutePath());
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciona un archivo de imagen válido (PNG, JPG, JPEG).", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnSeleccionarImagenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSeleccionarImagen;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
