@@ -240,5 +240,45 @@ body {
     background-color: #3f3f46; /* Color de fondo para el artista seleccionado */
     color: white; /* Color de texto para el artista seleccionado */
 }
+.user-section {
+    display: flex;
+    align-items: center;
+}
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+.user-nickname {
+    font-weight: bold;
+}
+.user-favorites {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #ffff00;
+}
+.star-icon {
+    margin-right: 0.25rem;
+}
+.logout-button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+.logout-button:hover {
+    background-color: white;
+    color: #191414;
+}
 
 
