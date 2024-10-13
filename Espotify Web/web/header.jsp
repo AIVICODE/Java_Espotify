@@ -1,4 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Datatypes.DTUsuario"%>
+<%
+    session = request.getSession(false);
+    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    if (dtUsuario == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 
 <head>
