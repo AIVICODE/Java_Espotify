@@ -3,12 +3,12 @@
 <%
     session = request.getSession(false);
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
-    if (dtUsuario != null) {
-        response.sendRedirect("dashboard.jsp");
+    if (dtUsuario == null) {
+        response.sendRedirect("index.jsp");    
         return;
     }
 %>
-<jsp:include page="headerLoguedOut.jsp" />
+<jsp:include page="header.jsp" /> <!-- haciendo este include en el principio del jsp es que traes el archivo header -->
     <!-- Main Content -->
     <div class="main-content container">
         <!-- Sidebar -->

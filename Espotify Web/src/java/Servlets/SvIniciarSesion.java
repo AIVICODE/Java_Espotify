@@ -27,7 +27,7 @@ public class SvIniciarSesion extends HttpServlet {
             DTUsuario dtUsuario = control.login(usuario, password);
             HttpSession session = request.getSession();
             session.setAttribute("usuario", dtUsuario);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("dashboard.jsp");
         } catch (Exception e) {
             request.setAttribute("errorMessage", "Usuario o contraseña incorrectos");
             request.getRequestDispatcher("login.jsp").forward(request, response);
