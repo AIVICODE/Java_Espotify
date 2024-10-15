@@ -55,10 +55,12 @@ body {
     width: 20%;
     padding: 10px;
     background-color: #121212;
-    margin-right: 40px;
+    left: 0;
+    margin-right: 220px;
 }
 
 .sidebar button {
+    
     width: 100%;
     text-align: left;
     padding: 0.4rem 0.8rem;

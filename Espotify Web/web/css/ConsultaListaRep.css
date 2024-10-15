@@ -1,24 +1,25 @@
 
 
-        body {
-            background-color: #121212; /* Color de fondo oscuro */
-            color: #ffffff; /* Texto blanco */
-            font-family: 'Helvetica Neue', Arial, sans-serif; /* Tipografía moderna */
-            margin: 0;
-            padding: 20px;
-        }
+     * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
         h1, h2 {
-            color: #1db954; /* Verde de Spotify */
+            color: #ffffff; /* Verde de Spotify */
         }
 
-        form {
-            margin-bottom: 20px;
-            border: 1px solid #1db954; /* Borde verde */
-            border-radius: 8px; /* Bordes redondeados */
-            padding: 20px;
-            background-color: #282828; /* Fondo del formulario */
-        }
+
 
         label {
             font-weight: bold;
@@ -39,7 +40,7 @@
         button {
             margin-top: 10px;
             padding: 10px;
-            background-color: #1db954; /* Verde de Spotify */
+            background-color: #404040; /* Verde de Spotify */
             color: white; /* Texto blanco */
             border: none;
             border-radius: 4px; /* Bordes redondeados */

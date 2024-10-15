@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Seleccionar Género</title>
-    <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.3">
+    <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.5">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Obtener los géneros desde el servlet
@@ -114,8 +114,11 @@
                         <form action="SvSeleccionarLista" method="GET">
                             <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep() %>">
                             <input type="hidden" name="nombreCliente" value="<%= lista.getNombreCliente() %>">
+                            <div class="list-content"> <!-- Contenedor para la imagen y texto -->
+                            <img src="<%= lista.getImagen()%>" alt="<%= lista.getNombreListaRep() %>" class="list-image">
                             <button type="submit"><%= lista.getNombreListaRep() %> (por <%= lista.getNombreCliente() %>)</button>
                         </form>
+                        </div>
                     </li>
                 <%
                     }

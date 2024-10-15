@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espotify - Dashboard</title>
-    <link rel="stylesheet" href="css/index.css?v=1.3"> <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="css/index.css?v=1.1"> <!-- Asegúrate de que la ruta sea correcta -->
     
     
 </head>
@@ -26,7 +26,6 @@
         <!-- Dynamic Content -->
         <div id="dynamicContent">
         </div>
-            <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
         
     </div>
 
@@ -200,4 +199,8 @@ genreList.appendChild(genreItem);
     </script>
 
 </body>
+<footer>
+                <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
+
+    <footer/>
 </html>
