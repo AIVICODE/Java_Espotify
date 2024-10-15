@@ -9,6 +9,8 @@ import Datatypes.DTSub;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -156,5 +158,15 @@ public interface IControlador {
     
     public abstract List<DTAlbum> findAlbumesPorArtista(String nickArtista) throws Exception;
     
-    public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) ;
+    public abstract String obtenerExtensionArchivo(String nombreArchivo);
+    
+    public abstract String guardarImagenesEnCarpeta(File archivoImagen, String nickname) throws IOException;
+    
+    public abstract String guardarTemaEnCarpeta(File archivoTema, String nombreTema) throws IOException;
+    
+    public abstract String guardarImagenesAlbum(File archivoImagen, String nombreAlbum, String nombreArtista) throws IOException;
+    
+    public abstract boolean esCorreo(String input);
+    
+    public abstract DTUsuario login(String usuario, String pass)throws Exception;
 }

@@ -9,6 +9,10 @@ import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Logica.Subscripcion.Estado;
 import Persis.ControladoraPersistencia;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -3716,6 +3720,100 @@ public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Except
         throw new Exception("Suscripción no encontrada con ID: " + id);
     }
 }
+
+public String obtenerExtensionArchivo(String nombreArchivo) {
+        if (nombreArchivo.lastIndexOf(".") != -1 && nombreArchivo.lastIndexOf(".") != 0) {
+            return nombreArchivo.substring(nombreArchivo.lastIndexOf(".") + 1).toLowerCase();
+        } else {
+            return "";
+        }
+    }
+
+    public String guardarImagenesEnCarpeta(File archivoImagen, String nickname) throws IOException {
+        String carpetaImagenes = "imagenes_usuarios/";
+        File directorio = new File(carpetaImagenes);
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+        String extension = obtenerExtensionArchivo(archivoImagen.getName());
+        String nombreArchivo = nickname + "." + extension;
+        File destino = new File(directorio, nombreArchivo);
+        Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return carpetaImagenes + nombreArchivo;
+    }
+
+    public String guardarTemaEnCarpeta(File archivoTema, String nombreTema) throws IOException {
+        String carpetaTemas = "temas/";
+        File directorio = new File(carpetaTemas);
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+        String extension = obtenerExtensionArchivo(archivoTema.getName());
+        String nombreArchivo = nombreTema + "." + extension;
+        File destino = new File(directorio, nombreArchivo);
+        Files.copy(archivoTema.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return carpetaTemas + nombreArchivo;
+    }
+
+public String guardarImagenesAlbum(File archivoImagen, String nombreAlbum, String nombreArtista) throws IOException {
+        String carpetaImagenes = "imagenes_album/";
+        File directorio = new File(carpetaImagenes);
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+        String extension = obtenerExtensionArchivo(archivoImagen.getName());
+        String nombreArchivo = nombreAlbum + "-" + encontrarNicknameArtista(nombreArtista) + "." + extension;
+        File destino = new File(directorio, nombreArchivo);
+        Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return carpetaImagenes + nombreArchivo;
+    }
+
+public boolean esCorreo(String input) {
+        String regexCorreo = "^[\\w-\\.]+@[\\w-\\.]+\\.[a-zA-Z]{2,}$";
+        return input.matches(regexCorreo);
+    }
+
+public DTUsuario login(String usuario, String pass) throws Exception {
+        DTCliente cliente;
+        DTArtista artista;
+        Cliente cli;
+        Artista art;
+
+        if (esCorreo(usuario)) {
+            cli = controlpersis.findClienteByCorreo(usuario);
+            art = controlpersis.findArtistaByCorreo(usuario);
+            cliente = new DTCliente(cli.getNickname(), cli.getNombre(), cli.getApellido(), cli.getMail(), cli.fechaNac, cli.getContrasenia(), cli.getImagen());
+            artista = new DTArtista(
+                art.getNickname(),
+                art.getNombre(),
+                art.getApellido(),
+                art.getContrasenia(),
+                art.getImagen(),
+                art.getFechaNac(),
+                art.getMail(),
+                art.getBiografia(),
+                art.getSitioWeb()
+        );
+        } else {
+            cliente = encontrarClientePorNickname(usuario);
+            artista = encontrarDTArtistaPorNickname(usuario);
+        }
+        if (cliente != null) {
+            if (cliente.getContrasenia().equals(pass)) {
+                return cliente;
+            } else {
+                throw new Exception("Contraseña incorrecta");
+            }
+        }
+        if (artista != null) {
+            if (artista.getContrasenia().equals(pass)) {
+                return artista;
+            } else {
+                throw new Exception("Contraseña incorrecta");
+            }
+        }
+        throw new Exception("Usuario no encontrado.");
+    }
 
 }
 
