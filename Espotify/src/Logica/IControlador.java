@@ -169,4 +169,6 @@ public interface IControlador {
     public abstract boolean esCorreo(String input);
     
     public abstract DTUsuario login(String usuario, String pass)throws Exception;
+    
+    public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) ;
 }
