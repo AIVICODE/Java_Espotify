@@ -2368,13 +2368,21 @@ public class Controlador implements IControlador {
 
         // Iterar sobre las listas del cliente para obtener la información
         for (ListaRep lista : listasPorCliente) {
+            String imagen = lista.getImagen(); 
+                    List<DTTema> temas = lista.getListaTemas().stream()
+                .map(tema -> new DTTema(
+                tema.getNombre(),
+                (int) tema.getDuracion().toMinutes(),
+                (int) tema.getDuracion().toSeconds() % 60,
+                tema.getDireccion()))
+                .collect(Collectors.toList());
             // Crear un objeto DTListaRep con el nombre de la lista
             DTListaRep dtListaRep = new DTListaRep(
                     lista.getNombre(), // nombreListaRep (nombre de la lista)
-                    null, // nombreCliente (correo del cliente)
+                    cliente.getNickname(), // nombreCliente (correo del cliente)
                     null, // género de la lista, si existe
-                    null, // imagen (si es necesario)
-                    null // no se cargarán los temas en este paso
+                    imagen, // imagen (si es necesario)
+                    temas // no se cargarán los temas en este paso
             );
 
             // Añadir la lista a la lista de DTListaRep
@@ -2384,6 +2392,70 @@ public class Controlador implements IControlador {
         return dtListas;
     }
 
+    
+    public List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) {
+        // Buscar al cliente por su correo
+        Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
+
+        // Verificar si el cliente existe
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente no encontrado con el correo: " + correoCliente);
+        }
+
+        // Obtener las listas de reproducción del cliente
+        List<ListaRep> listasPorCliente = cliente.getListaReproduccion();
+
+        // Crear una lista para los DTListaRep
+        List<DTListaRep> dtListas = new ArrayList<>();
+
+        // Iterar sobre las listas del cliente para obtener la información
+        for (ListaRep lista : listasPorCliente) {
+            if (!((ListaRepParticular) lista).isPrivada()) {
+  String imagen = lista.getImagen(); 
+                    List<DTTema> temas = lista.getListaTemas().stream()
+                .map(tema -> new DTTema(
+                tema.getNombre(),
+                (int) tema.getDuracion().toMinutes(),
+                (int) tema.getDuracion().toSeconds() % 60,
+                tema.getDireccion()))
+                .collect(Collectors.toList());
+            // Crear un objeto DTListaRep con el nombre de la lista
+            DTListaRep dtListaRep = new DTListaRep(
+                    lista.getNombre(), // nombreListaRep (nombre de la lista)
+                    cliente.getNickname(), // nombreCliente (correo del cliente)
+                    null, // género de la lista, si existe
+                    imagen, // imagen (si es necesario)
+                    temas // no se cargarán los temas en este paso
+            );
+
+            // Añadir la lista a la lista de DTListaRep
+            dtListas.add(dtListaRep);
+
+            }
+            
+        }
+
+        return dtListas;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista) {
         // Buscar al cliente por su correo
         Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);

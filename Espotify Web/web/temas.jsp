@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<link rel="stylesheet" href="css/temas.css?v=1.1">
+<link rel="stylesheet" href="css/temas.css?v=1.2">
 <% 
     String album = (String) request.getAttribute("album");
     String artista = (String) request.getAttribute("artista");
@@ -153,6 +153,6 @@ function updatePlayPauseButton() {
 // Función para cambiar el volumen
 volumeSlider.addEventListener("input", function() {
     audioPlayer.volume = this.value / 100;
-    audioPlayer
+    
 });
 </script>
