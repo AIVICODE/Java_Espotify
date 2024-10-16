@@ -12,7 +12,7 @@
         <title>header</title>
         <link rel="stylesheet" href="css/headerunlogged.css">
     </head>
-    <body>
+
         <header>
         <nav class="navbar">
         <div class="container">
@@ -36,5 +36,5 @@
         </div>
     </nav>
 </header>
-    </body>
+   
 </html>

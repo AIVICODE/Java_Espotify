@@ -7,7 +7,7 @@
     <title>Espotify</title>
     <link rel="stylesheet" href="css/index.css"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
-<body>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="container">

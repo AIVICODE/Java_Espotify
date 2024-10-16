@@ -1,4 +1,15 @@
+<%@page import="Datatypes.DTUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+
+<%
+    session = request.getSession(false);
+    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    if (dtUsuario != null) {
+        response.sendRedirect("dashboard.jsp");    
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 
 <head>
@@ -10,14 +21,15 @@
     
 </head>
 
-
+<jsp:include page="headerunlogged.jsp" />
 <body>
-        <jsp:include page="headerunlogged.jsp" />
+        
 
     <!-- Main Content -->
     <div class="main-content container">
         <!-- Sidebar -->
         <div class="sidebar">
+            <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
@@ -203,4 +215,4 @@ genreList.appendChild(genreItem);
                 <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
 
     <footer/>
-</html>
+

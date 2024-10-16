@@ -51,33 +51,40 @@ body {
     margin-top: 20px;
 }
 
+
 .sidebar {
-    width: 20%;
+    width: 200px; /* Ajusta este ancho como prefieras */
     padding: 10px;
     background-color: #121212;
     left: 0;
-    margin-right: 220px;
+    margin-right: 20px;
+    display: flex; /* Usar flexbox */
+    flex-direction: column; /* Alinear los botones en columna */
 }
+    
+
 
 .sidebar button {
-    
-    width: 100%;
-    text-align: left;
-    padding: 0.4rem 0.8rem;
-    margin-bottom: 0.3rem;
-    background-color: white;
-    border: 1px solid #ddd;
-    color: #121212;
-    cursor: pointer;
-    border-radius: 0.2rem;
+    width: 100%; /* Asegura que el botón ocupe el ancho completo del sidebar */
+    text-align: center; /* Centra el texto */
+    padding: 0.8rem 0; /* Aumentar el padding para un botón más grande */
+    margin-bottom: 0.5rem; /* Espacio entre botones */
+    background-color: #22c55e; /* Color de fondo verde */
+    border: none; /* Sin borde */
+    color: white; /* Color del texto */
+    cursor: pointer; /* Cambiar cursor a pointer */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Efecto de transición */
 }
 
 .sidebar button:hover {
-    background-color: #e7ebda;
+    background-color: #16a34a; /* Color de fondo más oscuro al pasar el mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra al pasar el mouse */
 }
 
 .sidebar button.active {
-    background-color: #e7ebda;
+    background-color: #15803d; /* Color para el botón activo */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para el botón activo */
 }
 
 .sidebar button:focus {
@@ -98,17 +105,11 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Footer (Player) styles */
-.footer {
-    background-color: #1a1a1a;
-    padding: 1rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+footer {
+    background-color: #121212; /* Asegúrate que el color sea consistente */
+    padding: 10px; /* Ajusta el espacio alrededor del reproductor */
+    z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
 }
-
-
 
 .volume-slider::-moz-range-thumb {
     width: 12px;

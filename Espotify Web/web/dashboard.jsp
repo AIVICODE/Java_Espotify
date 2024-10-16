@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Datatypes.DTUsuario"%>
+
+
 <%
     session = request.getSession(false);
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
@@ -8,21 +10,33 @@
         return;
     }
 %>
-<jsp:include page="header.jsp" /> <!-- haciendo este include en el principio del jsp es que traes el archivo header -->
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espotify</title>
+    <link rel="stylesheet" href="css/index.css"> <!-- Asegúrate de que la ruta sea correcta -->
+</head>
+
+<jsp:include page="header.jsp" />
+<body>
+        
+
     <!-- Main Content -->
     <div class="main-content container">
         <!-- Sidebar -->
         <div class="sidebar">
+            <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
+            <button id="btnListas">Listas de reproduccion</button>
         </div>
 
         <!-- Dynamic Content -->
         <div id="dynamicContent">
-            <iframe src="" width="50%" height="100px" frameborder="0" scrolling="auto" sandbox="allow-same-origin allow-scripts">></iframe>
         </div>
-            <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
-
         
     </div>
 
@@ -41,9 +55,15 @@
         
         const btnGeneros = document.getElementById('btnGeneros');
         const btnArtistas = document.getElementById('btnArtistas');
+        const btnListas = document.getElementById('btnListas');
         const dynamicContent = document.getElementById('dynamicContent');
         const playPauseBtn = document.getElementById('playPauseBtn');
         const volumeSlider = document.getElementById('volumeSlider');
+
+
+btnListas.addEventListener('click', () => {
+    window.location.href = 'SvObtenerClientes'; // Redirige a la nueva página
+});
 
         function setActiveButton(button) {
             [btnGeneros, btnArtistas].forEach(btn => btn.classList.remove('active'));
@@ -190,4 +210,7 @@ genreList.appendChild(genreItem);
     </script>
 
 </body>
-</html>
+<footer>
+                <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
+
+    <footer/>

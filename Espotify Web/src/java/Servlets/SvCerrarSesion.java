@@ -1,20 +1,23 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Servlets;
 
+import Datatypes.DTAlbum;
+import Datatypes.DTListaRep;
 import Logica.Fabrica;
 import Logica.IControlador;
-import Datatypes.DTAlbum;
-import com.google.gson.Gson;
-import jakarta.servlet.http.HttpSession;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import Datatypes.DTUsuario;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "SvCerrarSesion", urlPatterns = {"/SvCerrarSesion"})
 public class SvCerrarSesion extends HttpServlet {

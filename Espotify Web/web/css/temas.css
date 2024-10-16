@@ -1,21 +1,25 @@
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #121212; /* Fondo oscuro */
     color: #ffffff; /* Texto blanco */
     margin: 0;
-    padding: 20px;
-    margin-left: auto;
-    
+    padding: 0; /* Asegúrate de que no haya padding en el body */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Altura completa de la ventana */
 }
 
 h2 {
     color: #ffffff;
+    margin: 20px 20px 0; /* Margen para el título */
 }
 
 ul {
     list-style: none; /* Quitar viñetas */
     padding: 0;
+    flex: 1; /* Permitir que la lista ocupe el espacio restante */
+    overflow-y: auto; /* Habilitar el desplazamiento vertical */
+    margin: 0 20px; /* Margen para la lista */
 }
 
 li {
@@ -32,6 +36,16 @@ li {
 li:hover {
     background-color: #3a3a3a; /* Cambio de color al pasar el ratón */
 }
+
+.footer {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    position: relative; /* Cambia a 'relative' si no está funcionando como 'fixed' */
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 
 .orden {
     width: 30px; /* Ancho del número de orden */
