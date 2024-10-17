@@ -7,6 +7,8 @@ package GUI;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -169,16 +171,21 @@ private void actualizarComboBoxClientes() {
     }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombreLista = txtNombreLista.getText();
-        String correoCliente = (String) comboClienteconLista.getSelectedItem(); // El cliente seleccionado del combobox
-        boolean esPrivada = true; // Es privada por defecto
-        
-        // Llamar al método CrearListaRepParticular
-        try {
-            control.CrearListaRepParticular(nombreLista, correoCliente, imagenSeleccionada, esPrivada);
-            javax.swing.JOptionPane.showMessageDialog(this, "Lista de reproducción creada con éxito.");
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al crear la lista de reproducción: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        try {                                         
+            String nombreLista = txtNombreLista.getText();
+            String nickCliente = (String) comboClienteconLista.getSelectedItem(); // El cliente seleccionado del combobox
+            boolean esPrivada = true; // Es privada por defecto
+            String correoCliente = control.ConvierteNick_A_Correo(nickCliente);
+            
+            // Llamar al método CrearListaRepParticular
+            try {
+                control.CrearListaRepParticular(nombreLista, correoCliente, imagenSeleccionada, esPrivada);
+                javax.swing.JOptionPane.showMessageDialog(this, "Lista de reproducción creada con éxito.");
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al crear la lista de reproducción: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(AltaListaRep.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

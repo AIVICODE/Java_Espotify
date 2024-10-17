@@ -1,3 +1,4 @@
+<%@page import="Datatypes.DTUsuario"%>
 <%@page import="Datatypes.DTTema"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,6 +15,17 @@
     <% for (DTTema tema : temas) { %>
         <li onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= tema.getDirectorio() %>", <%= tema.getOrden() %>)'>
             <span class="orden"><%= tema.getOrden() %></span>
+            <%
+    session = request.getSession(false);
+    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    if (dtUsuario != null) {
+    %>
+            <button class="add-favorite-tema" onclick="AgregarTemaFavorito('<%= tema.getNombre() %>', '<%= album %>','<%= artista %>')">+</button>
+        <%
+        
+    }
+    
+%>
             <span ><%= tema.getNombre()%></span>
             <span class="duracion"><%= tema.getMinutos()+":"+tema.getSegundos()%></span>
             
@@ -155,4 +167,79 @@ volumeSlider.addEventListener("input", function() {
     audioPlayer.volume = this.value / 100;
     
 });
+
+
+// Lógica de descarga y verificación de suscripción
+    document.getElementById('downloadLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevenir la acción predeterminada de descarga
+
+        // Realiza la verificación de suscripción
+        fetch('SvVerificarSubscripcion', { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.hasSubscription) {
+                    // Si tiene suscripción, permitir la descarga
+                    const downloadLink = event.target;
+
+                    // Aquí estamos haciendo que el enlace descargue el archivo
+                    const href = downloadLink.href; 
+                    
+                    // Crear un nuevo elemento de anclaje para forzar la descarga
+                    const a = document.createElement('a');
+                    a.href = href;
+                    a.download = downloadLink.download; // Asegúrate de que el nombre del archivo se mantenga
+                    document.body.appendChild(a); // Agregar al DOM
+                    a.click(); // Simular clic para iniciar descarga
+                    document.body.removeChild(a); // Eliminar el elemento del DOM
+                } else {
+                    alert('No tienes una suscripción activa para descargar este archivo.');
+                }
+            })
+            .catch(error => {
+                console.error('Error al verificar la suscripción:', error);
+            });
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ function AgregarTemaFavorito(temaName, albumName, artistName) {
+    const encodedTemaName = encodeURIComponent(temaName);
+    const encodedAlbumName = encodeURIComponent(albumName);
+    const encodedArtistName = encodeURIComponent(artistName);
+
+    fetch('SvAgregarTemaFavorito', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "tema=" + encodedTemaName + "&album=" + encodedAlbumName + "&artista=" + encodedArtistName
+    })
+    .then(response => {
+        // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
+        if (!response.ok) {
+            return response.json().then(errorData => { throw new Error(errorData.message); });
+        }
+        return response.json(); // Parseamos la respuesta JSON
+    })
+    .then(data => {
+        if (data.success) {
+            alert(data.message); // Mostrar mensaje de éxito
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error.message); // Mostrar el mensaje de error
+    });
+}
+    
+    
+    
+    
+    
 </script>
+

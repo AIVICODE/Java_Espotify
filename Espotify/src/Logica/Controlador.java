@@ -321,10 +321,13 @@ public class Controlador implements IControlador {
                 }
             }
 
-            if (temaEncontrado == null) {
-                throw new Exception("Tema no encontrado con el nombre: " + nombreTema + " en el álbum: " + nombreAlbum);
-            }
-
+            if (temaEncontrado == null || temaEncontrado.getNombre() == null || temaEncontrado.getNombre().isEmpty()) {
+    throw new Exception("Tema no encontrado o el nombre del tema está vacío: " + nombreTema + " en el álbum: " + nombreAlbum);
+}
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAA");
+                System.out.println(cliente.getNickname());
+                System.out.println(temaEncontrado);
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAA");
             if (cliente.getTemas().contains(temaEncontrado)) {
                 throw new Exception("El tema ya está marcado como favorito.");
             }
@@ -3813,6 +3816,53 @@ public DTUsuario login(String usuario, String pass) throws Exception {
             }
         }
         throw new Exception("Usuario no encontrado.");
+    }
+
+
+
+public boolean verificarSubscripcion(String cliente) {
+        try {
+        
+       Cliente cli = controlpersis.findClienteByNickname(cliente);
+        
+        // Verifica si el cliente existe
+        if (cli == null) {
+            System.out.println("El cliente no existe.");
+            return false; // o lanzar una excepción según tu lógica
+        }
+        
+        // Obtiene la lista de suscripciones del cliente
+        List<Subscripcion> subscripciones = cli.getSubs();
+        
+        // Verifica si el cliente tiene suscripciones
+        if (subscripciones == null || subscripciones.isEmpty()) {
+            System.out.println("El cliente no tiene suscripciones.");
+            return false;
+        }
+        
+        // Itera sobre la lista de suscripciones para verificar su estado
+        for (Subscripcion sub : subscripciones) {
+            // Obtiene el estado de la suscripción
+            Estado estado = sub.getEstado();
+            
+            // Verifica si alguna suscripción está vigente
+            if (estado == Estado.VIGENTE) {
+                System.out.println("La suscripción está activa.");
+                return true; // Al menos una suscripción está vigente
+            }
+        }
+
+        // Si llegamos aquí, significa que no hay suscripciones vigentes
+        System.out.println("No hay suscripciones activas.");
+        return false; // No hay suscripciones activas
+       
+    
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        return true;
+
     }
 
 }

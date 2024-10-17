@@ -171,4 +171,6 @@ public interface IControlador {
     public abstract DTUsuario login(String usuario, String pass)throws Exception;
     
     public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) ;
+    
+    public abstract boolean verificarSubscripcion(String cliente) ;
 }

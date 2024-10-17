@@ -32,6 +32,7 @@
             <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
+            
             <button id="btnListas">Listas de reproduccion</button>
         </div>
 

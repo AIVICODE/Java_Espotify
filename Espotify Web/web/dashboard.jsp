@@ -6,7 +6,7 @@
     session = request.getSession(false);
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
     if (dtUsuario == null) {
-        response.sendRedirect("index.jsp");    
+        response.sendRedirect("index.jsp");
         return;
     }
 %>
@@ -22,7 +22,7 @@
 
 <jsp:include page="header.jsp" />
 <body>
-        
+
 
     <!-- Main Content -->
     <div class="main-content container">
@@ -37,22 +37,22 @@
         <!-- Dynamic Content -->
         <div id="dynamicContent">
         </div>
-        
+
     </div>
 
     <!-- Footer (Player) -->
-  
+
 
     <script>
-         function toggleTemas(albumId) {
-        const temasDiv = document.getElementById(albumId);
-        if (temasDiv.style.display === "none" || temasDiv.style.display === "") {
-            temasDiv.style.display = "block"; // Muestra los temas
-        } else {
-            temasDiv.style.display = "none"; // Oculta los temas
+        function toggleTemas(albumId) {
+            const temasDiv = document.getElementById(albumId);
+            if (temasDiv.style.display === "none" || temasDiv.style.display === "") {
+                temasDiv.style.display = "block"; // Muestra los temas
+            } else {
+                temasDiv.style.display = "none"; // Oculta los temas
+            }
         }
-    }
-        
+
         const btnGeneros = document.getElementById('btnGeneros');
         const btnArtistas = document.getElementById('btnArtistas');
         const btnListas = document.getElementById('btnListas');
@@ -61,9 +61,9 @@
         const volumeSlider = document.getElementById('volumeSlider');
 
 
-btnListas.addEventListener('click', () => {
-    window.location.href = 'SvObtenerClientes'; // Redirige a la nueva página
-});
+        btnListas.addEventListener('click', () => {
+            window.location.href = 'SvObtenerClientes'; // Redirige a la nueva página
+        });
 
         function setActiveButton(button) {
             [btnGeneros, btnArtistas].forEach(btn => btn.classList.remove('active'));
@@ -88,49 +88,49 @@ btnListas.addEventListener('click', () => {
                             genreItem.className = 'genre-item';
                             genreItem.textContent = genre;
 
-     genreItem.addEventListener('click', () => {
-        console.log('Género seleccionado:', genre);
-        const variableurl = encodeURIComponent(genre);
-        const url = "SvObtenerAlbumxGenero?genero=" + variableurl;
+                            genreItem.addEventListener('click', () => {
+                                console.log('Género seleccionado:', genre);
+                                const variableurl = encodeURIComponent(genre);
+                                const url = "SvObtenerAlbumxGenero?genero=" + variableurl;
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al obtener álbumes: ' + response.statusText);
-                }
-                return response.text(); // Cambia a .text() para obtener el HTML
-            })
-            .then(html => {
-                const dynamicContent = document.getElementById('dynamicContent');
-                dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
+                                fetch(url)
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Error al obtener álbumes: ' + response.statusText);
+                                            }
+                                            return response.text(); // Cambia a .text() para obtener el HTML
+                                        })
+                                        .then(html => {
+                                            const dynamicContent = document.getElementById('dynamicContent');
+                                            dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
 
-                // Vuelve a asociar el evento de clic a cada elemento de álbum
-                const albumItems = dynamicContent.querySelectorAll('.album-item');
-                albumItems.forEach(item => {
-                    
- // Obtener el nombre del álbum y del artista directamente del DOM
-        const albumName = item.querySelector('.album-name').textContent.trim();
-        const artistName = item.querySelector('.album-artist').textContent.trim();
-console.log('Género seleccionado:', genre);
-        // Verificar que se obtienen correctamente los nombres
-        console.log(`Album: `,albumName);
+                                            // Vuelve a asociar el evento de clic a cada elemento de álbum
+                                            const albumItems = dynamicContent.querySelectorAll('.album-item');
+                                            albumItems.forEach(item => {
 
-        item.onclick = () => {
-            const encodedAlbumName = encodeURIComponent(albumName);
-            const encodedArtistName = encodeURIComponent(artistName);
-const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
-            // Log de la URL generada
-            console.log(servletUrl);
+                                                // Obtener el nombre del álbum y del artista directamente del DOM
+                                                const albumName = item.querySelector('.album-name').textContent.trim();
+                                                const artistName = item.querySelector('.album-artist').textContent.trim();
+                                                console.log('Género seleccionado:', genre);
+                                                // Verificar que se obtienen correctamente los nombres
+                                                console.log(`Album: `, albumName);
 
-           const iframe = document.getElementById('dynamicIframe');
-            iframe.src = servletUrl; // Establece la URL del iframe
-        };
-                });
-            })
-            .catch(error => console.error('Error al obtener álbumes:', error));
-    });
+                                                item.onclick = () => {
+                                                    const encodedAlbumName = encodeURIComponent(albumName);
+                                                    const encodedArtistName = encodeURIComponent(artistName);
+                                                    const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
+                                                    // Log de la URL generada
+                                                    console.log(servletUrl);
 
-genreList.appendChild(genreItem);
+                                                    const iframe = document.getElementById('dynamicIframe');
+                                                    iframe.src = servletUrl; // Establece la URL del iframe
+                                                };
+                                            });
+                                        })
+                                        .catch(error => console.error('Error al obtener álbumes:', error));
+                            });
+
+                            genreList.appendChild(genreItem);
 
                         });
                     })
@@ -139,78 +139,102 @@ genreList.appendChild(genreItem);
 
 
         btnArtistas.addEventListener('click', () => {
-    setActiveButton(btnArtistas);
-    
-    // Realizar la solicitud AJAX para obtener los artistas
-    fetch('SvObtenerArtistas') // Asegúrate de que esta ruta sea correcta
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al obtener artistas: ' + response.statusText);
-            }
-            return response.json(); // Parsear la respuesta como JSON
-        })
-        .then(data => {
-            // Limpiar el contenido dinámico y crear una nueva lista de artistas
-            dynamicContent.innerHTML = '<div class="artist-list"></div>';
-            const artistList = document.querySelector('.artist-list');
-            
-            // Recorrer los artistas obtenidos y agregarlos a la lista
-            data.forEach(artist => {
-                const artistItem = document.createElement('div');
-                artistItem.className = 'artist-item';
-                artistItem.textContent = artist;
+            setActiveButton(btnArtistas);
 
-                // Agregar el artista a la lista
-                artistList.appendChild(artistItem);
+            // Realizar la solicitud AJAX para obtener los artistas
+            fetch('SvObtenerArtistas') // Asegúrate de que esta ruta sea correcta
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al obtener artistas: ' + response.statusText);
+                        }
+                        return response.json(); // Parsear la respuesta como JSON
+                    })
+                    .then(data => {
+                        // Limpiar el contenido dinámico y crear una nueva lista de artistas
+                        dynamicContent.innerHTML = '<div class="artist-list"></div>';
+                        const artistList = document.querySelector('.artist-list');
 
-                // Agregar el evento de clic para obtener álbumes del artista
-                artistItem.addEventListener('click', () => {
-                    console.log('Artista seleccionado:', artist);
-                    const variableUrl = encodeURIComponent(artist);
-                    const url = "SvObtenerAlbumxArtista?artista=" + variableUrl;
+                        // Recorrer los artistas obtenidos y agregarlos a la lista
+                        data.forEach(artist => {
+                            const artistItem = document.createElement('div');
+                            artistItem.className = 'artist-item';
+                            artistItem.textContent = artist;
 
-                    // Realiza la solicitud AJAX al servlet para obtener álbumes del artista
-                    fetch(url)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Error al obtener álbumes: ' + response.statusText);
-                            }
-                            return response.text(); // Cambia a .text() para obtener el HTML
-                        })
-                        .then(html => {
-                            const dynamicContent = document.getElementById('dynamicContent');
-                            dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
+                            // Agregar el artista a la lista
+                            artistList.appendChild(artistItem);
 
-                            // Vuelve a asociar el evento de clic a cada elemento de álbum
-                            const albumItems = dynamicContent.querySelectorAll('.album-item');
-                            albumItems.forEach(item => {
-                                const albumName = item.querySelector('.album-name').textContent.trim();
-                                const artistName = item.querySelector('.album-artist').textContent.trim();
-                                console.log(`Album: `, albumName);
+                            // Agregar el evento de clic para obtener álbumes del artista
+                            artistItem.addEventListener('click', () => {
+                                console.log('Artista seleccionado:', artist);
+                                const variableUrl = encodeURIComponent(artist);
+                                const url = "SvObtenerAlbumxArtista?artista=" + variableUrl;
 
-                                item.onclick = () => {
-                                    const encodedAlbumName = encodeURIComponent(albumName);
-                                    const encodedArtistName = encodeURIComponent(artistName);
-                                    const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
-                                    console.log(servletUrl);
+                                // Realiza la solicitud AJAX al servlet para obtener álbumes del artista
+                                fetch(url)
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Error al obtener álbumes: ' + response.statusText);
+                                            }
+                                            return response.text(); // Cambia a .text() para obtener el HTML
+                                        })
+                                        .then(html => {
+                                            const dynamicContent = document.getElementById('dynamicContent');
+                                            dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
 
-                                    const iframe = document.getElementById('dynamicIframe');
-                                    iframe.src = servletUrl; // Establece la URL del iframe
-                                };
+                                            // Vuelve a asociar el evento de clic a cada elemento de álbum
+                                            const albumItems = dynamicContent.querySelectorAll('.album-item');
+                                            albumItems.forEach(item => {
+                                                const albumName = item.querySelector('.album-name').textContent.trim();
+                                                const artistName = item.querySelector('.album-artist').textContent.trim();
+                                                console.log(`Album: `, albumName);
+
+                                                item.onclick = () => {
+                                                    const encodedAlbumName = encodeURIComponent(albumName);
+                                                    const encodedArtistName = encodeURIComponent(artistName);
+                                                    const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
+                                                    console.log(servletUrl);
+
+                                                    const iframe = document.getElementById('dynamicIframe');
+                                                    iframe.src = servletUrl; // Establece la URL del iframe
+                                                };
+                                            });
+                                        })
+                                        .catch(error => console.error('Error al obtener álbumes:', error));
                             });
-                        })
-                        .catch(error => console.error('Error al obtener álbumes:', error));
-                });
-            });
-        })
-        .catch(error => console.error('Error al obtener artistas:', error));
-});
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener artistas:', error));
+        });
 
-     
+        function AgregarAlbumFavorito(albumName,artistName) {
+               const encodedAlbumName = encodeURIComponent(albumName);
+               const encodedArtistName = encodeURIComponent(artistName);
+    fetch('SvAgregarAlbumFavorito', {
+        method: 'POST', // Enviamos los datos con POST
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded' // Indicamos que estamos enviando datos de un formulario
+        },
+        body: "album=" + encodedAlbumName + "&artista=" + encodedArtistName// Enviamos el nombre del álbum
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al agregar el álbum a favoritos');
+        }
+        return response.text(); // Si esperas una respuesta de texto
+    })
+    .then(data => {
+        // Maneja la respuesta del servidor (por ejemplo, mostrando una notificación)
+        alert('Álbum agregado a favoritos exitosamente.');
+    })
+    .catch(error => {
+        // Manejo de errores
+        console.error('Error al agregar el álbum:', error);
+    });
+        }
     </script>
 
 </body>
 <footer>
-                <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
+    <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
 
-    <footer/>
+    </footer>

@@ -1,3 +1,4 @@
+<%@page import="Datatypes.DTUsuario"%>
 <%@page import="Datatypes.DTAlbum"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
@@ -8,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Albumes</title>
-<link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.1">
+<link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.2">
     <style>
         .album-temas {
             
@@ -16,16 +17,7 @@
             margin-top: 10px;
         }
     </style>
-    <script>
-  
 
-        
-        function seleccionarTema(event,tema) {
-            event.stopPropagation();
-            event.preventDefault();
-            alert("Tema seleccionado: " + tema); // Esto se puede cambiar por la funcionalidad que desees
-        }
-    </script>
 </head>
 <body>
     <h1>Albumes</h1>
@@ -50,6 +42,19 @@
             <div><%= album.getAnioCreacion()%></div>
             
             <div class="album-artist"><%= album.getArtista().getNickname() %></div>
+            <%
+    session = request.getSession(false);
+    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    if (dtUsuario != null) {
+    %>
+<button class="add-favorite" onclick="AgregarAlbumFavorito('<%= album.getNombre() %>', '<%= album.getArtista().getCorreo() %>')">+</button>
+        <%
+        return;
+    }
+    
+%>
+                        
+
             
         </li>
     <%
@@ -67,5 +72,9 @@
     
 
 </body>
+    <script>
+  
 
+        
+    </script>
 </html>

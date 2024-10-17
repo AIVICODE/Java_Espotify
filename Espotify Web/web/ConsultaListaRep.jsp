@@ -1,3 +1,4 @@
+<%@page import="Datatypes.DTCliente"%>
 <%@page import="Datatypes.DTListaRep"%>
 <%@page import="Datatypes.DTTema"%>
 <%@page import="java.util.List"%>
@@ -55,7 +56,7 @@
 
         <%
             session = request.getSession(false);
-            DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
             if (dtUsuario == null) {
         %>
         <jsp:include page="headerunlogged.jsp" />
@@ -233,7 +234,7 @@
                 <source id="audioSource" src="" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
-            <a id="downloadLink" href="" download>Descargar</a>
+            <a id="downloadLink" href="" download >Descargar</a>
         </div>
     </footer>
     <%
@@ -332,6 +333,44 @@
         volumeSlider.addEventListener("input", function () {
             audioPlayer.volume = this.value / 100;
         });
+        
+        
+     // Lógica de descarga y verificación de suscripción
+    document.getElementById('downloadLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevenir la acción predeterminada de descarga
+
+        // Realiza la verificación de suscripción
+        fetch('SvVerificarSubscripcion', { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.hasSubscription) {
+                    // Si tiene suscripción, permitir la descarga
+                    const downloadLink = event.target;
+
+                    // Aquí estamos haciendo que el enlace descargue el archivo
+                    const href = downloadLink.href; 
+                    
+                    // Crear un nuevo elemento de anclaje para forzar la descarga
+                    const a = document.createElement('a');
+                    a.href = href;
+                    a.download = downloadLink.download; // Asegúrate de que el nombre del archivo se mantenga
+                    document.body.appendChild(a); // Agregar al DOM
+                    a.click(); // Simular clic para iniciar descarga
+                    document.body.removeChild(a); // Eliminar el elemento del DOM
+                } else {
+                    alert('No tienes una suscripción activa para descargar este archivo.');
+                }
+            })
+            .catch(error => {
+                console.error('Error al verificar la suscripción:', error);
+            });
+    });
+        
+        
     </script>
 
+    
+    
+    
+    
 </html>
