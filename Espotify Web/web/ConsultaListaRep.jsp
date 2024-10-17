@@ -16,7 +16,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Seleccionar Género</title>
-        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.8">
+        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.9">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Obtener los géneros desde el servlet
@@ -135,15 +135,19 @@
                     for (DTListaRep lista : listasParticulares) {
                 %>
                 <li>
-                    <!-- Formulario para seleccionar lista particular -->
-                    <form action="SvSeleccionarLista" method="GET">
-                        <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep()%>">
-                        <input type="hidden" name="nombreCliente" value="<%= lista.getNombreCliente()%>">
-                        <div class="list-content"> <!-- Contenedor para la imagen y texto -->
-                            <img src="<%= lista.getImagen()%>" alt="<%= lista.getNombreListaRep()%>" class="list-image">
-                            <button type="submit"><%= lista.getNombreListaRep()%> (por <%= lista.getNombreCliente()%>)</button>
-                    </form>
-                    </div>
+                <div class="list-item-container"> <!-- Contenedor para los botones de favoritos y submit -->
+        <!-- Botón de agregar a favoritos -->
+        <button class="add-favorite" onclick="AgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
+
+        <!-- Formulario para seleccionar lista particular -->
+        <form action="SvSeleccionarLista" method="GET" class="playlist-form">
+            <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep()%>">
+            <input type="hidden" name="nombreCliente" value="<%= lista.getNombreCliente()%>">
+            
+            <!-- Botón de submit para seleccionar la lista -->
+            <button type="submit" class="playlist-button"><%= lista.getNombreListaRep()%> (por <%= lista.getNombreCliente()%>)</button>
+        </form>
+    </div>
                 </li>
                 <%
                     }
@@ -366,7 +370,38 @@
             });
     });
         
+      function AgregarListaPartFavorito(listaName, clienteName) {
+    const encodedListaName = encodeURIComponent(listaName);
+    const encodedClienteName = encodeURIComponent(clienteName);
+
+    fetch('SvAgregarListaParticularFavorito', {
         
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "lista=" + encodedListaName + "&cliente=" + encodedClienteName
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(error => {
+                throw new Error(error.message || 'Error al agregar la lista a favoritos');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert(data.message); // Notificación de éxito
+        } else {
+            throw new Error(data.message); // Si no es exitoso, lanza el error
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error.message); // Notificación de error
+        console.error('Error al agregar la lista:', error);
+    });
+}
     </script>
 
     

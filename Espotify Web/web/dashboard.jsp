@@ -29,9 +29,11 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <h2>Biblioteca</h2>
+            <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
+            
         </div>
 
         <!-- Dynamic Content -->
@@ -206,35 +208,48 @@
                     .catch(error => console.error('Error al obtener artistas:', error));
         });
 
-        function AgregarAlbumFavorito(albumName,artistName) {
-               const encodedAlbumName = encodeURIComponent(albumName);
-               const encodedArtistName = encodeURIComponent(artistName);
-    fetch('SvAgregarAlbumFavorito', {
-        method: 'POST', // Enviamos los datos con POST
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded' // Indicamos que estamos enviando datos de un formulario
-        },
-        body: "album=" + encodedAlbumName + "&artista=" + encodedArtistName// Enviamos el nombre del álbum
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al agregar el álbum a favoritos');
+        function AgregarAlbumFavorito(albumName, artistName) {
+            const encodedAlbumName = encodeURIComponent(albumName);
+            const encodedArtistName = encodeURIComponent(artistName);
+
+            fetch('SvAgregarAlbumFavorito', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: "album=" + encodedAlbumName + "&artista=" + encodedArtistName
+            })
+                    .then(response => {
+                        // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
+                        if (!response.ok) {
+                            return response.json().then(errorData => {
+                                throw new Error(errorData.message);
+                            });
+                        }
+                        return response.json(); // Parseamos la respuesta JSON
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message); // Mostrar mensaje de éxito
+                        }
+                    })
+                    .catch(error => {
+                        // Manejo de errores y mostrar el mensaje capturado
+                        alert("Error: " + error.message);
+                    });
         }
-        return response.text(); // Si esperas una respuesta de texto
-    })
-    .then(data => {
-        // Maneja la respuesta del servidor (por ejemplo, mostrando una notificación)
-        alert('Álbum agregado a favoritos exitosamente.');
-    })
-    .catch(error => {
-        // Manejo de errores
-        console.error('Error al agregar el álbum:', error);
+        
+
+    document.getElementById('btnAgregarLista').addEventListener('click', function() {
+        // Redirigir a la página AgregarListaRep.jsp
+        window.location.href = 'AgregarListaRep.jsp';
     });
-        }
+
+        
     </script>
 
 </body>
 <footer>
     <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
 
-    </footer>
+</footer>

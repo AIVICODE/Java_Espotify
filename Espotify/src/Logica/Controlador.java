@@ -267,6 +267,13 @@ public class Controlador implements IControlador {
                 nuevaLista.setImagen(imagen);  // Asigna la imagen a la lista (si la propiedad existe)
 
                 // Añadir la lista de reproducción a la lista del cliente
+                for(ListaRep lista : cliente.getListaReproduccion()){
+                  if(  lista.getNombre().equals(nuevaLista.getNombre())){
+                    throw new Exception("El cliente ya tiene lista con ese nombre");
+                  }
+                }
+ 
+                
                 cliente.getListaReproduccion().add(nuevaLista);
 
                 // Guardar la nueva lista en la base de datos
@@ -280,7 +287,7 @@ public class Controlador implements IControlador {
                 throw new Exception("Cliente no encontrado con el correo: " + correoCliente);
             }
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            throw new Exception(e.getMessage());
 
         }
     }

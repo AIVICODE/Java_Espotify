@@ -48,20 +48,31 @@ public class SvAgregarAlbumFavorito extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-HttpSession session = request.getSession(false); // Esto devuelve null si no hay sesión.
-            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
-        String albumName = request.getParameter("album"); // Obtiene el valor del parámetro 'album'
-        String artistName = request.getParameter("artista"); // Obtiene el valor del parámetro 'album'
-System.out.println("Nombre del álbum recibido: " + albumName); // Para depurar
+ response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
 
-System.out.println("Nombre del artista recibido: " + artistName); // Para depurar
-        try {
-            control.GuardarAlbumFavorito(dtUsuario.getCorreo(), artistName, albumName);
-        } catch (Exception ex) {
-            Logger.getLogger(SvAgregarAlbumFavorito.class.getName()).log(Level.SEVERE, null, ex);
+    try {
+        HttpSession session = request.getSession(false); 
+        if (session == null || session.getAttribute("usuario") == null) {
+            throw new Exception("Usuario no autenticado.");
         }
 
-        processRequest(request, response);
+        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+        String albumName = request.getParameter("album");
+        String artistName = request.getParameter("artista");
+
+        System.out.println("Nombre del álbum recibido: " + albumName);
+        System.out.println("Nombre del artista recibido: " + artistName);
+
+        control.GuardarAlbumFavorito(dtUsuario.getCorreo(), artistName, albumName);
+
+        // Enviamos una respuesta de éxito en formato JSON
+        response.getWriter().write("{\"success\": true, \"message\": \"Álbum agregado a favoritos exitosamente.\"}");
+    } catch (Exception ex) {
+        // Si ocurre un error, enviamos una respuesta de error
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Código de error 400
+        response.getWriter().write("{\"success\": false, \"message\": \"Error al agregar el álbum a favoritos: " + ex.getMessage() + "\"}");
+    }
     }
 
    
