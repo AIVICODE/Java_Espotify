@@ -96,11 +96,15 @@
                     for (DTListaRep lista : listasRep) {
                 %>
                 <li>
+                    <div class="list-item-container">
                     <!-- Formulario para seleccionar lista -->
-                    <form action="SvSeleccionarLista" method="GET">
+<button class="add-favorite" onclick="AgregarListaDefFavorito('<%= lista.getNombreListaRep() %>')">+</button>
+
+                    <form action="SvSeleccionarLista" method="GET" class="playlist-form">
                         <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep()%>">
                         <button type="submit"><%= lista.getNombreListaRep()%></button>
                     </form>
+                      </div>
                 </li>
                 <%
                     }
@@ -402,6 +406,44 @@
         console.error('Error al agregar la lista:', error);
     });
 }
+
+
+
+
+
+      function AgregarListaDefFavorito(listaName) {
+    const encodedListaName = encodeURIComponent(listaName);
+
+    fetch('SvAgregarListaPorDefectoFavorito', {
+        
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "lista=" + encodedListaName
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(error => {
+                throw new Error(error.message || 'Error al agregar la lista a favoritos');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert(data.message); // Notificación de éxito
+        } else {
+            throw new Error(data.message); // Si no es exitoso, lanza el error
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error.message); // Notificación de error
+        console.error('Error al agregar la lista:', error);
+    });
+}
+
+
     </script>
 
     

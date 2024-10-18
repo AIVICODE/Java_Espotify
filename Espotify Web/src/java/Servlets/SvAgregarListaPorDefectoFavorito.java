@@ -40,7 +40,31 @@ IControlador control = fabrica.getIControlador();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+          try {
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession(false);
+        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+        
+        String listaName = request.getParameter("lista");
+        
+        try {
+            control.GuardarLista_Por_Defecto_Favorito(dtUsuario.getCorreo(), listaName);
+            
+            // Enviar respuesta exitosa en formato JSON
+            response.getWriter().write("{\"success\": true, \"message\": \"Lista agregada a favoritos exitosamente.\"}");
+        } catch (Exception ex) {
+            // Enviar respuesta de error en formato JSON
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"success\": false, \"message\": \"" + ex.getMessage() + "\"}");
+            Logger.getLogger(SvAgregarListaParticularFavorito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(SvAgregarListaParticularFavorito.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
 
