@@ -275,3 +275,8 @@ li:hover {
 .add-favorite:focus {
     outline: none; /* Quitar el contorno al hacer clic */
 }
+
+.playlist-image {
+    width: 100px; /* Ajusta según tu diseño */
+    height: auto; /* Mantiene la relación de aspecto */
+}

@@ -16,7 +16,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Seleccionar Género</title>
-        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.9">
+        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.2">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Obtener los géneros desde el servlet
@@ -95,11 +95,20 @@
                 <%
                     for (DTListaRep lista : listasRep) {
                 %>
+
                 <li>
+                    
                     <div class="list-item-container">
+                        
                     <!-- Formulario para seleccionar lista -->
 <button class="add-favorite" onclick="AgregarListaDefFavorito('<%= lista.getNombreListaRep() %>')">+</button>
 
+                <div style="width: 150px; height: 150px; border: 1px solid black;">
+                    <img src="<% lista.getImagen(); %>" alt="Imagen de prueba" style="width: 100%; height: auto;" />
+                    
+                    
+</div> 
+    
                     <form action="SvSeleccionarLista" method="GET" class="playlist-form">
                         <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep()%>">
                         <button type="submit"><%= lista.getNombreListaRep()%></button>
@@ -139,17 +148,24 @@
                     for (DTListaRep lista : listasParticulares) {
                 %>
                 <li>
-                <div class="list-item-container"> <!-- Contenedor para los botones de favoritos y submit -->
+              <div style="display: flex; align-items: center;">
         <!-- Botón de agregar a favoritos -->
-        <button class="add-favorite" onclick="AgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
-
+        <button class="add-favorite" style="margin-right: 10px;" 
+                onclick="AgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
+        
+       <div style="width: 150px; height: 150px; border: 1px solid black; margin-right: 10px;">
+    <img src="<%= request.getContextPath() + "/" + lista.getImagen().replace("imagen/", "") %>" 
+         alt="Imagen de <%= lista.getNombreListaRep() %>" 
+         style="width: 100%; height: auto;" />
+</div>
+        
         <!-- Formulario para seleccionar lista particular -->
-        <form action="SvSeleccionarLista" method="GET" class="playlist-form">
-            <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep()%>">
-            <input type="hidden" name="nombreCliente" value="<%= lista.getNombreCliente()%>">
+        <form action="SvSeleccionarLista" method="GET" class="playlist-form" style="display: inline;">
+            <input type="hidden" name="nombreLista" value="<%= lista.getNombreListaRep() %>">
+            <input type="hidden" name="nombreCliente" value="<%= lista.getNombreCliente() %>">
             
             <!-- Botón de submit para seleccionar la lista -->
-            <button type="submit" class="playlist-button"><%= lista.getNombreListaRep()%> (por <%= lista.getNombreCliente()%>)</button>
+            <button type="submit" class="playlist-button"><%= lista.getNombreListaRep() %> (por <%= lista.getNombreCliente() %>)</button>
         </form>
     </div>
                 </li>

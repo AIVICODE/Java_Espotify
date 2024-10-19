@@ -2426,6 +2426,8 @@ public class Controlador implements IControlador {
         for (ListaRep lista : listasPorCliente) {
             if (!((ListaRepParticular) lista).isPrivada()) {
   String imagen = lista.getImagen(); 
+  System.out.println("Imagen guardada: " + imagen);
+
                     List<DTTema> temas = lista.getListaTemas().stream()
                 .map(tema -> new DTTema(
                 tema.getNombre(),

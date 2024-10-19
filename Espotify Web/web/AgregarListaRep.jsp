@@ -11,9 +11,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Lista de Reproducción - Estilo Spotify</title>
+    <link rel="stylesheet" href="css/AgregarListaRep.css?v=1.2"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
+  <style>
         :root {
             --spotify-green: #1DB954;
             --spotify-black: #191414;
@@ -104,15 +105,16 @@
         }
     </style>
 </head>
+    <jsp:include page="header.jsp" />
 <body class="d-flex align-items-center min-vh-100">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+
+    <div class="container d-flex justify-content-center">
+
                 <div class="spotify-card">
                     <h1 class="spotify-title text-center">
                         <i class="fas fa-music me-2"></i>Crear Nueva Lista
                     </h1>
-                    <form id="playlistForm" onsubmit="handleFormSubmit(event)">
+                    <form id="playlistForm" onsubmit="handleFormSubmit(event)" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nombreLista" class="form-label">
                                 <i class="fas fa-list me-2"></i>Nombre de la Lista
@@ -136,8 +138,7 @@
                         <i class="fas fa-lock me-2"></i>La lista se creará como privada con la fecha actual del sistema.
                     </div>
                 </div>
-            </div>
-        </div>
+            
     </div>
 
 
@@ -147,37 +148,24 @@
     
     <script>
 
-       function handleFormSubmit(event) {
+ function handleFormSubmit(event) {
     event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
 
     // Capturar los valores del formulario
     const nombreLista = document.getElementById('nombreLista').value;
-    const imagenLista = document.getElementById('imagenLista').files[0]; // Si necesitas manejar la imagen
+    const imagenLista = document.getElementById('imagenLista').files[0];
 
-    // Obtener el nombre de la imagen y agregar el prefijo "images/"
-    let nombreImagen = '';
+    // Crear un objeto FormData
+    const formData = new FormData();
+    formData.append('nombreLista', nombreLista);
     if (imagenLista) {
-        nombreImagen = 'images/' + imagenLista.name; // Concatenar el prefijo
+        formData.append('imagenLista', imagenLista);
     }
 
-    // Aquí puedes llamar a la función AgregarListaRep con los nuevos valores
-    AgregarListaRep(nombreLista, nombreImagen); // Pasa el nombre de la imagen
-}
-
-function AgregarListaRep(nombreLista, nombreImagen) {
-    
-    const encodedListaName = encodeURIComponent(nombreLista);
-    const encodednombreImagen = encodeURIComponent(nombreImagen);
-    // Tu lógica para agregar la lista aquí
-    console.log('Nombre de la lista:', nombreLista);
-    console.log('Nombre de la imagen:', nombreImagen);
-    // Implementa la lógica de envío (fetch o AJAX) según sea necesario
+    // Enviar los datos al servlet
     fetch('SvAgregarListaRep', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: "lista=" + encodedListaName + "&imagen=" + encodednombreImagen
+        body: formData // Enviar el FormData
     }).then(response => {
         if (!response.ok) {
             return response.json().then(error => {
@@ -190,12 +178,11 @@ function AgregarListaRep(nombreLista, nombreImagen) {
         if (data.success) {
             alert(data.message); // Notificación de éxito
         } else {
-            throw new Error(data.message); // Si no es exitoso, lanza el error
+            throw new Error(data.message);
         }
     })
     .catch(error => {
-        alert('Error: ' + error.message); // Notificación de error
-        console.error('Error al agregar la lista:', error);
+        alert('Error: ' + error.message);
     });
 }
       
