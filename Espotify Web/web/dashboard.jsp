@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Datatypes.DTUsuario"%>
-
+<%@page import="Datatypes.DTCliente"%>
+<%@page import="Datatypes.DTArtista"%>
 
 <%
     session = request.getSession(false);
