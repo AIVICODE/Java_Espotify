@@ -173,4 +173,6 @@ public interface IControlador {
     public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) ;
     
     public abstract boolean verificarSubscripcion(String cliente) ;
+    
+    public abstract String guardarImagenesLista(File archivoImagen, String nombreLista) throws IOException;
 }
