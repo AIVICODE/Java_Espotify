@@ -29,7 +29,8 @@
         }
 
         .card {
-            background-color: #27272a;
+            margin-top: 100px;
+            background-color: #121212;
             border-radius: 8px;
             padding: 24px;
             box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
@@ -68,7 +69,7 @@
 <jsp:include page="header.jsp" />
 <body>
 
-    <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center ">
         <div class="row justify-content-center">
             <div class="card text-white">
                 <div class="card-body">
@@ -80,21 +81,39 @@
                         if (subscripciones != null && !subscripciones.isEmpty()) {
                             for (DTSub subscripcion : subscripciones) {
                     %>
-                        <form action="SvActualizarSubscripcion" method="GET" class="subs-form">
-                            <input type="hidden" name="id" value="<%= subscripcion.getId() %>">
-                            <input type="hidden" name="tipo" value="<%= subscripcion.getTipo() %>">
-                            <div class="mb-3">
-                                <label for="estado_<%= subscripcion.getId() %>" class="form-label">
-                                    Selecciona el nuevo estado para <%= subscripcion.getTipo() %> <%= subscripcion.getEstado()%> <%= subscripcion.getFechaActivacion() %> <%= subscripcion.getId() %>
-                                </label>
-                                <select name="estado" id="estado_<%= subscripcion.getId() %>" class="form-select">
-                                    <option value="Cancelada">Cancelada</option>
-                                    <option value="Vigente">Vigente</option>
-                                    <option value="Pendiente">Pendiente</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-success">Actualizar Suscripción</button>
-                        </form>
+                        <form action="SvActualizarSubscripcion" method="POST" class="subs-form">
+    <input type="hidden" name="id" value="<%= subscripcion.getId() %>">
+    <input type="hidden" name="tipo" value="<%= subscripcion.getTipo() %>">
+    <div class="mb-3">
+        <label for="estado_<%= subscripcion.getId() %>" class="form-label">
+            Selecciona el nuevo estado para <%= subscripcion.getTipo() %> (<%= subscripcion.getEstado()%>) activada el <%= subscripcion.getFechaActivacion() %> (ID: <%= subscripcion.getId() %>)
+        </label>
+        <select name="estado" id="estado_<%= subscripcion.getId() %>" class="form-select">
+            <%
+                // Verificar el estado actual de la suscripción y mostrar opciones según corresponda
+                String estadoActual = subscripcion.getEstado();
+                if (estadoActual.equals("PENDIENTE")) {
+            %>
+                <option value="Cancelada">Cancelada</option>
+            <%
+                } else if (estadoActual.equals("VENCIDA")) {
+            %>
+                <option value="Cancelada">Cancelada</option>
+                <option value="Vigente">Vigente</option>
+            <%
+                } else {
+                    // No mostrar opciones si el estado no permite cambios
+            %>
+                <option value="" disabled>No se permite modificar el estado</option>
+            <%
+                }
+            %>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success"
+        <%= estadoActual.equals("PENDIENTE") || estadoActual.equals("VENCIDA") ? "" : "disabled" %>>Actualizar Suscripción</button>
+</form>
+
                     <%
                             }
                         } else {

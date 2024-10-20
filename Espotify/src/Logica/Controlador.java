@@ -3755,6 +3755,46 @@ public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Except
     }
 }
 
+
+public void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado) throws Exception {
+    Subscripcion sub = controlpersis.findSubscripcion(id);
+    
+    if (sub != null) {
+        // Obtiene el estado actual de la suscripción
+        Estado estadoActual = sub.getEstado();
+        
+        // Verifica el nuevo estado deseado
+        Estado estadoDeseado;
+        try {
+            estadoDeseado = Estado.valueOf(nuevoEstado.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado no válido: " + nuevoEstado);
+        }
+
+        // Reglas
+        if (estadoActual == Estado.PENDIENTE && estadoDeseado == Estado.CANCELADA) {
+            // Permitido el cambio de "Pendiente" a "Cancelada"
+            sub.setEstado(estadoDeseado);
+            sub.setFechaInicio(new Date()); // Fecha del sistema
+        } else if (estadoActual == Estado.VENCIDA && (estadoDeseado == Estado.CANCELADA || estadoDeseado == Estado.VIGENTE)) {
+            // Permitido el cambio de "Vencida" a "Cancelada" o "Vigente"
+            sub.setEstado(estadoDeseado);
+            sub.setFechaInicio(new Date()); // Fecha del sistema
+        } else {
+            throw new Exception("No se puede realizar la modificación de " + estadoActual + " a " + nuevoEstado);
+        }
+
+        // Persistir la modificación en la base de datos
+        controlpersis.updateSubscripcion(sub); // Asegúrate de tener este método en tu capa de persistencia
+
+    } else {
+        throw new Exception("Suscripción no encontrada con ID: " + id);
+    }
+}
+
+
+
+
 public String obtenerExtensionArchivo(String nombreArchivo) {
         if (nombreArchivo.lastIndexOf(".") != -1 && nombreArchivo.lastIndexOf(".") != 0) {
             return nombreArchivo.substring(nombreArchivo.lastIndexOf(".") + 1).toLowerCase();

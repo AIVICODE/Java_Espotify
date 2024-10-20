@@ -28,9 +28,11 @@
     <div class="main-content container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <h2>Biblioteca</h2>
+            <h2>Opciones</h2>
+            <button id="btnActualizarSubscripcion">Actualizar Subscripcion</button>
             <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
+            <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
@@ -248,6 +250,10 @@
 document.getElementById('btnAgregarSubscripcion').addEventListener('click', function() {
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'ContratarSubscripcion.jsp';
+    });
+    document.getElementById('btnActualizarSubscripcion').addEventListener('click', function() {
+        // Redirigir a la página AgregarListaRep.jsp
+        window.location.href = 'SvActualizarSubscripcion';
     });
 
     </script>

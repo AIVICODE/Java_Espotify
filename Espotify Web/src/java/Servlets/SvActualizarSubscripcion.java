@@ -69,7 +69,28 @@ Fabrica fabrica = Fabrica.getInstance();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        try {
+            // Obtener parámetros del formulario
+            Long id = Long.valueOf(request.getParameter("id"));
+            String nuevoEstado = request.getParameter("estado");
+
+            // Llamar al método para modificar el estado de la suscripción
+            try {
+                control.ClienteModificaEstadoSuscripcion(id, nuevoEstado);
+                request.setAttribute("mensajeExito", "Suscripción actualizada correctamente.");
+            } catch (Exception e) {
+                request.setAttribute("mensajeError", e.getMessage());
+            }
+
+            // Volver a cargar las suscripciones para mostrar después de la actualización
+            doGet(request, response);
+
+        } catch (NumberFormatException e) {
+            Logger.getLogger(SvActualizarSubscripcion.class.getName()).log(Level.SEVERE, null, e);
+            request.setAttribute("mensajeError", "ID de suscripción inválido.");
+            doGet(request, response);
+        }
     }
 
     @Override

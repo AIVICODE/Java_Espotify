@@ -26,7 +26,7 @@
         }
 
         .card {
-            background-color: #27272a; /* Cambiado a un color más oscuro para asemejar el anterior */
+            background-color: #121212; /* Cambiado a un color más oscuro para asemejar el anterior */
             border-radius: 8px; /* Bordes redondeados */
             padding: 24px; /* Espaciado interior */
             box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5); /* Sombra similar a la tarjeta de Spotify */

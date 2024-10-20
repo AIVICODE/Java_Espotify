@@ -178,4 +178,6 @@ public interface IControlador {
     
     public abstract boolean existeNickname(String nickname);
     public abstract boolean existeMail(String mail);
+    
+    public abstract void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
 }
