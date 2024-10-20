@@ -1,77 +1,140 @@
-<%-- 
-    Document   : ContratarSubscripcion
-    Created on : Oct 19, 2024, 3:42:33 PM
-    Author     : ivan
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/ContratarSubscripcion.css"> 
     <title>Suscripción</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --spotify-green: #1DB954;
+            --spotify-black: #191414;
+            --spotify-white: #FFFFFF;
+            --spotify-grey: #535353;
+        }
+
         body {
-            background-color: #121212;
-            color: white;
+            background-color: var(--spotify-black);
+            color: var(--spotify-white);
+            font-family: 'Circular', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex; /* Flex para centrar todo el body */
+            align-items: center; /* Centra verticalmente */
+            justify-content: center; /* Centra horizontalmente */
         }
+
         .card {
-            background-color: #27272a;
+            background-color: #27272a; /* Cambiado a un color más oscuro para asemejar el anterior */
+            border-radius: 8px; /* Bordes redondeados */
+            padding: 24px; /* Espaciado interior */
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5); /* Sombra similar a la tarjeta de Spotify */
         }
+
+        .card-body {
+            display: flex; /* Utiliza flexbox para el contenido del card */
+            flex-direction: column; /* Coloca los elementos en columna */
+            justify-content: center; /* Centra verticalmente */
+            align-items: center; /* Centra horizontalmente */
+            min-height: 300px; /* Ajusta la altura mínima según sea necesario */
+        }
+
+        .card-title {
+            color: var(--spotify-white);
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            text-align: center; /* Centramos el título */
+        }
+
+        .form-check-input {
+    appearance: none; /* Eliminar el estilo predeterminado del input */
+    width: 20px; /* Ajustar el tamaño del círculo */
+    height: 20px; /* Ajustar el tamaño del círculo */
+    border: 2px solid var(--spotify-white); /* Borde blanco */
+    border-radius: 50%; /* Hacer que el input sea un círculo */
+    background-color: transparent; /* Fondo transparente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el input */
+}
+
+.form-check-input:checked {
+    background-color: var(--spotify-white); /* Fondo blanco cuando está seleccionado */
+    box-shadow: 0 0 0 4px var(--spotify-green); /* Sombra para dar un efecto de "resaltado" */
+}
+
+.form-check-label {
+    color: var(--spotify-white); /* Color de las etiquetas */
+}
         .btn-success {
-            background-color: #22c55e;
-            border-color: #22c55e;
+            background-color: var(--spotify-green);
+            border-color: var(--spotify-green);
+            color: var(--spotify-black);
+            border-radius: 30px; /* Bordes redondeados */
+            padding: 12px 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
+
         .btn-success:hover {
-            background-color: #16a34a;
-            border-color: #16a34a;
+            background-color: #1ed760; /* Color al pasar el ratón */
+            transform: scale(1.05);
+        }
+
+        #confirmationArea {
+            text-align: center; /* Centramos el contenido */
+            margin-top: 20px; /* Espacio superior */
+        }
+
+        #successMessage {
+            text-align: center; /* Centramos el mensaje de éxito */
+            margin-top: 20px; /* Espacio superior */
+            color: #22c55e; /* Color verde para el mensaje de éxito */
         }
     </style>
 </head>
-
+<jsp:include page="header.jsp" />
 <body>
-    <jsp:include page="header.jsp" />
-    <div class="container py-5">
+
+    <div class="container d-flex justify-content-center">
         <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card text-white">
-                    <div class="card-body">
-                        <h5 class="card-title text-center mb-4">Elige tu Suscripción</h5>
-                        <form id="subscriptionForm">
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="subscriptionOption" id="weekly" value="semanal">
-                                    <label class="form-check-label" for="weekly">
-                                        Semanal - $9.99
-                                    </label>
-                                </div>
+            <div class="card text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Elige tu Suscripción</h5>
+                    <form id="subscriptionForm">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="subscriptionOption" id="weekly" value="semanal">
+                                <label class="form-check-label" for="weekly">
+                                    Semanal - $9.99
+                                </label>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="subscriptionOption" id="monthly" value="mensual">
-                                    <label class="form-check-label" for="monthly">
-                                        Mensual - $29.99
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="subscriptionOption" id="yearly" value="anual">
-                                    <label class="form-check-label" for="yearly">
-                                        Anual - $299.99
-                                    </label>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="confirmationArea" class="text-center mt-4" style="display: none;">
-                            <p>Monto total: $<span id="totalAmount"></span></p>
-                            <button id="confirmButton" class="btn btn-success">Confirmar Suscripción</button>
                         </div>
-                        <div id="successMessage" class="text-center mt-4 text-success" style="display: none;">
-                            <p>¡Suscripción confirmada! Tu suscripción está ahora en estado "Pendiente".</p>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="subscriptionOption" id="monthly" value="mensual">
+                                <label class="form-check-label" for="monthly">
+                                    Mensual - $29.99
+                                </label>
+                            </div>
                         </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="subscriptionOption" id="yearly" value="anual">
+                                <label class="form-check-label" for="yearly">
+                                    Anual - $299.99
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="confirmationArea" style="display: none;">
+                        <p>Monto total: $<span id="totalAmount"></span></p>
+                        <button id="confirmButton" class="btn btn-success">Confirmar Suscripción</button>
+                    </div>
+                    <div id="successMessage" style="display: none;">
+                        <p>¡Suscripción confirmada! Tu suscripción está ahora en estado "Pendiente".</p>
                     </div>
                 </div>
             </div>
@@ -108,8 +171,26 @@
                 if (selectedOption) {
                     confirmationArea.style.display = 'none';
                     successMessage.style.display = 'block';
-                    // Aquí podrías enviar los datos a tu servidor
-                    console.log('Suscripción confirmada:', selectedOption.value);
+
+                    // Crear un objeto de datos para enviar
+                    const params = new URLSearchParams();
+                    params.append("subscriptionType", selectedOption.value); // Enviar el valor en minúsculas
+
+                    // Enviar la solicitud fetch
+                    fetch("SvContratarSubscripcion", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: params
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message); // Manejar la respuesta del servidor
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                 }
             });
         });

@@ -29,6 +29,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <h2>Biblioteca</h2>
+            <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
@@ -244,8 +245,11 @@
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'AgregarListaRep.jsp';
     });
+document.getElementById('btnAgregarSubscripcion').addEventListener('click', function() {
+        // Redirigir a la página AgregarListaRep.jsp
+        window.location.href = 'ContratarSubscripcion.jsp';
+    });
 
-        
     </script>
 
 </body>

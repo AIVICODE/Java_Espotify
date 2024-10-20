@@ -173,4 +173,9 @@ public interface IControlador {
     public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) ;
     
     public abstract boolean verificarSubscripcion(String cliente) ;
+    
+    public abstract List<DTSub> listarSubdeCliente(String nombrecli) throws Exception;
+    
+    public abstract boolean existeNickname(String nickname);
+    public abstract boolean existeMail(String mail);
 }
