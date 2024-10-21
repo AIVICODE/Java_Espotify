@@ -280,3 +280,15 @@ li:hover {
     width: 100px; /* Ajusta según tu diseño */
     height: auto; /* Mantiene la relación de aspecto */
 }
+
+.add-favorite-tema {
+    background-color: #1DB954; /* Verde característico de Spotify */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 6px 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+    margin-right: 10px;
+}

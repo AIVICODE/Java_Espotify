@@ -14,12 +14,39 @@ public class DTTema {
     private int segundos;
     private String directorio;
     private int orden;
+    private String nombrealbum;
+    private String nombreartista;
 
+    public String getNombrealbum() {
+        return nombrealbum;
+    }
+
+    public void setNombrealbum(String nombrealbum) {
+        this.nombrealbum = nombrealbum;
+    }
+
+    public String getNombreartista() {
+        return nombreartista;
+    }
+
+    public void setNombreartista(String nombreartista) {
+        this.nombreartista = nombreartista;
+    }
+    
+    
     public DTTema(String nombre, int minutos, int segundos, String directorio) {
         this.nombre = nombre;
         this.minutos = minutos;
         this.segundos = segundos;
         this.directorio = directorio;
+    }
+    public DTTema(String nombre, int minutos, int segundos, String directorio,String nombrealbum, String nombreartista) {
+        this.nombre = nombre;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.directorio = directorio;
+        this.nombrealbum = nombrealbum;
+        this.nombreartista = nombreartista;
     }
     
      public DTTema(String nombre, int minutos, int segundos, String directorio,int orden) {

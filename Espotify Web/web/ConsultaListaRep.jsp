@@ -59,7 +59,7 @@
             DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
             if (dtUsuario == null) {
         %>
-        <jsp:include page="headerunlogged.jsp" />
+        <jsp:include page="headerunlogged.jsp" /> 
         <%
         } else {
         %>
@@ -98,11 +98,18 @@
 
                 <li>
                     
-                    <div class="list-item-container">
+                    <div style="display: flex; align-items: center;">
                         
-                    <!-- Formulario para seleccionar lista -->
+                     <%
+    session = request.getSession(false);
+    if (dtUsuario != null) {
+    %>
 <button class="add-favorite" onclick="AgregarListaDefFavorito('<%= lista.getNombreListaRep() %>')">+</button>
-
+ <%
+        
+    }
+    
+%>
                 <div style="width: 150px; height: 150px; border: 1px solid black;">
                     <img src="<% lista.getImagen(); %>" alt="Imagen de prueba" style="width: 100%; height: auto;" />
                     
@@ -150,9 +157,17 @@
                 <li>
               <div style="display: flex; align-items: center;">
         <!-- Botón de agregar a favoritos -->
+          <%
+    session = request.getSession(false);
+    if (dtUsuario != null) {
+    %>
         <button class="add-favorite" style="margin-right: 10px;" 
                 onclick="AgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
+        <%
         
+    }
+    
+%>
        <div style="width: 150px; height: 150px; border: 1px solid black; margin-right: 10px;">
     <img src="<%= request.getContextPath() + "/" + lista.getImagen().replace("imagen/", "") %>" 
          alt="Imagen de <%= lista.getNombreListaRep() %>" 
@@ -198,7 +213,19 @@
                 %>
                 <li>
                     <a href="javascript:void(0);" class="tema-enlace" onclick="seleccionarTema('<%= tema.getNombre()%>', '<%= tema.getDirectorio()%>', <%= contador%>);">
+                        <%
+
+    if (dtUsuario != null) {
+    %>
+            <button class="add-favorite-tema" onclick="AgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>','<%= tema.getNombreartista() %>')">+</button>
+        <%
+        
+    }
+    
+%>
+                        
                         <span ><%= tema.getNombre()%></span> 
+                        
                         <span class="duracion" ><%= tema.getMinutos() + ":" + tema.getSegundos()%></span>
 
                     </a>
@@ -459,7 +486,34 @@
     });
 }
 
+ function AgregarTemaFavorito(temaName, albumName, artistName) {
+    const encodedTemaName = encodeURIComponent(temaName);
+    const encodedAlbumName = encodeURIComponent(albumName);
+    const encodedArtistName = encodeURIComponent(artistName);
 
+    fetch('SvAgregarTemaFavorito', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "tema=" + encodedTemaName + "&album=" + encodedAlbumName + "&artista=" + encodedArtistName
+    })
+    .then(response => {
+        // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
+        if (!response.ok) {
+            return response.json().then(errorData => { throw new Error(errorData.message); });
+        }
+        return response.json(); // Parseamos la respuesta JSON
+    })
+    .then(data => {
+        if (data.success) {
+            alert(data.message); // Mostrar mensaje de éxito
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error.message); // Mostrar el mensaje de error
+    });
+}
     </script>
 
     

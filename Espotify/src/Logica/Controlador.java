@@ -2351,7 +2351,7 @@ public class Controlador implements IControlador {
                     long segundos = tema.getDuracion().minusMinutes(minutos).getSeconds();
 
                     // Crear DTTema usando minutos y segundos separados
-                    return new DTTema(tema.getNombre(), (int) minutos, (int) segundos, tema.getDireccion());
+                    return new DTTema(tema.getNombre(), (int) minutos, (int) segundos, tema.getDireccion(),tema.getAlbum().getNombre(),tema.getAlbum().getArtista().getNickname());
                 })
                 .collect(Collectors.toList());
 
@@ -2496,7 +2496,9 @@ public class Controlador implements IControlador {
                 tema.getNombre(),
                 (int) tema.getDuracion().toMinutes(),
                 (int) tema.getDuracion().toSeconds() % 60,
-                tema.getDireccion()))
+                tema.getDireccion(),
+                tema.getAlbum().getNombre(),
+                tema.getAlbum().getArtista().getNickname()))
                 .collect(Collectors.toList());
 
         // Crear y retornar el DTO con toda la información
