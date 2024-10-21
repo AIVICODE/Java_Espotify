@@ -174,6 +174,7 @@ public interface IControlador {
     
     public abstract boolean verificarSubscripcion(String cliente) ;
     
+    public abstract String guardarImagenesLista(File archivoImagen, String nombreLista) throws IOException;
     public abstract List<DTSub> listarSubdeCliente(String nombrecli) throws Exception;
     
     public abstract boolean existeNickname(String nickname);

@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Datatypes.DTUsuario"%>
-
+<%@page import="Datatypes.DTCliente"%>
+<%@page import="Datatypes.DTArtista"%>
 
 <%
     session = request.getSession(false);
@@ -36,6 +37,9 @@
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
+            <% if (dtUsuario instanceof DTArtista) { %>
+            <button id="btnAltaAlbum">Alta Album</button>
+            <% }%>
             
         </div>
 
@@ -255,6 +259,12 @@ document.getElementById('btnAgregarSubscripcion').addEventListener('click', func
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'SvActualizarSubscripcion';
     });
+    <% if (dtUsuario instanceof DTArtista) { %>
+    document.getElementById('btnAltaAlbum').addEventListener('click', function() {
+        // Redirigir a la página altaAlbum .jsp
+        window.location.href = 'altaAlbum.jsp';
+    });
+    <% }%>
 
     </script>
 
