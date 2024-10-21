@@ -15,10 +15,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
+// Clase interna para procesar los datos del tema
 
-/**
- * Servlet para manejar el alta de álbum sin cargar archivos.
- */
+class TemaData {
+
+    private String nombre;
+    private int minutos;
+    private int segundos;
+    private String url;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getMinutos() {
+        return minutos;
+    }
+
+    public int getSegundos() {
+        return segundos;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+}
 @WebServlet(name = "SvAltaAlbum", urlPatterns = {"/SvAltaAlbum"})
 public class SvAltaAlbum extends HttpServlet {
 
@@ -43,13 +64,6 @@ public class SvAltaAlbum extends HttpServlet {
         String temasJson = request.getParameter("temas");
         String correoArtista = ((DTUsuario) session.getAttribute("usuario")).getCorreo();
 
-        // Mostrar en consola los valores recibidos
-        System.out.println("correo artist: " + correoArtista);
-        System.out.println("Nombre del álbum: " + nombreAlbum);
-        System.out.println("Año del álbum: " + anioAlbumStr);
-        System.out.println("Géneros seleccionados: " + (generosSeleccionados != null ? String.join(", ", generosSeleccionados) : "Ninguno"));
-        System.out.println("Temas en formato JSON: " + temasJson);
-
         // Convertir el año del álbum
         int anioAlbum = 2023;  // Valor predeterminado
         if (anioAlbumStr != null && !anioAlbumStr.isEmpty()) {
@@ -65,24 +79,30 @@ public class SvAltaAlbum extends HttpServlet {
         }
 
         // Convertir el JSON de los temas a una lista de DTTema
-        List<DTTema> listaTemas = new ArrayList<>();
-        if (temasJson != null && !temasJson.isEmpty()) {
-            Gson gson = new Gson();
-            DTTema[] temasArray = gson.fromJson(temasJson, DTTema[].class);
-            for (DTTema tema : temasArray) {
-                listaTemas.add(tema);
-            }
-        }
-
-        // Obtener el correo del artista logueado
-        //String correoArtista = ((DTUsuario) session.getAttribute("usuario")).getCorreo();
-
+List<DTTema> listaTemas = new ArrayList<>();
+if (temasJson != null && !temasJson.isEmpty()) {
+    Gson gson = new Gson();
+    // Deserializar los temas desde el JSON
+    TemaData[] temasArray = gson.fromJson(temasJson, TemaData[].class);
+    for (TemaData temaData : temasArray) {
+        // Crear el objeto DTTema usando los minutos y segundos
+        DTTema nuevoTema = new DTTema(temaData.getNombre(), temaData.getMinutos(), temaData.getSegundos(), temaData.getUrl());
+        listaTemas.add(nuevoTema);
+    }
+}
         try {
             // Crear el álbum con los datos recibidos
             DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, anioAlbum, "ruta archivo", generos);
             System.out.println("Creando álbum: " + nombreAlbum + " (Año: " + anioAlbum + ")");
 
             // Crear el álbum en la lógica de negocio
+            for (DTTema tema : listaTemas) {
+            System.out.println("Nombre: " + tema.getNombre());
+        System.out.println("Minutos: " + tema.getMinutos());
+        System.out.println("Segundos: " + tema.getSegundos());
+        System.out.println("URL: " + tema.getDirectorio());
+            System.out.println("-----------");
+        }
             control.CrearAlbum(correoArtista, nuevoAlbum, listaTemas);
             response.sendRedirect("dashboard.jsp");
 

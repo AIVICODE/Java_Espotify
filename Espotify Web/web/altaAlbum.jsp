@@ -55,7 +55,6 @@
                     <label>Agregar Temas</label>
                     <div class="form-group">
                         <input type="text" class="form-control mb-2" id="nombreTema" placeholder="Nombre del Tema">
-                        <input type="number" class="form-control mb-2" id="numeroTema" placeholder="Posición">
                         <input type="text" class="form-control mb-2" id="duracionTema" placeholder="Duración (mm:ss)">
                         <input type="text" class="form-control mb-2" id="urlTema" placeholder="URL del Tema (opcional)">
                     </div>
@@ -84,27 +83,31 @@
 
         document.getElementById('agregarTemaBtn').addEventListener('click', function() {
             const nombreTema = document.getElementById('nombreTema').value;
-            const numeroTema = document.getElementById('numeroTema').value;
             const duracionTema = document.getElementById('duracionTema').value;
             const urlTema = document.getElementById('urlTema').value;
-            
-            // Validación de campos
-            if (!nombreTema || !numeroTema || !duracionTema) {
+
+    // Validación de campos
+            if (!nombreTema || !duracionTema) {
                 alert("Por favor, complete todos los campos del tema.");
                 return;
             }
 
-            const duracionRegex = /^[0-5]?[0-9]:[0-5][0-9]$/;
-            if (!duracionRegex.test(duracionTema)) {
+    // Validar el formato de duración y extraer minutos y segundos
+            const duracionRegex = /^([0-5]?[0-9]):([0-5][0-9])$/;
+            const duracionMatch = duracionTema.match(duracionRegex);
+            if (!duracionMatch) {
                 alert("Por favor, ingrese la duración en formato mm:ss.");
                 return;
             }
 
-            // Agregar tema al array de temas
+            const minutos = parseInt(duracionMatch[1], 10);
+            const segundos = parseInt(duracionMatch[2], 10);
+
+    // Agregar tema al array de temas
             const tema = {
                 nombre: nombreTema,
-                numero: numeroTema,
-                duracion: duracionTema,
+                minutos: minutos,   // Enviar minutos por separado
+                segundos: segundos, // Enviar segundos por separado
                 url: urlTema
             };
             temas.push(tema);
@@ -112,24 +115,22 @@
             limpiarCamposTema();
         });
 
+
         function actualizarListaTemas() {
-            const listaTemas = document.getElementById('listaTemas');
-            listaTemas.innerHTML = ''; // Limpiar lista
+    const listaTemas = document.getElementById('listaTemas');
+    listaTemas.innerHTML = ''; // Limpiar lista
 
-            temas.forEach((tema, index) => {
-                console.log(`Mostrando el tema ${index}:`, tema);  // Depuración
+    for (let i = 0; i < temas.length; i++) {
+        const tema = temas[i];
+        const li = document.createElement('li');
+        li.innerHTML = `
+        ${tema.nombre} (${tema.minutos}:${tema.segundos})
+            <button type="button" class="delete-button btn btn-danger btn-sm" onclick="eliminarTema(${i})">Eliminar</button>
+        `;
+        listaTemas.appendChild(li);
+    }
+}
 
-                // Asegúrate de que el objeto tema contiene todos los valores correctamente.
-           
-                    const li = document.createElement('li');
-                    li.innerHTML = ` principio
-                ${tema.numero}  ${tema.nombre} ${tema.duracion} fin
-                        <button type="button" class="delete-button btn btn-danger btn-sm" onclick="eliminarTema(${index})">Eliminar</button>
-                    `;
-                    listaTemas.appendChild(li);
-
-            });
-        }
 
         function limpiarCamposTema() {
             document.getElementById('nombreTema').value = '';

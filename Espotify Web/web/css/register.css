@@ -79,4 +79,39 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        .existeNickMensaje {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .existeMailMensaje {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .available {
+            color: green;
+        }
+        .unavailable {
+            color: red;
+        }
+        .success-message {
+            color: white; /* Color del texto */
+            background-color: #22c55e; /* Fondo verde */
+            padding: 10px; /* Espaciado interno */
+            border-radius: 8px; /* Bordes redondeados */
+            text-align: center; /* Centrar texto */
+            margin-top: 15px; /* Espacio arriba */
+            margin-bottom: 20px; /* Espacio inferior */
+            width: 30%; /* Ancho del rectángulo */
+            margin-left: auto; /* Centrar horizontalmente */
+            margin-right: auto; /* Centrar horizontalmente */
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        
  

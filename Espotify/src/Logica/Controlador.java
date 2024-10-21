@@ -3710,6 +3710,28 @@ public List<DTSub> listarSubscripciones() throws Exception {
     return listsubs; 
 }
 
+public List<DTSub> listarSubdeCliente(String nombrecli) throws Exception {
+    // Obtener todas las suscripciones desde la base de datos
+     List<DTSub> listsubs = new ArrayList<>();
+    Cliente cliente = controlpersis.findClienteByNickname(nombrecli);
+    List<Subscripcion> subs = cliente.getSubs(); // Implementa este método en tu capa de persistencia
+    
+    for (Subscripcion sub : subs) {
+        // Crear un objeto DTSub a partir de cada suscripción
+        DTSub dtSub = new DTSub(
+                sub.getId(), // Suponiendo que la suscripción tiene un método getId()
+                sub.getCliente(), // Suponiendo que la suscripción tiene un método getCliente() que devuelve el cliente
+                sub.getTipo(), // Suponiendo que la suscripción tiene un método getTipo()
+                sub.getEstado().name(), // Suponiendo que la suscripción tiene un método getEstado()
+                sub.getFechaInicio()// Suponiendo que la suscripción tiene un método getFechaActivacion()
+        );
+        listsubs.add(dtSub);
+    }
+    
+    return listsubs; 
+}
+
+
 public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception{
     Subscripcion sub = controlpersis.findSubscripcion(id);
     
@@ -3897,5 +3919,32 @@ public String guardarImagenesLista(File archivoImagen, String nombreLista) throw
         return carpetaImagenes + nombreArchivo;
     }
 
+   public boolean existeNickname(String nickname){
+        for (Cliente c : controlpersis.listaClientes()) {
+            if (c.getNickname().equals(nickname)) {
+                return true;//si el nick está ocupado retorna true
+            }
+        }
+        for (Artista a:controlpersis.listaArtistas()){
+            if(a.getNickname().equals(nickname)){
+                return true;
+            }
+        }
+        return false; //si el nick está libre retorna false
+    }
+   
+    public boolean existeMail(String mail){
+        for (Cliente c : controlpersis.listaClientes()) {
+            if (c.getMail().equals(mail)) {
+                return true;//si el mail está ocupado retorna true
+            }
+        }
+        for (Artista a:controlpersis.listaArtistas()){
+            if(a.getMail().equals(mail)){
+                return true;
+            }
+        }
+        return false; //si el mail está libre retorna false
+    }
 }
 
