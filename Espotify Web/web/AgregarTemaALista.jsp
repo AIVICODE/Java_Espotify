@@ -1,5 +1,5 @@
-
-
+<%@page import="Datatypes.DTListaRep"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,13 +10,12 @@
   <link rel="stylesheet" href="css/AgregarTemaALista.css?v=1.2">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    
     body {
       background-color: #18181b;
     }
     .card {
-        color: #ddd;
-        background-color: #121212;
+      color: #ddd;
+      background-color: #121212;
       margin: 20px;
       padding: 20px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -28,37 +27,55 @@
       background-color: #1DB954;
       border-color: #1DB954;
     }
-    .titulo{
-        color :#ddd;
+    .titulo {
+      color: #ddd;
     }
-    
+    .playlist-img {
+      width: 150px;
+      height: 150px;
+      border: 1px solid black;
+      margin-right: 10px;
+    }
+    .add-favorite {
+      background-color: transparent;
+      border: none;
+      color: #1DB954;
+      font-size: 20px;
+    }
   </style>
 </head>
 
-<jsp:include page="header.jsp" />
-
 <body>
-    <div class="titulo">
-            <h1 class="my-4 text-center">Agregar Tema a Lista de Reproducción</h1>
-    </div>
-    
+  <jsp:include page="header.jsp" />
+
   <div class="container">
+    <div class="titulo">
+      <h1 class="my-4 text-center">Agregar Tema a Lista de Reproducción</h1>
+    </div>
 
     <!-- Selección de la lista de reproducción -->
     <div class="card">
       <h2>1. Selecciona una lista de reproducción</h2>
-      <form>
-        <div class="mb-3">
-          <label for="listaReproduccion" class="form-label">Lista de Reproducción</label>
-          <select class="form-select" id="listaReproduccion" required>
-            <option selected disabled>Elige una lista...</option>
-            <option value="1">Mi Playlist Favorita</option>
-            <option value="2">Rock Clásico</option>
-            <option value="3">Lista por Defecto</option>
-          </select>
-        </div>
-      </form>
+
+      <%
+        // Mostrar listas particulares si están disponibles
+        List<DTListaRep> listasParticulares = (List<DTListaRep>) request.getAttribute("listasdeRepparticular");
+        if (listasParticulares != null && !listasParticulares.isEmpty()) {
+      %>
+      <h3>Listas Particulares</h3>
+        <%
+          for (DTListaRep lista : listasParticulares) {
+        %>
+                    <%= lista.getNombreListaRep() %>
+            <%
+              }
+            %>
+            <%
+                }
+           %>
     </div>
+
+    <!-- Aquí continúan las otras tarjetas para seleccionar tipo de contenido, álbum, tema, etc. -->
 
     <!-- Selección del tipo de contenido -->
     <div class="card">
@@ -108,10 +125,9 @@
         <button type="submit" class="btn btn-primary">Agregar Tema</button>
       </form>
     </div>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-

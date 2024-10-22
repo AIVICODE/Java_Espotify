@@ -3850,57 +3850,73 @@ public boolean esCorreo(String input) {
     }
 
 public DTUsuario login(String usuario, String pass) throws Exception {
-        DTCliente cliente = null;
-     DTArtista artista = null;
-     
-     if (esCorreo(usuario)) {
-         Cliente cli = controlpersis.findClienteByCorreo(usuario);
-         Artista art = controlpersis.findArtistaByCorreo(usuario);
-         
-         if (cli != null) {
-             cliente = new DTCliente(cli.getNickname(), cli.getNombre(), cli.getApellido(), cli.getMail(), cli.getFechaNac(), cli.getContrasenia(), cli.getImagen());
-         }
-         
-         if (art != null) {
-             artista = new DTArtista(
-                 art.getNickname(),
-                 art.getNombre(),
-                 art.getApellido(),
-                 art.getContrasenia(),
-                 art.getImagen(),
-                 art.getFechaNac(),
-                 art.getMail(),
-                 art.getBiografia(),
-                 art.getSitioWeb()
-             );
-         }
-         
-     } else {
-         // Si no es un correo, se busca por nickname
-         cliente = encontrarClientePorNickname(usuario);
-         artista = encontrarDTArtistaPorNickname(usuario);
-     }
-     
-     // Verificación de las contraseñas
-     if (cliente != null) {
-         if (cliente.getContrasenia().equals(pass)) {
-             return cliente;
-         } else {
-             throw new Exception("Contraseña incorrecta para cliente");
-         }
-     }
-     
-     if (artista != null) {
-         if (artista.getContrasenia().equals(pass)) {
-             return artista;
-         } else {
-             throw new Exception("Contraseña incorrecta para artista");
-         }
-     }
-     
-     // Si ninguno existe, lanzar excepción
-     throw new Exception("Usuario no encontrado.");
+    DTCliente cliente = null;
+    DTArtista artista = null;
+
+    if (esCorreo(usuario)) {
+        // Buscar por correo tanto para clientes como para artistas
+        Cliente cli = controlpersis.findClienteByCorreo(usuario);
+        Artista art = controlpersis.findArtistaByCorreo(usuario);
+
+        if (cli != null) {
+            cliente = new DTCliente(cli.getNickname(), cli.getNombre(), cli.getApellido(), cli.getMail(), cli.getFechaNac(), cli.getContrasenia(), cli.getImagen());
+        }
+
+        if (art != null) {
+            artista = new DTArtista(
+                art.getNickname(),
+                art.getNombre(),
+                art.getApellido(),
+                art.getContrasenia(),
+                art.getImagen(),
+                art.getFechaNac(),
+                art.getMail(),
+                art.getBiografia(),
+                art.getSitioWeb()
+            );
+        }
+
+    } else {
+        // Si no es un correo, buscar por nickname
+        cliente = encontrarClientePorNickname(usuario);
+        Artista a = controlpersis.findArtistaByNickname(usuario);
+
+        if (a != null) {
+            artista = new DTArtista(
+                a.getNickname(),
+                a.getNombre(),
+                a.getApellido(),
+                a.getContrasenia(),
+                a.getImagen(),
+                a.getFechaNac(),
+                a.getMail(),
+                a.getBiografia(),
+                a.getSitioWeb()
+            );
+        }
     }
+
+    // Verificar la contraseña del cliente
+    if (cliente != null) {
+        if (cliente.getContrasenia().equals(pass)) {
+            return cliente;
+        } else {
+            throw new Exception("Contraseña incorrecta para cliente");
+        }
+    }
+
+    // Verificar la contraseña del artista
+    if (artista != null) {
+        if (artista.getContrasenia().equals(pass)) {
+            return artista;
+        } else {
+            throw new Exception("Contraseña incorrecta para artista");
+        }
+    }
+
+    // Si no se encontró ni cliente ni artista, lanzar excepción
+    throw new Exception("Usuario no encontrado.");
+}
 
 
 
