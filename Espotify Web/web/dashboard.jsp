@@ -245,6 +245,22 @@
                         alert("Error: " + error.message);
                     });
         }
+        function verificarYAgregarFavorito(nombreAlbum, correoArtista) {
+    // Verificación de suscripción antes de agregar a favoritos
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                AgregarAlbumFavorito(nombreAlbum, correoArtista);
+            } else {
+                alert('No tienes una suscripción activa para agregar este álbum a favoritos.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
         
 
     document.getElementById('btnAgregarLista').addEventListener('click', function() {

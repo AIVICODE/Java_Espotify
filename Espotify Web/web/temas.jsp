@@ -20,7 +20,7 @@
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
     if (dtUsuario != null) {
     %>
-            <button class="add-favorite-tema" onclick="AgregarTemaFavorito('<%= tema.getNombre() %>', '<%= album %>','<%= artista %>')">+</button>
+            <button class="add-favorite-tema" onclick="verificarYAgregarFavorito('<%= tema.getNombre() %>', '<%= album %>','<%= artista %>')">+</button>
         <%
         
     }
@@ -237,6 +237,22 @@ volumeSlider.addEventListener("input", function() {
     });
 }
     
+    function verificarYAgregarFavorito(temaName, albumName, artistName) {
+    // Verificación de suscripción antes de agregar a favoritos
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                AgregarTemaFavorito(temaName, albumName, artistName);
+            } else {
+                alert('No tienes una suscripción activa para agregar este tema a favoritos.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
     
     
     

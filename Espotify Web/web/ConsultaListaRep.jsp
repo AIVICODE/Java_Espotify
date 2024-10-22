@@ -104,7 +104,7 @@
     session = request.getSession(false);
     if (dtUsuario != null) {
     %>
-<button class="add-favorite" onclick="AgregarListaDefFavorito('<%= lista.getNombreListaRep() %>')">+</button>
+<button class="add-favorite" onclick="verificarYAgregarListaDefFavorito('<%= lista.getNombreListaRep() %>')">+</button>
  <%
         
     }
@@ -162,7 +162,7 @@
     if (dtUsuario != null) {
     %>
         <button class="add-favorite" style="margin-right: 10px;" 
-                onclick="AgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
+                onclick="verificarYAgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
         <%
         
     }
@@ -217,7 +217,7 @@
 
     if (dtUsuario != null) {
     %>
-            <button class="add-favorite-tema" onclick="AgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>','<%= tema.getNombreartista() %>')">+</button>
+            <button class="add-favorite-tema" onclick="verificarYAgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>','<%= tema.getNombreartista() %>')">+</button>
         <%
         
     }
@@ -514,6 +514,59 @@
         alert("Error: " + error.message); // Mostrar el mensaje de error
     });
 }
+
+
+
+function verificarYAgregarListaPartFavorito(listaName, clienteName) {
+    // Verificación de suscripción antes de agregar a favoritos
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                AgregarListaPartFavorito(listaName, clienteName);
+            } else {
+                alert('No tienes una suscripción activa para agregar esta lista a favoritos.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
+
+function verificarYAgregarTemaFavorito(temaName, albumName, artistName) {
+    // Verificación de suscripción antes de agregar a favoritos
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                AgregarTemaFavorito(temaName, albumName, artistName);
+            } else {
+                alert('No tienes una suscripción activa para agregar esta tema a favoritos.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
+function verificarYAgregarListaDefFavorito(listaName) {
+    // Verificación de suscripción antes de agregar a favoritos
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                AgregarListaDefFavorito(listaName);
+            } else {
+                alert('No tienes una suscripción activa para agregar esta lista a favoritos.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
+
     </script>
 
     

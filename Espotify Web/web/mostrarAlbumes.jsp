@@ -47,7 +47,7 @@
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
     if (dtUsuario != null) {
     %>
-<button class="add-favorite" onclick="AgregarAlbumFavorito('<%= album.getNombre() %>', '<%= album.getArtista().getCorreo() %>')">+</button>
+<button class="add-favorite" onclick="verificarYAgregarFavorito('<%= album.getNombre() %>', '<%= album.getArtista().getCorreo() %>')">+</button>
         <%
         return;
     }
