@@ -3,6 +3,7 @@ package Persis;
 import Logica.Album;
 import Logica.Artista;
 import Logica.Cliente;
+import Logica.Favoritos;
 import Logica.Genero;
 import Logica.ListaRep;
 import Logica.ListaRepGeneral;
@@ -302,6 +303,10 @@ public Artista encontrarArtistaPorNickname(String nickname) {
 
     public void updateSubscripcion(Subscripcion sub) throws Exception {
       subjpa.edit(sub);
+    }
+
+    public List<Favoritos> findFavoritosByFiltroCriteria(String filtro, String sortBy) {
+       return favjpa.findFavoritosByFiltroCriteria(filtro, sortBy);
     }
     
   

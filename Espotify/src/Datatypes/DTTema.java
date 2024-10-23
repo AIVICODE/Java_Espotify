@@ -8,7 +8,7 @@ package Datatypes;
  *
  * @author ivan
  */
-public class DTTema {
+public class DTTema extends DTContenido{
     private String nombre;
     private int minutos;
     private int segundos;
@@ -16,6 +16,15 @@ public class DTTema {
     private int orden;
     private String nombrealbum;
     private String nombreartista;
+    private int anioCreacion;
+
+    public int getAnioCreacion() {
+        return anioCreacion;
+    }
+
+    public void setAnioCreacion(int anioCreacion) {
+        this.anioCreacion = anioCreacion;
+    }
 
     public String getNombrealbum() {
         return nombrealbum;
@@ -48,6 +57,18 @@ public class DTTema {
         this.nombrealbum = nombrealbum;
         this.nombreartista = nombreartista;
     }
+    
+    public DTTema(String nombre, int minutos, int segundos, String directorio,String nombrealbum, String nombreartista,int anioCreacion) {
+        this.nombre = nombre;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.directorio = directorio;
+        this.nombrealbum = nombrealbum;
+        this.nombreartista = nombreartista;
+        this.anioCreacion = anioCreacion;
+    }
+    
+    
     
      public DTTema(String nombre, int minutos, int segundos, String directorio,int orden) {
         this.nombre = nombre;

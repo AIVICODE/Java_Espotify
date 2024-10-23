@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author ivan
  */
-public class DTListaRep {
+public class DTListaRep extends DTContenido{
     protected String nombreListaRep;
     protected String nombreCliente;
     protected String Genero;
@@ -23,6 +23,11 @@ public class DTListaRep {
         this.Genero = Genero;
         this.imagen = imagen;
         this.temas = temas;
+    }
+     public DTListaRep(String nombreListaRep, String nombreCliente, String Genero) {
+        this.nombreListaRep = nombreListaRep;
+        this.nombreCliente = nombreCliente;
+        this.Genero = Genero;
     }
 
     public String getNombreListaRep() {

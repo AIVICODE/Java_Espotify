@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author ivan
  */
-public class DTAlbum {
+public class DTAlbum extends DTContenido{
     protected String nombre;
     protected int anioCreacion;
     protected String imagen;
@@ -26,7 +26,12 @@ public class DTAlbum {
         this.imagen = imagen;
         this.listaGeneros = listaGeneros;
     }
-
+public DTAlbum(String nombre, int anioCreacion, List<String> listaGeneros, DTArtista artista) {
+    this.nombre = nombre;
+    this.anioCreacion = anioCreacion;
+    this.listaGeneros = listaGeneros;
+    this.artista = artista;
+}
     
     public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros,List<DTTema> listaTemas,DTArtista artista) {
         this.nombre = nombre;

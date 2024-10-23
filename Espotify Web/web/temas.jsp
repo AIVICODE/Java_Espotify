@@ -1,3 +1,4 @@
+<%@page import="Datatypes.DTCliente"%>
 <%@page import="Datatypes.DTUsuario"%>
 <%@page import="Datatypes.DTTema"%>
 <%@page import="java.util.List"%>
@@ -69,8 +70,15 @@
             <source id="audioSource" src="" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
+            <%
+            session = request.getSession(false);
+            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+            if (dtUsuario != null) {
+        %>
             <a id="downloadLink" href="" download>Descargar</a>
-
+<%
+            }
+        %>
             
     </div>
 </footer>

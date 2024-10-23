@@ -2,6 +2,7 @@
 package espotify;
 
 import GUI.Principal;
+import Logica.Controlador;
 import Logica.Fabrica;
 import Logica.IControlador;
 
@@ -11,9 +12,11 @@ public class Espotify {
         
         //Fabrica fabrica = Fabrica.getInstance();
         //IControlador control = fabrica.getIControlador();
-        
+        Controlador control = new Controlador();
         Principal prin= new Principal();
         prin.setVisible(true);
+        
+        control.Buscador("cumbia", "fecha");
         
        
 

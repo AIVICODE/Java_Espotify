@@ -25,7 +25,11 @@ public class DTArtista extends DTUsuario {
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
     }
-
+public DTArtista(String nickname, String correo) {
+        super(nickname, null, null, correo, null, null, null,null); // Llama al constructor de la superclase
+        this.biografia = ""; // Inicializa biografia por defecto
+        this.sitioWeb = "";  // Inicializa sitioWeb por defecto
+    }
     public String getNickname() {
         return nickname;
     }

@@ -22,13 +22,12 @@
                 </svg>
                 Espotify
             </a>
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Buscar tema, album o lista">
-                <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </div>
+                     <form action="Buscador.jsp" method="GET">
+                <div class="search-container">
+                    <input type="text" name="filtro" class="search-input" placeholder="Buscar tema, álbum o lista" required>
+                    <button type="submit" class="search-button">Buscar</button>
+                </div>
+            </form>
             <div class="auth-links">
                 <a href="login.jsp">Iniciar sesión</a>
                 <a href="register.jsp">Registrarse</a>

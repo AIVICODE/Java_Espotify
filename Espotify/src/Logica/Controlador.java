@@ -3,6 +3,7 @@ package Logica;
 import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
+import Datatypes.DTContenido;
 import Datatypes.DTListaRep;
 import Datatypes.DTSub;
 import Datatypes.DTTema;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -4004,5 +4006,44 @@ public String guardarImagenesLista(File archivoImagen, String nombreLista) throw
         }
         return false; //si el mail está libre retorna false
     }
+    
+    
+    
+    public List<DTContenido> Buscador(String filtro, String sortBy) throws Exception {
+    List<Favoritos> favoritosList = controlpersis.findFavoritosByFiltroCriteria(filtro, sortBy);
+    List<DTContenido> dtContenidoList = new ArrayList<>();
+
+    for (Favoritos favorito : favoritosList) {
+        if (favorito instanceof Tema) {
+            Tema tema = (Tema) favorito;
+            long duracionSegundos = tema.getDuracionSegundos();
+            int minutos = (int) (duracionSegundos / 60);
+            int segundos = (int) (duracionSegundos % 60);
+            dtContenidoList.add(new DTTema(tema.getNombre(), minutos, segundos, tema.getDireccion(), tema.getAlbum().getNombre(), tema.getAlbum().getArtista().getNickname(),tema.getAlbum().getAnioCreacion())); // Agregar DTTema
+        } else if (favorito instanceof Album) {
+            Album album = (Album) favorito;
+            List<String> listaGeneros = new ArrayList<>(); // Crear una lista vacía
+            
+            // Separar géneros
+            String[] generosArray = album.getNombreGeneros().split(","); // Separar por comas
+            Collections.addAll(listaGeneros, generosArray); // Agregar a la lista
+            
+            // Crear el artista
+            DTArtista art = new DTArtista(album.getArtista().getNickname(), album.getArtista().getMail());
+            
+            // Agregar DTAlbum
+            dtContenidoList.add(new DTAlbum(album.getNombre(), album.getAnioCreacion(), listaGeneros, art));
+        } else if (favorito instanceof ListaRep) {
+            ListaRep listaRep = (ListaRep) favorito;
+            dtContenidoList.add(new DTListaRep(listaRep.getNombre(), "", "")); // Agregar DTListaRep
+        }
+    }
+
+    
+
+    return dtContenidoList; // Retorna la lista de DTContenido
+}
+
+
 }
 

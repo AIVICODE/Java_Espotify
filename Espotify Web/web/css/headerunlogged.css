@@ -69,3 +69,35 @@
 .auth-links a:hover {
     background-color: #e7ebda;
 }
+
+
+.search-container {
+    display: flex; /* Alinea los elementos en fila */
+    align-items: center; /* Centra verticalmente los elementos */
+    border-radius: 5px; /* Bordes redondeados */
+    max-width: 600px; /* Ancho máximo del contenedor */
+    margin-left: auto; /* Aligna el buscador a la derecha */
+}
+
+.search-input {
+    width: 100%; /* Toma todo el ancho del contenedor */
+    padding: 8px 10px; /* Espaciado interno del campo de búsqueda */
+    border: none; /* Sin borde para el campo */
+    outline: none; /* Sin contorno en enfoque */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+.search-button {
+    background-color: #1a1a1a; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 8px 15px; /* Espaciado interno del botón */
+    cursor: pointer; /* Cambia el cursor a pointer al pasar el ratón */
+    border-radius: 45px; /* Bordes redondeados */
+    height: 100%; /* Altura completa del contenedor */
+    margin-left: 5px;
+}
+
+.search-button:hover {
+    background-color: gray; /* Color al pasar el ratón sobre el botón */
+}

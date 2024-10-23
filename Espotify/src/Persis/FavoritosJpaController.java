@@ -4,16 +4,25 @@
  */
 package Persis;
 
+import Logica.Album;
 import Logica.Favoritos;
+import Logica.Genero;
+import Logica.ListaRep;
+import Logica.Tema;
 import Persis.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.criteria.Predicate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 
 /**
@@ -139,5 +148,104 @@ public class FavoritosJpaController implements Serializable {
             em.close();
         }
     }
+    
+    
+public List<Favoritos> findFavoritosByFiltroCriteria(String filtro, String sortBy) {
+    EntityManager em = getEntityManager();
+    try {
+        List<Favoritos> resultados = new ArrayList<>();
+
+        // Buscar en Tema
+        resultados.addAll(findTemasByFiltro(filtro, sortBy, em));
+
+        // Buscar en Album
+        resultados.addAll(findAlbumsByFiltro(filtro, sortBy, em));
+
+        // Buscar en ListaRep
+        resultados.addAll(findListasRepByFiltro(filtro, sortBy, em));
+
+        return resultados;
+    } finally {
+        em.close();
+    }
+}
+
+private List<Tema> findTemasByFiltro(String filtro, String sortBy, EntityManager em) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Tema> cq = cb.createQuery(Tema.class);
+    Root<Tema> temaRoot = cq.from(Tema.class);
+    
+    // Realiza un JOIN con Album
+    Join<Tema, Album> albumJoin = temaRoot.join("album");
+    
+    // Realiza un JOIN con Genero a través de Album
+    Join<Album, Genero> generoJoin = albumJoin.join("listaGeneros");
+    
+    // Filtros
+    Predicate nombreLike = cb.like(temaRoot.get("nombre"), "%" + filtro + "%");
+    Predicate generoLike = cb.like(generoJoin.get("nombre"), "%" + filtro + "%");
+    
+    // Combinar condiciones
+    cq.where(cb.or(nombreLike, generoLike));
+    cq.distinct(true);
+    // Ordenar
+    if (sortBy.equals("nombre")) {
+        cq.orderBy(cb.asc(temaRoot.get("nombre")));
+    } else if (sortBy.equals("fecha")) {
+        // Asumiendo que "fechaCreacion" es el atributo en Album
+        cq.orderBy(cb.asc(albumJoin.get("anioCreacion")));
+    }
+    
+    Query query = em.createQuery(cq);
+    return query.getResultList();
+}
+
+private List<Album> findAlbumsByFiltro(String filtro, String sortBy, EntityManager em) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Album> cq = cb.createQuery(Album.class);
+    Root<Album> albumRoot = cq.from(Album.class);
+    
+    // JOIN con Genero
+    Join<Album, Genero> generoJoin = albumRoot.join("listaGeneros");
+    
+    // Filtros
+    Predicate nombreLike = cb.like(albumRoot.get("nombre"), "%" + filtro + "%");
+    Predicate generoLike = cb.like(generoJoin.get("nombre"), "%" + filtro + "%");
+    cq.where(cb.or(nombreLike, generoLike));
+cq.distinct(true);
+    // Ordenar
+    if (sortBy.equals("nombre")) {
+        cq.orderBy(cb.asc(albumRoot.get("nombre")));
+    } else if (sortBy.equals("fecha")) {
+        cq.orderBy(cb.asc(albumRoot.get("anioCreacion"))); // Asegúrate de que este atributo existe
+    }
+    
+    Query query = em.createQuery(cq);
+    return query.getResultList();
+}
+
+private List<ListaRep> findListasRepByFiltro(String filtro, String sortBy, EntityManager em) {
+    if ("fecha".equals(sortBy)) {
+        return new ArrayList<>(); // Retorna una lista vacía si se solicita ordenar por fecha
+    }
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<ListaRep> cq = cb.createQuery(ListaRep.class);
+    Root<ListaRep> listaRepRoot = cq.from(ListaRep.class);
+    
+    // Filtros
+    Predicate nombreLike = cb.like(listaRepRoot.get("nombre"), "%" + filtro + "%");
+    cq.where(nombreLike);
+cq.distinct(true);
+    // Ordenar
+    if (sortBy.equals("nombre")) {
+        cq.orderBy(cb.asc(listaRepRoot.get("nombre")));
+    } 
+    
+    Query query = em.createQuery(cq);
+    return query.getResultList();
+}
+
+
+
     
 }

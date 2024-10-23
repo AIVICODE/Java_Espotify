@@ -4,6 +4,7 @@ package Logica;
 import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
+import Datatypes.DTContenido;
 import Datatypes.DTListaRep;
 import Datatypes.DTSub;
 import Datatypes.DTTema;
@@ -181,4 +182,6 @@ public interface IControlador {
     public abstract boolean existeMail(String mail);
     
     public abstract void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
+    
+    public abstract List <DTContenido> Buscador(String filtro, String sortBy) throws Exception;
 }

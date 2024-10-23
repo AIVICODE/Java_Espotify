@@ -79,6 +79,19 @@ public class Album extends Favoritos implements Serializable {
     public List<Genero> getListaGeneros() {
         return listaGeneros;
     }
+    
+    public String getNombreGeneros() {
+    StringBuilder nombresGeneros = new StringBuilder(); // Usamos StringBuilder para construir la cadena
+    
+    for (Genero gen : listaGeneros) {
+        if (nombresGeneros.length() > 0) {
+            nombresGeneros.append(", "); // Agregar una coma y espacio antes de cada nombre, excepto el primero
+        }
+        nombresGeneros.append(gen.getNombre()); // Añadir el nombre del género
+    }
+    
+    return nombresGeneros.toString(); // Convertir StringBuilder a String y devolver
+}
 
     public void setListaGeneros(List<Genero> listaGeneros) {
         this.listaGeneros = listaGeneros;
