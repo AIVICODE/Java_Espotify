@@ -4038,11 +4038,15 @@ public String guardarImagenesLista(File archivoImagen, String nombreLista) throw
              ListaRep listaRep = (ListaRep) favorito;
             
 
-            if (listaRep instanceof ListaRepParticular) {
-                // Aquí solo agregamos el nombre del cliente para las listas particulares
-                Cliente cli = BuscarDuenioLista(listaRep.getId());
+            if (listaRep instanceof ListaRepParticular ) {
+                   ListaRepParticular listaParticular = (ListaRepParticular) listaRep; // Hacer el cast
+    if (!listaParticular.isPrivada()) { // Llamar al método isPrivada()
+         Cliente cli = BuscarDuenioLista(listaRep.getId());
             String nombreCliente = cli != null ? cli.getNickname() : "Desconocido";
                 dtContenidoList.add(new DTListaRep(listaRep.getNombre(), nombreCliente, ""));
+    }
+
+               
             } else if (listaRep instanceof ListaRepGeneral) {
                 String generolist = ((ListaRepGeneral) listaRep).getGenero().getNombre();
                 dtContenidoList.add(new DTListaRep(listaRep.getNombre(),"", generolist));

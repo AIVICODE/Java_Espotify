@@ -41,6 +41,7 @@
             <button id="btnActualizarSubscripcion">Actualizar Subscripcion</button>
             <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
+            <button id="btnPublicarLista">Publicar Lista de Reproducción </button>
             
             <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
@@ -282,7 +283,10 @@ document.getElementById('btnAgregarSubscripcion').addEventListener('click', func
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'SvActualizarSubscripcion';
     });
-
+document.getElementById('btnPublicarLista').addEventListener('click', function() {//NUEVO madi
+        // Redirigir a la página PublicarLista.jsp
+        window.location.href = 'PublicarLista.jsp';
+    });
     </script>
 
 </body>
