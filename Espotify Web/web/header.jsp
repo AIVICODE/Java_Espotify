@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espotify</title>
-    <link rel="stylesheet" href="css/headerunlogged.css?v1.1"> <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="css/headerunlogged.css?v1.2"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
 <header>
     <!-- Navbar -->

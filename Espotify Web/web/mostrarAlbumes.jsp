@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Albumes</title>
-<link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.2">
+<link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.3">
     <style>
         .album-temas {
             
@@ -20,7 +20,7 @@
 
 </head>
 <body>
-    <h1>Albumes</h1>
+    
     
     <%
         // Obtiene la lista de Ã¡lbumes desde la solicitud
@@ -29,7 +29,9 @@
         if (albumes != null && !albumes.isEmpty()) {
     %>
         <div class="album-list">
+            
             <ul>
+                <h1>Albumes</h1>
     <%
         // Itera sobre los álbumes y los muestra
         for (DTAlbum album : albumes) {
@@ -40,7 +42,7 @@
             <img src="<%= album.getImagen() %>" alt="Portada de <%= album.getNombre() %>" />
             <div class="album-name"><%= album.getNombre() %></div>
             <div><%= album.getAnioCreacion()%></div>
-            
+            <div><%= album.getListaGeneros()%></div>
             <div class="album-artist"><%= album.getArtista().getNickname() %></div>
             <%
     session = request.getSession(false);

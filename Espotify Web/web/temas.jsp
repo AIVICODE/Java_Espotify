@@ -98,10 +98,11 @@ let currentIndex = -1;
 function seleccionarTema(nombreTema, directorio, orden) {
   document.getElementById("currentSongName").textContent = nombreTema;
 
-  // Manejo de bit.ly (Mantengo este fragmento ya que lo tienes en tu código original)
+
   if (directorio.startsWith("bit.ly")) {
-    nextTema();
-    return;
+    var urlRedireccion = "https://" + directorio; // Asegúrate de agregar el esquema HTTPS
+    window.open(urlRedireccion, '_blank'); // Abre la URL en una nueva pestaña
+    return; // Detenemos la ejecución aquí
   }
 
   var audioSource = document.getElementById("audioSource");

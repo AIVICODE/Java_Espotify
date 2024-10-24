@@ -8,7 +8,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #121212;
     color: white;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -44,37 +43,35 @@ body {
     text-decoration: underline;
 }
 
-/* Main content styles */
-.main-content {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-
 .sidebar {
     width: 200px; /* Ajusta este ancho como prefieras */
-    padding: 10px;
-    background-color: #121212;
+    padding: 20px;
+    background-color: #121212; /* Color oscuro similar a Spotify */
+    color: #fff; /* Texto blanco para contraste */
+        position: absolute; /* Cambiado a absolute */
+height: auto;
+    top: 80px;
     left: 0;
-    margin-right: 20px;
-    display: flex; /* Usar flexbox */
+    display: flex;
     flex-direction: column; /* Alinear los botones en columna */
+    gap: 10px; /* Espacio entre los elementos */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Añadir una sombra para resaltar el sidebar */
 }
-    
 
+.sidebar h2 {
+    font-size: 1.5rem; /* Tamaño de fuente para el título */
+    margin-bottom: 20px;
+}
 
 .sidebar button {
-    width: 100%; /* Asegura que el botón ocupe el ancho completo del sidebar */
-    text-align: center; /* Centra el texto */
-    padding: 0.8rem 0; /* Aumentar el padding para un botón más grande */
-    margin-bottom: 0.5rem; /* Espacio entre botones */
-    background-color: #22c55e; /* Color de fondo verde */
-    border: none; /* Sin borde */
-    color: white; /* Color del texto */
-    cursor: pointer; /* Cambiar cursor a pointer */
-    border-radius: 0.5rem; /* Bordes redondeados */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Efecto de transición */
+    background-color: #282828; /* Color similar a los botones de Spotify */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar button:hover {
@@ -126,28 +123,38 @@ footer {
 }
 
 .genre-item {
-    padding: 0.5rem 1rem;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 50px; /* Botones curvos */
-    color: black;
+    padding: 0.75rem 1.5rem; /* Aumenta el espaciado para que parezca más sustancial */
+    background-color: #1DB954; /* Color característico de Spotify */
+    border: none; /* Sin borde */
+    border-radius: 25px; /* Bordes curvos moderados */
+    color: white; /* Texto blanco para contraste */
     cursor: pointer;
-    font-style: italic; /* Fuente cursiva */
+    font-weight: 500; /* Cambiar a una fuente más normal */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
     transition: background-color 0.3s ease, transform 0.2s ease;
     margin-right: 10px; /* Espacio entre los géneros horizontalmente */
     margin-bottom: 10px; /* Espacio entre los géneros verticalmente */
 }
 
 .genre-item:hover {
-    background-color: #e7ebda; /* Color más oscuro al hacer hover */
+    background-color: #1aa34a; /* Color más oscuro al hacer hover */
+    transform: scale(1.05); /* Aumenta ligeramente al pasar el ratón */
+}
+
+
+.containerprincipal {
+    align-items: flex-start;
+    display: flex; /* Usar flexbox para alinear el sidebar y el contenido */
 }
 
 #dynamicContent {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    width: calc(100% - 40px); /* Ajusta el ancho del contenido, considerando los márgenes */
-    height: 200px; /* Mantén la altura */
-    margin: 0 20px;
+    width: calc(100% - 200px); /* Resta el ancho del sidebar */
+    height: 600px; /* Mantén la altura */
+    margin-left: 220px; /* Margen entre el sidebar y el contenido */
     overflow-y: auto; /* Solo habilitar scroll vertical */
     overflow-x: hidden; /* Desactiva el scroll horizontal */
 }
@@ -172,25 +179,25 @@ footer {
 }
 
 .artist-item {
-    padding: 0.5rem 1rem;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 50px; /* Botones curvos */
-    color: black;
+    padding: 0.75rem 1.5rem; /* Aumenta el espaciado para que parezca más sustancial */
+    background-color: #1DB954; /* Color característico de Spotify */
+    border: none; /* Sin borde */
+    border-radius: 25px; /* Bordes curvos moderados */
+    color: white; /* Texto blanco para contraste */
     cursor: pointer;
-    font-style: italic; /* Fuente cursiva */
+    font-weight: 500; /* Cambiar a una fuente más normal */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
     transition: background-color 0.3s ease, transform 0.2s ease;
     margin-right: 10px; /* Espacio entre los géneros horizontalmente */
     margin-bottom: 10px; /* Espacio entre los géneros verticalmente */
 }
 
 .artist-item:hover {
-    background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
+    background-color: #1aa34a; /* Color más oscuro al hacer hover */
+    transform: scale(1.05); /* Aumenta ligeramente al pasar el ratón */
 }
 
-.artist-item:active {
-    background-color: #e0e0e0; /* Color de fondo al hacer clic */
-}
 
 .artist-item.selected {
     background-color: #3f3f46; /* Color de fondo para el artista seleccionado */
@@ -224,12 +231,14 @@ footer {
     margin-right: 0.25rem;
 }
 .logout-button {
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    cursor: pointer;
+    background-color: #1a1a1a; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 8px 15px; /* Espaciado interno del botón */
+    cursor: pointer; /* Cambia el cursor a pointer al pasar el ratón */
+    border-radius: 45px; /* Bordes redondeados */
+    height: 100%; /* Altura completa del contenedor */
+    margin-left: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
 .logout-button:hover {
@@ -263,4 +272,27 @@ footer {
     background-color: #16a34a;
 }
 
+html, body {
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: #22c55e #1a1a1a; /* Para Firefox */
+}
 
+html::-webkit-scrollbar {
+    width: 12px; /* Ancho para Chrome/Safari/Edge */
+    height: 12px; /* Altura para Chrome/Safari/Edge */
+}
+
+html::-webkit-scrollbar-track {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: #22c55e;
+    border-radius: 10px;
+    border: 2px solid #121212;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background-color: #16a34a;
+}

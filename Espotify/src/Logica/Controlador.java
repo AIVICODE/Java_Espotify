@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -4034,16 +4035,39 @@ public String guardarImagenesLista(File archivoImagen, String nombreLista) throw
             // Agregar DTAlbum
             dtContenidoList.add(new DTAlbum(album.getNombre(), album.getAnioCreacion(), listaGeneros, art));
         } else if (favorito instanceof ListaRep) {
-            ListaRep listaRep = (ListaRep) favorito;
-            dtContenidoList.add(new DTListaRep(listaRep.getNombre(), "", "")); // Agregar DTListaRep
+             ListaRep listaRep = (ListaRep) favorito;
+            
+
+            if (listaRep instanceof ListaRepParticular) {
+                // Aquí solo agregamos el nombre del cliente para las listas particulares
+                Cliente cli = BuscarDuenioLista(listaRep.getId());
+            String nombreCliente = cli != null ? cli.getNickname() : "Desconocido";
+                dtContenidoList.add(new DTListaRep(listaRep.getNombre(), nombreCliente, ""));
+            } else if (listaRep instanceof ListaRepGeneral) {
+                String generolist = ((ListaRepGeneral) listaRep).getGenero().getNombre();
+                dtContenidoList.add(new DTListaRep(listaRep.getNombre(),"", generolist));
+        }
         }
     }
 
-    
-
     return dtContenidoList; // Retorna la lista de DTContenido
-}
 
+    }
+private Cliente BuscarDuenioLista(Long idlista){
+   List<Cliente> clientes = controlpersis.listaClientes();
+    
+   for(Cliente c: clientes){
+       List<ListaRep> listascli = c.getListaReproduccion();
+       for(ListaRep lista:listascli){
+       
+           if(Objects.equals(lista.getId(), idlista)){
+           return c;
+           }
+       }
+   }
+return null;
+
+}
 
 }
 

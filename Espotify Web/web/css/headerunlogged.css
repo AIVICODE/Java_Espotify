@@ -96,8 +96,10 @@
     border-radius: 45px; /* Bordes redondeados */
     height: 100%; /* Altura completa del contenedor */
     margin-left: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .search-button:hover {
-    background-color: gray; /* Color al pasar el ratón sobre el botón */
+   background-color: white;
+    color: #191414;
 }

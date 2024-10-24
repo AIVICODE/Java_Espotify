@@ -69,10 +69,9 @@
 
     <body class="main-body">
 <div class="content-container">
-        <h1>Selecciona un Género</h1>
+        <h1>Selecciona un Género:</h1>
 
         <form action="SvObtenerListasDeRep" method="GET"> <!-- Se envía al servlet SvObtenerListasDeRep -->
-            <label for="genero">Género:</label>
             <select name="genero" id="genero" required>
                 <!-- Las opciones se llenarán dinámicamente con JavaScript -->
             </select>
@@ -110,7 +109,6 @@
 %>
                 <div style="width: 150px; height: 150px; border: 1px solid black;">
                     <img src="<% lista.getImagen(); %>" alt="Imagen de prueba" style="width: 100%; height: auto;" />
-                    
                     
 </div> 
     

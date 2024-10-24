@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espotify</title>
-    <link rel="stylesheet" href="css/index.css"> <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="css/index.css?v1.3"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
 
 <jsp:include page="header.jsp" />
@@ -26,26 +26,29 @@
 
 
     <!-- Main Content -->
-    <div class="main-content container">
+    <div class="containerprincipal">
         <!-- Sidebar -->
         <div class="sidebar">
             <h2>Opciones</h2>
+            <% if (dtUsuario instanceof DTArtista) { %>
+            <button id="btnAltaAlbum">Alta Album</button>
+            <% }else{%>
             <button id="btnActualizarSubscripcion">Actualizar Subscripcion</button>
             <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
+            
             <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
-            <% if (dtUsuario instanceof DTArtista) { %>
-            <button id="btnAltaAlbum">Alta Album</button>
-            <% }%>
+            <%}%>
             
         </div>
 
         <!-- Dynamic Content -->
         <div id="dynamicContent">
         </div>
+    <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
 
     </div>
 
@@ -278,6 +281,7 @@ document.getElementById('btnAgregarSubscripcion').addEventListener('click', func
     <% if (dtUsuario instanceof DTArtista) { %>
     document.getElementById('btnAltaAlbum').addEventListener('click', function() {
         // Redirigir a la página altaAlbum .jsp
+        console.error('Entra el click:', error);
         window.location.href = 'altaAlbum.jsp';
     });
     <% }%>
@@ -286,6 +290,5 @@ document.getElementById('btnAgregarSubscripcion').addEventListener('click', func
 
 </body>
 <footer>
-    <iframe src="" id="dynamicIframe" width="100%" height="400px" frameborder="0" scrolling="auto"></iframe>
 
 </footer>

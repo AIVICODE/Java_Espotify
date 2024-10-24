@@ -7,14 +7,27 @@ body {
 
 h1 {
     color: white;
-    text-align: center;
+    text-align: left;
     font-size: 2em; /* Reduce el tamaño del encabezado */
     font-weight: 300;
+    
+}
+
+.album-list {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente la lista */
+    align-items: center; /* Centra verticalmente (opcional) */
+    flex-direction: column; /* Asegura que los ítems estén en columna */
 }
 
 .album-list ul {
     padding: 0;
     list-style-type: none;
+    display: flex; /* Usar flexbox para centrar el contenido */
+    flex-direction: column; /* Asegurar que los ítems sigan en columna */
+    align-items: center; /* Centrar horizontalmente los ítems */
+    width: 100%; /* Ocupa el ancho completo */
+     /* Establecer el ancho máximo de la lista */
 }
 
 .album-item {

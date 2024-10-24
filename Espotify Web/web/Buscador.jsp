@@ -86,13 +86,25 @@
         <%
                     } else if (contenido instanceof DTListaRep) {
                         DTListaRep listaRep = (DTListaRep) contenido;
+            if (listaRep.getGenero() != null && !listaRep.getGenero().isEmpty()) {
+
         %>
                         <div class="alert alert-secondary">
-                            <strong>Lista de Reproducción:</strong> <%= listaRep.getNombreListaRep()%>
-                        </div>
+                    <strong>Lista de Reproducción:</strong> <%= listaRep.getNombreListaRep() %>
+                    <strong>Género:</strong> <%= listaRep.getGenero() %>
+                </div>
+<%
+            } else {
+                // Si no tiene género, mostrar el cliente
+%>
+                <div class="alert alert-secondary">
+                    <strong>Lista de Reproducción de clientes:</strong> <%= listaRep.getNombreListaRep() %>
+                    <strong>Cliente:</strong> <%= listaRep.getNombreCliente() %>
+                </div>
         <%
                     }
                 }
+}
             } else {
 
  if( request.getParameter("filtro").isEmpty() ){
@@ -104,6 +116,8 @@
         <%
             }
             }
+
+
         %>
     </div>
 </div>
