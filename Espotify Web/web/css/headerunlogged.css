@@ -103,3 +103,45 @@
    background-color: white;
     color: #191414;
 }
+.user-section {
+    display: flex;
+    align-items: center;
+}
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+.user-nickname {
+    font-weight: bold;
+}
+.user-favorites {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #ffff00;
+}
+.star-icon {
+    margin-right: 0.25rem;
+}
+.logout-button {
+    background-color: #1a1a1a; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 8px 15px; /* Espaciado interno del botón */
+    cursor: pointer; /* Cambia el cursor a pointer al pasar el ratón */
+    border-radius: 45px; /* Bordes redondeados */
+    height: 100%; /* Altura completa del contenedor */
+    margin-left: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.logout-button:hover {
+    background-color: white;
+    color: #191414;
+}

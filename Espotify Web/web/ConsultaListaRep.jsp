@@ -14,7 +14,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Seleccionar Género</title>
-        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.2">
+        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.5">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Obtener los géneros desde el servlet
@@ -208,7 +208,7 @@
                     for (DTTema tema : temas) {
                 %>
                 <li>
-                    <a href="javascript:void(0);" class="tema-enlace" onclick="seleccionarTema('<%= tema.getNombre()%>', '<%= tema.getDirectorio()%>', <%= contador%>);">
+                    <a href="javascript:void(0);" class="tema-enlace" onclick="seleccionarTema('<%= tema.getNombre()%>', '<%= tema.getDirectorio()%>','<%= tema.getNombreartista()%>', <%= contador%>);">
                         <%
 
     if (dtUsuario != null) {
@@ -304,6 +304,7 @@
         temas.push({
             nombre: "<%= tema.getNombre()%>",
             directorio: "<%= tema.getDirectorio()%>",
+            artista: "<%= tema.getNombreartista() %>",
             orden: <%= contador%> // Asignamos un orden secuencial basado en el índice del for
         });
         <%
@@ -316,8 +317,10 @@
 
         let currentIndex = -1;
 
-        function seleccionarTema(nombreTema, directorio, orden) {
+        function seleccionarTema(nombreTema, directorio, artista,orden) {
             document.getElementById("currentSongName").textContent = nombreTema;
+            document.getElementById("currentArtistName").textContent = artista;
+
 
             if (directorio.startsWith("bit.ly")) {
                 nextTema();
@@ -356,7 +359,7 @@
         function playTemaActual() {
             if (currentIndex >= 0 && currentIndex < temas.length) {
                 let temaActual = temas[currentIndex];
-                seleccionarTema(temaActual.nombre, temaActual.directorio, temaActual.orden);
+                seleccionarTema(temaActual.nombre, temaActual.directorio,temaActual.artista, temaActual.orden);
             }
         }
 

@@ -9,8 +9,16 @@
     if (dtUsuario == null) {
         response.sendRedirect("index.jsp");
         return;
+        
+        
+    }
+    
+ if (dtUsuario instanceof DTArtista) {
+ response.sendRedirect("dashboardartista.jsp");
+ return;
     }
 %>
+
 
 <!DOCTYPE html>
 
@@ -30,9 +38,6 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <h2>Opciones</h2>
-            <% if (dtUsuario instanceof DTArtista) { %>
-            <button id="btnAltaAlbum">Alta Album</button>
-            <% }else{%>
             <button id="btnActualizarSubscripcion">Actualizar Subscripcion</button>
             <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
@@ -41,7 +46,6 @@
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
-            <%}%>
             
         </div>
 
@@ -278,13 +282,6 @@ document.getElementById('btnAgregarSubscripcion').addEventListener('click', func
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'SvActualizarSubscripcion';
     });
-    <% if (dtUsuario instanceof DTArtista) { %>
-    document.getElementById('btnAltaAlbum').addEventListener('click', function() {
-        // Redirigir a la página altaAlbum .jsp
-        console.error('Entra el click:', error);
-        window.location.href = 'altaAlbum.jsp';
-    });
-    <% }%>
 
     </script>
 
