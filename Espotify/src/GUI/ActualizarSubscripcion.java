@@ -8,6 +8,7 @@ import Datatypes.DTSub;
 import Logica.Fabrica;
 import Logica.IControlador;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -71,23 +72,31 @@ private NoEditableTableModel model;
     }
     
     private void modificarSubscripcion() {
-        int selectedRow = jTable1.getSelectedRow(); // Obtener la fila seleccionada
-        if (selectedRow != -1) {
+int selectedRow = jTable1.getSelectedRow(); // Obtener la fila seleccionada
+    if (selectedRow != -1) {
 
-            Long id = (Long) model.getValueAt(selectedRow, 0); // Obtener el ID de la suscripción
-            String nuevoEstado = JOptionPane.showInputDialog(this, "Nuevo estado (Vigente/Cancelada):");
-            if (nuevoEstado != null && !nuevoEstado.isEmpty()) {
-                try {
-                    control.modificarEstadoSuscripcion(id, nuevoEstado); // Llama al método que modifica la suscripción
-                    JOptionPane.showMessageDialog(this, "Estado modificado a: " + nuevoEstado);
-                    listarSubscripciones(); // Actualizar la lista después de modificar
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error al modificar la suscripción: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+        Long id = (Long) model.getValueAt(selectedRow, 0); // Obtener el ID de la suscripción
+
+        // Crear un JComboBox con las opciones "Vigente" y "Cancelada"
+        String[] opciones = {"Vigente", "Cancelada"};
+        JComboBox<String> comboBox = new JComboBox<>(opciones);
+
+        // Mostrar el JComboBox en un JOptionPane
+        int result = JOptionPane.showConfirmDialog(this, comboBox, "Seleccionar nuevo estado", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (result == JOptionPane.OK_OPTION) {
+            String nuevoEstado = (String) comboBox.getSelectedItem(); // Obtener el estado seleccionado
+            try {
+                control.modificarEstadoSuscripcion(id, nuevoEstado); // Llama al método que modifica la suscripción
+                JOptionPane.showMessageDialog(this, "Estado modificado a: " + nuevoEstado);
+                listarSubscripciones(); // Actualizar la lista después de modificar
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al modificar la suscripción: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una suscripción para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una suscripción para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
     }
     
     /**
@@ -118,6 +127,11 @@ private NoEditableTableModel model;
         jScrollPane1.setViewportView(jTable1);
 
         BotonModificar.setText("Modificar");
+        BotonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonModificarActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -131,14 +145,12 @@ private NoEditableTableModel model;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 13, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BotonModificar)
-                .addGap(40, 40, 40)
+                .addGap(113, 113, 113)
                 .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(119, 119, 119))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,6 +169,10 @@ private NoEditableTableModel model;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void BotonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotonModificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
