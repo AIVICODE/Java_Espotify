@@ -316,7 +316,7 @@ public class AltaCliente extends javax.swing.JInternalFrame {
                 byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
                 imagen = control.guardarImagenesEnCarpeta(archivoImagen, nickname);
 
-            }else{imagen="X:/filias/imagenes_usuarios/generico.jpg";}
+            }else{imagen="GitProject/ProgApps-/imagenes_usuarios/generico.jpg";}
             DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, contrasenia,confirmacion,imagen);
             control.crearUsuario(user);
             txtApellido.setText("");

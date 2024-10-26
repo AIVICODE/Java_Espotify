@@ -8,16 +8,16 @@ import Datatypes.DTAlbum;
 import Datatypes.DTListaRep;
 import Logica.Fabrica;
 import Logica.IControlador;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import Datatypes.DTUsuario;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 
 @WebServlet(name = "SvIniciarSesion", urlPatterns = {"/SvIniciarSesion"})
@@ -32,6 +32,7 @@ public class SvIniciarSesion extends HttpServlet {
         try {
             DTUsuario dtUsuario = control.login(usuario, password);
             String rutaImagen = dtUsuario.getImagen();
+            System.out.println("ACA IMAGEN "+rutaImagen);
             HttpSession session = request.getSession();
             byte[] imagenBytes = control.obtenerImagenComoBytes(rutaImagen);
             session.setAttribute("usuario", dtUsuario);

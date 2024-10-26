@@ -8,24 +8,27 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import Logica.Fabrica;
 import Logica.IControlador;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jakarta.servlet.http.Part;
 
 
 @WebServlet(name = "SvRegistrarUsuario", urlPatterns = {"/SvRegistrarUsuario"})
+@MultipartConfig
 public class SvRegistrarUsuario extends HttpServlet {
     Fabrica fabrica = Fabrica.getInstance();
     IControlador control = fabrica.getIControlador();
@@ -56,17 +59,31 @@ public class SvRegistrarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Logica de agregar usuario
-        String nickname = request.getParameter("nickname");
-        String correo = request.getParameter("email");
-        String nombre = request.getParameter("name");
-        String apellido = request.getParameter("surname");
-        String contrasenia = request.getParameter("password");
-        String contraseniaC = request.getParameter("confirmPassword");     
-        String tipoUsuario = request.getParameter("userType");
-        String nacimiento = request.getParameter("dob");//ver esto que onda
+    String nickname = request.getParameter("nickname");
+    String correo = request.getParameter("email");
+    String nombre = request.getParameter("name");
+    String apellido = request.getParameter("surname");
+    String contrasenia = request.getParameter("password");
+    String contraseniaC = request.getParameter("confirmPassword");
+    String tipoUsuario = request.getParameter("userType");
+    String nacimiento = request.getParameter("dob");
+        System.out.println("nickname recibido: " + nickname);
+        System.out.println("Fecha de nacimiento recibida: " + nacimiento);
+
         Date fecha = convertirStringADate(nacimiento);
-        String imagen = request.getParameter("image");
+        
+        // Manejo de la imagen
+        Part imagenPart = request.getPart("image"); // Obtener la parte del archivo
+        String imagen = null;
+
+        if (imagenPart != null && imagenPart.getSize() > 0) {
+            byte[] archivoImagen = new byte[(int) imagenPart.getSize()];
+            imagenPart.getInputStream().read(archivoImagen); // Leer el archivo como bytes
+            imagen = control.guardarImagenesEnCarpeta(archivoImagen, nickname); // Guardar la imagen
+        } else {
+            imagen = "/home/usuario/imagenes_usuarios/generico.jpg"; // Ruta por defecto
+        }
+
         
         //Artista
         String biografia = request.getParameter("bio");

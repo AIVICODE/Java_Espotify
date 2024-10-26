@@ -3817,7 +3817,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarImagenesEnCarpeta(byte[] archivoImagen, String nickname) throws IOException {
-        String carpetaImagenes = "X:/filias/imagenes_usuarios/";
+        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/imagenes_usuarios/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3831,7 +3831,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException {
-        String carpetaTemas = "X:/filias/temas/";
+        String carpetaTemas = "/home/ivan/GitProject/ProgApps-";
         File directorio = new File(carpetaTemas);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3910,7 +3910,15 @@ public DTUsuario login(String usuario, String pass) throws Exception {
         }
     }
 
-    // Verificar la contraseña del cliente
+
+     if (artista != null) {
+        if (artista.getContrasenia().equals(pass)) {
+            return artista;
+        } else {
+            throw new Exception("Contraseña incorrecta para artista");
+        }
+    }
+
     if (cliente != null) {
         if (cliente.getContrasenia().equals(pass)) {
             return cliente;
@@ -3919,15 +3927,8 @@ public DTUsuario login(String usuario, String pass) throws Exception {
         }
     }
 
-    // Verificar la contraseña del artista
-    if (artista != null) {
-        if (artista.getContrasenia().equals(pass)) {
-            return artista;
-        } else {
-            throw new Exception("Contraseña incorrecta para artista");
-        }
-    }
 
+   
     // Si no se encontró ni cliente ni artista, lanzar excepción
     throw new Exception("Usuario no encontrado.");
 }
@@ -4090,7 +4091,8 @@ return null;
         if (Files.exists(ruta)) {
             return Files.readAllBytes(ruta); // Lee y devuelve la imagen como un arreglo de bytes
         } else {
-            throw new IOException("La imagen en la ruta especificada no existe: " + rutaImagen);
+            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/imagenes_usuarios/generico.jpg");
+            return Files.readAllBytes(ruta);
         }
     }
     
