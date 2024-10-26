@@ -79,6 +79,10 @@ public class DTUsuario {
     public Date getFechaNac() {
         return fechaNac;
     }
+    
+    public String getImagen(){
+        return imagen;
+    }
 
     public List<String> getListaUsuariosFavoritos() {
         return listaUsuariosFavoritos;

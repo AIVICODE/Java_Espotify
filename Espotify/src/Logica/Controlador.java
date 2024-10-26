@@ -13,7 +13,10 @@ import Persis.ControladoraPersistencia;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -87,7 +90,8 @@ public class Controlador implements IControlador {
                         artista.getFechaNac(),
                         artista.getCorreo(),
                         artista.getBiografia(),
-                        artista.getSitioWeb()
+                        artista.getSitioWeb(),
+                        artista.getImagen()
                 );
                 controlpersis.AddArtista((Artista) nuevoUsuario);
             } else {
@@ -98,7 +102,8 @@ public class Controlador implements IControlador {
                         user.getApellido(),
                         user.getContrasenia(),
                         user.getCorreo(),
-                        user.getFechaNac()
+                        user.getFechaNac(),
+                        user.getImagen()
                 );
                 controlpersis.AddCliente((Cliente) nuevoUsuario);
             }
@@ -3811,42 +3816,45 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
         }
     }
 
-    public String guardarImagenesEnCarpeta(File archivoImagen, String nickname) throws IOException {
-        String carpetaImagenes = "imagenes_usuarios/";
+    public String guardarImagenesEnCarpeta(byte[] archivoImagen, String nickname) throws IOException {
+        String carpetaImagenes = "X:/filias/imagenes_usuarios/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
-        String extension = obtenerExtensionArchivo(archivoImagen.getName());
-        String nombreArchivo = nickname + "." + extension;
+        //String extension = obtenerExtensionArchivo(archivoImagen.getName());
+        String nombreArchivo = nickname + ".jpg" /*+ extension*/;
         File destino = new File(directorio, nombreArchivo);
-        Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.write(destino.toPath(), archivoImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        //Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return carpetaImagenes + nombreArchivo;
     }
 
-    public String guardarTemaEnCarpeta(File archivoTema, String nombreTema) throws IOException {
-        String carpetaTemas = "temas/";
+    public String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException {
+        String carpetaTemas = "X:/filias/temas/";
         File directorio = new File(carpetaTemas);
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
-        String extension = obtenerExtensionArchivo(archivoTema.getName());
-        String nombreArchivo = nombreTema + "." + extension;
+        //String extension = obtenerExtensionArchivo(archivoTema.getName());
+        String nombreArchivo = nombreTema + ".mp3";
         File destino = new File(directorio, nombreArchivo);
-        Files.copy(archivoTema.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        //Files.copy(archivoTema.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.write(destino.toPath(), archivoTema, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         return carpetaTemas + nombreArchivo;
     }
 
-public String guardarImagenesAlbum(File archivoImagen, String nombreAlbum, String nombreArtista) throws IOException {
-        String carpetaImagenes = "imagenes_album/";
+public String guardarImagenesAlbum(byte[] archivoImagen, String nombreAlbum, String nombreArtista) throws IOException {
+        String carpetaImagenes = "X:/filias/imagenes_album/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
-        String extension = obtenerExtensionArchivo(archivoImagen.getName());
-        String nombreArchivo = nombreAlbum + "-" + encontrarNicknameArtista(nombreArtista) + "." + extension;
+        //String extension = obtenerExtensionArchivo(archivoImagen.getName());
+        String nombreArchivo = nombreAlbum + "-" + encontrarNicknameArtista(nombreArtista) + ".jpg" /*+ extension*/;
         File destino = new File(directorio, nombreArchivo);
-        Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.write(destino.toPath(), archivoImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        //Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return carpetaImagenes + nombreArchivo;
     }
 
@@ -3970,16 +3978,17 @@ public boolean verificarSubscripcion(String cliente) {
         return true;
 
     }
-public String guardarImagenesLista(File archivoImagen, String nombreLista) throws IOException {
-        String carpetaImagenes = "imagenes_listarep/";
+public String guardarImagenesLista(byte[] archivoImagen, String nombreLista) throws IOException {
+        String carpetaImagenes = "X:/filias/imagenes_listarep/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
-        String extension = obtenerExtensionArchivo(archivoImagen.getName());
-        String nombreArchivo = nombreLista + "." + extension;
+        //String extension = obtenerExtensionArchivo(archivoImagen.getName());
+        String nombreArchivo = nombreLista + "." /*+ extension*/;
         File destino = new File(directorio, nombreArchivo);
-        Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.write(destino.toPath(), archivoImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        //Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return carpetaImagenes + nombreArchivo;
     }
 
@@ -4076,5 +4085,31 @@ return null;
 
 }
 
-}
+    public byte[] obtenerImagenComoBytes(String rutaImagen) throws IOException {
+        Path ruta = Paths.get(rutaImagen);
+        if (Files.exists(ruta)) {
+            return Files.readAllBytes(ruta); // Lee y devuelve la imagen como un arreglo de bytes
+        } else {
+            throw new IOException("La imagen en la ruta especificada no existe: " + rutaImagen);
+        }
+    }
+    
+    public boolean estaSiguiendoUsuario(String nicknameSeguidor, String nicknameSeguido) {
+        Cliente seguidor = encontrarClientePorNicknameTipoCli(nicknameSeguidor);
 
+        if (seguidor != null) {
+            for (Cliente c : seguidor.getClientesSeguidos()) {
+                if (c.getNickname().equals(nicknameSeguido)) {
+                    return true;
+                }
+            }
+            for (Artista a : seguidor.getArtistasSeguidos()) {
+                if (a.getNickname().equals(nicknameSeguido)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+}

@@ -372,7 +372,7 @@ try {
 
         // Crear un objeto Album con todos los datos
         if (!imagen.isEmpty()) {
-        File archivoImagen = new File(imagen);
+        byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
         imagen = control.guardarImagenesAlbum(archivoImagen, nombreAlbum, correo);
         }
         DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, fechaCreacion, imagen, generosSeleccionados);
@@ -382,7 +382,7 @@ try {
             List<DTTema> listaTemasAlbum = new ArrayList<>();
             for(DTTema t : listaTemas){
                 if (Files.exists(Paths.get(t.getDirectorio()))) {
-                    File archivoTema = new File(t.getDirectorio());
+                    byte[] archivoTema = Files.readAllBytes(Paths.get(t.getDirectorio()));
                     String ruta= control.guardarTemaEnCarpeta(archivoTema, nuevoAlbum.getNombre()+" - "+t.getNombre());
                     DTTema nuevoTema = new DTTema(t.getNombre(), t.getMinutos(), t.getSegundos(),ruta);
                     listaTemasAlbum.add(nuevoTema);

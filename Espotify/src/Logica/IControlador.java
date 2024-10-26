@@ -161,11 +161,11 @@ public interface IControlador {
     
     public abstract String obtenerExtensionArchivo(String nombreArchivo);
     
-    public abstract String guardarImagenesEnCarpeta(File archivoImagen, String nickname) throws IOException;
+    public abstract String guardarImagenesEnCarpeta(byte[] archivoImagen, String nickname) throws IOException;
     
-    public abstract String guardarTemaEnCarpeta(File archivoTema, String nombreTema) throws IOException;
+    public abstract String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException;
     
-    public abstract String guardarImagenesAlbum(File archivoImagen, String nombreAlbum, String nombreArtista) throws IOException;
+    public abstract String guardarImagenesAlbum(byte[] archivoImagen, String nombreAlbum, String nombreArtista) throws IOException;
     
     public abstract boolean esCorreo(String input);
     
@@ -175,7 +175,7 @@ public interface IControlador {
     
     public abstract boolean verificarSubscripcion(String cliente) ;
     
-    public abstract String guardarImagenesLista(File archivoImagen, String nombreLista) throws IOException;
+    public abstract String guardarImagenesLista(byte[] archivoImagen, String nombreLista) throws IOException;
     public abstract List<DTSub> listarSubdeCliente(String nombrecli) throws Exception;
     
     public abstract boolean existeNickname(String nickname);
@@ -184,4 +184,6 @@ public interface IControlador {
     public abstract void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
     
     public abstract List <DTContenido> Buscador(String filtro, String sortBy) throws Exception;
+    public abstract byte[] obtenerImagenComoBytes(String rutaImagen) throws IOException;
+    public abstract boolean estaSiguiendoUsuario(String nicknameSeguidor, String nicknameSeguido);
 }

@@ -9,6 +9,8 @@ import Logica.Fabrica;
 import Logica.IControlador;
 import java.awt.Image;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -198,9 +200,9 @@ public class AltaListaRepPorDefecto extends javax.swing.JInternalFrame {
         try {
             String imagen = txtImagen.getText();
             if (!imagen.isEmpty()) {
-                File archivoImagen = new File(imagen);
+                byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
                 imagen = control.guardarImagenesLista(archivoImagen, nombreLista);
-            }
+            }else{imagen="X:/filias/imagenes_listarep/generico.jpg";}
             control.CrearListaRepGeneral(nombreLista, imagen,selectedGenero);
             JOptionPane.showMessageDialog(this, "Lista por defecto agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {

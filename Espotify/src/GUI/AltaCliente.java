@@ -13,6 +13,8 @@ import java.awt.Image;
 //import Logica.Controlador;
 import static java.awt.SystemColor.control;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -311,10 +313,10 @@ public class AltaCliente extends javax.swing.JInternalFrame {
         
          try {
             if (!imagen.isEmpty()) {
-                File archivoImagen = new File(imagen);
+                byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
                 imagen = control.guardarImagenesEnCarpeta(archivoImagen, nickname);
 
-            }
+            }else{imagen="X:/filias/imagenes_usuarios/generico.jpg";}
             DTUsuario user = new DTUsuario(nickname, nombre, apellido, correo, fechaSeleccionada, contrasenia,confirmacion,imagen);
             control.crearUsuario(user);
             txtApellido.setText("");

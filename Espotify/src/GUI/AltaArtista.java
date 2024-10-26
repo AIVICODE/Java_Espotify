@@ -14,6 +14,8 @@ import static java.awt.SystemColor.control;
 import java.io.File;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -354,9 +356,9 @@ public class AltaArtista extends javax.swing.JInternalFrame {
         
         try {
             if (!imagen.isEmpty()) {
-                File archivoImagen = new File(imagen);
+                byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
                 imagen = control.guardarImagenesEnCarpeta(archivoImagen, nickname);
-            }
+            }else{imagen="X:/filias/imagenes_usuarios/generico.jpg";}
             DTUsuario user = new DTArtista(nickname, nombre, apellido, contrasenia,confirmacion,imagen, fechaSeleccionada, correo,Biografia,Web);
             control.crearUsuario(user);
             txtApellido.setText("");

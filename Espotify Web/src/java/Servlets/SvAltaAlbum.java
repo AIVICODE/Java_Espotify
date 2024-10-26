@@ -5,18 +5,24 @@ import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Logica.Fabrica;
 import Logica.IControlador;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import com.google.gson.Gson;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
-// Clase interna para procesar los datos del tema
 
+// Clase interna para procesar los datos del tema
 class TemaData {
 
     private String nombre;
@@ -39,8 +45,13 @@ class TemaData {
     public String getUrl() {
         return url;
     }
+    
 }
+
 @WebServlet(name = "SvAltaAlbum", urlPatterns = {"/SvAltaAlbum"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+                 maxFileSize = 1024 * 1024 * 10,      // 10MB
+                 maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class SvAltaAlbum extends HttpServlet {
 
     Fabrica fabrica = Fabrica.getInstance();
@@ -57,18 +68,25 @@ public class SvAltaAlbum extends HttpServlet {
         }
 
         // Obtener los parámetros del formulario
-        
         String nombreAlbum = request.getParameter("nombreAlbum");
         String anioAlbumStr = request.getParameter("anioAlbum");
         String[] generosSeleccionados = request.getParameterValues("genero[]");
         String temasJson = request.getParameter("temas");
         String correoArtista = ((DTUsuario) session.getAttribute("usuario")).getCorreo();
 
-        // Convertir el año del álbum
-        int anioAlbum = 2023;  // Valor predeterminado
-        if (anioAlbumStr != null && !anioAlbumStr.isEmpty()) {
-            anioAlbum = Integer.parseInt(anioAlbumStr);
+        // Procesar la imagen del álbum
+        Part imagenPart = request.getPart("imagenAlbum");
+        String rutaImagen = null;
+        if (imagenPart != null && imagenPart.getSize() > 0) {
+            File archivoTemporal = File.createTempFile("album_image_", ".jpg");
+            imagenPart.write(archivoTemporal.getAbsolutePath());
+            byte[] archivoImagen = Files.readAllBytes(archivoTemporal.toPath());
+            rutaImagen = control.guardarImagenesAlbum(archivoImagen, nombreAlbum, correoArtista);
+            archivoTemporal.delete();
         }
+
+        // Convertir el año del álbum
+        int anioAlbum = anioAlbumStr != null && !anioAlbumStr.isEmpty() ? Integer.parseInt(anioAlbumStr) : 2023;
 
         // Convertir los géneros seleccionados a una lista
         List<String> generos = new ArrayList<>();
@@ -78,31 +96,39 @@ public class SvAltaAlbum extends HttpServlet {
             }
         }
 
-        // Convertir el JSON de los temas a una lista de DTTema
-List<DTTema> listaTemas = new ArrayList<>();
-if (temasJson != null && !temasJson.isEmpty()) {
-    Gson gson = new Gson();
-    // Deserializar los temas desde el JSON
-    TemaData[] temasArray = gson.fromJson(temasJson, TemaData[].class);
-    for (TemaData temaData : temasArray) {
-        // Crear el objeto DTTema usando los minutos y segundos
-        DTTema nuevoTema = new DTTema(temaData.getNombre(), temaData.getMinutos(), temaData.getSegundos(), temaData.getUrl());
-        listaTemas.add(nuevoTema);
-    }
-}
-        try {
-            // Crear el álbum con los datos recibidos
-            DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, anioAlbum, "ruta archivo", generos);
-            System.out.println("Creando álbum: " + nombreAlbum + " (Año: " + anioAlbum + ")");
+        // Procesar cada tema desde JSON y verificar si tiene archivo MP3
+        List<DTTema> listaTemas = new ArrayList<>();
+        if (temasJson != null && !temasJson.isEmpty()) {
+            Gson gson = new Gson();
+            TemaData[] temasArray = gson.fromJson(temasJson, TemaData[].class);
 
-            // Crear el álbum en la lógica de negocio
-            for (DTTema tema : listaTemas) {
-            System.out.println("Nombre: " + tema.getNombre());
-        System.out.println("Minutos: " + tema.getMinutos());
-        System.out.println("Segundos: " + tema.getSegundos());
-        System.out.println("URL: " + tema.getDirectorio());
-            System.out.println("-----------");
+            for (TemaData temaData : temasArray) {
+                String rutaTema = null;
+
+                // Recorre todas las partes y busca las que coincidan con archivoTema
+                for (Part part : request.getParts()) {
+                    if (part.getName().equals("archivoTema") && part.getSize() > 0) {
+                        File archivoMp3Temporal = File.createTempFile("tema_", ".mp3");
+                        part.write(archivoMp3Temporal.getAbsolutePath());
+                        byte[] archivoMp3 = Files.readAllBytes(archivoMp3Temporal.toPath());
+                        rutaTema = control.guardarTemaEnCarpeta(archivoMp3, temaData.getNombre());
+                        archivoMp3Temporal.delete();
+                        break; // Rompe después de encontrar el archivo del tema actual
+                    }
+                }
+
+                if (rutaTema == null) {
+                    // Usa la URL si no hay archivo
+                    rutaTema = temaData.getUrl();
+                }
+
+                DTTema nuevoTema = new DTTema(temaData.getNombre(), temaData.getMinutos(), temaData.getSegundos(), rutaTema);
+                listaTemas.add(nuevoTema);
+            }
         }
+
+        try {
+            DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, anioAlbum, rutaImagen, generos);
             control.CrearAlbum(correoArtista, nuevoAlbum, listaTemas);
             response.sendRedirect("dashboard.jsp");
 

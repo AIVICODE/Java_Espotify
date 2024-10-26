@@ -38,7 +38,15 @@
             </form>
             <div class="auth-links">
                 <div class="user-section">
-                <img src="/placeholder.svg?height=40&width=40" alt="Avatar del usuario" class="user-avatar">
+                <%
+                        byte[] imagenUsuario = (byte[]) session.getAttribute("imagenUsuario");
+                        if (imagenUsuario != null) {
+                            String base64Image = java.util.Base64.getEncoder().encodeToString(imagenUsuario);
+                    %>
+                <img src="data:image/jpeg;base64,<%= base64Image %>" alt="Avatar del usuario" class="user-avatar">
+                    <%
+                        }
+                    %>
                 <div class="user-info">
                     <span class="user-nickname"><%= dtUsuario.getNickname() %></span>
                     <% if (dtUsuario instanceof DTCliente) { %>

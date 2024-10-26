@@ -8,6 +8,8 @@ import Logica.Fabrica;
 import Logica.IControlador;
 import java.awt.Image;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -191,9 +193,9 @@ private void actualizarComboBoxClientes() {
             // Llamar al método CrearListaRepParticular
             try {
                 if (!imagen.isEmpty()) {
-                    File archivoImagen = new File(imagen);
+                    byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
                     imagen = control.guardarImagenesLista(archivoImagen, nombreLista);
-                }
+                }else{imagen="X:/filias/imagenes_listarep/generico.jpg";}
                 control.CrearListaRepParticular(nombreLista, correoCliente, imagen, esPrivada);
                 javax.swing.JOptionPane.showMessageDialog(this, "Lista de reproducción creada con éxito.");
             } catch (Exception e) {
