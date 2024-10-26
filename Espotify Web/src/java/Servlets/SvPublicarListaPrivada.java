@@ -60,25 +60,33 @@ IControlador control = fabrica.getIControlador();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = (HttpSession) request.getSession(false);
-        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
-        
-        String nombreLista = request.getParameter("nombreLista");
-        //que no mande nada al controlador si no se selecciona lista
-        if (nombreLista.equals("")){
-            request.setAttribute("mensajeExito", "Debe seleccionar una lista valida");
-            request.getRequestDispatcher("PublicarLista.jsp").forward(request, response);
-        }
-        try {
-            control.publicarListaPrivada(dtUsuario.getNickname(), nombreLista);
-            //Mensaje de exito en jsp
-            request.setAttribute("mensajeExito", "La lista '" + nombreLista + "' ha sido publicada con éxito.");
+    DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
 
-            // Redirigir al JSP donde se mostrará el mensaje
-            request.getRequestDispatcher("PublicarLista.jsp").forward(request, response);
-                        
-        } catch (Exception ex) {
-            Logger.getLogger(SvPublicarListaPrivada.class.getName()).log(Level.SEVERE, null, ex);
+    String nombreLista = request.getParameter("nombreLista");
+
+    response.setContentType("application/json"); // Set response type to JSON
+
+    try {
+        // Check if the list name is valid
+        if (nombreLista == null || nombreLista.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"success\": false, \"message\": \"Debe seleccionar una lista válida\"}");
+            return;
         }
+
+        // Publish the playlist
+        control.publicarListaPrivada(dtUsuario.getNickname(), nombreLista);
+
+        // On success
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write("{\"success\": true, \"message\": \"La lista '" + nombreLista + "' ha sido publicada con éxito.\"}");
+    } catch (Exception ex) {
+        Logger.getLogger(SvPublicarListaPrivada.class.getName()).log(Level.SEVERE, null, ex);
+
+        // Send JSON error message for frontend handling
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        response.getWriter().write("{\"success\": false, \"message\": \"No se pudo publicar la lista. Intente nuevamente.\"}");
+    }
         
     }
 

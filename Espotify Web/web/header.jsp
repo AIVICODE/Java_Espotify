@@ -18,8 +18,10 @@
     <title>Espotify</title>
     <link rel="stylesheet" href="css/headerunlogged.css?v1.2"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
+
 <header>
     <!-- Navbar -->
+    
     <nav class="navbar">
         <div class="container">
             <a href="index.jsp" class="logo">

@@ -54,7 +54,6 @@ public class SvObtenerAlbumxGenero extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al obtener los álbumes: " + e.getMessage());
             }
         } else {
-            // Si no se proporcionó el parámetro de género, enviar un error
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "El parámetro 'genero' es requerido.");
         }
     

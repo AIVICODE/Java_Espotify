@@ -2145,7 +2145,6 @@ public class Controlador implements IControlador {
             throw new Exception(e.getMessage());
         }
     }
-//nuevo PUBLICAR LISTA
 
     public DTCliente encontrarClientePorNickname(String nick) {
         List<Cliente> clientes = listaClientes();
@@ -2213,11 +2212,15 @@ public class Controlador implements IControlador {
                 client = c;
             }
         }
+     
         //Busco la lista en sus listas
         List<ListaRep> listasdelcliente = client.getListaReproduccion();//guardo las listas
         for (ListaRep l : listasdelcliente) {
             if (l.getNombre().equals(nombreLista)) {//selecciono la lista a hacer publica
                 ListaRepParticular particular = (ListaRepParticular) l;//la casteo para hacerla publica
+                if(particular.isPrivada()==false){
+                     throw new Exception("La lista ya es publica");
+                }
                 particular.setPrivada(false);//la hago publica
                 controlpersis.editListaPrivada(particular);//le mando la lista para editarla en la bd
             }
