@@ -43,7 +43,17 @@
             <div class="album-name"><%= album.getNombre() %></div>
             <div><%= album.getAnioCreacion()%></div>
             <div><%= album.getListaGeneros()%></div>
+                   <%
+                        byte[] imagenAlbum = (byte[]) album.getImagenBytes();
+                        if (imagenAlbum != null) {
+                            String base64Image = java.util.Base64.getEncoder().encodeToString(imagenAlbum);
+                    %>
+                <img src="data:image/jpeg;base64,<%= base64Image %>" alt="Album image" class="album-image">
+                    <%
+                        }
+                    %>
             <div class="album-artist"><%= album.getArtista().getNickname() %></div>
+     
             <%
     session = request.getSession(false);
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");

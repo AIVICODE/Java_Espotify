@@ -19,7 +19,7 @@ public class DTAlbum extends DTContenido{
     protected List<String> listaGeneros;
     protected List<DTTema> listaTemas;
     protected DTArtista artista;
-
+protected byte[] imagenBytes; 
     public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros) {
         this.nombre = nombre;
         this.anioCreacion = anioCreacion;
@@ -32,12 +32,35 @@ public DTAlbum(String nombre, int anioCreacion, List<String> listaGeneros, DTArt
     this.listaGeneros = listaGeneros;
     this.artista = artista;
 }
+
+    public byte[] getImagenBytes() {
+        return imagenBytes;
+    }
+
+    public void setImagenBytes(byte[] imagenBytes) {
+        this.imagenBytes = imagenBytes;
+    }
     
     public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros,List<DTTema> listaTemas,DTArtista artista) {
         this.nombre = nombre;
         this.anioCreacion = anioCreacion;
         this.imagen = imagen;
         this.listaGeneros = listaGeneros;
+        this.listaTemas = listaTemas;
+        this.artista = artista;
+    }
+     public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros,List<DTTema> listaTemas,DTArtista artista,byte[] imagenBytes) {
+        this.nombre = nombre;
+        this.anioCreacion = anioCreacion;
+        this.imagen = imagen;
+        this.listaGeneros = listaGeneros;
+        this.listaTemas = listaTemas;
+        this.artista = artista;
+        this.imagenBytes = imagenBytes;
+    }
+    
+    public DTAlbum (String nombre, List<DTTema> listaTemas, DTArtista artista){
+        this.nombre = nombre;
         this.listaTemas = listaTemas;
         this.artista = artista;
     }

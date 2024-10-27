@@ -186,4 +186,12 @@ public interface IControlador {
     public abstract List <DTContenido> Buscador(String filtro, String sortBy) throws Exception;
     public abstract byte[] obtenerImagenComoBytes(String rutaImagen) throws IOException;
     public abstract boolean estaSiguiendoUsuario(String nicknameSeguidor, String nicknameSeguido);
+    
+    
+    
+    
+    
+    
+    
+     public abstract List<DTAlbum> findDTAlbumTodos()throws Exception;
 }

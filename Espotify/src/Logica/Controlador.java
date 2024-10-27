@@ -2897,7 +2897,7 @@ public class Controlador implements IControlador {
                         auxA.getArtista().getMail(),
                         auxA.getArtista().getBiografia(),
                         auxA.getArtista().getSitioWeb()
-                    )
+                    ) ,obtenerImagenComoBytes(auxA.getImagen())
                 );
                 nombreAlbumes.add(dtAlbum);
             }
@@ -3023,7 +3023,8 @@ public class Controlador implements IControlador {
                         art.getMail(),
                         art.getBiografia(),
                         art.getSitioWeb()
-                )
+                ), obtenerImagenComoBytes(album.getImagen())
+                
         );
 
         dtAlbumes.add(dtAlbum);
@@ -3831,7 +3832,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException {
-        String carpetaTemas = "/home/ivan/GitProject/ProgApps-";
+        String carpetaTemas = "/home/ivan/GitProject/ProgApps-/imagenes_tema/";
         File directorio = new File(carpetaTemas);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3845,7 +3846,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
 public String guardarImagenesAlbum(byte[] archivoImagen, String nombreAlbum, String nombreArtista) throws IOException {
-        String carpetaImagenes = "X:/filias/imagenes_album/";
+        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/imagenes_album/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3980,7 +3981,7 @@ public boolean verificarSubscripcion(String cliente) {
 
     }
 public String guardarImagenesLista(byte[] archivoImagen, String nombreLista) throws IOException {
-        String carpetaImagenes = "X:/filias/imagenes_listarep/";
+        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/imagenes_listarep/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -4114,4 +4115,74 @@ return null;
         return false;
     }
 
+    
+    
+    
+    
+    
+    
+    //CAMI - AGREGAR TEMA A LISTA
+//QUIERO RETORNAR UNA LISTA DE DTALBUMES PERO QUE TENGAN SOLO EL NOMBRE, TEMAS Y ARTISTA.
+/*    public DTAlbum (String nombre, List<DTTema> listaTemas, DTArtista artista){
+        this.nombre = nombre;
+        this.listaTemas = listaTemas;
+        this.artista = artista;
+    }*/
+
+    public List<DTAlbum> findDTAlbumTodos() throws Exception {
+    // Obtener la lista de álbumes desde el controlador de persistencia
+    List<Album> albumes; 
+        albumes = controlpersis.findDTAlbumTodos();
+    List<DTAlbum> nombreAlbumes = new ArrayList<>();
+    
+    // Verificar si la lista de álbumes está vacía
+    if (albumes == null || albumes.isEmpty()) {
+        System.out.println("No se encontraron álbumes en la base de datos.");
+        return nombreAlbumes; // Retornar lista vacía
+    }
+
+    // Recorrer la lista de objetos de álbumes
+    for (Album auxA : albumes) {
+        // Verificar si el álbum es nulo
+        if (auxA == null) {
+            System.out.println("Álbum nulo encontrado en la lista.");
+            continue; // Continuar con el siguiente álbum
+        }
+
+        // Verificar que el álbum tenga al menos un tema asociado
+        if (auxA.getListaTemas() != null && !auxA.getListaTemas().isEmpty()) {
+            // Crear la lista de DTTema a partir de los temas del álbum
+            List<DTTema> listaTemas = auxA.getListaTemas().stream()
+                .map(t -> new DTTema(t.getNombre(), (int) (t.getDuracionSegundos() / 60), (int) (t.getDuracionSegundos() % 60), t.getDireccion(), t.getOrden()))
+                .collect(Collectors.toList());
+
+            // Crear el objeto DTArtista a partir del artista del álbum
+            DTArtista dtArtista = new DTArtista(
+                auxA.getArtista().getNickname(),
+                auxA.getArtista().getNombre(),
+                auxA.getArtista().getApellido(),
+                auxA.getArtista().getContrasenia(),
+                auxA.getArtista().getImagen(),
+                auxA.getArtista().getFechaNac(),
+                auxA.getArtista().getMail(),
+                auxA.getArtista().getBiografia(),
+                auxA.getArtista().getSitioWeb()
+            );
+
+            // Crear el objeto DTAlbum con el constructor simplificado
+            DTAlbum dtAlbum = new DTAlbum(auxA.getNombre(), listaTemas, dtArtista);
+            nombreAlbumes.add(dtAlbum);
+        }
+    }
+
+    // Retornar la lista de DTAlbum
+    return nombreAlbumes;
 }
+    
+    
+    
+}
+
+
+
+

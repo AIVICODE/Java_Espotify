@@ -49,9 +49,11 @@ class TemaData {
 }
 
 @WebServlet(name = "SvAltaAlbum", urlPatterns = {"/SvAltaAlbum"})
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-                 maxFileSize = 1024 * 1024 * 10,      // 10MB
-                 maxRequestSize = 1024 * 1024 * 50)   // 50MB
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+    maxFileSize = 1024 * 1024 * 50,      // 50MB
+    maxRequestSize = 1024 * 1024 * 200   // 200MB
+)
 public class SvAltaAlbum extends HttpServlet {
 
     Fabrica fabrica = Fabrica.getInstance();
@@ -98,27 +100,35 @@ public class SvAltaAlbum extends HttpServlet {
 
         // Procesar cada tema desde JSON y verificar si tiene archivo MP3
         List<DTTema> listaTemas = new ArrayList<>();
+        System.out.println("IF antes temasjson distinto null y no vacio");
         if (temasJson != null && !temasJson.isEmpty()) {
+            System.out.println("IF dentro");
             Gson gson = new Gson();
             TemaData[] temasArray = gson.fromJson(temasJson, TemaData[].class);
 
             for (TemaData temaData : temasArray) {
                 String rutaTema = null;
 
-                // Recorre todas las partes y busca las que coincidan con archivoTema
-                for (Part part : request.getParts()) {
-                    if (part.getName().equals("archivoTema") && part.getSize() > 0) {
-                        File archivoMp3Temporal = File.createTempFile("tema_", ".mp3");
-                        part.write(archivoMp3Temporal.getAbsolutePath());
-                        byte[] archivoMp3 = Files.readAllBytes(archivoMp3Temporal.toPath());
-                        rutaTema = control.guardarTemaEnCarpeta(archivoMp3, temaData.getNombre());
-                        archivoMp3Temporal.delete();
-                        break; // Rompe después de encontrar el archivo del tema actual
-                    }
-                }
+                // Construye el nombre del archivo MP3 basado en el nombre del tema
+                String partName = "archivoTema_" + temaData.getNombre();
 
-                if (rutaTema == null) {
+                // Intenta obtener el archivo MP3 usando el nombre específico
+                Part mp3Part = request.getPart(partName);
+                  System.out.println("Nombre del part: " + mp3Part.getName());
+                System.out.println("Tipo de contenido: " + mp3Part.getContentType());
+                System.out.println("Tamaño: " + mp3Part.getSize());
+                  //System.out.println(mp3Part.getName());
+                  System.out.println("IF antes mp3part");
+                if (mp3Part != null && mp3Part.getSize() > 0) {
+                    System.out.println("IF dentro mp3part");
+                    File archivoMp3Temporal = File.createTempFile("tema_", ".mp3");
+                    mp3Part.write(archivoMp3Temporal.getAbsolutePath());
+                    byte[] archivoMp3 = Files.readAllBytes(archivoMp3Temporal.toPath());
+                    rutaTema = control.guardarTemaEnCarpeta(archivoMp3, temaData.getNombre());
+                    archivoMp3Temporal.delete();
+                } else {
                     // Usa la URL si no hay archivo
+                    System.out.println("else mp3part");
                     rutaTema = temaData.getUrl();
                 }
 

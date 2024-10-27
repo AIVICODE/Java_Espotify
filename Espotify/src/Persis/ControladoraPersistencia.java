@@ -309,5 +309,8 @@ public Artista encontrarArtistaPorNickname(String nickname) {
        return favjpa.findFavoritosByFiltroCriteria(filtro, sortBy);
     }
     
-  
+  public List<Album> findDTAlbumTodos(){
+      return albjpa.findAlbumEntities();
+
+}
 }

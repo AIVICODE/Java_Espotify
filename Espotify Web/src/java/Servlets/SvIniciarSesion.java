@@ -34,9 +34,14 @@ public class SvIniciarSesion extends HttpServlet {
             String rutaImagen = dtUsuario.getImagen();
             System.out.println("ACA IMAGEN "+rutaImagen);
             HttpSession session = request.getSession();
-            byte[] imagenBytes = control.obtenerImagenComoBytes(rutaImagen);
-            session.setAttribute("usuario", dtUsuario);
+            if(!("".equals(rutaImagen))){ // ESTO LO ANADI PORQUE SI NO HABIA NADA EN EL URL IMAGEN DE LA BD ROMPE LA FUNCION DE TRAER IMAGEN
+                byte[] imagenBytes = control.obtenerImagenComoBytes(rutaImagen);
             session.setAttribute("imagenUsuario", imagenBytes);
+            }
+            
+            
+            session.setAttribute("usuario", dtUsuario);
+            
             response.sendRedirect("dashboard.jsp");
         } catch (Exception e) {
             request.setAttribute("errorMessage", "Usuario o contraseña incorrectos");
