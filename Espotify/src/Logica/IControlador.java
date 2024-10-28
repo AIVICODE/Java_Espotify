@@ -102,7 +102,7 @@ public interface IControlador {
     public abstract List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero);
     public abstract DTListaRep obtenerDatosDeLista_Por_Defecto(String nombreSeleccionado) throws Exception;
     public abstract List<DTListaRep> obtenerDTListaPorCliente(String correoCliente);
-    public abstract DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista);
+    public abstract DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista)throws Exception;
     public abstract List<String> nicknamesDeTodosLosArtistas();
     public abstract DTArtista encontrarDTArtistaPorNickname(String nick);
     public abstract List<String> nicksClientesSiguenArtista(String nickAr);
@@ -171,7 +171,7 @@ public interface IControlador {
     
     public abstract DTUsuario login(String usuario, String pass)throws Exception;
     
-    public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) ;
+    public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente)  throws Exception;
     
     public abstract boolean verificarSubscripcion(String cliente) ;
     

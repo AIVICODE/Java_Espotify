@@ -195,7 +195,7 @@ private void actualizarComboBoxClientes() {
                 if (!imagen.isEmpty()) {
                     byte[] archivoImagen = Files.readAllBytes(Paths.get(imagen));
                     imagen = control.guardarImagenesLista(archivoImagen, nombreLista);
-                }else{imagen="X:/filias/imagenes_listarep/generico.jpg";}
+                }else{imagen="/home/ivan/GitProject/ProgApps-/imagenes_listarep/generico.jpg";}
                 control.CrearListaRepParticular(nombreLista, correoCliente, imagen, esPrivada);
                 javax.swing.JOptionPane.showMessageDialog(this, "Lista de reproducción creada con éxito.");
             } catch (Exception e) {
@@ -203,7 +203,7 @@ private void actualizarComboBoxClientes() {
             }
         }catch (Exception ex) {
     Logger.getLogger(AltaListaRep.class.getName()).log(Level.SEVERE, "Error al intentar dar de alta una nueva lista de reproducción", ex);
-}
+         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.servlet.annotation.MultipartConfig;
+import java.nio.file.Files;
 /**
  *
  * @author ivan
@@ -50,37 +51,18 @@ IControlador control = fabrica.getIControlador();
         // Obtener el nombre de la lista desde el formulario
         String listName = request.getParameter("nombreLista");
 
-        // Obtener la parte del archivo (si fue subido)
-        Part filePart = request.getPart("imagenLista"); // Aquí debe coincidir con el "name" del campo del archivo en el formulario
-        String fileName = null;
-
-        // Si hay un archivo cargado
-        if (filePart != null && filePart.getSize() > 0) {
-            // Obtener el nombre del archivo
-            fileName = filePart.getSubmittedFileName();
-
-            // Ruta donde se guardará el archivo (en la carpeta 'images')
-            String imagesDir = getServletContext().getRealPath("/images");
-            File imageDirFile = new File(imagesDir);
-
-            // Crear la carpeta si no existe
-            if (!imageDirFile.exists()) {
-                imageDirFile.mkdirs(); // Crea los directorios necesarios
-            }
-
-            // Ruta completa del archivo a guardar
-            String path = imagesDir + File.separator + fileName;
-
-            // Guardar el archivo en la carpeta 'images'
-            filePart.write(path);
+        Part imagenPart = request.getPart("imagenLista");
+        String rutaImagen = null;
+        if (imagenPart != null && imagenPart.getSize() > 0) {
+            File archivoTemporal = File.createTempFile("album_image_", ".jpg");
+            imagenPart.write(archivoTemporal.getAbsolutePath());
+            byte[] archivoImagen = Files.readAllBytes(archivoTemporal.toPath());
+            rutaImagen = control.guardarImagenesLista(archivoImagen, listName);
+            
+            System.out.println(rutaImagen);
+            archivoTemporal.delete();
         }
-
-        // Llamar al método de negocio para crear la lista de reproducción
-        String imagendir = (fileName != null) ? "images/" + fileName : null; // Si no hay imagen, imagendir será null
-
-        System.out.println("Nombre de la lista: " + listName);
-        System.out.println("Nombre de la url: " + imagendir);
-        control.CrearListaRepParticular(listName, dtUsuario.getCorreo(), imagendir, true);
+        control.CrearListaRepParticular(listName, dtUsuario.getCorreo(), rutaImagen, true);
 
         // Responder con éxito en formato JSON
         response.setContentType("application/json");

@@ -108,8 +108,15 @@
     
 %>
                 <div style="width: 150px; height: 150px; border: 1px solid black;">
-                    <img src="<% lista.getImagen(); %>" alt="Imagen de prueba" style="width: 100%; height: auto;" />
-                    
+<%
+                        byte[] imagenAlbum = (byte[]) lista.getImagenBytes();
+                        if (imagenAlbum != null) {
+                            String base64Image = java.util.Base64.getEncoder().encodeToString(imagenAlbum);
+                    %>
+                <img src="data:image/jpeg;base64,<%= base64Image %>" style="width: 100%; height: 100%; object-fit: cover;">
+                    <%
+                        }
+                    %>                    
 </div> 
     
                     <form action="SvSeleccionarLista" method="GET" class="playlist-form">
@@ -165,9 +172,16 @@
     
 %>
        <div style="width: 150px; height: 150px; border: 1px solid black; margin-right: 10px;">
-    <img src="<%= request.getContextPath() + "/" + lista.getImagen().replace("imagen/", "") %>" 
-         alt="Imagen de <%= lista.getNombreListaRep() %>" 
-         style="width: 100%; height: auto;" />
+    <%
+        
+                        byte[] imagenAlbum = (byte[]) lista.getImagenBytes();
+                        if (imagenAlbum != null) {
+                            String base64Image = java.util.Base64.getEncoder().encodeToString(imagenAlbum);
+                    %>
+                <img src="data:image/jpeg;base64,<%= base64Image %>" style="width: 100%; height: 100%; object-fit: cover;">
+                    <%
+                        }
+                    %>     
 </div>
         
         <!-- Formulario para seleccionar lista particular -->

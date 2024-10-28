@@ -2329,17 +2329,23 @@ public class Controlador implements IControlador {
 
         // Itera sobre las listas para obtener el nombre de la lista
         for (ListaRepGeneral lista : listasPorGenero) {
-            // Usa el constructor de DTListaRep para crear el objeto con solo el nombre de la lista
-            DTListaRep dtListaRep = new DTListaRep(
-                    lista.getNombre(), // nombreListaRep (nombre de la lista)
-                    null, // nombreCliente (nulo porque es una lista por defecto)
-                    selectedGenero, // género de la lista
-                    null, // imagen (puedes ajustar esto si necesitas)
-                    null // no se cargarán los temas
-            );
-
-            // Añade a la lista
-            dtListas.add(dtListaRep);
+            try {
+                // Usa el constructor de DTListaRep para crear el objeto con solo el nombre de la lista
+                DTListaRep dtListaRep = new DTListaRep(
+                        lista.getNombre(), // nombreListaRep (nombre de la lista)
+                        null, // nombreCliente (nulo porque es una lista por defecto)
+                        selectedGenero, // género de la lista
+                        null, // imagen (puedes ajustar esto si necesitas)
+                        null,
+                        obtenerImagenComoBytes(lista.getImagen())
+                        // no se cargarán los temas
+                );
+                
+                // Añade a la lista
+                dtListas.add(dtListaRep);
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return dtListas;
@@ -2393,32 +2399,36 @@ public class Controlador implements IControlador {
 
         // Iterar sobre las listas del cliente para obtener la información
         for (ListaRep lista : listasPorCliente) {
-            String imagen = lista.getImagen(); 
-                    List<DTTema> temas = lista.getListaTemas().stream()
-                .map(tema -> new DTTema(
-                tema.getNombre(),
-                (int) tema.getDuracion().toMinutes(),
-                (int) tema.getDuracion().toSeconds() % 60,
-                tema.getDireccion()))
-                .collect(Collectors.toList());
-            // Crear un objeto DTListaRep con el nombre de la lista
-            DTListaRep dtListaRep = new DTListaRep(
-                    lista.getNombre(), // nombreListaRep (nombre de la lista)
-                    cliente.getNickname(), // nombreCliente (correo del cliente)
-                    null, // género de la lista, si existe
-                    imagen, // imagen (si es necesario)
-                    temas // no se cargarán los temas en este paso
-            );
-
-            // Añadir la lista a la lista de DTListaRep
-            dtListas.add(dtListaRep);
+            try {
+                String imagen = lista.getImagen();
+                List<DTTema> temas = lista.getListaTemas().stream()
+                        .map(tema -> new DTTema(
+                                tema.getNombre(),
+                                (int) tema.getDuracion().toMinutes(),
+                                (int) tema.getDuracion().toSeconds() % 60,
+                                tema.getDireccion()))
+                        .collect(Collectors.toList());
+                // Crear un objeto DTListaRep con el nombre de la lista
+                DTListaRep dtListaRep = new DTListaRep(
+                        lista.getNombre(), // nombreListaRep (nombre de la lista)
+                        cliente.getNickname(), // nombreCliente (correo del cliente)
+                        null, // género de la lista, si existe
+                        imagen, // imagen (si es necesario)
+                        temas,obtenerImagenComoBytes(lista.getImagen()) // no se cargarán los temas en este paso
+                );
+                
+                // Añadir la lista a la lista de DTListaRep
+                dtListas.add(dtListaRep);
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return dtListas;
     }
 
     
-    public List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) {
+    public List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente) throws Exception{
         // Buscar al cliente por su correo
         Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
 
@@ -2452,7 +2462,7 @@ public class Controlador implements IControlador {
                     cliente.getNickname(), // nombreCliente (correo del cliente)
                     null, // género de la lista, si existe
                     imagen, // imagen (si es necesario)
-                    temas // no se cargarán los temas en este paso
+                    temas, obtenerImagenComoBytes(lista.getImagen())
             );
 
             // Añadir la lista a la lista de DTListaRep
@@ -2483,7 +2493,7 @@ public class Controlador implements IControlador {
     
     
     
-    public DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista) {
+    public DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista) throws Exception{
         // Buscar al cliente por su correo
         Cliente cliente = controlpersis.findClienteByCorreo(correoCliente);
 
@@ -2512,13 +2522,15 @@ public class Controlador implements IControlador {
                 tema.getAlbum().getArtista().getNickname()))
                 .collect(Collectors.toList());
 
+        
         // Crear y retornar el DTO con toda la información
         return new DTListaRep(
                 listaSeleccionada.getNombre(), // nombreListaRep
                 correoCliente, // nombreCliente
                 null, // género (puedes ajustar esto si es necesario)
                 imagen, // imagen
-                temas // temas
+                temas,
+                obtenerImagenComoBytes(listaSeleccionada.getImagen())// temas
         );
     }
 
@@ -3987,7 +3999,7 @@ public String guardarImagenesLista(byte[] archivoImagen, String nombreLista) thr
             directorio.mkdirs();
         }
         //String extension = obtenerExtensionArchivo(archivoImagen.getName());
-        String nombreArchivo = nombreLista + "." /*+ extension*/;
+        String nombreArchivo = nombreLista + ".jpg" /*+ extension*/;
         File destino = new File(directorio, nombreArchivo);
         Files.write(destino.toPath(), archivoImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         //Files.copy(archivoImagen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
