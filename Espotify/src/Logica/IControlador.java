@@ -187,11 +187,10 @@ public interface IControlador {
     public abstract byte[] obtenerImagenComoBytes(String rutaImagen) throws IOException;
     public abstract boolean estaSiguiendoUsuario(String nicknameSeguidor, String nicknameSeguido);
     
-    
-    
-    
-    
-    
+   
     
      public abstract List<DTAlbum> findDTAlbumTodos()throws Exception;
+     
+     public abstract List<String> listaFavoritosDeCliente(String nick);
+     public abstract List<String> nombreAlbumyNombreArtistaFavoritosCliente(String nick);
 }

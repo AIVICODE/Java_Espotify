@@ -4190,9 +4190,71 @@ return null;
     // Retornar la lista de DTAlbum
     return nombreAlbumes;
 }
+    //formato: nombreAlbum-NombreArtista-nombreAlbum-NombreArtista
+    public List<String> nombreAlbumyNombreArtistaFavoritosCliente(String nick){//primero va el nombre del album y luego del cliente
+        List<String> albumsfav = new ArrayList<>();
+        for (Cliente c:controlpersis.listaClientes()){
+            if(c.getNickname().equals(nick)){
+                for(Album a:c.getAlbums()){
+                    albumsfav.add((a.getNombre()) + "-" + (a.getArtista().getNickname()));
+                }
+            }
+            
+        }
+        return albumsfav;
+    }
     
-    
-    
+    public List<String> listaFavoritosDeCliente(String nick) {
+        List<String> favoritos = new ArrayList<>();
+        try {
+            // Buscar al cliente por su nickname
+            Cliente c = controlpersis.findClienteByNickname(nick);
+            if (c != null) {
+                // Listas de reproducción favoritas
+                if (!c.getListaRepFavoritos().isEmpty()) {
+                    favoritos.add("  Listas:  ");
+
+                    for (ListaRep l : c.getListaRepFavoritos()) {
+                        favoritos.add(l.getNombre()); // Agregar el nombre de la lista
+                    }
+                }
+
+                // Álbumes favoritos
+                if (!c.getAlbums().isEmpty()) {
+                    favoritos.add("  ");
+                    favoritos.add("  Albumes:  ");
+
+                    for (Album a : c.getAlbums()) {
+                        favoritos.add(a.getNombre()); // Agregar el nombre del álbum
+                    }
+                }
+
+                // Temas favoritos
+                if (!c.getTemas().isEmpty()) {
+                    favoritos.add("  ");
+                    favoritos.add("  Temas:  ");
+
+                    for (Tema t : c.getTemas()) {
+                        favoritos.add(t.getNombre()); // Agregar el nombre del tema
+                    }
+                }
+
+                // Si el cliente no tiene listas, álbumes ni temas favoritos
+                if (c.getListaRepFavoritos().isEmpty() && c.getAlbums().isEmpty() && c.getTemas().isEmpty()) {
+                    favoritos.clear();
+                    favoritos.add("El cliente no tiene preferencias guardadas");
+                }
+            } else {
+                // Si no se encontró el cliente
+                favoritos.add("No se encontró al cliente con el nickname proporcionado.");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            favoritos.add("Error al buscar el cliente.");
+        }
+        return favoritos;
+    }
 }
 
 

@@ -29,10 +29,11 @@
     <div class="containerprincipal">
         <!-- Sidebar -->
         <div class="sidebar">
+            <h2>Usuarios</h2>
+            <button id="btnConsultaUsuarioL">Consulta de Perfil de Usuario</button>
             <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
-            
             <button id="btnListas">Listas de reproduccion</button>
         </div>
 
@@ -209,7 +210,10 @@ genreList.appendChild(genreItem);
         .catch(error => console.error('Error al obtener artistas:', error));
 });
 
-     
+     document.getElementById('btnConsultaUsuarioL').addEventListener('click', function() {//NUEVO madi
+        // Redirigir a la página AgregarListaRep.jsp
+        window.location.href = 'ConsultaUsuario_Visitante.jsp';
+    });
     </script>
 
 </body>

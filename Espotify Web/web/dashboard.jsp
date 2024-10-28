@@ -42,7 +42,8 @@
             <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
             <button id="btnPublicarLista">Publicar Lista de Reproducción </button>
-            
+            <h2>Usuarios</h2>
+            <button id="btnConsultaUsuarioL">Consulta de Perfil de Usuario</button>
             <h2>Biblioteca</h2>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
@@ -286,6 +287,11 @@ document.getElementById('btnAgregarSubscripcion').addEventListener('click', func
 document.getElementById('btnPublicarLista').addEventListener('click', function() {//NUEVO madi
         // Redirigir a la página PublicarLista.jsp
         window.location.href = 'PublicarLista.jsp';
+    });
+    
+    document.getElementById('btnConsultaUsuarioL').addEventListener('click', function() {//NUEVO madi
+        // Redirigir a la página AgregarListaRep.jsp
+        window.location.href = 'ConsultaUsuario_Logueado.jsp';
     });
     </script>
 
