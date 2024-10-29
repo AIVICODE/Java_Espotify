@@ -22,32 +22,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-// Clase interna para procesar los datos del tema
-class TemaData {
-
-    private String nombre;
-    private int minutos;
-    private int segundos;
-    private String url;
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public int getMinutos() {
-        return minutos;
-    }
-
-    public int getSegundos() {
-        return segundos;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-    
-}
-
 @WebServlet(name = "SvAltaAlbum", urlPatterns = {"/SvAltaAlbum"})
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -56,8 +30,8 @@ class TemaData {
 )
 public class SvAltaAlbum extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    private IControlador control = fabrica.getIControlador();
+    private final Fabrica fabrica = Fabrica.getInstance();
+    private final IControlador control = fabrica.getIControlador();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,11 +43,10 @@ public class SvAltaAlbum extends HttpServlet {
             return;
         }
 
-        // Obtener los parámetros del formulario
+        // Obtener los parámetros del álbum
         String nombreAlbum = request.getParameter("nombreAlbum");
         String anioAlbumStr = request.getParameter("anioAlbum");
         String[] generosSeleccionados = request.getParameterValues("genero[]");
-        String temasJson = request.getParameter("temas");
         String correoArtista = ((DTUsuario) session.getAttribute("usuario")).getCorreo();
 
         // Procesar la imagen del álbum
@@ -88,7 +61,7 @@ public class SvAltaAlbum extends HttpServlet {
         }
 
         // Convertir el año del álbum
-        int anioAlbum = anioAlbumStr != null && !anioAlbumStr.isEmpty() ? Integer.parseInt(anioAlbumStr) : 2023;
+        int anioAlbum = (anioAlbumStr != null && !anioAlbumStr.isEmpty()) ? Integer.parseInt(anioAlbumStr) : 2023;
 
         // Convertir los géneros seleccionados a una lista
         List<String> generos = new ArrayList<>();
@@ -98,46 +71,49 @@ public class SvAltaAlbum extends HttpServlet {
             }
         }
 
-        // Procesar cada tema desde JSON y verificar si tiene archivo MP3
+        // Procesar múltiples temas iterando por índice
         List<DTTema> listaTemas = new ArrayList<>();
-        System.out.println("IF antes temasjson distinto null y no vacio");
-        if (temasJson != null && !temasJson.isEmpty()) {
-            System.out.println("IF dentro");
-            Gson gson = new Gson();
-            TemaData[] temasArray = gson.fromJson(temasJson, TemaData[].class);
+        int temaIndex = 0;
 
-            for (TemaData temaData : temasArray) {
-                String rutaTema = null;
+        while (true) {
+            // Obtener los parámetros del tema en el índice actual
+            String nombreTema = request.getParameter("nombreTema_" + temaIndex);
+            String duracionTema = request.getParameter("duracionTema_" + temaIndex);
+            String urlTema = request.getParameter("urlTema_" + temaIndex);
+            Part archivoTemaPart = request.getPart("archivoTema_" + temaIndex);
 
-                // Construye el nombre del archivo MP3 basado en el nombre del tema
-                String partName = "archivoTema_" + temaData.getNombre();
-
-                // Intenta obtener el archivo MP3 usando el nombre específico
-                Part mp3Part = request.getPart(partName);
-                  System.out.println("Nombre del part: " + mp3Part.getName());
-                System.out.println("Tipo de contenido: " + mp3Part.getContentType());
-                System.out.println("Tamaño: " + mp3Part.getSize());
-                  //System.out.println(mp3Part.getName());
-                  System.out.println("IF antes mp3part");
-                if (mp3Part != null && mp3Part.getSize() > 0) {
-                    System.out.println("IF dentro mp3part");
-                    File archivoMp3Temporal = File.createTempFile("tema_", ".mp3");
-                    mp3Part.write(archivoMp3Temporal.getAbsolutePath());
-                    byte[] archivoMp3 = Files.readAllBytes(archivoMp3Temporal.toPath());
-                    rutaTema = control.guardarTemaEnCarpeta(archivoMp3, temaData.getNombre());
-                    archivoMp3Temporal.delete();
-                } else {
-                    // Usa la URL si no hay archivo
-                    System.out.println("else mp3part");
-                    rutaTema = temaData.getUrl();
-                }
-
-                DTTema nuevoTema = new DTTema(temaData.getNombre(), temaData.getMinutos(), temaData.getSegundos(), rutaTema);
-                listaTemas.add(nuevoTema);
+            // Salir del bucle si no hay más temas
+            if (nombreTema == null || duracionTema == null) {
+                break;
             }
+
+            // Separar la duración en minutos y segundos
+            String[] duracionSplit = duracionTema.split(":");
+            int minutos = Integer.parseInt(duracionSplit[0]);
+            int segundos = Integer.parseInt(duracionSplit[1]);
+
+            // Determinar la ruta del archivo de tema o URL
+            String rutaTema = null;
+            if (archivoTemaPart != null && archivoTemaPart.getSize() > 0) {
+                File archivoMp3Temporal = File.createTempFile("tema_", ".mp3");
+                archivoTemaPart.write(archivoMp3Temporal.getAbsolutePath());
+                byte[] archivoMp3 = Files.readAllBytes(archivoMp3Temporal.toPath());
+                rutaTema = control.guardarTemaEnCarpeta(archivoMp3, nombreTema+"_"+nombreAlbum+"_"+((DTUsuario) session.getAttribute("usuario")).getNickname());
+                archivoMp3Temporal.delete();
+            } else if (urlTema != null && !urlTema.isEmpty()) {
+                rutaTema = urlTema;
+            }
+
+            // Crear el objeto DTTema y añadirlo a la lista de temas
+            DTTema nuevoTema = new DTTema(nombreTema, minutos, segundos, rutaTema);
+            listaTemas.add(nuevoTema);
+
+            // Incrementar el índice para el próximo tema
+            temaIndex++;
         }
 
         try {
+            // Crear el objeto DTAlbum y guardarlo usando el controlador
             DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, anioAlbum, rutaImagen, generos);
             control.CrearAlbum(correoArtista, nuevoAlbum, listaTemas);
             response.sendRedirect("dashboard.jsp");

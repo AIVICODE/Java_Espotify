@@ -5,32 +5,29 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <link rel="stylesheet" href="css/temas.css?v=1.2">
-<% 
+
+<%
     String album = (String) request.getAttribute("album");
     String artista = (String) request.getAttribute("artista");
     List<DTTema> temas = (List<DTTema>) request.getAttribute("temas");
+    byte[][] temasBytes = (byte[][]) request.getAttribute("temasBytes");
 %>
 
 <h2>Temas de <%= album %></h2>
 <ul>
-    <% for (DTTema tema : temas) { %>
-        <li onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= tema.getDirectorio() %>", <%= tema.getOrden() %>)'>
-            <span class="orden"><%= tema.getOrden() %></span>
-            <%
-    session = request.getSession(false);
-    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
-    if (dtUsuario != null) {
+    <% for (int i = 0; i < temas.size(); i++) { 
+        DTTema tema = temas.get(i);
+        String temaDataUrl = "data:audio/mpeg;base64," + java.util.Base64.getEncoder().encodeToString(temasBytes[i]);
     %>
-            <button class="add-favorite-tema" onclick="verificarYAgregarFavorito('<%= tema.getNombre() %>', '<%= album %>','<%= artista %>')">+</button>
-        <%
-        
-    }
-    
-%>
-            <span ><%= tema.getNombre()%></span>
-            <span class="duracion"><%= tema.getMinutos()+":"+tema.getSegundos()%></span>
-            
-            
+        <li onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= temaDataUrl %>", <%= tema.getOrden() %>)'>
+            <span class="orden"><%= tema.getOrden() %></span>
+            <% session = request.getSession(false); 
+            DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario"); 
+            if (dtUsuario != null) { %>
+                <button class="add-favorite-tema" onclick="verificarYAgregarFavorito('<%= tema.getNombre() %>', '<%= album %>', '<%= artista %>')">+</button>
+            <% } %>
+            <span><%= tema.getNombre() %></span>
+            <span class="duracion"><%= tema.getMinutos() + ":" + tema.getSegundos() %></span>
         </li>
     <% } %>
 </ul>
@@ -70,84 +67,61 @@
             <source id="audioSource" src="" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-            <%
-            session = request.getSession(false);
-            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
-            if (dtUsuario != null) {
-        %>
-            <a id="downloadLink" href="" download>Descargar</a>
-<%
-            }
-        %>
-            
     </div>
 </footer>
 
 <script>
-let temas = []; // Se llenará con los datos del servidor
-<% for (DTTema tema : temas) { %>
-  temas.push({
-    nombre: "<%= tema.getNombre() %>",
-    directorio: "<%= tema.getDirectorio() %>",
-    orden: <%= tema.getOrden() %>
-  });
+// Lista de temas con datos del servidor
+let temas = [];
+<% for (int i = 0; i < temas.size(); i++) { 
+    DTTema tema = temas.get(i);
+    String temaDataUrl = "data:audio/mpeg;base64," + java.util.Base64.getEncoder().encodeToString(temasBytes[i]);
+%>
+    temas.push({
+        nombre: "<%= tema.getNombre() %>",
+        directorio: "<%= temaDataUrl %>",
+        orden: <%= tema.getOrden() %>
+    });
 <% } %>
 
 let currentIndex = -1;
+let audioPlayer = document.getElementById("audioPlayer");
+let audioSource = document.getElementById("audioSource");
 
+// Función para seleccionar y reproducir un tema
 function seleccionarTema(nombreTema, directorio, orden) {
-  document.getElementById("currentSongName").textContent = nombreTema;
+    document.getElementById("currentSongName").textContent = nombreTema;
+    audioSource.src = directorio;
+    audioPlayer.load();
+    audioPlayer.play();
 
-
-  if (directorio.startsWith("bit.ly")) {
-    var urlRedireccion = "https://" + directorio; // Asegúrate de agregar el esquema HTTPS
-    window.open(urlRedireccion, '_blank'); // Abre la URL en una nueva pestaña
-    return; // Detenemos la ejecución aquí
-  }
-
-  var audioSource = document.getElementById("audioSource");
-  audioSource.src = directorio;
-  var audioPlayer = document.getElementById("audioPlayer");
-  audioPlayer.load();
-  audioPlayer.play();
-  
-  //LA OPCION DE DESCARGA SOLO DISONIBLE PARA USUARIOS REGISTRADOS (PRECISO SESION PARA PODER CONFIGURAR)
-  let downloadLink = document.getElementById("downloadLink");
-    downloadLink.href = directorio; // URL del archivo
-    downloadLink.download = nombreTema; // Nombre del archivo al descargar
-  
-
-  // Encuentra el índice real en el array 'temas' basado en el 'orden'
-  currentIndex = temas.findIndex(tema => tema.orden === orden); 
+    currentIndex = temas.findIndex(tema => tema.orden === orden); 
 }
 
-
+// Función para reproducir el tema anterior
 function prevTema() {
-  if (temas.length === 0) return;
-
-  currentIndex = (currentIndex - 1 + temas.length) % temas.length; // Ajusta el índice
-  playTemaActual();
+    if (temas.length === 0) return;
+    currentIndex = (currentIndex - 1 + temas.length) % temas.length;
+    playTemaActual();
 }
 
+// Función para reproducir el siguiente tema
 function nextTema() {
-  if (temas.length === 0) return;
-
-  currentIndex = (currentIndex + 1) % temas.length; // Ajusta el índice
-  playTemaActual();
-  
+    if (temas.length === 0) return;
+    currentIndex = (currentIndex + 1) % temas.length;
+    playTemaActual();
 }
 
+// Función para reproducir el tema actual en `currentIndex`
 function playTemaActual() {
-  if (currentIndex >= 0 && currentIndex < temas.length) {
-    let temaActual = temas[currentIndex];
-    seleccionarTema(temaActual.nombre, temaActual.directorio, temaActual.orden);
-  }
+    if (currentIndex >= 0 && currentIndex < temas.length) {
+        let temaActual = temas[currentIndex];
+        seleccionarTema(temaActual.nombre, temaActual.directorio, temaActual.orden);
+    }
 }
-
-
 
 // Función de reproducción/pausa
-playPauseBtn.addEventListener("click", function() {
+document.getElementById("playPauseBtn").addEventListener("click", function() {
     if (audioPlayer.paused) {
         audioPlayer.play();
     } else {
@@ -159,64 +133,19 @@ playPauseBtn.addEventListener("click", function() {
 // Función para actualizar el ícono de play/pausa
 function updatePlayPauseButton() {
     const playIcon = playPauseBtn.querySelector("svg");
-    if (audioPlayer.paused) {
-        playIcon.innerHTML = `
-            <circle cx="12" cy="12" r="10"></circle>
-            <polygon points="10 8 16 12 10 16 10 8"></polygon>`;
-    } else {
-        playIcon.innerHTML = `
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="10" y1="15" x2="10" y2="9"></line>
-            <line x1="14" y1="15" x2="14" y2="9"></line>`;
-    }
+    playIcon.innerHTML = audioPlayer.paused
+        ? `<circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon>`
+        : `<circle cx="12" cy="12" r="10"></circle><line x1="10" y1="15" x2="10" y2="9"></line><line x1="14" y1="15" x2="14" y2="9"></line>`;
 }
 
-// Función para cambiar el volumen
-volumeSlider.addEventListener("input", function() {
+// Ajusta el volumen
+document.getElementById("volumeSlider").addEventListener("input", function() {
     audioPlayer.volume = this.value / 100;
-    
 });
 
 
-// Lógica de descarga y verificación de suscripción
-    document.getElementById('downloadLink').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevenir la acción predeterminada de descarga
 
-        // Realiza la verificación de suscripción
-        fetch('SvVerificarSubscripcion', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                if (data.hasSubscription) {
-                    // Si tiene suscripción, permitir la descarga
-                    const downloadLink = event.target;
 
-                    // Aquí estamos haciendo que el enlace descargue el archivo
-                    const href = downloadLink.href; 
-                    
-                    // Crear un nuevo elemento de anclaje para forzar la descarga
-                    const a = document.createElement('a');
-                    a.href = href;
-                    a.download = downloadLink.download; // Asegúrate de que el nombre del archivo se mantenga
-                    document.body.appendChild(a); // Agregar al DOM
-                    a.click(); // Simular clic para iniciar descarga
-                    document.body.removeChild(a); // Eliminar el elemento del DOM
-                } else {
-                    alert('No tienes una suscripción activa para descargar este archivo.');
-                }
-            })
-            .catch(error => {
-                console.error('Error al verificar la suscripción:', error);
-            });
-    });
-    
-    
-    
-    
-    
-    
-    
-    
-    
  function AgregarTemaFavorito(temaName, albumName, artistName) {
     const encodedTemaName = encodeURIComponent(temaName);
     const encodedAlbumName = encodeURIComponent(albumName);
@@ -262,9 +191,4 @@ volumeSlider.addEventListener("input", function() {
             console.error('Error al verificar la suscripción:', error);
         });
 }
-    
-    
-    
-    
 </script>
-

@@ -13,11 +13,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-/**
- *
- * @author ivan
- */
 @WebServlet(name = "SvObtenerAlbumxArtista", urlPatterns = {"/SvObtenerAlbumxArtista"})
 public class SvObtenerAlbumxArtista extends HttpServlet {
     
@@ -41,9 +41,16 @@ public class SvObtenerAlbumxArtista extends HttpServlet {
                 // Llamar al método del controlador para obtener la lista de DTAlbum
                 List<DTAlbum> nombresAlbumes = control.findAlbumesPorArtista(artista);
                 //System.out.println("Número de álbumes encontrados: " + nombresAlbumes.size());
-
+                List<byte[]> listaImgAlbumes = new ArrayList<>();
+                for (DTAlbum album : nombresAlbumes) {
+                    Path ruta = Paths.get(album.getImagen()); // Obtiene la ruta de la imagen
+                    byte[] imgAlbumBytes;
+                    imgAlbumBytes = Files.readAllBytes(ruta);
+                    listaImgAlbumes.add(imgAlbumBytes); // Agrega cada imagen a la lista
+                }
                 // Guardar la lista de álbumes en el request para enviarla a la JSP
                 request.setAttribute("listaAlbumes", nombresAlbumes);
+                request.setAttribute("listaImgAlbumes", listaImgAlbumes);
 
                 // Redirigir a la página JSP para mostrar los álbumes
                 RequestDispatcher dispatcher = request.getRequestDispatcher("mostrarAlbumes.jsp");

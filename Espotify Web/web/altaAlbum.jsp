@@ -20,154 +20,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta álbum - Espotify</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/altaAlbum.css">
+    <link rel="stylesheet" href="css/index.css">
+    
 </head>
 <jsp:include page="header.jsp" />
 <body>
-    <div class="container mt-5">
-        <div class="content-container">
-            <h1 class="text-center mb-4">Alta álbum</h1>
+    <div class="sidebar">
+        <h2 class="mt-4">Opciones</h2>
+        <button id="btnAltaAlbum" class="btn btn-primary w-100 mb-2">Alta Album</button>
+    </div>
 
-            <!-- Formulario único para datos del álbum, imagen y temas -->
-            <form id="altaAlbumForm" action="SvAltaAlbum" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="nombreAlbum">Nombre del álbum</label>
-                    <input type="text" class="form-control" id="nombreAlbum" name="nombreAlbum" placeholder="Ingrese el nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="anioAlbum">Año de creación</label>
-                    <input type="number" class="form-control" id="anioAlbum" name="anioAlbum" min="1900" max="2099" value="2023" required>
-                </div>
-                <div class="form-group">
-                    <label for="imagenAlbum">Seleccionar Imagen del Álbum</label>
-                    <input type="file" class="form-control" id="imagenAlbum" name="imagenAlbum" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label>Género</label>
-                    <div id="generosContainer" class="form-check">
-                        <!-- Los géneros se cargarán dinámicamente aquí -->
-                    </div>
-                </div>
+    <div class="content-container">
+        <h1 class="text-center mb-4">Alta álbum</h1>
 
-                <!-- Sección para agregar temas -->
-                <div id="temasContainer" class="form-group">
-                    <label>Agregar Temas</label>
+        <!-- Formulario para datos del álbum, imagen y temas dinámicos -->
+        <form id="altaAlbumForm" action="SvAltaAlbum" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nombreAlbum">Nombre del álbum</label>
+                <input type="text" class="form-control" id="nombreAlbum" name="nombreAlbum" placeholder="Ingrese el nombre" required>
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+                <label for="anioAlbum">Año de creación</label>
+                <input type="number" class="form-control" id="anioAlbum" name="anioAlbum" min="1900" max="2099" value="2023" required>
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+                <label for="imagenAlbum">Seleccionar Imagen del Álbum</label>
+                <input type="file" class="form-control" id="imagenAlbum" name="imagenAlbum" accept="image/*">
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+                <label>Género</label>
+                <div id="generosContainer" class="form-check">
+                    <!-- Los géneros se cargarán dinámicamente aquí -->
+                </div>
+            </div>
+
+
+            
+            <!-- Contenedor para los temas -->
+            <div id="temasContainer">
+                <!-- Tema inicial -->
+                <div class="temaContainer form-group">
+                    <div class="section-divider"></div>
+                    <label>Tema</label>
                     <div class="form-group">
-                        <input type="text" class="form-control mb-2" id="nombreTema" placeholder="Nombre del Tema">
-                        <input type="text" class="form-control mb-2" id="duracionTema" placeholder="Duración (mm:ss)">
-                        <input type="text" class="form-control mb-2" id="urlTema" placeholder="URL del Tema (opcional)">
+                        <input type="text" class="form-control mb-2" name="nombreTema_0" placeholder="Nombre del Tema" required>
+                        <input type="text" class="form-control mb-2" name="duracionTema_0" placeholder="Duración (mm:ss)" required>
+                        <input type="text" class="form-control mb-2" name="urlTema_0" placeholder="URL del Tema (opcional)">
                         <label for="archivoTema">O seleccionar un archivo MP3</label>
-                        <input type="file" class="form-control mb-2" id="archivoTema" accept="audio/*">
+                        <input type="file" class="form-control mb-2" name="archivoTema_0" accept="audio/*">
                     </div>
-                    <button type="button" id="agregarTemaBtn" class="btn btn-info">Agregar Tema</button>
-                    <!-- Lista de temas -->
-                    <ul id="listaTemas" class="mt-3"></ul>
                 </div>
-
-                <!-- Campo oculto para temas en formato JSON -->
-                <input type="hidden" id="temasInput" name="temas" value="">
-
-                <!-- Botón para enviar el formulario -->
-                <button type="submit" class="btn btn-success w-100" id="submitBtn">Crear Álbum</button>
-            </form>
-        </div>
+            </div>
+            <button id="agregarTemaBtn" class="btn btn-primary mb-2">Agregar Tema</button>
+            <!-- Botón para enviar el formulario -->
+            <div class="section-divider"></div>
+            <button type="submit" class="boton" id="submitBtn">Crear Álbum</button>
+        </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-    let temas = [];
-
-    document.getElementById('agregarTemaBtn').addEventListener('click', function() {
-        const nombreTema = document.getElementById('nombreTema').value;
-        const duracionTema = document.getElementById('duracionTema').value;
-        const urlTema = document.getElementById('urlTema').value;
-        const archivoTema = document.getElementById('archivoTema').files[0];
-
-        // Validación de campos
-        if (!nombreTema || !duracionTema) {
-            alert("Por favor, complete todos los campos del tema.");
-            return;
-        }
-
-        const duracionRegex = /^([0-5]?[0-9]):([0-5][0-9])$/;
-        const duracionMatch = duracionTema.match(duracionRegex);
-        if (!duracionMatch) {
-            alert("Por favor, ingrese la duración en formato mm:ss.");
-            return;
-        }
-
-        const minutos = parseInt(duracionMatch[1], 10);
-        const segundos = parseInt(duracionMatch[2], 10);
-        
-        let archivo;
-        if (archivoTema) {
-            archivo = archivoTema.name;
-        } else {
-            archivo = null;
-        }
-
-
-        const tema = {
-            nombre: nombreTema,
-            minutos: minutos,
-            segundos: segundos,
-            url: urlTema,
-            archivo: archivo
-        };
-
-        temas.push(tema);
-        
-        if (archivoTema) {
-            const archivoInput = document.createElement("input");
-            archivoInput.type = "file";
-            archivoInput.name = "archivoTema_" + nombreTema; // Nombre único basado en el nombre del tema
-            archivoInput.style.display = "none"; // Oculta el campo
-            archivoInput.files = document.getElementById('archivoTema').files;
-            document.getElementById('altaAlbumForm').appendChild(archivoInput);
-        }
-
-        actualizarListaTemas();
-        limpiarCamposTema();
-    });
-
-    function actualizarListaTemas() {
-        const listaTemas = document.getElementById('listaTemas');
-        listaTemas.innerHTML = ''; 
-
-        for (let i = 0; i < temas.length; i++) {
-            const tema = temas[i];
-            const li = document.createElement('li');
-
-            // Usa paréntesis para separar la expresión condicional de archivo o URL
-            li.innerHTML = tema.nombre + " (" + tema.minutos + ":" + tema.segundos + ") - " + 
-                        (tema.archivo ? "Archivo MP3: " + tema.archivo : "URL: " + tema.url) + 
-                        '<button type="button" class="delete-button btn btn-danger btn-sm" onclick="eliminarTema(' + i + ')">Eliminar</button>';
-
-            listaTemas.appendChild(li);
-        }
-    }
-
-
-    function limpiarCamposTema() {
-        document.getElementById('nombreTema').value = '';
-        document.getElementById('duracionTema').value = '';
-        document.getElementById('urlTema').value = '';
-        document.getElementById('archivoTema').value = '';
-    }
-
-    function eliminarTema(index) {
-        temas.splice(index, 1);
-        actualizarListaTemas();
-    }
-
-document.getElementById('altaAlbumForm').addEventListener('submit', function(event) {
-        document.getElementById('temasInput').value = JSON.stringify(temas);
-    });
-
+    let temaIndex = 1;  // Inicia el contador en 1 para las copias de temas
 
     $(document).ready(function() {
+        // Cargar géneros de manera dinámica
         function cargarGeneros() {
             $.ajax({
                 url: 'SvObtenerGeneros',
@@ -203,6 +124,27 @@ document.getElementById('altaAlbumForm').addEventListener('submit', function(eve
             });
         }
         cargarGeneros();
+
+        // Agregar un nuevo tema al hacer clic en el botón "Agregar Tema"
+        $('#agregarTemaBtn').click(function() {
+            const temaContainer = $('.temaContainer').first().clone();
+            temaContainer.find('input').val(''); // Limpiar los campos
+
+            // Actualizar los nombres de los campos en el nuevo tema
+            temaContainer.find('input[name="nombreTema_0"]').attr('name', 'nombreTema_' + temaIndex);
+            temaContainer.find('input[name="duracionTema_0"]').attr('name', 'duracionTema_' + temaIndex);
+            temaContainer.find('input[name="urlTema_0"]').attr('name', 'urlTema_' + temaIndex);
+            temaContainer.find('input[name="archivoTema_0"]').attr('name', 'archivoTema_' + temaIndex);
+
+            $('#temasContainer').append(temaContainer);
+            temaIndex++; // Incrementar el índice para el próximo tema
+        });
+    });
+
+    document.getElementById('btnAltaAlbum').addEventListener('click', function () {
+        // Redirigir a la página altaAlbum .jsp
+        console.log('Button clicked');
+        window.location.href = 'altaAlbum.jsp';
     });
     </script>
 </body>

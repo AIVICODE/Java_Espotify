@@ -193,4 +193,6 @@ public interface IControlador {
      
      public abstract List<String> listaFavoritosDeCliente(String nick);
      public abstract List<String> nombreAlbumyNombreArtistaFavoritosCliente(String nick);
+     public abstract byte[] obtenerTemaComoBytes(String rutaTema) throws IOException;
+    public abstract byte[][] obtenerTemasComoBytes(String[] rutasTemas) throws IOException;
 }

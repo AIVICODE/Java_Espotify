@@ -50,16 +50,25 @@ public class SvObtenerTemas extends HttpServlet {
         // Busca el álbum utilizando la lógica de negocio
         String correo= control.ConvierteNick_A_Correo(artista);
         DTAlbum dtalbum = control.findAlbumxNombreDT(album, correo);
-
+        
         if (dtalbum != null) {
             List<DTTema> temas = dtalbum.getListaTemas();
+ 
 
             if (temas != null && !temas.isEmpty()) {
                 // Pasa los datos del álbum y los temas a la página JSP
+//--------------------------------------------------------------------------------------------------------------------------
+                String[] rutasTemas = temas.stream()
+                        .map(DTTema::getDirectorio)
+                        .toArray(String[]::new);
+                // Obtiene los byte[] de cada tema
+                byte[][] temasBytes = control.obtenerTemasComoBytes(rutasTemas);
+//---------------------------------------------------------------------------------------------------------------------------
                 request.setAttribute("album", album);
                 request.setAttribute("artista", artista);
                 request.setAttribute("temas", temas);
-
+                request.setAttribute("temasBytes", temasBytes);
+               
                 // Redirige a temas.jsp
                 RequestDispatcher rd = request.getRequestDispatcher("temas.jsp");
                 rd.forward(request, response);

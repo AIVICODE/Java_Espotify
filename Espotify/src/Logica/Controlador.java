@@ -3830,7 +3830,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarImagenesEnCarpeta(byte[] archivoImagen, String nickname) throws IOException {
-        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/imagenes_usuarios/";
+        String carpetaImagenes = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_usuarios/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3844,7 +3844,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException {
-        String carpetaTemas = "/home/ivan/GitProject/ProgApps-/imagenes_tema/";
+        String carpetaTemas = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/";
         File directorio = new File(carpetaTemas);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3858,7 +3858,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
 public String guardarImagenesAlbum(byte[] archivoImagen, String nombreAlbum, String nombreArtista) throws IOException {
-        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/imagenes_album/";
+        String carpetaImagenes = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_album/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3993,7 +3993,7 @@ public boolean verificarSubscripcion(String cliente) {
 
     }
 public String guardarImagenesLista(byte[] archivoImagen, String nombreLista) throws IOException {
-        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/imagenes_listarep/";
+        String carpetaImagenes = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_listarep/";
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -4254,6 +4254,33 @@ return null;
             favoritos.add("Error al buscar el cliente.");
         }
         return favoritos;
+    }
+
+    public byte[] obtenerTemaComoBytes(String rutaTema) throws IOException {
+        Path ruta = Paths.get(rutaTema);
+        if (Files.exists(ruta)) {
+            return Files.readAllBytes(ruta); // Lee y devuelve el como un arreglo de bytes
+        } else {
+            ruta = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/" + "generico.mp3");
+            return Files.readAllBytes(ruta);
+        }
+    }
+    
+    public byte[][] obtenerTemasComoBytes(String[] rutasTemas) throws IOException {
+        byte[][] temasBytes = new byte[rutasTemas.length][]; // Array para almacenar cada tema en bytes
+
+        for (int i = 0; i < rutasTemas.length; i++) {
+            Path ruta = Paths.get(rutasTemas[i]);
+            if (Files.exists(ruta)) {
+                temasBytes[i] = Files.readAllBytes(ruta); // Lee y almacena cada archivo en el array
+            } else {
+                // Si el archivo no existe, cargar un archivo genérico
+                Path rutaGenerica = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/" + "generico.mp3");
+                temasBytes[i] = Files.readAllBytes(rutaGenerica);
+            }
+        }
+
+        return temasBytes;
     }
 }
 
