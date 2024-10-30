@@ -150,7 +150,7 @@
     <body>
         <div class="container d-flex justify-content-center">
                 <div class="spotify-card">
-                    <form id="userForm" class="formi"><!-- SERVLET CAMBIAR --> <!-- NUEVO GPT -->
+                    <form id="userForm" class="formi"><!-- SERVLET CAMBIAR --> 
                         <h1 id="borrar">Consulta de Perfil de Usuario</h1>
                         <div class="mb-3">                       
                             <label for="opciones">Seleccione el usuario</label>
@@ -163,6 +163,13 @@
                     <div id="userInfo" style="display: none;">
                         <h2>Información del Usuario</h2>
                         <p><strong>Nickname:</strong> <span id="nickname"></span></p>
+<p>
+    <img id="imagen" 
+         src="" 
+         alt="Imagen de Usuario" 
+         style="width: 150px; height: auto; border-radius: 8px; border: 2px solid #ccc; margin-top: 10px;">
+</p>
+
                         <p><strong>Correo electrónico:</strong> <span id="correo"></span></p>
                         <p><strong>Nombre:</strong> <span id="nombre"></span></p>
                         <p><strong>Apellido:</strong> <span id="apellido"></span></p>
@@ -256,6 +263,12 @@
                     document.getElementById('fechaNac').textContent = usuario.fechaNac;
                     document.getElementById('bio').textContent = usuario.biografia;
                     document.getElementById('web').textContent = usuario.sitioWeb;
+                    document.getElementById('imagen').textContent = usuario.imagen;
+                    
+  const nombreImagen = usuario.imagen; 
+        console.log("Nombre de la imagen:", nombreImagen);
+            document.getElementById('imagen').src = "/SvGetImagen?nombre=" + nombreImagen;
+
                     // Hace visible el div con la información del usuario    
                     document.getElementById('userInfo').style.display = 'block';
                     //si es A se muestra sino no

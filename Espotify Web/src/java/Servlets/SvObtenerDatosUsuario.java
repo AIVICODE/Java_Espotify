@@ -128,6 +128,8 @@ IControlador control = fabrica.getIControlador();
             //Convierto a JSON
             jsonUsuario.append("{");
             jsonUsuario.append("\"nickname\": \"").append(usuario.getNickname()).append("\",");
+            
+            jsonUsuario.append("\"imagen\": \"").append(usuario.getImagen()).append("\",");
             jsonUsuario.append("\"nombre\": \"").append(usuario.getNombre()).append("\",");
             jsonUsuario.append("\"apellido\": \"").append(usuario.getApellido()).append("\",");
             jsonUsuario.append("\"correo\": \"").append(usuario.getCorreo()).append("\",");
@@ -214,6 +216,7 @@ IControlador control = fabrica.getIControlador();
             jsonUsuario.append("{");
             jsonUsuario.append("\"nickname\": \"").append(usuario.getNickname()).append("\",");
             jsonUsuario.append("\"nombre\": \"").append(usuario.getNombre()).append("\",");
+             jsonUsuario.append("\"imagen\": \"").append(usuario.getImagen()).append("\",");
             jsonUsuario.append("\"apellido\": \"").append(usuario.getApellido()).append("\",");
             jsonUsuario.append("\"correo\": \"").append(usuario.getCorreo()).append("\",");
             jsonUsuario.append("\"biografia\": \"\",");

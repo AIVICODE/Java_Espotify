@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import Datatypes.DTUsuario;
 import jakarta.servlet.http.HttpSession;
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Files;
 /**
  *
@@ -22,7 +23,8 @@ import java.nio.file.Files;
  */
 @WebServlet(name = "SvGetImagen", urlPatterns = {"/SvGetImagen"})
 public class SvGetImagen extends HttpServlet {
-
+private final Fabrica fabrica = Fabrica.getInstance();
+    private final IControlador control = fabrica.getIControlador();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,25 +35,23 @@ public class SvGetImagen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String nombreImagen = request.getParameter("nombre");
+                 String nombreImagen = request.getParameter("nombre");
+        
+        // Obtener la imagen como arreglo de bytes
+        byte[] imagenBytes = control.obtenerImagenComoBytes(nombreImagen);
 
-        // Ruta donde se guardan las imágenes
-        String path = getServletContext().getRealPath("/images") + File.separator + nombreImagen;
-        File imageFile = new File(path);
-
-        if (imageFile.exists() && imageFile.isFile()) {
-            // Cargar la imagen en un array de bytes
-            byte[] imagenBytes = Files.readAllBytes(imageFile.toPath());
-
-            // Configurar la respuesta
-            response.setContentType("image/jpeg"); // o "image/png", según el formato
+        if (imagenBytes != null) {
+            // Configura el tipo de contenido de la respuesta como imagen
+            response.setContentType("image/jpeg");
             response.setContentLength(imagenBytes.length);
-
-            // Escribir los bytes de la imagen en la respuesta
-            response.getOutputStream().write(imagenBytes);
-            response.getOutputStream().flush(); // Asegurarse de que se envían todos los bytes
+            
+            // Escribe los bytes de la imagen en el OutputStream de la respuesta
+            try (OutputStream out = response.getOutputStream()) {
+                out.write(imagenBytes);
+            }
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND); // Si la imagen no existe
+            // Si no se encuentra la imagen, enviar un error 404
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Imagen no encontrada");
         }
     }
 
