@@ -68,6 +68,14 @@
 
 
     <body class="main-body">
+        <%
+            // Si `temaBytes` no es nulo, construye el `temaDataUrl` en base64.
+            byte[] temaBytes = (byte[]) request.getAttribute("temaBytes");
+            String temaDataUrl = temaBytes != null
+                    ? "data:audio/mpeg;base64," + java.util.Base64.getEncoder().encodeToString(temaBytes)
+                    : "";
+        %>
+ 
 <div class="content-container">
         <h1>Selecciona un Género:</h1>
 
@@ -328,33 +336,51 @@
         %>
         console.log("No hay temas disponibles.");
         <% }%>
-
+      
         let currentIndex = -1;
 
-        function seleccionarTema(nombreTema, directorio, artista,orden) {
-            document.getElementById("currentSongName").textContent = nombreTema;
-            document.getElementById("currentArtistName").textContent = artista;
+function seleccionarTema(nombreTema, directorio, artista, orden) {
+    document.getElementById("currentSongName").textContent = nombreTema;
+    document.getElementById("currentArtistName").textContent = artista;
 
+    // Si `directorio` es una URL, redirige y termina la función
+    if (directorio.startsWith("bit.ly") || directorio.startsWith("http")) {
+        window.open(directorio.startsWith("http") ? directorio : "https://" + directorio, '_blank');
+        return;
+    }
 
-            if (directorio.startsWith("bit.ly")) {
-                var urlRedireccion = "https://" + directorio; // Asegúrate de agregar el esquema HTTPS
-                window.open(urlRedireccion, '_blank'); // Abre la URL en una nueva pestaña
-                return; // Detenemos la ejecución aquí
+    // Si no es una URL, realiza una solicitud al servlet `SvGetTema` para obtener el archivo en bytes
+    fetch("SvGetTema?rutaTema="+ encodeURIComponent(directorio))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener el tema');
             }
-
+            return response.arrayBuffer(); // Recibe el audio en formato ArrayBuffer
+        })
+        .then(arrayBuffer => {
+            // Convierte el ArrayBuffer a un Blob y establece la fuente del reproductor
+            const audioBlob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+            const audioUrl = URL.createObjectURL(audioBlob);
             var audioSource = document.getElementById("audioSource");
-            audioSource.src = directorio;
+            audioSource.src = audioUrl;
             var audioPlayer = document.getElementById("audioPlayer");
             audioPlayer.load();
             audioPlayer.play();
 
+            // Configuración para la descarga del tema
             let downloadLink = document.getElementById("downloadLink");
-            downloadLink.href = directorio;
+            downloadLink.href = audioUrl;
             downloadLink.download = nombreTema;
+        })
+        .catch(error => {
+            console.error("Error al cargar el tema:", error);
+        });
 
-            currentIndex = temas.findIndex(tema => tema.orden === orden);
-        }
+    // Actualizar índice actual
+    currentIndex = temas.findIndex(tema => tema.orden === orden);
+}
 
+        
         function prevTema() {
             if (temas.length === 0)
                 return;
