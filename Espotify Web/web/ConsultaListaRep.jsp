@@ -224,35 +224,28 @@
                 if (temas != null && !temas.isEmpty() && listaSeleccionada != null) {
             %>
             <h2>Temas en la Lista: <%= listaSeleccionada.getNombreListaRep()%></h2>
-            <ul>
-                <%
-                    int contador = 0;
-                    for (DTTema tema : temas) {
-                %>
-                <li>
-                    <a href="javascript:void(0);" class="tema-enlace" onclick="seleccionarTema('<%= tema.getNombre()%>', '<%= tema.getDirectorio()%>','<%= tema.getNombreartista()%>', <%= contador%>);">
-                        <%
-
-    if (dtUsuario != null) {
+        <ul>
+    <%
+        int contador = 0;
+        for (DTTema tema : temas) {
     %>
-            <button class="add-favorite-tema" onclick="verificarYAgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>','<%= tema.getNombreartista() %>')">+</button>
-        <%
-        
-    }
-    
-%>
-                        
-                        <span ><%= tema.getNombre()%></span> 
-                        
-                        <span class="duracion" ><%= tema.getMinutos() + ":" + tema.getSegundos()%></span>
+    <li>
+        <a href="javascript:void(0);" class="tema-enlace" 
+           onclick="seleccionarTema('<%= tema.getNombre() %>', '<%= tema.getDirectorio() %>', '<%= tema.getNombreartista() %>', <%= contador %>);">
+            <% if (dtUsuario != null) { %>
+                <button class="add-favorite-tema" 
+                        onclick="event.stopPropagation(); verificarYAgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>', '<%= tema.getNombreartista() %>')">+</button>
+            <% } %>
+            <span><%= tema.getNombre() %></span> 
+            <span class="duracion"><%= tema.getMinutos() + ":" + tema.getSegundos() %></span>
+        </a>
+    </li>
+    <%
+            contador++;
+        }
+    %>
+</ul>
 
-                    </a>
-                </li>
-                <%
-                        contador++;
-                    }
-                %>
-            </ul>
             <%
             } else if (listaSeleccionada != null) {
             %>

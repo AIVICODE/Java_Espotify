@@ -19,18 +19,25 @@
         DTTema tema = temas.get(i);
         String temaDataUrl = "data:audio/mpeg;base64," + java.util.Base64.getEncoder().encodeToString(temasBytes[i]);
     %>
-        <li onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= tema.getDirectorio() %>", <%= tema.getOrden() %>)'>
-            <span class="orden"><%= tema.getOrden() %></span>
-            <% session = request.getSession(false); 
-            DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario"); 
-            if (dtUsuario != null) { %>
-                <button class="add-favorite-tema" onclick="verificarYAgregarFavorito('<%= tema.getNombre() %>', '<%= album %>', '<%= artista %>')">+</button>
+    <% session = request.getSession(false); 
+        DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario"); 
+    %>
+        <li style="display: flex; align-items: center; justify-content: space-between;" 
+            onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= tema.getDirectorio() %>", <%= tema.getOrden() %>)'>
+            
+            <% if (dtUsuario != null) { %>
+                <button class="add-favorite-tema" 
+                        onclick="event.stopPropagation(); verificarYAgregarFavorito('<%= tema.getNombre() %>', '<%= album %>', '<%= artista %>')"
+                        style="margin-right: 10px;">+</button>
             <% } %>
+
+            <span class="orden"><%= tema.getOrden() %></span>
             <span><%= tema.getNombre() %></span>
             <span class="duracion"><%= tema.getMinutos() + ":" + tema.getSegundos() %></span>
         </li>
     <% } %>
 </ul>
+
 
 <footer>
     <div class="container player-container">

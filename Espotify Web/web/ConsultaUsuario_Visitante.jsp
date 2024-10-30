@@ -168,7 +168,8 @@
     <img id="imagen" 
          src="" 
          alt="Imagen de Usuario" 
-         style="width: 150px; height: auto; border-radius: 8px; border: 2px solid #ccc; margin-top: 10px;">
+                  style="width: 150px; height: 150px; border-radius: 50%; border: 2px solid #ccc; margin-top: 10px;">
+
 </p>
                         <p id="cor"><strong>Correo electrónico:</strong> <span id="correo"></span></p>
                         <p id="nom"><strong>Nombre:</strong> <span id="nombre"></span></p>

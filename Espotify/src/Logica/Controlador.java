@@ -36,7 +36,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
 
 public class Controlador implements IControlador {
-    
     public static final String CARPETA_LISTA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
 public static final String CARPETA_ALBUM = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
 public static final String CARPETA_USUARIOS = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
