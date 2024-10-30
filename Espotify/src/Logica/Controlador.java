@@ -36,6 +36,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
 
 public class Controlador implements IControlador {
+    
+    public static final String CARPETA_LISTA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
+public static final String CARPETA_ALBUM = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
+public static final String CARPETA_USUARIOS = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
+public static final String CARPETA_TEMA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
+
+public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
+
 
     private Date createDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
@@ -3830,7 +3838,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarImagenesEnCarpeta(byte[] archivoImagen, String nickname) throws IOException {
-        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
+        String carpetaImagenes = CARPETA_USUARIOS;
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3844,7 +3852,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
     public String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException {
-        String carpetaTemas = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
+        String carpetaTemas = CARPETA_TEMA;
         File directorio = new File(carpetaTemas);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3858,7 +3866,7 @@ public String obtenerExtensionArchivo(String nombreArchivo) {
     }
 
 public String guardarImagenesAlbum(byte[] archivoImagen, String nombreAlbum, String nombreArtista) throws IOException {
-        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
+        String carpetaImagenes = CARPETA_ALBUM;
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -3993,7 +4001,7 @@ public boolean verificarSubscripcion(String cliente) {
 
     }
 public String guardarImagenesLista(byte[] archivoImagen, String nombreLista) throws IOException {
-        String carpetaImagenes = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
+        String carpetaImagenes = CARPETA_LISTA;
         File directorio = new File(carpetaImagenes);
         if (!directorio.exists()) {
             directorio.mkdirs();
@@ -4106,7 +4114,7 @@ return null;
             
             return Files.readAllBytes(ruta); // Lee y devuelve la imagen como un arreglo de bytes
         } else {
-            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg");
+            ruta = Paths.get(CARPETA_GENERICO);
             return Files.readAllBytes(ruta);
         }
     }
