@@ -47,9 +47,9 @@ public class SvObtenerAlbumxGenero extends HttpServlet {
                 System.out.println("Número de álbumes encontrados: " + nombresAlbumes.size());
                 List<byte[]> listaImgAlbumes = new ArrayList<>();
                 for (DTAlbum album : nombresAlbumes) {
-                    Path ruta = Paths.get(album.getImagen()); // Obtiene la ruta de la imagen
+                    
                     byte[] imgAlbumBytes;
-                    imgAlbumBytes = Files.readAllBytes(ruta);
+                    imgAlbumBytes = album.getImagenBytes();
                     listaImgAlbumes.add(imgAlbumBytes); // Agrega cada imagen a la lista
                 }
                 // Guardar la lista de álbumes en el request para enviarla a la JSP
