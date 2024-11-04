@@ -8,17 +8,74 @@ package Datatypes;
  *
  * @author ivan
  */
-public class DTTema {
+public class DTTema extends DTContenido{
     private String nombre;
     private int minutos;
     private int segundos;
     private String directorio;
+    private int orden;
+    private String nombrealbum;
+    private String nombreartista;
+    private int anioCreacion;
 
+    public int getAnioCreacion() {
+        return anioCreacion;
+    }
+
+    public void setAnioCreacion(int anioCreacion) {
+        this.anioCreacion = anioCreacion;
+    }
+
+    public String getNombrealbum() {
+        return nombrealbum;
+    }
+
+    public void setNombrealbum(String nombrealbum) {
+        this.nombrealbum = nombrealbum;
+    }
+
+    public String getNombreartista() {
+        return nombreartista;
+    }
+
+    public void setNombreartista(String nombreartista) {
+        this.nombreartista = nombreartista;
+    }
+    
+    
     public DTTema(String nombre, int minutos, int segundos, String directorio) {
         this.nombre = nombre;
         this.minutos = minutos;
         this.segundos = segundos;
         this.directorio = directorio;
+    }
+    public DTTema(String nombre, int minutos, int segundos, String directorio,String nombrealbum, String nombreartista) {
+        this.nombre = nombre;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.directorio = directorio;
+        this.nombrealbum = nombrealbum;
+        this.nombreartista = nombreartista;
+    }
+    
+    public DTTema(String nombre, int minutos, int segundos, String directorio,String nombrealbum, String nombreartista,int anioCreacion) {
+        this.nombre = nombre;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.directorio = directorio;
+        this.nombrealbum = nombrealbum;
+        this.nombreartista = nombreartista;
+        this.anioCreacion = anioCreacion;
+    }
+    
+    
+    
+     public DTTema(String nombre, int minutos, int segundos, String directorio,int orden) {
+        this.nombre = nombre;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.directorio = directorio;
+        this.orden = orden;
     }
 
     public String getNombre() {
@@ -38,7 +95,10 @@ public class DTTema {
     }
 
     
-    
+     public int getOrden() {
+        return orden;
+    }
+
     
     
     

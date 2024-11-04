@@ -49,16 +49,27 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
+        jMenuItem32 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        cargarDatosMenu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         AltaAlbum = new javax.swing.JMenuItem();
+        jMenu14 = new javax.swing.JMenu();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
+        jMenu15 = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
+        jMenu16 = new javax.swing.JMenu();
+        jMenuItem30 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -82,6 +93,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu13 = new javax.swing.JMenu();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -104,6 +116,8 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu7.setText("Edit");
         jMenuBar3.add(jMenu7);
+
+        jMenuItem32.setText("jMenuItem32");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,7 +143,16 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(desktopPane)
         );
 
-        jMenu1.setText("Inicio");
+        jMenu1.setText("Datos de Prueba");
+
+        cargarDatosMenu.setText("Cargar datos");
+        cargarDatosMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarDatosMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(cargarDatosMenu);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Casos de uso");
@@ -169,6 +192,66 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(AltaAlbum);
+
+        jMenu14.setText("Crear Lista");
+
+        jMenuItem27.setText("Crear Lista Particular");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem27);
+
+        jMenuItem28.setText("Crear Lista Por Defecto");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem28);
+
+        jMenu2.add(jMenu14);
+
+        jMenu15.setText("Agregar Tema a Lista");
+
+        jMenuItem26.setText("Agregar a Lista Particular");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem26);
+
+        jMenuItem29.setText("Agregar a Lista Por Defecto");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem29);
+
+        jMenu2.add(jMenu15);
+
+        jMenu16.setText("Eliminar Tema de Lista");
+
+        jMenuItem30.setText("Eliminar de lista particular");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem30);
+
+        jMenuItem31.setText("Eliminar de lista por defecto");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem31);
+
+        jMenu2.add(jMenu16);
 
         jMenu8.setText("Agregar Favorito");
 
@@ -329,6 +412,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu13.add(jMenuItem23);
 
         jMenu2.add(jMenu13);
+
+        jMenuItem33.setText("Modificar subscripcion");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem33);
 
         jMenuBar1.add(jMenu2);
 
@@ -639,6 +730,103 @@ public class Principal extends javax.swing.JFrame {
     alta_genero.show(); 
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
+    private void cargarDatosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosMenuActionPerformed
+        //Cargar datos
+        CargarDatosDePrueba datosPrueba= new CargarDatosDePrueba();
+        desktopPane.add(datosPrueba,JLayeredPane.DEFAULT_LAYER);
+        datosPrueba .setVisible(true);
+        datosPrueba.setClosable(true);
+        datosPrueba.setMaximizable(true);
+        datosPrueba.setIconifiable(true);
+        datosPrueba.setResizable(true);
+        datosPrueba.toFront();
+        datosPrueba.show();
+    }//GEN-LAST:event_cargarDatosMenuActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+                AltaListaRep alta_listarep= new AltaListaRep();
+    desktopPane.add(alta_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_listarep.setVisible(true);
+    alta_listarep.setClosable(true);
+    alta_listarep.setMaximizable(true);
+    alta_listarep.setIconifiable(true);
+    alta_listarep.setResizable(true);
+    alta_listarep.toFront();
+    alta_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        AltaListaRepPorDefecto alta_listarep= new AltaListaRepPorDefecto();
+    desktopPane.add(alta_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_listarep.setVisible(true);
+    alta_listarep.setClosable(true);
+    alta_listarep.setMaximizable(true);
+    alta_listarep.setIconifiable(true);
+    alta_listarep.setResizable(true);
+    alta_listarep.toFront();
+    alta_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        AgregarTema_A_Lista_Part alta_tema_listarep= new AgregarTema_A_Lista_Part ();
+    desktopPane.add(alta_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_tema_listarep.setVisible(true);
+    alta_tema_listarep.setClosable(true);
+    alta_tema_listarep.setMaximizable(true);
+    alta_tema_listarep.setIconifiable(true);
+    alta_tema_listarep.setResizable(true);
+    alta_tema_listarep.toFront();
+    alta_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        AgregarTema_A_Lista_Defecto alta_tema_listarep= new AgregarTema_A_Lista_Defecto ();
+    desktopPane.add(alta_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   alta_tema_listarep.setVisible(true);
+    alta_tema_listarep.setClosable(true);
+    alta_tema_listarep.setMaximizable(true);
+    alta_tema_listarep.setIconifiable(true);
+    alta_tema_listarep.setResizable(true);
+    alta_tema_listarep.toFront();
+    alta_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+ QuitarTemaDeLista_Part quitar_tema_listarep= new QuitarTemaDeLista_Part ();
+    desktopPane.add(quitar_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   quitar_tema_listarep.setVisible(true);
+    quitar_tema_listarep.setClosable(true);
+    quitar_tema_listarep.setMaximizable(true);
+    quitar_tema_listarep.setIconifiable(true);
+    quitar_tema_listarep.setResizable(true);
+    quitar_tema_listarep.toFront();
+    quitar_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        QuitarTemaDeLista_Def quitar_tema_listarep= new QuitarTemaDeLista_Def ();
+    desktopPane.add(quitar_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   quitar_tema_listarep.setVisible(true);
+    quitar_tema_listarep.setClosable(true);
+    quitar_tema_listarep.setMaximizable(true);
+    quitar_tema_listarep.setIconifiable(true);
+    quitar_tema_listarep.setResizable(true);
+    quitar_tema_listarep.toFront();
+    quitar_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+       ActualizarSubscripcion quitar_tema_listarep= new ActualizarSubscripcion();
+    desktopPane.add(quitar_tema_listarep,JLayeredPane.DEFAULT_LAYER);
+   quitar_tema_listarep.setVisible(true);
+    quitar_tema_listarep.setClosable(true);
+    quitar_tema_listarep.setMaximizable(true);
+    quitar_tema_listarep.setIconifiable(true);
+    quitar_tema_listarep.setResizable(true);
+    quitar_tema_listarep.toFront();
+    quitar_tema_listarep.show(); 
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -677,12 +865,16 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AltaAlbum;
+    private javax.swing.JMenuItem cargarDatosMenu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
+    private javax.swing.JMenu jMenu14;
+    private javax.swing.JMenu jMenu15;
+    private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -712,7 +904,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

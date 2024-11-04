@@ -143,14 +143,14 @@ public class ListaRepJpaController implements Serializable {
     }
     
     
-    public ListaRep findListaRepByNombre(String nombre) throws Exception {
+    public List<ListaRep> findListaRepByNombre(String nombre) throws Exception {
     EntityManager em = getEntityManager();
     try {
         // Usamos JPQL (Java Persistence Query Language) para buscar la lista de reproducción por nombre
         Query query = em.createQuery("SELECT l FROM ListaRep l WHERE l.nombre = :nombre");
         query.setParameter("nombre", nombre);
         // Utilizamos getSingleResult() si estamos seguros de que solo habrá una lista con ese nombre
-        return (ListaRep) query.getSingleResult();
+        return query.getResultList();
     } catch (NoResultException e) {
         // Si no se encuentra la lista, lanzamos una excepción específica
         throw new Exception("No se encuentra la lista de reproducción con el nombre: " + nombre, e);
@@ -186,6 +186,36 @@ public class ListaRepJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    public List<String> NombreDeListasParticulares() {
+    EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL para obtener los nombres de las listas de reproducción particulares
+        TypedQuery<String> query = em.createQuery(
+            "SELECT DISTINCT l.nombre FROM ListaRepParticular l where l.privada = false", String.class
+        );
+        
+        // Retornamos la lista de nombres de las listas de reproducción particulares, sin duplicados
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
+    List<String> NombreDeListasDefault() {
+            EntityManager em = getEntityManager();
+    try {
+        // Usamos JPQL para obtener los nombres de las listas de reproducción particulares
+        TypedQuery<String> query = em.createQuery(
+            "SELECT DISTINCT l.nombre FROM ListaRepGeneral l", String.class
+        );
+        
+        // Retornamos la lista de nombres de las listas de reproducción particulares, sin duplicados
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
     }
     
 }

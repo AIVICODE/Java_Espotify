@@ -9,6 +9,7 @@ public class DTUsuario {
     protected String nombre, apellido, contrasenia;
     protected String correo, imagen;
     protected Date fechaNac;
+    protected String confirmacion;
     private List<String> listaUsuariosFavoritos;
     
     public DTUsuario() {}
@@ -19,6 +20,17 @@ public class DTUsuario {
         this.correo = correo;
         this.fechaNac = fechaNac;
         this.contrasenia = contrasenia;
+        this.imagen= imagen;
+    }
+    
+     public DTUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia,String confirmacion,String imagen) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+        this.contrasenia = contrasenia;
+        this.confirmacion = confirmacion;
         this.imagen= imagen;
     }
 
@@ -40,6 +52,14 @@ public class DTUsuario {
         return contrasenia;
     }
 
+    public String getConfirmacion() {
+        return confirmacion;
+    }
+
+    public void setConfirmacion(String confirmacion) {
+        this.confirmacion = confirmacion;
+    }
+
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
@@ -58,6 +78,10 @@ public class DTUsuario {
 
     public Date getFechaNac() {
         return fechaNac;
+    }
+    
+    public String getImagen(){
+        return imagen;
     }
 
     public List<String> getListaUsuariosFavoritos() {

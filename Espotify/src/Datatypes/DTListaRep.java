@@ -10,19 +10,42 @@ import java.util.List;
  *
  * @author ivan
  */
-public class DTListaRep {
+public class DTListaRep extends DTContenido{
     protected String nombreListaRep;
     protected String nombreCliente;
     protected String Genero;
     protected String imagen;
     protected List<DTTema> temas;
-
+    protected byte[] imagenBytes; 
+    
     public DTListaRep(String nombreListaRep, String nombreCliente, String Genero, String imagen, List<DTTema> temas) {
         this.nombreListaRep = nombreListaRep;
         this.nombreCliente = nombreCliente;
         this.Genero = Genero;
         this.imagen = imagen;
         this.temas = temas;
+    }
+     public DTListaRep(String nombreListaRep, String nombreCliente, String Genero) {
+        this.nombreListaRep = nombreListaRep;
+        this.nombreCliente = nombreCliente;
+        this.Genero = Genero;
+    }
+
+    public byte[] getImagenBytes() {
+        return imagenBytes;
+    }
+
+    public void setImagenBytes(byte[] imagenBytes) {
+        this.imagenBytes = imagenBytes;
+    }
+     
+         public DTListaRep(String nombreListaRep, String nombreCliente, String Genero, String imagen, List<DTTema> temas,byte[] imagenBytes) {
+        this.nombreListaRep = nombreListaRep;
+        this.nombreCliente = nombreCliente;
+        this.Genero = Genero;
+        this.imagen = imagen;
+        this.temas = temas;
+        this.imagenBytes = imagenBytes;
     }
 
     public String getNombreListaRep() {
@@ -43,6 +66,13 @@ public class DTListaRep {
 
     public List<DTTema> getTemas() {
         return temas;
+    }
+    
+    public DTListaRep(String nombreListaRep, String nombreCliente, String Genero, List<DTTema> temas){
+        this.nombreListaRep = nombreListaRep;
+        this.nombreCliente = nombreCliente;
+        this.Genero = Genero;
+        this.temas = temas;
     }
     
 }

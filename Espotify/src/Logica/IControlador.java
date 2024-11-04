@@ -4,10 +4,14 @@ package Logica;
 import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
+import Datatypes.DTContenido;
 import Datatypes.DTListaRep;
+import Datatypes.DTSub;
 import Datatypes.DTTema;
 import Datatypes.DTUsuario;
 import Persis.ControladoraPersistencia;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -27,7 +31,7 @@ public interface IControlador {
     //private abstract Artista buscarArtistaPorCorreo(String correo) throws Exception;
     //@SuppressWarnings("empty-statement")
     //private abstract Genero buscarGeneroPorNombre(String nombreGenero) throws Exception;
-    public abstract void CrearListaRepGeneral(String nombreLista, String imagen);
+    public abstract void CrearListaRepGeneral(String nombreLista, String imagen,String nomGenero);
     public abstract void CrearListaRepParticular(String nombreLista, String correoCliente, String imagen, boolean privada) throws Exception;
     public abstract void GuardarTemaFavorito(String correoCliente, String correoArtista, String nombreAlbum, String nombreTema) throws Exception;
     public abstract void GuardarAlbumFavorito(String correoCliente, String correoArtista, String nombreAlbum) throws Exception;
@@ -40,7 +44,7 @@ public interface IControlador {
     public abstract List<String> MostrarNombreClientes();
     public abstract List<Cliente> listaClientes();
     public abstract Cliente encontrarCliente(String mail);
-    public abstract List<Artista> listaArtistas();
+   public abstract List<Artista> listaArtistas();
     public abstract Artista encontrarArtista(String mail);
     public abstract void seguirUsuario(String correoSeguidor, String correoSeguido) throws Exception;
     public abstract void dejarSeguirUsuario(String correoSeguidor, String correoSeguido) throws Exception;
@@ -50,10 +54,14 @@ public interface IControlador {
     public abstract Cliente encontrarClientePorNicknameTipoCli(String nickname);
     public abstract Artista encontrarArtistaPorNicknameTipoArt(String nickname);
     public abstract List<String> obtenerAlbumesFavoritosDeCliente(String correoCliente) throws Exception ;
-    public abstract DTAlbum findAlbumxNombreDT (String string) throws Exception;
-    public abstract List<String> findDTAlbumPorGenero(String string) ;
+    public abstract DTAlbum findAlbumxNombreDT(String nombreAlbum,String correoArtista) throws Exception;
+    public abstract List<String> findstringAlbumPorGenero(String string) ;
     public abstract List<String> MostrarNombreGeneros();
     public abstract String ConvierteNick_A_Correo(String nickname) throws Exception ;
+     public abstract List<String> nombreDeListasDeCliente(String mail)throws Exception ;
+     public abstract  List<String> Lista_Albumes() ;
+     public List<String>FindListasRep_Duenios(String nombrelista) throws Exception;
+     public abstract List<DTAlbum> findDTAlbum(String generopertenece) throws Exception;
     /*private abstract void Cargar_Perfiles();
     private abstract void Cargar_Generos() throws Exception;
     private abstract void Cargar_Albumes() throws Exception;
@@ -94,7 +102,7 @@ public interface IControlador {
     public abstract List<DTListaRep> obtenerDTListaPorGenero(String selectedGenero);
     public abstract DTListaRep obtenerDatosDeLista_Por_Defecto(String nombreSeleccionado) throws Exception;
     public abstract List<DTListaRep> obtenerDTListaPorCliente(String correoCliente);
-    public abstract DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista);
+    public abstract DTListaRep obtenerDatosDeLista_Por_Cliente(String correoCliente, String nombreLista)throws Exception;
     public abstract List<String> nicknamesDeTodosLosArtistas();
     public abstract DTArtista encontrarDTArtistaPorNickname(String nick);
     public abstract List<String> nicksClientesSiguenArtista(String nickAr);
@@ -105,10 +113,90 @@ public interface IControlador {
     public abstract List<String> artistasSeguidosDelCliente(String nick);
     public abstract List<String> nombresListaRepDeCliente(String nick);
     public abstract DefaultListModel favoritosDeCliente (String nick);
-
+    public abstract List<String> obtenerSeguidos(String correoSeguidor);
     public abstract List<String> MostrarNombreArtistasbyAlbum(String nombreAlbum) throws Exception;
     public abstract List<String> temasDeAlbumDeArtista(String album, String artistaMail);
     public abstract List<String> listasPublicasDeCliente (String correo);
     public abstract List<String> listaAlbumesArtistaMail(String correo) throws Exception;
     public abstract List<String> listasDefecto();
+    public abstract boolean sePuedenCargarLosDatos();
+
+    public abstract List<String> FindListas();
+    public abstract List<String> FindListasDefault();
+
+    public abstract List<String>ListaTemas_De_Lista(String lista, String NickArtist);
+
+    public abstract List<String> ListaTemas_De_Lista_Def(String lista);
+
+    public abstract void AgregarTema_De_Album_A_Lista(String cliente, String lista_de_cliente, String album, String artista_de_album, String tema_selected) throws Exception;
+
+    public abstract void AgregarTema_De_ListaPart_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String cliente_con_lista, String tema_selected)throws Exception;
+
+    public abstract void AgregarTema_De_ListaDef_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String tema_selected) throws Exception;
+
+    public abstract void AgregarTema_De_Album_A_ListaDef(String lista, String album,String artista_de_album, String tema_selected)throws Exception;
+
+    public abstract void AgregarTema_De_ListaPart_A_ListaDef(String lista, String lista_where_temais, String cliente_con_lista, String tema_selected)throws Exception;
+
+    public abstract void AgregarTema_De_ListaDef_A_ListaDef(String lista, String lista_where_temais, String tema_selected)throws Exception;
+
+    public abstract void EliminarTemaDeLista_Part(String NomLista, String nickCli, Long idTema) throws Exception;
+
+    public abstract List<Long> GetIdTemas(String nomTema) throws Exception;
+
+    public abstract void EliminarTemaDeLista_Def(String nombreLista, String nombreTema)throws Exception;
+    
+    public abstract double calculaMontoSubscripcion(String tipo) throws Exception;
+    
+    public abstract void crearSubscripcion(String nicknameCliente, String tipoSub) throws Exception;
+    
+    public abstract void PruebaSubs() throws Exception;
+
+    
+    public abstract List<DTSub> listarSubscripciones() throws Exception;
+
+    public abstract void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
+    
+    public abstract List<DTAlbum> findAlbumesPorArtista(String nickArtista) throws Exception;
+    
+    public abstract String obtenerExtensionArchivo(String nombreArchivo);
+    
+    public abstract String guardarImagenesEnCarpeta(byte[] archivoImagen, String nickname) throws IOException;
+    
+    public abstract String guardarTemaEnCarpeta(byte[] archivoTema, String nombreTema) throws IOException;
+    
+    public abstract String guardarImagenesAlbum(byte[] archivoImagen, String nombreAlbum, String nombreArtista) throws IOException;
+    
+    public abstract boolean esCorreo(String input);
+    
+    public abstract DTUsuario login(String usuario, String pass)throws Exception;
+    
+    public abstract List<DTListaRep> obtenerDTListaPorClientepublica(String correoCliente)  throws Exception;
+    
+    public abstract boolean verificarSubscripcion(String cliente) ;
+    
+    public abstract String guardarImagenesLista(byte[] archivoImagen, String nombreLista) throws IOException;
+    public abstract List<DTSub> listarSubdeCliente(String nombrecli) throws Exception;
+    
+    public abstract boolean existeNickname(String nickname);
+    public abstract boolean existeMail(String mail);
+    
+    public abstract void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado)throws Exception;
+    
+    public abstract List <DTContenido> Buscador(String filtro, String sortBy) throws Exception;
+    public abstract byte[] obtenerImagenComoBytes(String rutaImagen) throws IOException;
+    public abstract boolean estaSiguiendoUsuario(String nicknameSeguidor, String nicknameSeguido);
+    
+   
+    
+     public abstract List<DTAlbum> findDTAlbumTodos()throws Exception;
+     
+     public abstract List<String> listaFavoritosDeCliente(String nick);
+     public abstract List<String> nombreAlbumyNombreArtistaFavoritosCliente(String nick);
+     public abstract byte[] obtenerTemaComoBytes(String rutaTema) throws IOException;
+    public abstract byte[][] obtenerTemasComoBytes(String[] rutasTemas) throws IOException;
+    
+    
+    public abstract List<DTListaRep> ListasPorDefecto() throws Exception;
+    public abstract List<DTListaRep> ListasParticulares() throws Exception;
 }

@@ -3,10 +3,12 @@ package Persis;
 import Logica.Album;
 import Logica.Artista;
 import Logica.Cliente;
+import Logica.Favoritos;
 import Logica.Genero;
 import Logica.ListaRep;
 import Logica.ListaRepGeneral;
 import Logica.ListaRepParticular;
+import Logica.Subscripcion;
 import Logica.Tema;
 import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class ControladoraPersistencia {
     TemaJpaController temajpa = new TemaJpaController();
     ListaRepJpaController listjpa = new ListaRepJpaController();
     FavoritosJpaController favjpa = new  FavoritosJpaController();
+    SubscripcionJpaController subjpa = new SubscripcionJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -159,7 +162,7 @@ public void crearAlbum(Album album) throws Exception {
     
     
 
-    public ListaRep findListaRepByNombre(String recurso) throws Exception{
+    public List<ListaRep> findListaRepByNombre(String recurso) throws Exception{
         try {
         return listjpa.findListaRepByNombre(recurso);
     }catch (Exception e) {
@@ -167,6 +170,12 @@ public void crearAlbum(Album album) throws Exception {
         throw new Exception("No se encuentra el nombre de la lista de reproduccion: " +recurso, e);
     }
     }
+    
+    public List<String> NombreListasRepParticular(){
+        return listjpa.NombreDeListasParticulares();
+}
+    
+    
         public Album findOneAlbumByNombre(String recurso) throws Exception{
         
            try {
@@ -200,7 +209,9 @@ public void crearAlbum(Album album) throws Exception {
 public void editListaPrivada(ListaRepParticular lista) throws Exception{//puede ser que la tenga q cambiar a particular
         listjpa.edit(lista);//le ando la lista hecha publica
     } 
-
+public void editListaPorDefecto(ListaRepGeneral lista) throws Exception{
+    listjpa.edit(lista);
+}
      public Album findAlbumId(Long id){
         
         return albjpa.findAlbum(id);
@@ -256,14 +267,56 @@ public Artista encontrarArtistaPorNickname(String nickname) {
         return listjpa.findListaRepEntities();
     }
     
-    
-    
         public List<Genero> listaGeneros (){
         return genjpa.findGeneroEntities(); //me devuelve una lista con todos los artistas de la BD para mostrarlos de ahi
     }
     
-    
     public List<Album> listaAlbumes(){
         return albjpa.findAlbumEntities(); //me devuelve una lista con todos los albumes de la BD para mostrarlos de ahi
     }
+    
+    public void modificarBiografiaArtista(){
+        artjpa.modificarBiografiaArtista();
+    }
+
+    public List<String> NombreListasRep_Defecto() {
+       return listjpa.NombreDeListasDefault();
+    }
+
+    public List<Tema> findTemaEntities() {
+        
+        return temajpa.findTemaEntities();
+    }
+
+    public void crearSubscripcion(Subscripcion nuevaSubscripcion) {
+       subjpa.create(nuevaSubscripcion);
+    }
+
+    public List<Subscripcion> getAllSubscripciones() {
+       return subjpa.findSubscripcionEntities();
+
+    }
+
+    public Subscripcion findSubscripcion(Long id) {
+       return subjpa.findSubscripcion(id);
+    }
+
+    public void updateSubscripcion(Subscripcion sub) throws Exception {
+      subjpa.edit(sub);
+    }
+
+    public List<Favoritos> findFavoritosByFiltroCriteria(String filtro, String sortBy) {
+       return favjpa.findFavoritosByFiltroCriteria(filtro, sortBy);
+    }
+    
+  public List<Album> findDTAlbumTodos(){
+      return albjpa.findAlbumEntities();
+
+}
+  
+  public List<ListaRep> findListasRep(){
+       
+       return listjpa.findListaRepEntities();
+  
+   }
 }

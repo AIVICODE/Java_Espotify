@@ -1,0 +1,124 @@
+
+     * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    background-color: #22c55e;
+    padding: 1rem;
+}
+        body {
+            background-color: #121212; /* Color de fondo oscuro similar a Spotify */
+            color: #fff; /* Texto blanco */
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Fuente moderna */
+            margin: 0; /* Asegurarte de que el body no tenga margen */
+            padding: 0; /* Asegurarte de que el body no tenga padding */
+
+        }
+        .container3 {
+            background-color: #1e1e1e; /* Fondo más claro para el contenedor */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+            padding: 20px; /* Espaciado interno */
+
+        }
+        h2 {
+            color: white; /* Verde característico de Spotify */
+            border-bottom: 2px solid #1db954; /* Línea verde debajo del título */
+            padding-bottom: 10px; /* Espaciado debajo del título */
+        }
+        .form-group label {
+            font-weight: bold; /* Etiquetas en negrita */
+            color: #b3b3b3; /* Color gris para las etiquetas */
+        }
+        .btn-primary {
+            background-color: #1db954; /* Color verde de Spotify para el botón */
+            border: none; /* Sin borde */
+        }
+        .btn-primary:hover {
+            background-color: #1aa34a; /* Color verde más claro al pasar el mouse */
+        }
+        .alert {
+            border-radius: 5px; /* Bordes redondeados para las alertas */
+        }
+        .results .alert-info {
+            background-color: #282828; /* Fondo gris para resultados de temas */
+            color: #fff; /* Texto blanco */
+        }
+        .results .alert-light {
+            background-color: #1e1e1e; /* Fondo gris para resultados de álbumes */
+            color: #fff; /* Texto blanco */
+        }
+        .results .alert-secondary {
+            background-color: #1e1e1e; /* Fondo gris para resultados de listas */
+            color: #fff; /* Texto blanco */
+        }
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+.profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.profile-info button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+
+.profile-info button:hover {
+    text-decoration: underline;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+.user-nickname {
+    font-weight: bold;
+}
+.user-favorites {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #ffff00;
+}
+.star-icon {
+    margin-right: 0.25rem;
+}
+.logout-button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+.logout-button:hover {
+    background-color: white;
+    color: #191414;
+}

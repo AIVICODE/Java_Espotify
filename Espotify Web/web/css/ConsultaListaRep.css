@@ -1,0 +1,294 @@
+
+     * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    background-color: #22c55e;
+    padding: 1rem;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #181818;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+.profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.profile-info button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+
+.profile-info button:hover {
+    text-decoration: underline;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+}
+.user-nickname {
+    font-weight: bold;
+}
+.user-favorites {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #ffff00;
+}
+.star-icon {
+    margin-right: 0.25rem;
+}
+.logout-button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+.logout-button:hover {
+    background-color: white;
+    color: #191414;
+}
+        h1, h2 {
+            color: #ffffff; /* Verde de Spotify */
+        }
+
+
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #404040; /* Color de fondo del select */
+            color: #ffffff; /* Texto blanco */
+            font-size: 16px; /* Tamaño de fuente */
+            width: 100%;
+            cursor: pointer; /* Cambia el cursor al pasar sobre el select */
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #404040; /* Verde de Spotify */
+            color: white; /* Texto blanco */
+            border: none;
+            border-radius: 4px; /* Bordes redondeados */
+            font-size: 16px; /* Tamaño de fuente */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        }
+
+        button:hover {
+            background-color: #1aa34a; /* Verde más oscuro al pasar el mouse */
+        }
+
+        ul {
+            list-style-type: none; /* Sin viñetas */
+            padding: 0; /* Sin relleno */
+        }
+
+      
+        .playlist-form {
+    display: inline; /* Para que el formulario no ocupe toda la fila */
+}
+        
+        
+li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 5px 0;
+    background-color: #282828; /* Fondo oscuro para cada tema */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Efecto de transición */
+    cursor: pointer; /* Cambiar cursor */
+}
+
+
+li:hover {
+    background-color: #3a3a3a; /* Cambio de color al pasar el ratón */
+}
+
+.orden {
+    width: 30px; /* Ancho del número de orden */
+    text-align: center; /* Centrar número */
+    color: #b3b3b3; /* Color gris para el orden */
+}
+
+.player-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.track-info {
+    display: flex;
+    align-items: center;
+}
+
+.album-cover {
+    width: 2rem; /* Reduce el tamaño de la portada del álbum */
+    height: 2rem;
+    margin-right: 0.8rem; /* Reduce el margen derecho */
+}
+
+.track-details p {
+    margin: 0;
+}
+
+.track-details .artist {
+    font-size: 0.75rem; /* Reduce el tamaño de la fuente del artista */
+    color: #9ca3af;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+}
+
+.player-controls button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin: 0 0.3rem; /* Reduce el margen entre los botones */
+}
+
+.player-controls button:hover {
+    color: #22c55e;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    width: 80px; /* Reduce el ancho del control deslizante */
+    height: 4px;
+    background: #4a4a4a;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    margin-left: 0.5rem;
+}
+
+.volume-slider:hover {
+    opacity: 1;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px; /* Reduce el tamaño del controlador deslizante */
+    height: 10px;
+    background: #22c55e;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.tema-enlace {
+    display: flex; /* Usar flexbox en el enlace */
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center; /* Alineación vertical */
+    text-decoration: none; /* Quitar subrayado */
+    color: inherit; /* Mantener el color del texto del contenedor */
+    width: 100%;
+}
+.duracion {
+    margin-left: auto; /* Empuja el tiempo hacia la derecha */
+    color: #b3b3b3; /* Color gris para la duración */
+    min-width: 50px; /* Ancho mínimo para la duración para que no se mueva con el texto */
+    text-align: right; /* Alinear texto a la derecha */
+}
+
+.tema-enlace:hover {
+    color: #007bff; /* Cambia el color al pasar el mouse, si lo deseas */
+}
+
+
+.add-favorite {
+    background-color: #1DB954; /* Verde característico de Spotify */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 6px 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+}
+
+.add-favorite:hover {
+    background-color: #1AA34A; /* Color más oscuro al pasar el ratón */
+}
+
+.add-favorite:focus {
+    outline: none; /* Quitar el contorno al hacer clic */
+}
+
+.playlist-image {
+    width: 100px; /* Ajusta según tu diseño */
+    height: auto; /* Mantiene la relación de aspecto */
+}
+
+.add-favorite-tema {
+    background-color: #1DB954; /* Verde característico de Spotify */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 6px 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+    margin-right: 10px;
+}

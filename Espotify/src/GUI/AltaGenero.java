@@ -65,6 +65,7 @@ public class AltaGenero extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setText("Nombre del Genero");
 
@@ -86,35 +87,38 @@ public class AltaGenero extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(jTree1);
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel3.setText("Alta de Genero");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel1)
-                        .addGap(67, 67, 67)
-                        .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
-                                .addGap(72, 72, 72)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(111, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,11 +128,11 @@ public class AltaGenero extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(54, 54, 54))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -140,19 +144,26 @@ public class AltaGenero extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombreGenero = txtGenero.getText();
+        if(nombreGenero.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre del genero no puede ser vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }else{
+            //si selectedGenero es el genero primero entonces va a ser null, sino da error y dice que no existe el genero géneros
+            if((selectedGenero != null) && (selectedGenero.equals("Géneros"))){
+                selectedGenero = null;//este control daria error si se hiciera un genero de nombre Géneros y se seleccionara como padre
+            }
+            try {
+                // Llamar al método CrearGenero
+                control.CrearGenero(nombreGenero, selectedGenero);
 
-
-    try {
-        // Llamar al método CrearGenero
-        control.CrearGenero(nombreGenero, selectedGenero);
-        
-        // Mostrar mensaje de éxito
-        javax.swing.JOptionPane.showMessageDialog(this, "El género fue creado exitosamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        
-    } catch (Exception e) {
-        // Mostrar mensaje de error
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al crear el género: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+                // Mostrar mensaje de éxito
+                javax.swing.JOptionPane.showMessageDialog(this, "El género fue creado exitosamente.", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                jTree1.setModel(control.buildGeneroTree());//actualizar los generos luego de agregar uno
+                txtGenero.setText("");//limpio el coso del nombre al ingresar el genero
+            } catch (Exception e) {
+                // Mostrar mensaje de error
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al crear el género: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -161,6 +172,7 @@ public class AltaGenero extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTree1;
     private javax.swing.JTextField txtGenero;

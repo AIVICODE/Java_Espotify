@@ -1,0 +1,151 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+    margin: 0;
+    padding: 0; /* Asegúrate de que no haya padding en el body */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Altura completa de la ventana */
+}
+
+h2 {
+    color: #ffffff;
+    margin: 20px 20px 0; /* Margen para el título */
+}
+
+ul {
+    list-style: none; /* Quitar viñetas */
+    padding: 0;
+    flex: 1; /* Permitir que la lista ocupe el espacio restante */
+    overflow-y: auto; /* Habilitar el desplazamiento vertical */
+    margin: 0 20px; /* Margen para la lista */
+}
+
+li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 5px 0;
+    background-color: #282828; /* Fondo oscuro para cada tema */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Efecto de transición */
+    cursor: pointer; /* Cambiar cursor */
+}
+
+li:hover {
+    background-color: #3a3a3a; /* Cambio de color al pasar el ratón */
+}
+
+.footer {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    position: relative; /* Cambia a 'relative' si no está funcionando como 'fixed' */
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+.orden {
+    width: 30px; /* Ancho del número de orden */
+    text-align: center; /* Centrar número */
+    color: #b3b3b3; /* Color gris para el orden */
+}
+
+.player-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.track-info {
+    display: flex;
+    align-items: center;
+}
+
+.album-cover {
+    width: 2rem; /* Reduce el tamaño de la portada del álbum */
+    height: 2rem;
+    margin-right: 0.8rem; /* Reduce el margen derecho */
+}
+
+.track-details p {
+    margin: 0;
+}
+
+.track-details .artist {
+    font-size: 0.75rem; /* Reduce el tamaño de la fuente del artista */
+    color: #9ca3af;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+}
+
+.player-controls button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin: 0 0.3rem; /* Reduce el margen entre los botones */
+}
+
+.player-controls button:hover {
+    color: #22c55e;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    width: 80px; /* Reduce el ancho del control deslizante */
+    height: 4px;
+    background: #4a4a4a;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    margin-left: 0.5rem;
+}
+
+.volume-slider:hover {
+    opacity: 1;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px; /* Reduce el tamaño del controlador deslizante */
+    height: 10px;
+    background: #22c55e;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.duracion {
+    margin-left: auto; /* Empuja el tiempo hacia la derecha */
+    color: #b3b3b3; /* Color gris para la duración */
+}
+
+.add-favorite-tema {
+    background-color: #1DB954; /* Verde característico de Spotify */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 6px 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+    margin-right: 10px;
+}
+
+.add-favorite-tema:hover {
+    background-color: #1AA34A; /* Color más oscuro al pasar el ratón */
+}
+
+.add-favorite-tema:focus {
+    outline: none; /* Quitar el contorno al hacer clic */
+}

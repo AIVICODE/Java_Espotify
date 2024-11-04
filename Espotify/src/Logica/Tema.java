@@ -2,6 +2,7 @@ package Logica;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -26,7 +27,9 @@ public class Tema extends Favoritos {
     public void setDuracionSegundos(long duracionSegundos) {
         this.duracionSegundos = duracionSegundos;
     }
-
+    
+ 
+    
     private String nombre;
 
     @Column(name = "duracion_segundos")
@@ -49,6 +52,14 @@ public class Tema extends Favoritos {
         this.nombre = nombre;
         this.duracion = Duration.ofMinutes(minutos).plusSeconds(segundos);
         this.direccion = direccion;
+                
+        // Establecer el orden basado en la cantidad de temas existentes
+        if (album != null) {
+            List<Tema> temas = album.getListaTemas(); // Supongamos que hay un método en Album que devuelve la lista de temas
+            this.orden = temas.size() + 1; // El nuevo tema tendrá un orden uno mayor que el número de temas existentes
+        } else {
+            this.orden = 1; // Si no hay álbum, establecer el orden en 1
+        }
     }
 
     // Getters y setters
