@@ -22,20 +22,26 @@ public class SvSeguirDejarDeSeguirUsuarios extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+        System.out.println("llea el user "+ dtUsuario.getNickname());
         if (dtUsuario == null) {
             response.sendRedirect("login.jsp");
             return;
         }
         String correoSeguidor = dtUsuario.getCorreo();
+        String nickNameSeguidor= dtUsuario.getNickname();
         String nicknameSeguido = request.getParameter("nicknameSeguido");
-
+        String correoSeguido = request.getParameter("correoSeguido");
+        System.out.println("llea el seguidor "+ nicknameSeguido );
+        System.out.println("llea el seguidor "+ correoSeguido );
         try {
-            boolean yaSigue = control.estaSiguiendoUsuario(correoSeguidor, nicknameSeguido);
+            boolean yaSigue = control.estaSiguiendoUsuario(nickNameSeguidor, nicknameSeguido);
             if (yaSigue) {
-                control.dejarSeguirUsuario(correoSeguidor, nicknameSeguido);
+                System.out.println("if ya lo sigue");
+                control.dejarSeguirUsuario(correoSeguidor, correoSeguido);
                 response.getWriter().write("Dejaste de seguir a " + nicknameSeguido);
             } else {
-                control.seguirUsuario(correoSeguidor, nicknameSeguido);
+                System.out.println("Else no lo sigue");
+                control.seguirUsuario(correoSeguidor, correoSeguido);
                 response.getWriter().write("Ahora sigues a " + nicknameSeguido);
             }
         } catch (Exception e) {

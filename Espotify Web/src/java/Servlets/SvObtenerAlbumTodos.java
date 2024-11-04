@@ -48,19 +48,20 @@ public class SvObtenerAlbumTodos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try {
-            List<DTAlbum> listaAlbumes = control.findDTAlbumTodos();
-            request.setAttribute("listaAlbumes", listaAlbumes);
-            // Redirigir a una vista o enviar la respuesta como texto (puedes personalizar esto)
-            response.setContentType("application/json");
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            out.print(gson.toJson(listaAlbumes)); // Convertir a JSON
-            out.flush();
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al obtener los álbumes");
-        }
-    
+        
+ try {
+        List<DTAlbum> albumes = control.findDTAlbumTodos(); // Obtener todos los álbumes
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        // Generar opciones HTML para el ComboBox de álbumes, identificando por nombre de álbum y nombre de artista
+       for (DTAlbum album : albumes) {
+    out.println("<option value='" + album.getNombre() + " - " + album.getArtista().getNickname() + "'>" + album.getNombre() + " - " + album.getArtista().getNickname() + "</option>");
+}
+    } catch (Exception ex) {
+        Logger.getLogger(SvObtenerAlbumTodos.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
     }
 
 

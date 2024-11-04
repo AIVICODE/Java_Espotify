@@ -313,4 +313,10 @@ public Artista encontrarArtistaPorNickname(String nickname) {
       return albjpa.findAlbumEntities();
 
 }
+  
+  public List<ListaRep> findListasRep(){
+       
+       return listjpa.findListaRepEntities();
+  
+   }
 }

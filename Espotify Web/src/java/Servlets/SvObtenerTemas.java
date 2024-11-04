@@ -62,9 +62,11 @@ public class SvObtenerTemas extends HttpServlet {
                         .map(DTTema::getDirectorio)
                         .toArray(String[]::new);
                 // Obtiene los byte[] de cada tema
+                System.out.println("ENTRA A TEMAS BYTES");
                 byte[][] temasBytes = control.obtenerTemasComoBytes(rutasTemas);
 //---------------------------------------------------------------------------------------------------------------------------
-                request.setAttribute("album", album);
+System.out.println("SALE A TEMAS BYTES");                
+request.setAttribute("album", album);
                 request.setAttribute("artista", artista);
                 request.setAttribute("temas", temas);
                 request.setAttribute("temasBytes", temasBytes);

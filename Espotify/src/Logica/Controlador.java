@@ -36,12 +36,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
 
 public class Controlador implements IControlador {
-    public static final String CARPETA_LISTA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
-public static final String CARPETA_ALBUM = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
-public static final String CARPETA_USUARIOS = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
-public static final String CARPETA_TEMA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
+    public static final String CARPETA_LISTA = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_listarep/";
+public static final String CARPETA_ALBUM = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_album/";
+public static final String CARPETA_USUARIOS = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_usuarios/";
+public static final String CARPETA_TEMA = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/";
 
-public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
+public static final String CARPETA_GENERICO ="/home/tecnologo/Documentos/Discreta/Espotify/imagenes_usuarios/generico.jpg";
 
 
     private Date createDate(int year, int month, int day) {
@@ -4270,7 +4270,7 @@ return null;
         if (Files.exists(ruta)) {
             return Files.readAllBytes(ruta); // Lee y devuelve el como un arreglo de bytes
         } else {
-            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/" + "generico.mp3");
+            ruta = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
             return Files.readAllBytes(ruta);
         }
     }
@@ -4284,13 +4284,80 @@ return null;
                 temasBytes[i] = Files.readAllBytes(ruta); // Lee y almacena cada archivo en el array
             } else {
                 // Si el archivo no existe, cargar un archivo genérico
-                Path rutaGenerica = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/" + "generico.mp3");
+                Path rutaGenerica = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
                 temasBytes[i] = Files.readAllBytes(rutaGenerica);
             }
         }
 
         return temasBytes;
     }
+    
+    
+    public List<DTListaRep> ListasParticulares() throws Exception {
+    List<ListaRep> favoritosList = controlpersis.findListasRep();
+    List<DTListaRep> dtListaRepList = new ArrayList<>();
+
+    for (Favoritos favorito : favoritosList) {
+        if (favorito instanceof ListaRep listaRep) {
+            List<DTTema> temasDT = new ArrayList<>(); // Lista para almacenar los temas de la lista actual
+
+            // Obtener los temas de la lista actual y convertirlos a DTTema
+            for (Tema tema : listaRep.getListaTemas()) { // Suponiendo que ListaRep tiene un método getTemas()
+                DTTema dtTema = new DTTema(
+                    tema.getNombre(),(int)
+                    tema.getDuracionSegundos() / 60,(int)
+                    tema.getDuracionSegundos() % 60,
+                    tema.getDireccion()
+                );
+                System.out.println("Nombre Tema:" + tema.getNombre());
+                temasDT.add(dtTema);
+            }
+
+            if (listaRep instanceof ListaRepParticular listaParticular) {
+                if (!listaParticular.isPrivada()) {
+                    Cliente cli = BuscarDuenioLista(listaRep.getId());
+                    String nombreCliente = cli != null ? cli.getNickname() : "";
+                    System.out.println("nombreCliente:"+ nombreCliente);
+                    dtListaRepList.add(new DTListaRep(listaRep.getNombre(), nombreCliente, "", temasDT));
+                    System.out.println("Nombre lista:" + listaParticular.getNombre());
+                }
+            } 
+        }
+    }
+
+    return dtListaRepList;
+    
+}
+    public List<DTListaRep> ListasPorDefecto() throws Exception {
+    List<ListaRep> favoritosList = controlpersis.findListasRep();
+    List<DTListaRep> dtListaRepList = new ArrayList<>();
+
+    for (Favoritos favorito : favoritosList) {
+        if (favorito instanceof ListaRep listaRep) {
+            List<DTTema> temasDT = new ArrayList<>(); // Lista para almacenar los temas de la lista actual
+
+            // Obtener los temas de la lista actual y convertirlos a DTTema
+            for (Tema tema : listaRep.getListaTemas()) { // Suponiendo que ListaRep tiene un método getTemas()
+                DTTema dtTema = new DTTema(
+                    tema.getNombre(),(int)
+                    tema.getDuracionSegundos() / 60,(int)
+                    tema.getDuracionSegundos() % 60,
+                    tema.getDireccion()
+                );
+                temasDT.add(dtTema);
+            }
+
+            if (listaRep instanceof ListaRepGeneral listaRepGeneral) {
+                String generoList = listaRepGeneral.getGenero().getNombre();
+                 System.out.println("Lista general:"+ generoList);
+                dtListaRepList.add(new DTListaRep(listaRep.getNombre(), "", generoList, temasDT));
+                System.out.println("Nombre lista:" + listaRepGeneral.getNombre());
+            }
+        }
+    }
+
+    return dtListaRepList;
+}
 }
 
 

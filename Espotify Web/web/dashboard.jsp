@@ -42,6 +42,7 @@
             <button id="btnAgregarSubscripcion">Activar Premium</button>
             <button id="btnAgregarLista">Crear Lista de Reproduccion</button>
             <button id="btnPublicarLista">Publicar Lista de Reproducción </button>
+            <button id="btnAgregarTema">Agregar Tema a Lista </button>
             <h2>Usuarios</h2>
             <button id="btnConsultaUsuarioL">Consulta de Perfil de Usuario</button>
             <h2>Biblioteca</h2>
@@ -293,9 +294,13 @@ document.getElementById('btnPublicarLista').addEventListener('click', function()
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'ConsultaUsuario_Logueado.jsp';
     });
+    
+    document.getElementById('btnAgregarTema').addEventListener('click', function() {//NUEVO madi
+        // Redirigir a la página AgregarListaRep.jsp
+        window.location.href = 'AgregarTemaALista.jsp';
+    });
+    
+
     </script>
 
 </body>
-<footer>
-
-</footer>

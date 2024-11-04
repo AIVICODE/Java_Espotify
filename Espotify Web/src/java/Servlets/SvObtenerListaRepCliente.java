@@ -4,6 +4,7 @@ import Datatypes.DTCliente;
 import Datatypes.DTListaRep;
 import Logica.Fabrica;
 import Logica.IControlador;
+import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -31,29 +32,31 @@ public class SvObtenerListaRepCliente extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
-        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+ HttpSession session = request.getSession(false);
+    DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
 
-        if (dtUsuario != null && !dtUsuario.getNickname().isEmpty()) {
-            try {
-                // Obtener las listas particulares del cliente
-                List<DTListaRep> listasParticulares = control.obtenerDTListaPorCliente(dtUsuario.getCorreo());
+    if (dtUsuario != null && !dtUsuario.getNickname().isEmpty()) {
+        try {
+            // Obtener las listas particulares del cliente
+            List<DTListaRep> listasParticulares = control.obtenerDTListaPorCliente(dtUsuario.getCorreo());
 
-                // Pasar la lista de reproducción al JSP
-                request.setAttribute("listasdeRepparticular", listasParticulares);
+            // Convertir la lista a JSON
+            Gson gson = new Gson();
+            String listasJson = gson.toJson(listasParticulares);
 
-                // Redirigir a la página JSP para mostrar las listas particulares
-                RequestDispatcher dispatcher = request.getRequestDispatcher("AgregarTemaALista.jsp");
-                dispatcher.forward(request, response);
+            // Configurar la respuesta
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(listasJson);
 
-            } catch (Exception e) {
-                Logger.getLogger(SvObtenerListaRepCliente.class.getName()).log(Level.SEVERE, null, e);
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al obtener listas particulares: " + e.getMessage());
-            }
-        } else {
-            // Si no se proporciona el nombre del cliente, devolver un error o redirigir
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Nombre del cliente no proporcionado.");
+        } catch (Exception e) {
+            Logger.getLogger(SvObtenerListaRepCliente.class.getName()).log(Level.SEVERE, null, e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al obtener listas particulares: " + e.getMessage());
         }
+    } else {
+        // Si no hay usuario en sesión, devolver error
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Nombre del cliente no proporcionado.");
+    }
     }
 
     @Override

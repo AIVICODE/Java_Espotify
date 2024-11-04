@@ -147,6 +147,10 @@
         </style>
     </head>
     <jsp:include page="header.jsp" />
+    <%
+        DTUsuario nickLogueado = (DTUsuario) session.getAttribute("usuario");
+        String correoLogueado = nickLogueado != null ? nickLogueado.getNickname() : null;
+    %>
     <body>
         <div class="container d-flex justify-content-center">
                 <div class="spotify-card">
@@ -195,6 +199,10 @@
                         <div id="albumesFavoritosDiv"> <h3>Albumes favoritos del Cliente:</h3>
                         <ul id="albumesFavoritos"></ul>
                         </div>
+                        <div class="section-divider"></div>
+                        <div id="seguirDiv">
+                        <button id="seguirButton" class="boton" onclick="verificarYAgregarFavorito()">Seguir</button>
+                        </div>
                         <!-- Dynamic Content para albumes-->
                         <div id="dynamicContent"> </div>
                     </div>
@@ -206,6 +214,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
       
     <script>
+        let correoLogueado = "<%= correoLogueado %>";
         function cargarUsuarios() {
             fetch('SvCargarUsuarios')
                 .then(response => {
@@ -288,7 +297,7 @@
                                 seguidoresDiv.appendChild(li);
                             });
                             // Muestra el contenedor de seguidores
-                            document.getElementById('seguidoresDiv').style.display = 'block'; // Asegúrate de que el contenedor esté visible
+                            document.getElementById('seguidoresDiv').style.display = 'block'; // Asegúrate de que el contenedor esté visible                
                         } else {
                             // Si no hay seguidores, puedes ocultar el contenedor
                             document.getElementById('seguidoresDiv').style.display = 'none';
@@ -304,6 +313,15 @@
                             });
                             document.getElementById('seguidosDiv').style.display = 'block'; // Asegúrate de que el contenedor esté visible
                             console.log(seguidos);//MOSTRAR CLIENTES Y ARTISTAS
+     //-------------------------------------------------------MARIANO-----------------------------------------------------------------------------
+                            // Mostrar el botón de seguir o dejar de seguir según estado actual
+                        const seguirButton = document.getElementById('seguirButton');
+                        if (correoLogueado && seguidores.includes(correoLogueado)) {
+                            seguirButton.textContent = "Dejar de seguir";
+                        } else {
+                            seguirButton.textContent = "Seguir";
+                        }
+    //-------------------------------------------------------MARIANO-----------------------------------------------------------------------------    
                         } else {
                             document.getElementById('seguidosDiv').style.display = 'none'; // Asegúrate de que el contenedor esté visible
                         }
@@ -395,10 +413,20 @@
                                 li.textContent = segu;
                                 seguidoresDiv.appendChild(li);
                             });
+                            //------------------------------------------------------------------------------------------MARIANO----------------------------------------------------------------                           
+                        // Mostrar el botón de seguir o dejar de seguir según estado actual
+                        const seguirButton = document.getElementById('seguirButton');
+                        if (correoLogueado && seguidores.includes(correoLogueado)) {
+                            seguirButton.textContent = "Dejar de seguir";
+                        } else {
+                            seguirButton.textContent = "Seguir";
+                        }
+ //-----------------------------------------------------------------------------------------------------MARIANO---------------------------------------------------------------------------------------                           
                             // Muestra el contenedor de seguidores
                             document.getElementById('seguidoresDiv').style.display = 'block'; // Asegúrate de que el contenedor esté visible
                         } else {// Si no hay seguidores, ocultar el contenedor
                             document.getElementById('seguidoresDiv').style.display = 'none';
+                            
                         }
                         //Seguidos aca no se muestra
                         const seguidosDiv = document.getElementById('seguidos');
@@ -505,6 +533,53 @@
         }
         
         //-----------------------------------------------------------------------------
+        function seguirUsuario() {
+            const nicknameSeguido = document.getElementById('nickname').textContent;
+            const correoSeguido = document.getElementById('correo').textContent;
+
+            fetch('SvSeguirDejarDeSeguirUsuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: "nicknameSeguido="+nicknameSeguido + "&correoSeguido="+ correoSeguido
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al intentar seguir/dejar de seguir al usuario');
+                }
+                return response.text(); // La respuesta es texto plano
+            })
+            .then(message => {
+                alert(message); // Muestra el mensaje "Ahora sigues a..." o "Dejaste de seguir a..."
+                cargarDatosUsuario();
+            })
+            .catch(error => {
+                console.error('Error al procesar la solicitud:', error);
+                alert('No se pudo completar la acción.');
+            });
+        }
+window.onload = cargarUsuarios;
+
+
+        function verificarYAgregarFavorito() {
+    // Verificación de suscripción
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                seguirUsuario();
+            } else {
+                alert('No tienes una suscripción activa para poder seguir.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
+
+
         </script>
   
     

@@ -68,4 +68,11 @@ public class DTListaRep extends DTContenido{
         return temas;
     }
     
+    public DTListaRep(String nombreListaRep, String nombreCliente, String Genero, List<DTTema> temas){
+        this.nombreListaRep = nombreListaRep;
+        this.nombreCliente = nombreCliente;
+        this.Genero = Genero;
+        this.temas = temas;
+    }
+    
 }
