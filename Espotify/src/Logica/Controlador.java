@@ -4,6 +4,7 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTContenido;
+import Datatypes.DTIngresoWeb;
 import Datatypes.DTListaRep;
 import Datatypes.DTSub;
 import Datatypes.DTTema;
@@ -4473,6 +4474,26 @@ return null;
     controlpersis.GeneraRegistro(regweb);
     
     }
+    
+    
+    public List<DTIngresoWeb> convertToDTIngresoWebList() {
+    List<DTIngresoWeb> dtIngresoWebList = new ArrayList<>();
+    
+    for (RegistroIngresoWeb registro : controlpersis.ObtenerRegistros(true)) {
+        DTIngresoWeb dtIngresoWeb = new DTIngresoWeb(
+            registro.getIp(),
+            registro.getUrl(),
+            registro.getBrowser(),
+            registro.getSo(),
+            registro.getFecha()
+        );
+        dtIngresoWebList.add(dtIngresoWeb);
+    }
+    
+    return dtIngresoWebList;
+}
+    
+    
 }
 
 

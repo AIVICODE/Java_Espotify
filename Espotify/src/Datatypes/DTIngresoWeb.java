@@ -4,6 +4,8 @@
  */
 package Datatypes;
 
+import java.util.Date;
+
 /**
  *
  * @author ivan
@@ -13,12 +15,14 @@ public class DTIngresoWeb {
     String url;
     String browser;
     String So;
+    Date fecha;
 
-    public DTIngresoWeb(String ip, String url, String browser, String So) {
+    public DTIngresoWeb(String ip, String url, String browser, String So,Date fecha) {
         this.ip = ip;
         this.url = url;
         this.browser = browser;
         this.So = So;
+        this.fecha=fecha;
     }
 
     public String getIp() {
@@ -36,6 +40,16 @@ public class DTIngresoWeb {
     public String getSo() {
         return So;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    
     
     
 }

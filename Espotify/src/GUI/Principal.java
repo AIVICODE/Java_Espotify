@@ -94,6 +94,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -420,6 +421,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem33);
+
+        jMenuItem34.setText("Ver Registros");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem34);
 
         jMenuBar1.add(jMenu2);
 
@@ -827,6 +836,18 @@ public class Principal extends javax.swing.JFrame {
     quitar_tema_listarep.show(); 
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        VerRegistros verregistro= new VerRegistros();
+    desktopPane.add(verregistro,JLayeredPane.DEFAULT_LAYER);
+   verregistro.setVisible(true);
+    verregistro.setClosable(true);
+    verregistro.setMaximizable(true);
+    verregistro.setIconifiable(true);
+    verregistro.setResizable(true);
+    verregistro.toFront();
+    verregistro.show(); 
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -913,6 +934,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

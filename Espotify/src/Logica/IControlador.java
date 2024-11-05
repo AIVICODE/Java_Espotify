@@ -5,6 +5,7 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTContenido;
+import Datatypes.DTIngresoWeb;
 import Datatypes.DTListaRep;
 import Datatypes.DTSub;
 import Datatypes.DTTema;
@@ -201,4 +202,6 @@ public interface IControlador {
     public abstract List<DTListaRep> ListasParticulares() throws Exception;
     
     public abstract void GeneraRegistro(String ip,String url,String browser,String so);
+    
+    public abstract List<DTIngresoWeb> convertToDTIngresoWebList() ;
 }

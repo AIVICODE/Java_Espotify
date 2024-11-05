@@ -1,6 +1,7 @@
 package Logica;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +21,17 @@ public class RegistroIngresoWeb implements Serializable {
     private String browser;
     
     private String so; 
-
+    private Date fecha;
     public RegistroIngresoWeb() {
         // Constructor sin parámetros requerido por JPA.
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public RegistroIngresoWeb(String ip, String url, String browser, String so) {
@@ -30,6 +39,7 @@ public class RegistroIngresoWeb implements Serializable {
         this.url = url;
         this.browser = browser;
         this.so = so;
+            this.fecha=new Date();
     }
 
     // Getters y Setters

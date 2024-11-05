@@ -326,4 +326,8 @@ public Artista encontrarArtistaPorNickname(String nickname) {
       regjpa.create(regweb);
   
   }
+  
+  public List<RegistroIngresoWeb> ObtenerRegistros(boolean orden){
+      return regjpa.findRegistroIngresoWebEntitiesOrderedByDate(orden);
+  }
 }

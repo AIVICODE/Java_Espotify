@@ -138,4 +138,24 @@ public class RegistroIngresoWebJpaController implements Serializable {
         }
     }
     
+    public List<RegistroIngresoWeb> findRegistroIngresoWebEntitiesOrderedByDate(boolean ascending) {
+    EntityManager em = getEntityManager();
+    try {
+        CriteriaQuery<RegistroIngresoWeb> cq = em.getCriteriaBuilder().createQuery(RegistroIngresoWeb.class);
+        Root<RegistroIngresoWeb> registro = cq.from(RegistroIngresoWeb.class);
+        
+        if (ascending) {
+            cq.orderBy(em.getCriteriaBuilder().asc(registro.get("fecha"))); // Orden ascendente
+        } else {
+            cq.orderBy(em.getCriteriaBuilder().desc(registro.get("fecha"))); // Orden descendente
+        }
+        
+        Query q = em.createQuery(cq);
+        return q.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
+    
 }

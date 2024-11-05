@@ -1,3 +1,5 @@
+package Logica;
+
 
 import Logica.Fabrica;
 import Logica.IControlador;
