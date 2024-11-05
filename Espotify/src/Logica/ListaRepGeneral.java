@@ -22,6 +22,11 @@ public class ListaRepGeneral extends ListaRep {
     public ListaRepGeneral(String nombre, String imagen) {
         super(nombre, imagen);
     }
+    
+public ListaRepGeneral(String nombre) {
+    super(nombre, null); 
+
+}
 
     public ListaRepGeneral( String nombre, String imagen,Genero genero) {
         super(nombre, imagen);

@@ -231,7 +231,7 @@
     %>
     <li>
         <a href="javascript:void(0);" class="tema-enlace" 
-           onclick="seleccionarTema('<%= tema.getNombre() %>', '<%= tema.getDirectorio() %>', '<%= tema.getNombreartista() %>', <%= contador %>);">
+           onclick="seleccionarTema('<%= tema.getNombre() %>', '<%= tema.getDirectorio() %>', '<%= tema.getNombreartista() %>', <%= contador %>,'<%= tema.getNombrealbum() %>');">
             <% if (dtUsuario != null) { %>
                 <button class="add-favorite-tema" 
                         onclick="event.stopPropagation(); verificarYAgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>', '<%= tema.getNombreartista() %>')">+</button>
@@ -320,7 +320,8 @@
             nombre: "<%= tema.getNombre()%>",
             directorio: "<%= tema.getDirectorio()%>",
             artista: "<%= tema.getNombreartista() %>",
-            orden: <%= contador%> // Asignamos un orden secuencial basado en el índice del for
+            orden: <%= contador%>,
+            album: "<%= tema.getNombrealbum() %>"// Asignamos un orden secuencial basado en el índice del for
         });
         <%
             contador++; // Incrementamos el contador después de cada iteración
@@ -332,12 +333,13 @@
       
         let currentIndex = -1;
 
-function seleccionarTema(nombreTema, directorio, artista, orden) {
+function seleccionarTema(nombreTema, directorio, artista, orden,album) {
     document.getElementById("currentSongName").textContent = nombreTema;
     document.getElementById("currentArtistName").textContent = artista;
 
     // Si `directorio` es una URL, redirige y termina la función
     if (directorio.startsWith("bit.ly") || directorio.startsWith("http")) {
+        AumentarReproducciones(nombreTema, album, artista);
         window.open(directorio.startsWith("http") ? directorio : "https://" + directorio, '_blank');
         return;
     }
@@ -359,11 +361,13 @@ function seleccionarTema(nombreTema, directorio, artista, orden) {
             var audioPlayer = document.getElementById("audioPlayer");
             audioPlayer.load();
             audioPlayer.play();
-
+AumentarReproducciones(nombreTema, album, artista);
             // Configuración para la descarga del tema
             let downloadLink = document.getElementById("downloadLink");
             downloadLink.href = audioUrl;
             downloadLink.download = nombreTema;
+            
+            
         })
         .catch(error => {
             console.error("Error al cargar el tema:", error);
@@ -426,35 +430,110 @@ function seleccionarTema(nombreTema, directorio, artista, orden) {
         
         
      // Lógica de descarga y verificación de suscripción
-    document.getElementById('downloadLink').addEventListener('click', function(event) {
+   document.getElementById('downloadLink').addEventListener('click', function(event) {
         event.preventDefault(); // Prevenir la acción predeterminada de descarga
+ const downloadLink = event.target;
 
-        // Realiza la verificación de suscripción
-        fetch('SvVerificarSubscripcion', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                if (data.hasSubscription) {
-                    // Si tiene suscripción, permitir la descarga
-                    const downloadLink = event.target;
+    // Verifica la suscripción del usuario primero
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, realizar la solicitud para obtener el archivo
+                return fetch(downloadLink.href, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+            } else {
+                throw new Error('No tienes una suscripción activa para descargar este archivo.');
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al intentar descargar el archivo.');
+            }
+            // Verifica el tipo de contenido
+            const contentType = response.headers.get('Content-Type');
+            if (contentType === 'audio/mpeg') {
+                const temaActual = temas[currentIndex]; // Obtén el tema actual
+                            AumentarDescargas(temaActual.nombre, temaActual.album, temaActual.artista);
+                // Si el tipo es correcto, proceder a descargar
+                const fileName = downloadLink.download; // Obtener el nombre del archivo desde el atributo download
 
-                    // Aquí estamos haciendo que el enlace descargue el archivo
-                    const href = downloadLink.href; 
-                    
-                    // Crear un nuevo elemento de anclaje para forzar la descarga
-                    const a = document.createElement('a');
-                    a.href = href;
-                    a.download = downloadLink.download; // Asegúrate de que el nombre del archivo se mantenga
-                    document.body.appendChild(a); // Agregar al DOM
-                    a.click(); // Simular clic para iniciar descarga
-                    document.body.removeChild(a); // Eliminar el elemento del DOM
-                } else {
-                    alert('No tienes una suscripción activa para descargar este archivo.');
-                }
-            })
-            .catch(error => {
-                console.error('Error al verificar la suscripción:', error);
-            });
+                // Crear un nuevo elemento de anclaje para forzar la descarga
+                const a = document.createElement('a');
+                a.href = downloadLink.href; // Usar el href original
+                a.download = fileName+ '.mp3'; // Asegúrate de que el nombre del archivo se mantenga
+                document.body.appendChild(a); // Agregar al DOM
+                a.click(); // Simular clic para iniciar descarga
+                document.body.removeChild(a); // Eliminar el elemento del DOM
+                
+                
+            } else {
+                alert('El archivo que intentas descargar no es un archivo de audio válido.');
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
     });
+    
+    
+    function AumentarReproducciones(temaName, albumName, artistName) {
+    const encodedTemaName = encodeURIComponent(temaName);
+    const encodedAlbumName = encodeURIComponent(albumName);
+    const encodedArtistName = encodeURIComponent(artistName);
+    
+    fetch('SvActualizarConteo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "temaName=" + encodedTemaName + "&albumName=" + encodedAlbumName + "&artistName=" + encodedArtistName +"&tipo=reproduccion"
+    })
+    .then(response => {
+        // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
+        if (!response.ok) {
+            return response.json().then(errorData => { throw new Error(errorData.message); });
+        }
+        return response.json(); // Parseamos la respuesta JSON
+    })
+    .then(data => {
+        if (data.success) {
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error.message); // Mostrar el mensaje de error
+    });
+    
+}
+
+function AumentarDescargas(temaName, albumName, artistName) {
+    const encodedTemaName = encodeURIComponent(temaName);
+    const encodedAlbumName = encodeURIComponent(albumName);
+    const encodedArtistName = encodeURIComponent(artistName);
+    
+    fetch('SvActualizarConteo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "temaName=" + encodedTemaName + "&albumName=" + encodedAlbumName + "&artistName=" + encodedArtistName +"&tipo=descarga"
+    })
+    .then(response => {
+        // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
+        if (!response.ok) {
+            return response.json().then(errorData => { throw new Error(errorData.message); });
+        }
+        return response.json(); // Parseamos la respuesta JSON
+    })
+    .then(data => {
+        if (data.success) {
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error.message); // Mostrar el mensaje de error
+    });
+}
+    
+    
         
       function AgregarListaPartFavorito(listaName, clienteName) {
     const encodedListaName = encodeURIComponent(listaName);

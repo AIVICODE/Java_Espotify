@@ -330,4 +330,23 @@ public Artista encontrarArtistaPorNickname(String nickname) {
   public List<RegistroIngresoWeb> ObtenerRegistros(boolean orden){
       return regjpa.findRegistroIngresoWebEntitiesOrderedByDate(orden);
   }
+  
+  public void editTema(Tema tema) throws Exception{
+    temajpa.edit(tema);
+}
+
+    public List<Tema> findtemasfavoritos() {
+        return favjpa.findTemasFavoritos();
+    }
+
+    public void guardarOActualizarLista(ListaRepGeneral lista) throws Exception {
+            if (lista.getId() == null) {
+        // Si el ID es null, la lista no está en la base de datos, así que la guardamos
+        listjpa.create(lista);
+    } else {
+        // Si el ID no es null, significa que la lista ya existe, entonces la actualizamos
+        listjpa.edit(lista);
+    }
+    }
+
 }

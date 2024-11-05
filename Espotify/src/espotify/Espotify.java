@@ -1,6 +1,7 @@
 
 package espotify;
 
+import Datatypes.DTTema;
 import GUI.Principal;
 import Logica.Controlador;
 import Logica.Fabrica;
@@ -15,8 +16,11 @@ public class Espotify {
         Controlador control = new Controlador();
         Principal prin= new Principal();
         prin.setVisible(true);
-        
-        control.Buscador("cumbia", "fecha");
+        control.CrearListaRepSugerencia();
+        //control.Buscador("cumbia", "fecha");
+       // DTTema tema = new DTTema("Violeta","20 Grandes Éxitos","alcides@tuta.io");
+      //  control.AgregaDescargaTema(tema);
+       // control.AgregaReproduccionTema(tema);
         
        
 

@@ -78,6 +78,12 @@ public class DTTema extends DTContenido{
         this.orden = orden;
     }
 
+       public DTTema(String nombre,String nombrealbum, String nombreartista) {
+        this.nombre = nombre;
+        this.nombrealbum = nombrealbum;
+        this.nombreartista = nombreartista;
+    }
+     
     public String getNombre() {
         return nombre;
     }

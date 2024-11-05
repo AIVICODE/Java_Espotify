@@ -245,6 +245,24 @@ cq.distinct(true);
     return query.getResultList();
 }
 
+public List<Tema> findTemasFavoritos() {
+    EntityManager em = getEntityManager();
+    try {
+        // Crea la consulta para seleccionar temas que están en favoritos
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tema> cq = cb.createQuery(Tema.class);
+        Root<Tema> temaRoot = cq.from(Tema.class); // Directly from Tema
+
+        // Selecciona los temas de Favoritos como resultado
+        cq.select(temaRoot).distinct(true);
+        
+        Query query = em.createQuery(cq);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
 
 
     

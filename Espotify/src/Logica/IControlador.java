@@ -204,4 +204,9 @@ public interface IControlador {
     public abstract void GeneraRegistro(String ip,String url,String browser,String so);
     
     public abstract List<DTIngresoWeb> convertToDTIngresoWebList() ;
+    
+    public abstract void AgregaDescargaTema(DTTema tema);
+    public abstract void AgregaReproduccionTema(DTTema tema);
+    
+   // public abstract void CrearListaRepSugerencia() throws Exception ;
 }

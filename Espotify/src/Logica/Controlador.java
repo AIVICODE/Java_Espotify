@@ -44,12 +44,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
 
 public class Controlador implements IControlador {
-    public static final String CARPETA_LISTA = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_listarep/";
-public static final String CARPETA_ALBUM = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_album/";
-public static final String CARPETA_USUARIOS = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_usuarios/";
-public static final String CARPETA_TEMA = "/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/";
+    public static final String CARPETA_LISTA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
+public static final String CARPETA_ALBUM = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
+public static final String CARPETA_USUARIOS = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
+public static final String CARPETA_TEMA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
 
-public static final String CARPETA_GENERICO ="/home/tecnologo/Documentos/Discreta/Espotify/imagenes_usuarios/generico.jpg";
+public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
 
 
     private Date createDate(int year, int month, int day) {
@@ -261,7 +261,7 @@ public static final String CARPETA_GENERICO ="/home/tecnologo/Documentos/Discret
         }
     }
 
-    public void CrearListaRepGeneral(String nombreLista, String imagen,String nomGenero) {
+    public void CrearListaRepGeneral(String nombreLista, String imagen,String nomGenero) { 
 // Encuentra al cliente por su correo
         try {
             // Crear una nueva instancia de ListaRep
@@ -4377,7 +4377,7 @@ return null;
         if (Files.exists(ruta)) {
             return Files.readAllBytes(ruta); // Lee y devuelve el como un arreglo de bytes
         } else {
-            ruta = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
+            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/generico.mp3");
             return Files.readAllBytes(ruta);
         }
     }
@@ -4391,7 +4391,7 @@ return null;
                 temasBytes[i] = Files.readAllBytes(ruta); // Lee y almacena cada archivo en el array
             } else {
                 // Si el archivo no existe, cargar un archivo genérico
-                Path rutaGenerica = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
+                Path rutaGenerica = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/generico.mp3");
                 temasBytes[i] = Files.readAllBytes(rutaGenerica);
             }
         }
@@ -4493,9 +4493,75 @@ return null;
     return dtIngresoWebList;
 }
     
+    public void AgregaDescargaTema(DTTema tema){
+        try {
+            Artista art = controlpersis.encontrarArtistaPorNickname(tema.getNombreartista());
+            Album alb = art.buscarAlbumPorNombre(tema.getNombrealbum());
+            Tema temabuscado = alb.buscarTemaPorNombre(tema.getNombre());
+            temabuscado.incrementarDescargas();
+            controlpersis.editTema(temabuscado);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void AgregaReproduccionTema(DTTema tema){
+    try {
+            Artista art = controlpersis.encontrarArtistaPorNickname(tema.getNombreartista());
+            Album alb = art.buscarAlbumPorNombre(tema.getNombrealbum());
+            Tema temabuscado = alb.buscarTemaPorNombre(tema.getNombre());
+            temabuscado.incrementarReproducciones();
+            controlpersis.editTema(temabuscado);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+
+
+
+
+public void CrearListaRepSugerencia() throws Exception {
+      ListaRepGeneral lista;
+    try {
+        // Try to find the "Sugerencias" list
+        lista = controlpersis.findListaRep_Por_Defecto_ByNombre("Sugerencias");
+       
+         lista.getListaTemas().clear();
+    } catch (Exception e) {
+        // If not found or an error occurs, initialize as a new list
+        lista = new ListaRepGeneral("Sugerencias");
+    }
+
+    // Obtiene todos los temas y calcula el puntaje solo para ordenar
+    List<Tema> temasConPuntaje = controlpersis.findTemaEntities().stream()
+        .sorted((t1, t2) -> Double.compare(calcularPuntaje(t2), calcularPuntaje(t1))) // Ordena de mayor a menor puntaje
+        .limit(10) // Obtiene solo los 10 temas con mayor puntaje
+        .collect(Collectors.toList());
+
+
+    // Agrega los temas recomendados a la lista
+    lista.setListaTemas(temasConPuntaje);
+
+    // Guardar o actualizar la lista en la base de datos si es necesario
+    controlpersis.guardarOActualizarLista(lista);
+}
+
+// Método para calcular el puntaje de un tema usando la fórmula especificada
+private double calcularPuntaje(Tema tema) {
+    int conteoDescargas = (int) tema.getConteoDescargas();
+    int conteoReproducciones = (int) tema.getConteoReproducciones();
+    int listasCon = controlpersis.findListasRep().stream()
+                                  .filter(lista -> lista.getListaTemas().contains(tema))
+                                  .toList().size();
+    
+int favoritosCon = (int) controlpersis.findtemasfavoritos().stream()
+                          .filter(favorito -> favorito.equals(tema)) // Cambiamos contains a equals para comparar el tema actual
+                          .count();
+
+    // Calcula el puntaje usando la fórmula proporcionada
+    return conteoDescargas * 0.2 + conteoReproducciones * 0.3 + listasCon * 0.2 + favoritosCon * 0.3;
 }
 
 
 
-
+}

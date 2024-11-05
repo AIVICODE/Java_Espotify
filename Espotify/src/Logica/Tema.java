@@ -122,5 +122,29 @@ private void postLoad() {
         this.orden = orden;
     }
 
+    
+    @Column(name = "conteo_reproducciones")
+    private long conteoReproducciones;
+
+    @Column(name = "conteo_descargas")
+    private long conteoDescargas;
+
+    // Métodos para incrementar el conteo
+    public void incrementarReproducciones() {
+        this.conteoReproducciones++;
+    }
+
+    public void incrementarDescargas() {
+        this.conteoDescargas++;
+    }
+
+    // Getters y setters para los contadores (opcional)
+    public long getConteoReproducciones() {
+        return conteoReproducciones;
+    }
+
+    public long getConteoDescargas() {
+        return conteoDescargas;
+    }
    
 }
