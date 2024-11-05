@@ -8,6 +8,7 @@ import Logica.Genero;
 import Logica.ListaRep;
 import Logica.ListaRepGeneral;
 import Logica.ListaRepParticular;
+import Logica.RegistroIngresoWeb;
 import Logica.Subscripcion;
 import Logica.Tema;
 import Persis.exceptions.PreexistingEntityException;
@@ -28,6 +29,7 @@ public class ControladoraPersistencia {
     ListaRepJpaController listjpa = new ListaRepJpaController();
     FavoritosJpaController favjpa = new  FavoritosJpaController();
     SubscripcionJpaController subjpa = new SubscripcionJpaController();
+    RegistroIngresoWebJpaController regjpa=new RegistroIngresoWebJpaController();
     
     public void AddCliente(Cliente cli) throws Exception {
         clijpa.create(cli);
@@ -319,4 +321,9 @@ public Artista encontrarArtistaPorNickname(String nickname) {
        return listjpa.findListaRepEntities();
   
    }
+  
+  public void GeneraRegistro(RegistroIngresoWeb regweb){
+      regjpa.create(regweb);
+  
+  }
 }

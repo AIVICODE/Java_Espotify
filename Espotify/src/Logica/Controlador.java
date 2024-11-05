@@ -28,10 +28,17 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
 
@@ -3768,6 +3775,10 @@ public List<DTSub> listarSubdeCliente(String nombrecli) throws Exception {
 public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Exception{
     Subscripcion sub = controlpersis.findSubscripcion(id);
     
+    Cliente cli = controlpersis.findClienteByNickname(sub.getCliente());
+    
+   
+    
     if (sub != null) {
         
         if (sub.getEstado() != Estado.PENDIENTE) {
@@ -3783,14 +3794,83 @@ public void modificarEstadoSuscripcion(Long id, String nuevoEstado)throws Except
         sub.setFechaInicio(new Date());
         // Persistir la modificación en la base de datos
         controlpersis.updateSubscripcion(sub); // Asegúrate de tener este método en tu capa de persistencia
+        
+        // Cálculo de la fecha de vencimiento
+        Calendar fechaInicioCalendar = Calendar.getInstance();
+        fechaInicioCalendar.setTime(sub.getFechaInicio());
+        Date fechaVencimiento;
+
+        switch (sub.getTipo().toLowerCase()) {
+            case "semanal":
+                fechaInicioCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+                break;
+            case "mensual":
+                fechaInicioCalendar.add(Calendar.MONTH, 1);
+                break;
+            case "anual":
+                fechaInicioCalendar.add(Calendar.YEAR, 1);
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo de suscripción no válido: " + sub.getTipo());
+        }
+
+        fechaVencimiento = fechaInicioCalendar.getTime();
+        
+        if ((sub.getEstado() == Estado.VIGENTE)) {
+
+            enviarNotificacionEmail(cli.getMail(), cli.getNombre(), sub.getTipo(), sub.getFechaInicio(), fechaVencimiento);
+        }
+
     } else {
         throw new Exception("Suscripción no encontrada con ID: " + id);
     }
 }
+public void enviarNotificacionEmail(String toEmail, String clienteNombre, String tipoSuscripcion, Date fechaInicio, Date fechaFin) throws MessagingException {
+    Properties props = new Properties();
+    props.put("mail.smtp.host", "localhost");
+    props.put("mail.smtp.port", "2525");
 
+    Session session = Session.getInstance(props, null);
+    Message message = new MimeMessage(session);
+    message.setFrom(new InternetAddress("no-reply@tudominio.com"));
+    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+    message.setSubject("[Espotify] [" + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()) + "]");
+    double monto = 0;
+        switch (tipoSuscripcion) {
+            case "semanal":
+                monto = 5.0;
+                break;
+            case "mensual":
+                monto = 19.0;
+                break;
+            case "anual":
+                monto = 120.0;
+                break;
+        }
+    // Formato HTML del cuerpo del correo
+    String body = "<html><body>" +
+                  "<p>Estimado/a " + clienteNombre + ",</p>" +
+                  "<p>Su suscripción en <strong>Espotify</strong> ha sido aprobada y se encuentra <b>Vigente</b>.</p>" +
+                  "<hr>" +
+                  "<p><b>---Detalles de la Suscripción---</b></p>" +
+                  
+                  "<p>- Tipo: <br> - " + tipoSuscripcion + ": U$:</p>"+ monto +
+                  "<p>- Fecha inicio: <br> - " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(fechaInicio) + "</p>" +
+                  "<p>- Fecha fin: <br> - " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(fechaFin) + "</p>" +
+                  "<p>Gracias por preferirnos,</p>" +
+                  "<p>Saludos.<br>Espotify</p>" +
+                  "</body></html>";
+
+    message.setContent(body, "text/html");
+
+    Transport.send(message);
+    System.out.println("Correo enviado a " + toEmail);
+}
 
 public void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado) throws Exception {
     Subscripcion sub = controlpersis.findSubscripcion(id);
+        Cliente cli = controlpersis.findClienteByNickname(sub.getCliente());
+
     
     if (sub != null) {
         // Obtiene el estado actual de la suscripción
@@ -3803,7 +3883,7 @@ public void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado) throws
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Estado no válido: " + nuevoEstado);
         }
-
+    
         // Reglas
         if (estadoActual == Estado.PENDIENTE && estadoDeseado == Estado.CANCELADA) {
             // Permitido el cambio de "Pendiente" a "Cancelada"
@@ -3819,6 +3899,32 @@ public void ClienteModificaEstadoSuscripcion(Long id, String nuevoEstado) throws
 
         // Persistir la modificación en la base de datos
         controlpersis.updateSubscripcion(sub); // Asegúrate de tener este método en tu capa de persistencia
+        
+        // Cálculo de la fecha de vencimiento
+        Calendar fechaInicioCalendar = Calendar.getInstance();
+        fechaInicioCalendar.setTime(sub.getFechaInicio());
+        Date fechaVencimiento;
+
+        switch (sub.getTipo().toLowerCase()) {
+            case "semanal":
+                fechaInicioCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+                break;
+            case "mensual":
+                fechaInicioCalendar.add(Calendar.MONTH, 1);
+                break;
+            case "anual":
+                fechaInicioCalendar.add(Calendar.YEAR, 1);
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo de suscripción no válido: " + sub.getTipo());
+        }
+
+        fechaVencimiento = fechaInicioCalendar.getTime();
+        
+        if ((sub.getEstado() == Estado.VIGENTE)) {
+
+            enviarNotificacionEmail(cli.getMail(), cli.getNombre(), sub.getTipo(), sub.getFechaInicio(), fechaVencimiento);
+        }
 
     } else {
         throw new Exception("Suscripción no encontrada con ID: " + id);
@@ -4358,6 +4464,15 @@ return null;
 
     return dtListaRepList;
 }
+    
+    
+    
+    public void GeneraRegistro(String ip,String url,String browser,String so){
+        
+        RegistroIngresoWeb regweb= new RegistroIngresoWeb(ip,url,browser,so); 
+    controlpersis.GeneraRegistro(regweb);
+    
+    }
 }
 
 

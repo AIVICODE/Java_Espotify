@@ -199,4 +199,6 @@ public interface IControlador {
     
     public abstract List<DTListaRep> ListasPorDefecto() throws Exception;
     public abstract List<DTListaRep> ListasParticulares() throws Exception;
+    
+    public abstract void GeneraRegistro(String ip,String url,String browser,String so);
 }
