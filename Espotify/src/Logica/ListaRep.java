@@ -11,12 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class ListaRep extends Favoritos {
 
     @OneToMany
+    @OrderColumn(name = "orden")
     private List<Tema> listaTemas = new ArrayList<>();
 
     public ListaRep(List<Tema> listaTemas, String nombre, String imagen) {

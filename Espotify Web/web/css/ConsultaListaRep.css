@@ -256,6 +256,17 @@ li:hover {
     color: #007bff; /* Cambia el color al pasar el mouse, si lo deseas */
 }
 
+.info-button{
+    margin-left: 10px;
+background-color: #1DB954; /* Verde característico de Spotify */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 6px 12px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+}
 
 .add-favorite {
     background-color: #1DB954; /* Verde característico de Spotify */
@@ -291,4 +302,33 @@ li:hover {
     cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
     transition: background-color 0.3s; /* Transición suave del color de fondo */
     margin-right: 10px;
+}
+.modal {
+    display: none; /* Ocultarlo por defecto */
+    position: absolute; /* Ahora es absoluto dentro de su contenedor */
+    z-index: 9999; /* Asegura que esté sobre el resto del contenido */
+    width: 250px; /* Tamaño pequeño */
+    height: auto;
+    background-color: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra sutil */
+}
+
+.modal-content {
+    font-size: 14px; /* Tamaño de texto más pequeño */
+}
+
+.close {
+    color: #aaa;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
 }

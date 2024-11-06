@@ -5,6 +5,7 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTContenido;
+import Datatypes.DTInfoTema;
 import Datatypes.DTIngresoWeb;
 import Datatypes.DTListaRep;
 import Datatypes.DTSub;
@@ -208,5 +209,9 @@ public interface IControlador {
     public abstract void AgregaDescargaTema(DTTema tema);
     public abstract void AgregaReproduccionTema(DTTema tema);
     
-   // public abstract void CrearListaRepSugerencia() throws Exception ;
+    public abstract DTListaRep obtenerListaSugerida() throws Exception;
+    
+   public abstract void CrearListaRepSugerencia() throws Exception ;
+   
+   public abstract DTInfoTema ObtenerInfoTema(String nombreTema,String nombreArtista,String nombreAlbum) throws Exception;
 }

@@ -4,6 +4,7 @@ import Datatypes.DTAlbum;
 import Datatypes.DTArtista;
 import Datatypes.DTCliente;
 import Datatypes.DTContenido;
+import Datatypes.DTInfoTema;
 import Datatypes.DTIngresoWeb;
 import Datatypes.DTListaRep;
 import Datatypes.DTSub;
@@ -26,9 +27,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.PriorityQueue;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -2368,6 +2372,12 @@ public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Es
 
     public DTListaRep obtenerDatosDeLista_Por_Defecto(String nombreSeleccionado) throws Exception {
         // Busca la lista de reproducción por nombre
+        
+      if(nombreSeleccionado.equals("Sugerencias")){
+          CrearListaRepSugerencia();
+           return obtenerListaSugerida();
+      }else{
+        
         ListaRepGeneral listaPorDefecto = controlpersis.findListaRep_Por_Defecto_ByNombre(nombreSeleccionado);
 
         if (listaPorDefecto == null) {
@@ -2386,15 +2396,17 @@ public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Es
                     return new DTTema(tema.getNombre(), (int) minutos, (int) segundos, tema.getDireccion(),tema.getAlbum().getNombre(),tema.getAlbum().getArtista().getNickname());
                 })
                 .collect(Collectors.toList());
-
+String genero = (listaPorDefecto.getGenero() != null) ? listaPorDefecto.getGenero().getNombre() : null;
+    String imagen = (listaPorDefecto.getImagen() != null) ? listaPorDefecto.getImagen() : null;
         // Crea y retorna el DTO con la información de la lista
         return new DTListaRep(
                 listaPorDefecto.getNombre(), // nombreListaRep
                 null, // nombreCliente (quedará en null)
-                listaPorDefecto.getGenero().getNombre(), // género (asumiendo que getNombre() devuelve el nombre del género)
-                listaPorDefecto.getImagen(), // imagen
+                genero, // género (asumiendo que getNombre() devuelve el nombre del género)
+                imagen, // imagen
                 temas // temas
         );
+      }
     }
 
     public List<DTListaRep> obtenerDTListaPorCliente(String correoCliente) {
@@ -4521,34 +4533,105 @@ return null;
 
 
 public void CrearListaRepSugerencia() throws Exception {
-      ListaRepGeneral lista;
+    ListaRepGeneral lista;
     try {
-        // Try to find the "Sugerencias" list
+        // Intentamos encontrar la lista "Sugerencias"
         lista = controlpersis.findListaRep_Por_Defecto_ByNombre("Sugerencias");
-       
-         lista.getListaTemas().clear();
+        lista.getListaTemas().clear();
     } catch (Exception e) {
-        // If not found or an error occurs, initialize as a new list
+        // Si no se encuentra, inicializamos una nueva lista
         lista = new ListaRepGeneral("Sugerencias");
     }
 
-    // Obtiene todos los temas y calcula el puntaje solo para ordenar
-    List<Tema> temasConPuntaje = controlpersis.findTemaEntities().stream()
-        .sorted((t1, t2) -> Double.compare(calcularPuntaje(t2), calcularPuntaje(t1))) // Ordena de mayor a menor puntaje
-        .limit(10) // Obtiene solo los 10 temas con mayor puntaje
-        .collect(Collectors.toList());
+    // Obtenemos todos los temas, listas y temas favoritos de una vez
+    List<Tema> temasConPuntaje = controlpersis.findTemaEntities();
+    List<ListaRep> listasRep = controlpersis.findListasRep();  // Aquí se usa ListaRep, no ListaRepGeneral
+    List<Tema> temasFavoritos = controlpersis.findtemasfavoritos();
 
+    // Convertimos los temas favoritos en un Set para búsqueda rápida
+    Set<Tema> favoritosSet = new HashSet<>(temasFavoritos);
+
+    // Usamos un Map para contar cuántas listas contienen cada tema
+    Map<Tema, Long> temasEnListas = new HashMap<>();
+    for (ListaRep listaRep : listasRep) {  // Iteramos con ListaRep, no ListaRepGeneral
+        for (Tema t : listaRep.getListaTemas()) {
+            temasEnListas.put(t, temasEnListas.getOrDefault(t, 0L) + 1);
+        }
+    }
+
+    // Usamos un PriorityQueue directamente con los temas y sus puntajes
+    PriorityQueue<Tema> pq = new PriorityQueue<>((t1, t2) -> {
+        double puntajeT1 = calcularPuntaje(t1, temasEnListas, favoritosSet);
+        double puntajeT2 = calcularPuntaje(t2, temasEnListas, favoritosSet);
+        return Double.compare(puntajeT2, puntajeT1);  // Ordenamos de mayor a menor puntaje
+    });
+
+    // Llenamos la cola con los temas
+    pq.addAll(temasConPuntaje);
+
+    // Extraemos los 10 mejores temas
+    List<Tema> topTemas = new ArrayList<>(10);
+    for (int i = 0; i < 10 && !pq.isEmpty(); i++) {
+        topTemas.add(pq.poll());
+    }
 
     // Agrega los temas recomendados a la lista
-    lista.setListaTemas(temasConPuntaje);
+    lista.setListaTemas(topTemas);
 
     // Guardar o actualizar la lista en la base de datos si es necesario
     controlpersis.guardarOActualizarLista(lista);
 }
 
+public DTListaRep obtenerListaSugerida() throws Exception {
+
+    // Buscar la lista por defecto llamada "Sugerencias"
+    ListaRepGeneral lista = controlpersis.findListaRep_Por_Defecto_ByNombre("Sugerencias");
+    
+    // Verificar si se encontró la lista
+    if (lista == null) {
+        throw new Exception("La lista 'Sugerencias' no fue encontrada.");
+    }
+
+    // Crear una lista para almacenar los temas convertidos a DTTema
+    List<DTTema> temasDT = new ArrayList<>();
+
+    // Recorrer los temas de la lista y convertirlos a DTTema
+    for (Tema tema : lista.getListaTemas()) {
+        DTTema dtTema = new DTTema(
+            tema.getNombre(),
+            (int) tema.getDuracionSegundos() / 60,
+            (int) tema.getDuracionSegundos() % 60,
+            tema.getDireccion(),
+                tema.getAlbum().getNombre(),
+                tema.getAlbum().getArtista().getNickname()
+        );
+        temasDT.add(dtTema);
+    }
+
+    // Crear y devolver el objeto DTListaRep con los datos de la lista y sus temas
+    return new DTListaRep(lista.getNombre(), "", "", temasDT);
+}
+
 // Método para calcular el puntaje de un tema usando la fórmula especificada
-private double calcularPuntaje(Tema tema) {
+private double calcularPuntaje(Tema tema, Map<Tema, Long> temasEnListas, Set<Tema> favoritosSet) {
     int conteoDescargas = (int) tema.getConteoDescargas();
+    int conteoReproducciones = (int) tema.getConteoReproducciones();
+
+    // Calculamos cuántas veces el tema está en las listas
+    long listasCon = temasEnListas.getOrDefault(tema, 0L);
+
+    // Verificamos si el tema está en los favoritos
+    int favoritosCon = favoritosSet.contains(tema) ? 1 : 0;
+
+    // Calculamos el puntaje usando los diferentes factores
+    return conteoDescargas * 0.2 + conteoReproducciones * 0.3 + listasCon * 0.2 + favoritosCon * 0.3;
+}
+public DTInfoTema ObtenerInfoTema(String nombreTema,String nombreArtista,String nombreAlbum) throws Exception{
+    Artista art = controlpersis.encontrarArtistaPorNickname(nombreArtista);
+    Album alb = art.buscarAlbumPorNombre(nombreAlbum);
+    Tema tema = alb.buscarTemaPorNombre(nombreTema);
+    
+ int conteoDescargas = (int) tema.getConteoDescargas();
     int conteoReproducciones = (int) tema.getConteoReproducciones();
     int listasCon = controlpersis.findListasRep().stream()
                                   .filter(lista -> lista.getListaTemas().contains(tema))
@@ -4558,10 +4641,10 @@ int favoritosCon = (int) controlpersis.findtemasfavoritos().stream()
                           .filter(favorito -> favorito.equals(tema)) // Cambiamos contains a equals para comparar el tema actual
                           .count();
 
-    // Calcula el puntaje usando la fórmula proporcionada
-    return conteoDescargas * 0.2 + conteoReproducciones * 0.3 + listasCon * 0.2 + favoritosCon * 0.3;
+                          DTInfoTema info = new DTInfoTema(conteoDescargas,conteoReproducciones,favoritosCon,listasCon);
+                          
+                          return info;
 }
-
 
 
 }

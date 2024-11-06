@@ -46,6 +46,7 @@
             <h2>Usuarios</h2>
             <button id="btnConsultaUsuarioL">Consulta de Perfil de Usuario</button>
             <h2>Biblioteca</h2>
+            <button id="btnSugerencia">Sugerencia</button>
             <button id="btnGeneros">Generos</button>
             <button id="btnArtistas">Artistas</button>
             <button id="btnListas">Listas de reproduccion</button>
@@ -292,7 +293,7 @@ document.getElementById('btnPublicarLista').addEventListener('click', function()
     
     document.getElementById('btnConsultaUsuarioL').addEventListener('click', function() {//NUEVO madi
         // Redirigir a la página AgregarListaRep.jsp
-        window.location.href = 'ConsultaUsuario_Logueado.jsp';
+        window.locationgithub.href = 'ConsultaUsuario_Logueado.jsp';
     });
     
     document.getElementById('btnAgregarTema').addEventListener('click', function() {//NUEVO madi
@@ -300,6 +301,11 @@ document.getElementById('btnPublicarLista').addEventListener('click', function()
         window.location.href = 'AgregarTemaALista.jsp';
     });
     
+   document.getElementById('btnSugerencia').addEventListener('click', function() {
+
+        window.location.href = 'SvSeleccionarLista?nombreLista=Sugerencias';
+    });
+
 
     </script>
 

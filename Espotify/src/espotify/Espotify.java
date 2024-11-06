@@ -1,6 +1,7 @@
 
 package espotify;
 
+import Datatypes.DTInfoTema;
 import Datatypes.DTTema;
 import GUI.Principal;
 import Logica.Controlador;
@@ -22,9 +23,10 @@ public class Espotify {
       //  control.AgregaDescargaTema(tema);
        // control.AgregaReproduccionTema(tema);
         
-       
-
-
+//       DTInfoTema info = control.ObtenerInfoTema("Violeta","alcides","20 Grandes Éxitos");
+//
+//System.out.println(info.getCantidadDescargas());
+//System.out.println(info.getCantidadReproducciones());
         
     }
     

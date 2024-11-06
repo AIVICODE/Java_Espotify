@@ -4,17 +4,24 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
 <%@page import="Datatypes.DTUsuario"%>
+<%
+                // Mostrar los temas de la lista seleccionada si están disponibles
+                List<DTTema> temas = (List<DTTema>) request.getAttribute("temas");
+                DTListaRep listaSeleccionada = (DTListaRep) request.getAttribute("listaSeleccionada");
 
+           
+            %>
 <!DOCTYPE html>
 <html>
 
     <head>
         <meta charset="UTF-8">
         <title>Seleccionar Género</title>
-        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.5">
+        <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.7">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Obtener los géneros desde el servlet
@@ -52,20 +59,26 @@
     </head>
 
 
+
         <%
             session = request.getSession(false);
             DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
             if (dtUsuario == null) {
         %>
+        
+        
         <jsp:include page="headerunlogged.jsp" /> 
         <%
         } else {
         %>
+   
         <jsp:include page="header.jsp" />
+
         <%
             }
         %>
 
+<input type="hidden" id="nombreListaRep" value="<%= listaSeleccionada != null ? listaSeleccionada.getNombreListaRep() : "" %>">
 
     <body class="main-body">
         <%
@@ -77,15 +90,15 @@
         %>
  
 <div class="content-container">
-        <h1>Selecciona un Género:</h1>
-
-        <form action="SvObtenerListasDeRep" method="GET"> <!-- Se envía al servlet SvObtenerListasDeRep -->
-            <select name="genero" id="genero" required>
-                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
-            </select>
-
-            <button type="submit">Ver Listas de Reproducción</button>
-        </form>
+        <% if (listaSeleccionada == null || !"Sugerencias".equals(listaSeleccionada.getNombreListaRep())) { %>
+    <h1>Selecciona un Género:</h1>
+    <form action="SvObtenerListasDeRep" method="GET">
+        <select name="genero" id="genero" required>
+            <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+        </select>
+        <button type="submit">Ver Listas de Reproducción</button>
+    </form>
+<% } %>
 
         <div id="playlist-container">
             <!-- Aquí se llenarán las listas de reproducción cuando se seleccione un género -->
@@ -215,16 +228,12 @@
             %>
         </div>
 
-        <div id="temas-container">
-            <%
-                // Mostrar los temas de la lista seleccionada si están disponibles
-                List<DTTema> temas = (List<DTTema>) request.getAttribute("temas");
-                DTListaRep listaSeleccionada = (DTListaRep) request.getAttribute("listaSeleccionada");
-
-                if (temas != null && !temas.isEmpty() && listaSeleccionada != null) {
-            %>
-            <h2>Temas en la Lista: <%= listaSeleccionada.getNombreListaRep()%></h2>
-        <ul>
+  <div id="temas-container" style="position: relative;"> <!-- Añadido position: relative para el contenedor -->
+    <% 
+        if (temas != null && !temas.isEmpty() && listaSeleccionada != null) {
+    %>
+    <h2><%= listaSeleccionada.getNombreListaRep()%></h2>
+    <ul>
     <%
         int contador = 0;
         for (DTTema tema : temas) {
@@ -239,21 +248,95 @@
             <span><%= tema.getNombre() %></span> 
             <span class="duracion"><%= tema.getMinutos() + ":" + tema.getSegundos() %></span>
         </a>
-    </li>
+        <!-- Nuevo botón para abrir el pop-up -->
+<button class="info-button" onclick="abrirPopup('<%= tema.getNombre() %>', '<%= tema.getNombreartista() %>', '<%= tema.getNombrealbum() %>');">
+    <i class="fas fa-chevron-down"></i>
+</button>    </li>
     <%
             contador++;
         }
     %>
-</ul>
+    </ul>
+    <% 
+        } else if (listaSeleccionada != null) {
+    %>
+    <p>No hay temas disponibles en esta lista.</p>
+    <% 
+        }
+    %>
+</div>
 
-            <%
-            } else if (listaSeleccionada != null) {
-            %>
-            <p>No hay temas disponibles en esta lista.</p>
-            <%
-                }
-            %>
-        </div>
+<div id="popupModal" style="display:none; position:absolute; background-color: #404040; color: white; padding: 15px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5); width: 260px; font-family: Arial, sans-serif;">
+ 
+    <p id="popupDownloads" style="margin: 8px 0; font-size: 14px;"></p>
+    <p id="popupPlays" style="margin: 8px 0; font-size: 14px;"></p>
+    <p id="popupFavorites" style="margin: 8px 0; font-size: 14px;"></p>
+    <p id="popupLists" style="margin: 8px 0; font-size: 14px;"></p>
+</div>
+
+
+
+<!-- JavaScript para manejar el pop-up -->
+<script>
+function abrirPopup(nombreTema, nombreArtista, nombreAlbum) {
+    // Obtener el botón que activó el popup
+    var boton = event.currentTarget;
+    
+    // Crear la solicitud AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "SvObtenerInfoTema?nombreTema=" + encodeURIComponent(nombreTema) + 
+                      "&nombreArtista=" + encodeURIComponent(nombreArtista) + 
+                      "&nombreAlbum=" + encodeURIComponent(nombreAlbum), true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+
+
+                document.getElementById("popupDownloads").textContent = "Descargas: " + (data.cantidadDescargas || 0);
+                document.getElementById("popupPlays").textContent = "Reproducciones: " + (data.cantidadReproducciones || 0);
+                document.getElementById("popupFavorites").textContent = "Favoritos: " + (data.cantidadFavoritos || 0);
+                document.getElementById("popupLists").textContent = "Listas: " + (data.cantidadListas || 0);
+
+                // Posicionar el modal junto al botón
+                var botonRect = boton.getBoundingClientRect();
+                var modal = document.getElementById("popupModal");
+                modal.style.left = (botonRect.left + 30) + "px";
+                modal.style.top = (botonRect.top + 30 + window.scrollY) + "px";
+
+                // Mostrar el modal
+                modal.style.display = "block";
+            } catch (e) {
+                console.error("Error al parsear la respuesta JSON:", e);
+            }
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error("Error de red al realizar la solicitud AJAX.");
+    };
+
+    xhr.send();
+}
+
+// Para ocultar el popup cuando se hace clic fuera de él
+window.onclick = function(event) {
+    var modal = document.getElementById("popupModal");
+    if (event.target !== modal && !modal.contains(event.target)) {
+        modal.style.display = "none";
+    }
+};
+
+
+
+
+function cerrarPopup() {
+    // Ocultar el modal
+    document.getElementById("popupModal").style.display = "none";
+}
+</script>
+
         </div>
     </body>
 
@@ -266,6 +349,8 @@
             <div class="track-info">
                 <div class="track-details">
                     <p id="currentSongName"></p>
+                    <p class="artist" id="currentAlbumName" ></p>
+                    
                     <p class="artist" id="currentArtistName"></p>
                 </div>
             </div>
@@ -336,6 +421,7 @@
 function seleccionarTema(nombreTema, directorio, artista, orden,album) {
     document.getElementById("currentSongName").textContent = nombreTema;
     document.getElementById("currentArtistName").textContent = artista;
+    document.getElementById("currentAlbumName").textContent = album;
 
     // Si `directorio` es una URL, redirige y termina la función
     if (directorio.startsWith("bit.ly") || directorio.startsWith("http")) {
@@ -343,6 +429,7 @@ function seleccionarTema(nombreTema, directorio, artista, orden,album) {
         window.open(directorio.startsWith("http") ? directorio : "https://" + directorio, '_blank');
         return;
     }
+
 
     // Si no es una URL, realiza una solicitud al servlet `SvGetTema` para obtener el archivo en bytes
     fetch("SvGetTema?rutaTema="+ encodeURIComponent(directorio))
