@@ -34,6 +34,10 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <button type="submit" class="submit-btn">Iniciar sesión</button>
+                                <div class="form-check">
+                    <input type="checkbox" id="remember" name="remember" class="form-check-input">
+                    <label class="form-check-label" for="remember">Recordar credenciales</label>
+                </div>
             </form>
             <!-- Mensaje de error en caso de que se presente -->
             <%
@@ -48,5 +52,37 @@
         </div>
     </main>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Carga las credenciales si están guardadas
+        const savedUser = localStorage.getItem("savedUser");
+        const savedPassword = localStorage.getItem("savedPassword");
+
+        if (savedUser) {
+            document.getElementById("usuario").value = savedUser;
+            document.getElementById("remember").checked = true;
+        }
+
+        if (savedPassword) {
+            document.getElementById("password").value = savedPassword;
+        }
+
+        // Guarda las credenciales cuando se envía el formulario
+        document.getElementById("loginForm").addEventListener("submit", function () {
+            const rememberMe = document.getElementById("remember").checked;
+            const user = document.getElementById("usuario").value;
+            const password = document.getElementById("password").value;
+
+            if (rememberMe) {
+                localStorage.setItem("savedUser", user);
+                localStorage.setItem("savedPassword", password); // No recomendado guardar contraseñas en localStorage
+            } else {
+                localStorage.removeItem("savedUser");
+                localStorage.removeItem("savedPassword");
+            }
+        });
+    });
+</script>
+
 </html>
 

@@ -3,6 +3,7 @@
 <%@page import="Datatypes.DTCliente"%>
 <%@page import="Datatypes.DTArtista"%>
 
+
 <%
     session = request.getSession(false);
     DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
@@ -19,6 +20,16 @@
     }
 %>
 
+<%
+    // Obtener el User-Agent del navegador del cliente
+    String userAgent = request.getHeader("User-Agent");
+    
+    // Verificar si el User-Agent contiene "Mobi", lo cual indica que es un dispositivo móvil
+    if (userAgent != null && userAgent.contains("Mobi")) {
+        response.sendRedirect("dashboardMobile.jsp");
+        return; // Detener la ejecución del código posterior
+    }
+%>
 
 <!DOCTYPE html>
 
@@ -293,7 +304,7 @@ document.getElementById('btnPublicarLista').addEventListener('click', function()
     
     document.getElementById('btnConsultaUsuarioL').addEventListener('click', function() {//NUEVO madi
         // Redirigir a la página AgregarListaRep.jsp
-        window.locationgithub.href = 'ConsultaUsuario_Logueado.jsp';
+        window.location.href = 'ConsultaUsuario_Logueado.jsp';
     });
     
     document.getElementById('btnAgregarTema').addEventListener('click', function() {//NUEVO madi
@@ -306,7 +317,7 @@ document.getElementById('btnPublicarLista').addEventListener('click', function()
         window.location.href = 'SvSeleccionarLista?nombreLista=Sugerencias';
     });
 
-
+ 
     </script>
 
 </body>

@@ -9,7 +9,16 @@
         return;
     }
 %>
-
+<%
+    // Obtener el User-Agent del navegador del cliente
+    String userAgent = request.getHeader("User-Agent");
+    
+    // Verificar si el User-Agent contiene "Mobi", lo cual indica que es un dispositivo móvil
+    if (userAgent != null && userAgent.contains("Mobi")) {
+        response.sendRedirect("login.jsp");
+        return; // Detener la ejecución del código posterior
+    }
+%>
 <!DOCTYPE html>
 
 <head>
@@ -214,10 +223,10 @@ genreList.appendChild(genreItem);
         // Redirigir a la página AgregarListaRep.jsp
         window.location.href = 'ConsultaUsuario_Visitante.jsp';
     });
+    
+          
     </script>
 
 </body>
-<footer>
 
-    <footer/>
 
