@@ -5,11 +5,14 @@
 package Datatypes;
 
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author ivan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTIngresoWeb {
       String ip;
     String url;

@@ -5,6 +5,8 @@
 package Datatypes;
 
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 
 
@@ -12,6 +14,7 @@ import java.util.Date;
  *
  * @author ivan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTSub {
     private Long id; // ID de la suscripción
     private String cliente; // Nombre o ID del cliente
@@ -30,7 +33,7 @@ public class DTSub {
 
     }
 
-    // Getters y Setters
+    // Getters y Setters    
     public Long getId() {
         return id;
     }
@@ -38,7 +41,7 @@ public class DTSub {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getCliente() {
         return cliente;
     }
@@ -46,7 +49,7 @@ public class DTSub {
     public void setCliente(String cliente) {
         this.cliente = cliente;
     }
-
+    
     public String getTipo() {
         return tipo;
     }
@@ -54,7 +57,7 @@ public class DTSub {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
+    
     public String getEstado() {
         return estado;
     }
@@ -62,7 +65,7 @@ public class DTSub {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
+    
     public Date getFechaActivacion() {
         return fechaActivacion;
     }
@@ -70,7 +73,7 @@ public class DTSub {
     public void setFechaActivacion(Date fechaActivacion) {
         this.fechaActivacion = fechaActivacion;
     }
-
+    
     public Date getFechaVencimiento() {
         return fechaVencimiento;
     }

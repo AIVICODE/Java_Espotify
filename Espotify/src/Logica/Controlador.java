@@ -46,14 +46,17 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeModel;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
 
 public class Controlador implements IControlador {
-    public static final String CARPETA_LISTA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
-public static final String CARPETA_ALBUM = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
-public static final String CARPETA_USUARIOS = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
-public static final String CARPETA_TEMA = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
+    public static final String CARPETA_LISTA = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_listarep/";
+public static final String CARPETA_ALBUM = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_album/";
+public static final String CARPETA_USUARIOS = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/";
+public static final String CARPETA_TEMA = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_tema/";
 
-public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
+public static final String CARPETA_GENERICO ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
 
 
     private Date createDate(int year, int month, int day) {
@@ -4389,7 +4392,7 @@ return null;
         if (Files.exists(ruta)) {
             return Files.readAllBytes(ruta); // Lee y devuelve el como un arreglo de bytes
         } else {
-            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/generico.mp3");
+            ruta = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
             return Files.readAllBytes(ruta);
         }
     }
@@ -4403,7 +4406,7 @@ return null;
                 temasBytes[i] = Files.readAllBytes(ruta); // Lee y almacena cada archivo en el array
             } else {
                 // Si el archivo no existe, cargar un archivo genérico
-                Path rutaGenerica = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/generico.mp3");
+                Path rutaGenerica = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
                 temasBytes[i] = Files.readAllBytes(rutaGenerica);
             }
         }
@@ -4646,5 +4649,5 @@ int favoritosCon = (int) controlpersis.findtemasfavoritos().stream()
                           return info;
 }
 
-
 }
+//GuardarTemaFavorito

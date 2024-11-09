@@ -7,11 +7,14 @@ package Datatypes;
 import java.time.Year;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author ivan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DTAlbum extends DTContenido{
     protected String nombre;
     protected int anioCreacion;
