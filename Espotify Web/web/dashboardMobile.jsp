@@ -99,6 +99,10 @@
         
         body {
             background-color: #121212;
+            flex-wrap:wrap !important;
+            display:flex !important;
+            height:auto !important;
+            flex-direction:column;
         }
     </style>
 </head>
@@ -284,6 +288,53 @@
                 })
                 .catch(error => console.error('Error al obtener artistas:', error));
         });
+        
+        function AgregarAlbumFavorito(albumName, artistName) {
+            const encodedAlbumName = encodeURIComponent(albumName);
+            const encodedArtistName = encodeURIComponent(artistName);
+
+            fetch('SvAgregarAlbumFavorito', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: "album=" + encodedAlbumName + "&artista=" + encodedArtistName
+            })
+                    .then(response => {
+                        // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
+                        if (!response.ok) {
+                            return response.json().then(errorData => {
+                                throw new Error(errorData.message);
+                            });
+                        }
+                        return response.json(); // Parseamos la respuesta JSON
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message); // Mostrar mensaje de éxito
+                        }
+                    })
+                    .catch(error => {
+                        // Manejo de errores y mostrar el mensaje capturado
+                        alert("Error: " + error.message);
+                    });
+        }
+        function verificarYAgregarFavorito(nombreAlbum, correoArtista) {
+    // Verificación de suscripción antes de agregar a favoritos
+    fetch('SvVerificarSubscripcion', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasSubscription) {
+                // Si tiene suscripción, agregar el álbum a favoritos
+                AgregarAlbumFavorito(nombreAlbum, correoArtista);
+            } else {
+                alert('No tienes una suscripción activa para agregar este álbum a favoritos.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la suscripción:', error);
+        });
+}
     </script>
 </body>
 

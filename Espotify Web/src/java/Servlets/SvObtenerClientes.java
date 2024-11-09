@@ -63,6 +63,17 @@ public class SvObtenerClientes extends HttpServlet {
         // Agregar la lista de clientes como atributo en la solicitud (request)
         request.setAttribute("listaClientes", clientes);
 
+
+    // Obtener el User-Agent del navegador del cliente
+    String userAgent = request.getHeader("User-Agent");
+    
+    // Verificar si el User-Agent contiene "Mobi", lo cual indica que es un dispositivo móvil
+    if (userAgent != null && userAgent.contains("Mobi")) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ConsultaListaRepMobile.jsp");
+        dispatcher.forward(request, response);
+        return; // Detener la ejecución del código posterior
+    } 
+
         // Redirigir al JSP donde se mostrará la lista
         RequestDispatcher dispatcher = request.getRequestDispatcher("ConsultaListaRep.jsp");
         dispatcher.forward(request, response);
