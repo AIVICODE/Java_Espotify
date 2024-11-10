@@ -4,9 +4,9 @@
  */
 package Servlets;
 
-import Datatypes.DTInfoTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtInfoTema;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,12 +16,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 @WebServlet(name = "SvObtenerInfoTema", urlPatterns = {"/SvObtenerInfoTema"})
 public class SvObtenerInfoTema extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
-
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -36,7 +39,7 @@ public class SvObtenerInfoTema extends HttpServlet {
 System.out.println("ENTRA AL SERVLET");
         try {
             // Obtener la información del tema
-            DTInfoTema infoTema = control.ObtenerInfoTema(nombreTema, nombreArtista, nombreAlbum);
+            DtInfoTema infoTema = control.obtenerInfoTema(nombreTema, nombreArtista, nombreAlbum);
 
             // Construir la respuesta JSON manualmente
             String jsonResponse = "{"

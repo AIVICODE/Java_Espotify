@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Datatypes.DTUsuario"%>
+<%@page import="webservices.DtUsuario"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -148,7 +148,7 @@
     </head>
     <jsp:include page="header.jsp" />
     <%
-        DTUsuario nickLogueado = (DTUsuario) session.getAttribute("usuario");
+        DtUsuario nickLogueado = (DtUsuario) session.getAttribute("usuario");
         String correoLogueado = nickLogueado != null ? nickLogueado.getNickname() : null;
     %>
     <body>

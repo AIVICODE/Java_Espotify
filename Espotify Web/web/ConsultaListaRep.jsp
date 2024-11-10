@@ -1,17 +1,17 @@
-<%@page import="Datatypes.DTCliente"%>
-<%@page import="Datatypes.DTListaRep"%>
-<%@page import="Datatypes.DTTema"%>
+<%@page import="webservices.DtCliente"%>
+<%@page import="webservices.DtListaRep"%>
+<%@page import="webservices.DtTema"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
-<%@page import="Datatypes.DTUsuario"%>
+<%@page import="webservices.DtUsuario"%>
 <%
                 // Mostrar los temas de la lista seleccionada si están disponibles
-                List<DTTema> temas = (List<DTTema>) request.getAttribute("temas");
-                DTListaRep listaSeleccionada = (DTListaRep) request.getAttribute("listaSeleccionada");
+                List<DtTema> temas = (List<DtTema>) request.getAttribute("temas");
+                DtListaRep listaSeleccionada = (DtListaRep) request.getAttribute("listaSeleccionada");
 
            
             %>
@@ -62,7 +62,7 @@
 
         <%
             session = request.getSession(false);
-            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+            DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
             if (dtUsuario == null) {
         %>
         
@@ -104,14 +104,14 @@
             <!-- Aquí se llenarán las listas de reproducción cuando se seleccione un género -->
             <%
                 // Mostrar listas de reproducción por género
-                List<DTListaRep> listasRep = (List<DTListaRep>) request.getAttribute("listasdeRep");
+                List<DtListaRep> listasRep = (List<DtListaRep>) request.getAttribute("listasdeRep");
 
                 if (listasRep != null && !listasRep.isEmpty()) {
             %>
             <h2>Listas de Reproducción para el Género Seleccionado</h2>
             <ul>
                 <%
-                    for (DTListaRep lista : listasRep) {
+                    for (DtListaRep lista : listasRep) {
                 %>
 
                 <li>
@@ -169,14 +169,14 @@
 
             <%
                 // Mostrar listas particulares si están disponibles
-                List<DTListaRep> listasParticulares = (List<DTListaRep>) request.getAttribute("listasdeRepparticular");
+                List<DtListaRep> listasParticulares = (List<DtListaRep>) request.getAttribute("listasdeRepparticular");
 
                 if (listasParticulares != null && !listasParticulares.isEmpty()) {
             %>
             <h2>Listas Particulares</h2>
             <ul>
                 <%
-                    for (DTListaRep lista : listasParticulares) {
+                    for (DtListaRep lista : listasParticulares) {
                 %>
                 <li>
               <div style="display: flex; align-items: center;">
@@ -236,7 +236,7 @@
     <ul>
     <%
         int contador = 0;
-        for (DTTema tema : temas) {
+        for (DtTema tema : temas) {
     %>
     <li>
         <a href="javascript:void(0);" class="tema-enlace" 
@@ -399,7 +399,7 @@ function cerrarPopup() {
         <%
         if (temas != null && !temas.isEmpty()) {
             int contador = 0; // Variable contador para asignar orden secuencial
-            for (DTTema tema : temas) {
+            for (DtTema tema : temas) {
         %>
         temas.push({
             nombre: "<%= tema.getNombre()%>",

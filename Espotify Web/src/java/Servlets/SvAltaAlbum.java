@@ -1,10 +1,10 @@
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTTema;
-import Datatypes.DTUsuario;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtTema;
+import webservices.DtUsuario;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -21,6 +21,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.IOException_Exception;
 
 @WebServlet(name = "SvAltaAlbum", urlPatterns = {"/SvAltaAlbum"})
 @MultipartConfig(
@@ -30,8 +35,10 @@ import java.util.List;
 )
 public class SvAltaAlbum extends HttpServlet {
 
-    private final Fabrica fabrica = Fabrica.getInstance();
-    private final IControlador control = fabrica.getIControlador();
+    //private final Fabrica fabrica = Fabrica.getInstance();
+    //private final IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,7 +54,7 @@ public class SvAltaAlbum extends HttpServlet {
         String nombreAlbum = request.getParameter("nombreAlbum");
         String anioAlbumStr = request.getParameter("anioAlbum");
         String[] generosSeleccionados = request.getParameterValues("genero[]");
-        String correoArtista = ((DTUsuario) session.getAttribute("usuario")).getCorreo();
+        String correoArtista = ((DtUsuario) session.getAttribute("usuario")).getCorreo();
 
         // Procesar la imagen del álbum
         Part imagenPart = request.getPart("imagenAlbum");
@@ -56,7 +63,11 @@ public class SvAltaAlbum extends HttpServlet {
             File archivoTemporal = File.createTempFile("album_image_", ".jpg");
             imagenPart.write(archivoTemporal.getAbsolutePath());
             byte[] archivoImagen = Files.readAllBytes(archivoTemporal.toPath());
-            rutaImagen = control.guardarImagenesAlbum(archivoImagen, nombreAlbum, correoArtista);
+            try {
+                rutaImagen = control.guardarImagenesAlbum(archivoImagen, nombreAlbum, correoArtista);
+            } catch (IOException_Exception ex) {
+                Logger.getLogger(SvAltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+            }
             archivoTemporal.delete();
         }
 
@@ -72,7 +83,7 @@ public class SvAltaAlbum extends HttpServlet {
         }
 
         // Procesar múltiples temas iterando por índice
-        List<DTTema> listaTemas = new ArrayList<>();
+        List<DtTema> listaTemas = new ArrayList<>();
         int temaIndex = 0;
 
         while (true) {
@@ -98,14 +109,24 @@ public class SvAltaAlbum extends HttpServlet {
                 File archivoMp3Temporal = File.createTempFile("tema_", ".mp3");
                 archivoTemaPart.write(archivoMp3Temporal.getAbsolutePath());
                 byte[] archivoMp3 = Files.readAllBytes(archivoMp3Temporal.toPath());
-                rutaTema = control.guardarTemaEnCarpeta(archivoMp3, nombreTema+"_"+nombreAlbum+"_"+((DTUsuario) session.getAttribute("usuario")).getNickname());
+                try {
+                    rutaTema = control.guardarTemaEnCarpeta(archivoMp3, nombreTema+"_"+nombreAlbum+"_"+((DtUsuario) session.getAttribute("usuario")).getNickname());
+                } catch (IOException_Exception ex) {
+                    Logger.getLogger(SvAltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //rutaTema = control.guardarTemaEnCarpeta(archivoMp3, nombreTema+"_"+nombreAlbum+"_"+((DtUsuario) session.getAttribute("usuario")).getNickname());
                 archivoMp3Temporal.delete();
             } else if (urlTema != null && !urlTema.isEmpty()) {
                 rutaTema = urlTema;
             }
 
             // Crear el objeto DTTema y añadirlo a la lista de temas
-            DTTema nuevoTema = new DTTema(nombreTema, minutos, segundos, rutaTema);
+            //DtTema nuevoTema = new DtTema(nombreTema, minutos, segundos, rutaTema);
+            DtTema nuevoTema = new DtTema(); 
+            nuevoTema.setNombre(nombreTema);
+            nuevoTema.setMinutos(minutos);
+            nuevoTema.setSegundos(segundos);
+            nuevoTema.setDirectorio(rutaTema);
             listaTemas.add(nuevoTema);
 
             // Incrementar el índice para el próximo tema
@@ -114,8 +135,13 @@ public class SvAltaAlbum extends HttpServlet {
 
         try {
             // Crear el objeto DTAlbum y guardarlo usando el controlador
-            DTAlbum nuevoAlbum = new DTAlbum(nombreAlbum, anioAlbum, rutaImagen, generos);
-            control.CrearAlbum(correoArtista, nuevoAlbum, listaTemas);
+            DtAlbum nuevoAlbum = new DtAlbum();
+            //DtAlbum nuevoAlbum = new DtAlbum(nombreAlbum, anioAlbum, rutaImagen, generos);
+            nuevoAlbum.setNombre(nombreAlbum);
+            nuevoAlbum.setAnioCreacion(anioAlbum);
+            nuevoAlbum.setImagen(rutaImagen);
+            nuevoAlbum.getListaGeneros().addAll(generos);
+            control.crearAlbum(correoArtista, nuevoAlbum, (webservices.ArrayList) listaTemas);//control.CrearAlbum(correoArtista, nuevoAlbum, listaTemas);
             response.sendRedirect("dashboard.jsp");
 
         } catch (Exception e) {

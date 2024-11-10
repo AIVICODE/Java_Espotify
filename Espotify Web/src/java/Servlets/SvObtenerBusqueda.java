@@ -1,9 +1,9 @@
 package Servlets;
 
 
-import Datatypes.DTContenido;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtContenido;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -13,12 +13,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTContenido;
 
 
 @WebServlet(name = "SvObtenerBusqueda", urlPatterns = {"/SvObtenerBusqueda"})
 public class SvObtenerBusqueda extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    private IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //private IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,7 +39,8 @@ public class SvObtenerBusqueda extends HttpServlet {
         String sortBy = request.getParameter("sortBy");
 
         try {
-            List<DTContenido> favoritosList = control.Buscador(filtro, sortBy);
+            ListaDTContenido favLis = control.buscador(filtro, sortBy);
+            List<DtContenido> favoritosList = favLis.getLista();//control.Buscador(filtro, sortBy);
             // Coloca la lista de favoritos como atributo en la solicitud
             request.setAttribute("dtContenidoList", favoritosList);
 

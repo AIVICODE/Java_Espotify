@@ -1,4 +1,4 @@
-package Logica;
+/*package Logica;
 
 
 import Logica.Fabrica;
@@ -47,3 +47,4 @@ IControlador control = fabrica.getIControlador();
         // Aquí puedes hacer cualquier limpieza necesaria
     }
 }
+*/

@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><xs:schema xmlns:tns="http://WebServices/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://WebServices/">
+
+<xs:element name="Exception" type="tns:Exception"/>
+
+<xs:element name="IOException" type="tns:IOException"/>
+
+<xs:element name="base64BinaryArray" type="tns:base64BinaryArray"/>
+
+<xs:element name="listaDTAlbum" type="tns:listaDTAlbum"/>
+
+<xs:element name="listaDTCliente" type="tns:listaDTCliente"/>
+
+<xs:element name="listaDTContenido" type="tns:listaDTContenido"/>
+
+<xs:element name="listaDTIngresoWeb" type="tns:listaDTIngresoWeb"/>
+
+<xs:element name="listaDTListaRep" type="tns:listaDTListaRep"/>
+
+<xs:element name="listaDTSub" type="tns:listaDTSub"/>
+
+<xs:element name="listaString" type="tns:listaString"/>
+
+<xs:complexType name="listaString">
+<xs:sequence>
+<xs:element name="lista" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaDTAlbum">
+<xs:sequence>
+<xs:element name="lista" type="tns:dtAlbum" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtAlbum">
+<xs:complexContent>
+<xs:extension base="tns:dtContenido">
+<xs:sequence>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="anioCreacion" type="xs:int"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="listaGeneros" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listaTemas" type="tns:dtTema" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="artista" type="tns:dtArtista" minOccurs="0"/>
+<xs:element name="imagenBytes" type="xs:base64Binary" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="dtContenido">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="dtTema">
+<xs:complexContent>
+<xs:extension base="tns:dtContenido">
+<xs:sequence>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="minutos" type="xs:int"/>
+<xs:element name="segundos" type="xs:int"/>
+<xs:element name="directorio" type="xs:string" minOccurs="0"/>
+<xs:element name="orden" type="xs:int"/>
+<xs:element name="nombrealbum" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreartista" type="xs:string" minOccurs="0"/>
+<xs:element name="anioCreacion" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="dtArtista">
+<xs:complexContent>
+<xs:extension base="tns:dtUsuario">
+<xs:sequence>
+<xs:element name="biografia" type="xs:string" minOccurs="0"/>
+<xs:element name="sitioWeb" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="dtUsuario">
+<xs:sequence>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="apellido" type="xs:string" minOccurs="0"/>
+<xs:element name="contrasenia" type="xs:string" minOccurs="0"/>
+<xs:element name="correo" type="xs:string" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaNac" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="confirmacion" type="xs:string" minOccurs="0"/>
+<xs:element name="listaUsuariosFavoritos" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="base64BinaryArray">
+<xs:sequence>
+<xs:element name="items" type="xs:base64Binary" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="IOException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaDTListaRep">
+<xs:sequence>
+<xs:element name="lista" type="tns:dtListaRep" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtListaRep">
+<xs:complexContent>
+<xs:extension base="tns:dtContenido">
+<xs:sequence>
+<xs:element name="nombreListaRep" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreCliente" type="xs:string" minOccurs="0"/>
+<xs:element name="Genero" type="xs:string" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="temas" type="tns:dtTema" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="imagenBytes" type="xs:base64Binary" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="listaDTSub">
+<xs:sequence>
+<xs:element name="lista" type="tns:dtSub" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtSub">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="cliente" type="xs:string" minOccurs="0"/>
+<xs:element name="tipo" type="xs:string" minOccurs="0"/>
+<xs:element name="estado" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaActivacion" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fechaVencimiento" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtInfoTema">
+<xs:sequence>
+<xs:element name="cantidadDescargas" type="xs:int"/>
+<xs:element name="cantidadReproducciones" type="xs:int"/>
+<xs:element name="cantidadfavoritos" type="xs:int"/>
+<xs:element name="cantidadlistas" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaDTCliente">
+<xs:sequence>
+<xs:element name="lista" type="tns:dtCliente" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtCliente">
+<xs:complexContent>
+<xs:extension base="tns:dtUsuario">
+<xs:sequence>
+<xs:element name="listaReproduccion" type="tns:listaRep" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="listaRep" abstract="true">
+<xs:complexContent>
+<xs:extension base="tns:favoritos">
+<xs:sequence>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="listaTemas" type="tns:tema" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="favoritos" abstract="true">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="tema">
+<xs:complexContent>
+<xs:extension base="tns:favoritos">
+<xs:sequence>
+<xs:element name="album" type="tns:album" minOccurs="0"/>
+<xs:element name="direccion" type="xs:string" minOccurs="0"/>
+<xs:element name="duracion" type="tns:duration" minOccurs="0"/>
+<xs:element name="duracionSegundos" type="xs:long"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="orden" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="album">
+<xs:complexContent>
+<xs:extension base="tns:favoritos">
+<xs:sequence>
+<xs:element name="anioCreacion" type="xs:int"/>
+<xs:element name="artista" type="tns:artista" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="listaGeneros" type="tns:genero" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listaTemas" type="tns:tema" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="artista">
+<xs:complexContent>
+<xs:extension base="tns:usuario">
+<xs:sequence>
+<xs:element name="albumes" type="tns:album" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="biografia" type="xs:string" minOccurs="0"/>
+<xs:element name="sitioWeb" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="usuario" abstract="true">
+<xs:sequence>
+<xs:element name="apellido" type="xs:string" minOccurs="0"/>
+<xs:element name="contrasenia" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaNac" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="mail" type="xs:string" minOccurs="0"/>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="genero">
+<xs:sequence>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="padre" type="tns:genero" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="duration" final="extension restriction">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listaDTContenido">
+<xs:sequence>
+<xs:element name="lista" type="tns:dtContenido" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaDTIngresoWeb">
+<xs:sequence>
+<xs:element name="lista" type="tns:dtIngresoWeb" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtIngresoWeb">
+<xs:sequence>
+<xs:element name="ip" type="xs:string" minOccurs="0"/>
+<xs:element name="url" type="xs:string" minOccurs="0"/>
+<xs:element name="browser" type="xs:string" minOccurs="0"/>
+<xs:element name="So" type="xs:string" minOccurs="0"/>
+<xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="arrayList">
+<xs:complexContent>
+<xs:extension base="tns:abstractList">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="abstractList" abstract="true">
+<xs:complexContent>
+<xs:extension base="tns:abstractCollection">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="abstractCollection" abstract="true">
+<xs:sequence/>
+</xs:complexType>
+</xs:schema>

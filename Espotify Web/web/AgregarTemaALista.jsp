@@ -1,7 +1,7 @@
-<%@page import="Datatypes.DTTema"%>
-<%@page import="Datatypes.DTAlbum"%>
+<%@page import="webservices.DtTema"%>
+<%@page import="webservices.DtAlbum"%>
 <%@page import="java.util.List"%>
-<%@page import="Datatypes.DTListaRep"%>
+<%@page import="webservices.DtListaRep"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">

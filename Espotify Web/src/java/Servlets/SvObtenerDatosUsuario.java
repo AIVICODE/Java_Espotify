@@ -1,15 +1,15 @@
 package Servlets;
-import Datatypes.DTArtista;
-import Datatypes.DTCliente;
-import Datatypes.DTUsuario;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtArtista;
+import webservices.DtCliente;
+import webservices.DtUsuario;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
-import Logica.Fabrica;
-import Logica.IControlador;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -30,18 +30,23 @@ import com.google.gson.JsonArray;
 
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaString;
 
 
 @WebServlet(name = "SvObtenerDatosUsuario", urlPatterns = {"/SvObtenerDatosUsuario"})
 public class SvObtenerDatosUsuario extends HttpServlet {
-Fabrica fabrica = Fabrica.getInstance();
-IControlador control = fabrica.getIControlador();
+//Fabrica fabrica = Fabrica.getInstance();
+//IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -64,7 +69,7 @@ IControlador control = fabrica.getIControlador();
             response.getWriter().write("Nickname no proporcionado");
             return;
         }
-        DTUsuario usuario = null;    
+        DtUsuario usuario = null;    
         usuario = control.encontrarClientePorNickname(nickname);//dt cliente
         if (usuario == null){
             usuario = control.encontrarDTArtistaPorNickname(nickname);
@@ -114,8 +119,8 @@ IControlador control = fabrica.getIControlador();
             return;
         }  
         //Operaciones para mandar la info al jsp en forma de json
-        DTArtista artista = new DTArtista();
-        DTCliente cliente = new DTCliente();
+        DtArtista artista = new DtArtista();
+        DtCliente cliente = new DtCliente();
         artista = null;
         cliente = null;
         artista = control.encontrarDTArtistaPorNickname(nickname);
@@ -123,7 +128,7 @@ IControlador control = fabrica.getIControlador();
             cliente = control.encontrarClientePorNickname(nickname);//dt cliente
         }
         if (artista != null){//si es artista mandarlo
-            DTArtista usuario = artista;
+            DtArtista usuario = artista;
             StringBuilder jsonUsuario = new StringBuilder();
             //Convierto a JSON
             jsonUsuario.append("{");
@@ -142,7 +147,8 @@ IControlador control = fabrica.getIControlador();
             jsonUsuario.append("}");
             
             // Crear el JSON de seguidores
-            List<String> seguidores = control.nicksClientesSiguenArtista(nickname);
+            ListaString segui = control.nicksClientesSiguenArtista(nickname);
+            List<String> seguidores = segui.getLista();//control.nicksClientesSiguenArtista(nickname);
             StringBuilder jsonSeguidores = new StringBuilder();
             jsonSeguidores.append("["); // Comienza el array
             for (int i = 0; i < seguidores.size(); i++) {
@@ -168,7 +174,8 @@ IControlador control = fabrica.getIControlador();
             List<String> albumesArtista;
             StringBuilder jsonAlbumesArtista = new StringBuilder();
             try {
-                albumesArtista = control.listaAlbumesArtistaNick(nickname);
+                ListaString alArt = control.listaAlbumesArtistaNick(nickname);
+                albumesArtista = alArt.getLista();//control.listaAlbumesArtistaNick(nickname);
                 jsonAlbumesArtista.append("["); // Comienza el array
                 for (int i = 0; i < albumesArtista.size(); i++) {
                     jsonAlbumesArtista.append("\"").append(albumesArtista.get(i)).append("\"");
@@ -210,7 +217,7 @@ IControlador control = fabrica.getIControlador();
             response.getWriter().flush();
         }
         if(cliente != null){//si es null es cliente
-            DTCliente usuario = cliente;
+            DtCliente usuario = cliente;
             StringBuilder jsonUsuario = new StringBuilder();
             //Convierto a JSON
             jsonUsuario.append("{");
@@ -228,7 +235,8 @@ IControlador control = fabrica.getIControlador();
             jsonUsuario.append("}");
             
             // Crear el JSON de seguidores
-            List<String> seguidores = control.seguidoresDelCliente(nickname);
+            ListaString seg = control.seguidoresDelCliente(nickname);
+            List<String> seguidores = seg.getLista();//control.seguidoresDelCliente(nickname);
             StringBuilder jsonSeguidores = new StringBuilder();
             jsonSeguidores.append("["); // Comienza el array
             for (int i = 0; i < seguidores.size(); i++) {
@@ -240,7 +248,8 @@ IControlador control = fabrica.getIControlador();
             jsonSeguidores.append("]"); // Cierra el array
             System.out.println("Contenido de jsonSeguidores: " + jsonSeguidores.toString());
             // Crear el JSON de los seguidos de clientes 
-            List<String> seguidos = control.clientesSeguidosDelCliente(nickname);
+            ListaString segd = control.clientesSeguidosDelCliente(nickname);
+            List<String> seguidos = segd.getLista();//control.clientesSeguidosDelCliente(nickname);
             StringBuilder jsonSeguidos = new StringBuilder();
             jsonSeguidos.append("[");
             if (!seguidos.isEmpty()) {
@@ -253,7 +262,8 @@ IControlador control = fabrica.getIControlador();
                     jsonSeguidos.append(","); // Agregar coma si no es el último elemento
                 }
             }
-            List<String> seguidosA = control.artistasSeguidosDelCliente(nickname);
+            ListaString segA = control.artistasSeguidosDelCliente(nickname);
+            List<String> seguidosA = segA.getLista();//control.artistasSeguidosDelCliente(nickname);
             if (!seguidosA.isEmpty()) {
                 jsonSeguidos.append(",\"Artistas:\"");// Agrega el texto "Artistas:"
                 jsonSeguidos.append(","); // Añade una coma después de "Artistas:" solo si la lista no está vacía
@@ -268,7 +278,8 @@ IControlador control = fabrica.getIControlador();
             jsonSeguidos.append("]"); // Cierra el array
            
             // Crear el JSON de listasCreadas por cliente
-            List<String> listasCreadas = control.nombresListaRepDeCliente(nickname);
+            ListaString lisCre = control.nombresListaRepDeCliente(nickname);
+            List<String> listasCreadas = lisCre.getLista();//control.nombresListaRepDeCliente(nickname);
             StringBuilder jsonListasCreadas = new StringBuilder();
             jsonListasCreadas.append("["); // Comienza el array
             for (int i = 0; i < listasCreadas.size(); i++) {
@@ -281,11 +292,12 @@ IControlador control = fabrica.getIControlador();
             System.out.println("Contenido de jsonListasCreadas: " + jsonListasCreadas.toString());
             
             // Crear el JSON de favoritos del cliente
-            List<String> favoritos = control.listaFavoritosDeCliente(nickname);
+            ListaString favo = control.listaFavoritosDeCliente(nickname);
+            List<String> favoritos = favo.getLista();//control.listaFavoritosDeCliente(nickname);
             StringBuilder jsonFavoritos = new StringBuilder();
             jsonFavoritos.append("["); // Comienza el array
             for (int i = 0; i < favoritos.size(); i++) {
-                jsonFavoritos.append("\"").append(favoritos.get(i)).append("\"");
+                jsonFavoritos.append("\"").append(favoritos.get(i)).append("\"");// OJO
                 if (i < favoritos.size() - 1) {
                     jsonFavoritos.append(","); // Agregar coma si no es el último elemento
                 }
@@ -299,7 +311,9 @@ IControlador control = fabrica.getIControlador();
             
             // NUEVO Crear el JSON de listas publicas del cliente
             String c = usuario.getCorreo();//agarra correo de cliente
-            List<String> listasPublicas = control.listasPublicasDeCliente(c); //RECIBE CORREO 
+            
+            ListaString lisPub = control.listasPublicasDeCliente(c);
+            List<String> listasPublicas = lisPub.getLista();//control.listasPublicasDeCliente(c); //RECIBE CORREO 
             StringBuilder jsonListasPublicas = new StringBuilder();
             jsonListasPublicas.append("["); // Comienza el array
             for (int i = 0; i < listasPublicas.size(); i++) {
@@ -313,7 +327,8 @@ IControlador control = fabrica.getIControlador();
 
             //NUEVO ALBUMES MOSTRAR
             
-            List<String> albumesFavoritos = control.nombreAlbumyNombreArtistaFavoritosCliente(nickname);
+            ListaString albFav = control.nombreAlbumyNombreArtistaFavoritosCliente(nickname);
+            List<String> albumesFavoritos = albFav.getLista();//control.nombreAlbumyNombreArtistaFavoritosCliente(nickname);
             StringBuilder jsonalbumesFavoritos = new StringBuilder();
             jsonalbumesFavoritos.append("["); // Comienza el array
             for (int i = 0; i < albumesFavoritos.size(); i++) {
@@ -346,7 +361,7 @@ IControlador control = fabrica.getIControlador();
             // Enviar la respuesta combinada al jsp
             response.getWriter().print(jsonRespuesta.toString());
             response.getWriter().flush();
-            System.out.println("FIN CLIENTE");
+            
         }     
     }
 

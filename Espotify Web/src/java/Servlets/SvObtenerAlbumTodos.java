@@ -1,15 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -18,24 +13,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Datatypes.DTUsuario;
+import webservices.DtUsuario;
 import com.google.gson.Gson;
 import java.util.List;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTAlbum;
 
 
 
-/**
- *
- * @author camil
- */
 @WebServlet(name = "SvObtenerAlbumTodos", urlPatterns = {"/SvObtenerAlbumTodos"})
 public class SvObtenerAlbumTodos extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -50,12 +46,13 @@ public class SvObtenerAlbumTodos extends HttpServlet {
             throws ServletException, IOException {
         
  try {
-        List<DTAlbum> albumes = control.findDTAlbumTodos(); // Obtener todos los álbumes
+        ListaDTAlbum alb = control.findDTAlbumTodos();
+        List<DtAlbum> albumes = alb.getLista(); // Obtener todos los álbumes
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         // Generar opciones HTML para el ComboBox de álbumes, identificando por nombre de álbum y nombre de artista
-       for (DTAlbum album : albumes) {
+       for (DtAlbum album : albumes) {
     out.println("<option value='" + album.getNombre() + " - " + album.getArtista().getNickname() + "'>" + album.getNombre() + " - " + album.getArtista().getNickname() + "</option>");
 }
     } catch (Exception ex) {

@@ -4,12 +4,12 @@
  */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Datatypes.DTTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+import webservices.DtTema;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -18,24 +18,30 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Datatypes.DTUsuario;
+import webservices.DtUsuario;
 import java.util.List;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import java.util.ArrayList;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTListaRep;
 
 /**
  *
  * @author camil
  */
 //NO LE CAMBIE EL NOMBRE PARA NO COMPLICAR PERO TRAE SOLO LAS LISTAS PARTICULARES
+
 @WebServlet(name = "SvObtenerListaParticular", urlPatterns = {"/SvObtenerListaParticular"})
 public class SvObtenerListaParticular extends HttpServlet {
     
-        Fabrica fabrica = Fabrica.getInstance();
-        IControlador control = fabrica.getIControlador();
+        //Fabrica fabrica = Fabrica.getInstance();
+        //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
 
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -47,12 +53,13 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
     try {
-        List<DTListaRep> listasRepTodas = control.ListasParticulares(); // Obtener todas las listas de reproducción particulares
+        ListaDTListaRep lisRepTod = control.listasParticulares();
+        List<DtListaRep> listasRepTodas = lisRepTod.getLista();//control.ListasParticulares(); // Obtener todas las listas de reproducción particulares
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         // Generar opciones HTML para el ComboBox, identificando por nombre de lista y nombre de cliente
-        for (DTListaRep listaRep : listasRepTodas) {
+        for (DtListaRep listaRep : listasRepTodas) {
             out.println("<option value='" + listaRep.getNombreListaRep() + " - " + listaRep.getNombreCliente() + "'>" + listaRep.getNombreListaRep() + " - " + listaRep.getNombreCliente() + "</option>");
         }
     } catch (Exception ex) {
@@ -74,16 +81,3 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             return "Short description";
         }
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-

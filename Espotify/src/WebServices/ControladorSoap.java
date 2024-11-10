@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template  obtenerTemasComoBytes 
  */
 package WebServices;
 import Datatypes.DTUsuario;
@@ -18,6 +18,7 @@ import Logica.Subscripcion.Estado;
 import Logica.Fabrica;
 import Logica.IControlador;
 import Logica.Tema;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -479,9 +480,10 @@ public class ControladorSoap {
     
     
     @WebMethod
-    public byte[][] obtenerTemasComoBytes(String[] rutasTemas) throws IOException {
+    public byte[][] obtenerTemasComoBytes(/*String[]*/ListaString rutasTemas) throws IOException {
         try{
-             return control.obtenerTemasComoBytes(rutasTemas);
+            List<String> rutas =rutasTemas.getLista();
+            return control.obtenerTemasComoBytes(rutas.toArray(new String[0]));
          } catch (IOException e) {
             // Lanza la excepción para que sea gestionada en un nivel superior
             throw new IOException(e.getMessage());
@@ -512,6 +514,7 @@ public class ControladorSoap {
     @WebMethod
     public void crearUsuario(DTUsuario user) throws Exception {
         try{
+            
             control.crearUsuario(user);
         } catch (IllegalArgumentException e) {
             throw new Exception(e.getMessage());
@@ -594,6 +597,39 @@ public class ControladorSoap {
             return control.ObtenerInfoTema(nombreTema, nombreArtista, nombreAlbum);
         } catch (IllegalArgumentException e) {
             throw new Exception(e.getMessage());
+        }
+    }
+    
+    public void AgregarTema_De_Album_A_Lista(String cliente, String lista_de_cliente, String album, String artista_de_album, String tema_selected) throws Exception{
+        try{
+            control.AgregarTema_De_Album_A_Lista(cliente,lista_de_cliente, album, artista_de_album, tema_selected);
+        } catch (IllegalArgumentException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    public void AgregarTema_De_ListaPart_A_Lista(String cliente, String lista_de_cliente, String lista_where_temais, String cliente_con_lista, String tema_selected) throws Exception {
+        try{
+            control.AgregarTema_De_ListaPart_A_Lista(cliente,lista_de_cliente, lista_where_temais, cliente_con_lista, tema_selected);
+        } catch (IllegalArgumentException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    @WebMethod
+    public Base64BinaryArray obtTemasComoBytes(ListaString rutasTemas) throws IOException {
+        try {
+            List<String> rutas =rutasTemas.getLista();
+            byte[][] temasBytes = control.obtenerTemasComoBytes(rutas.toArray(new String[0]));
+
+            // Convierte el byte[][] a Base64BinaryArray
+            Base64BinaryArray array = new Base64BinaryArray();
+            for (byte[] tema : temasBytes) {
+                array.getItems().add(tema);
+            }
+            return array;
+        } catch (IOException e) {
+            throw new IOException(e.getMessage());
         }
     }
 

@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Datatypes.DTTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+import webservices.DtTema;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -20,11 +21,18 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import java.util.List;
+import java.util.stream.Collectors;
+import webservices.Base64BinaryArray;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaString;
 
 @WebServlet(name = "SvObtenerTemas", urlPatterns = {"/SvObtenerTemas"})
 public class SvObtenerTemas extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,22 +56,32 @@ public class SvObtenerTemas extends HttpServlet {
         }
 
         // Busca el álbum utilizando la lógica de negocio
-        String correo= control.ConvierteNick_A_Correo(artista);
-        DTAlbum dtalbum = control.findAlbumxNombreDT(album, correo);
+        String correo= control.convierteNickACorreo(artista);//control.ConvierteNick_A_Correo(artista);
+        DtAlbum dtalbum = control.findAlbumxNombreDT(album, correo);
         
         if (dtalbum != null) {
-            List<DTTema> temas = dtalbum.getListaTemas();
+            List<DtTema> temas = dtalbum.getListaTemas();
  
 
             if (temas != null && !temas.isEmpty()) {
                 // Pasa los datos del álbum y los temas a la página JSP
 //--------------------------------------------------------------------------------------------------------------------------
-                String[] rutasTemas = temas.stream()
-                        .map(DTTema::getDirectorio)
-                        .toArray(String[]::new);
-                // Obtiene los byte[] de cada tema
+                List<String> rutasTemas = temas.stream()
+                            .map(DtTema::getDirectorio) // Extrae el valor de directorio de cada DtTema
+                            .collect(Collectors.toList());
+                ListaString result = new ListaString();
+                result.getLista().addAll(rutasTemas);
+                //String[] rutasTemas = temas.stream()
+                //        .map(DtTema::getDirectorio)
+                //        .toArray(String[]::new);
+                Base64BinaryArray temasBytesArray = control.obtTemasComoBytes(result);
+                byte[][] temasBytes = new byte[temasBytesArray.getItems().size()][];
+                for (int i = 0; i < temasBytesArray.getItems().size(); i++) {
+                    temasBytes[i] = temasBytesArray.getItems().get(i);
+                }
+
                 System.out.println("ENTRA A TEMAS BYTES");
-                byte[][] temasBytes = control.obtenerTemasComoBytes(rutasTemas);
+                //byte[][] temasBytes = control.obtenerTemasComoBytes((ListaString) rutasTemas);//control.obtenerTemasComoBytes(rutasTemas);
 //---------------------------------------------------------------------------------------------------------------------------
 System.out.println("SALE A TEMAS BYTES");                
 request.setAttribute("album", album);

@@ -1,11 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Datatypes.DTUsuario"%>
-<%@page import="Datatypes.DTCliente"%>
-<%@page import="Datatypes.DTArtista"%>
+<%@page import="webservices.DtUsuario"%>
+<%@page import="webservices.DtCliente"%>
+<%@page import="webservices.DtArtista"%>
 
 <%
     session = request.getSession(false);
-    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    DtUsuario dtUsuario = (DtUsuario) session.getAttribute("usuario");
     if (dtUsuario == null) {
         response.sendRedirect("index.jsp");
         return;

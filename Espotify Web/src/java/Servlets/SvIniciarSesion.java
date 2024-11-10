@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -16,21 +13,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Datatypes.DTUsuario;
+import webservices.DtUsuario;
 import jakarta.servlet.http.HttpSession;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 
 @WebServlet(name = "SvIniciarSesion", urlPatterns = {"/SvIniciarSesion"})
 public class SvIniciarSesion extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    private IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //private IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String usuario = request.getParameter("usuario");  // puede ser nickname o email
         String password = request.getParameter("password");
 
         try {
-            DTUsuario dtUsuario = control.login(usuario, password);
+            DtUsuario dtUsuario = control.login(usuario, password);
             String rutaImagen = dtUsuario.getImagen();
             System.out.println("ACA IMAGEN "+rutaImagen);
             HttpSession session = request.getSession();

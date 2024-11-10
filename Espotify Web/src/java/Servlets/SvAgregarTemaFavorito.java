@@ -1,10 +1,10 @@
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -17,17 +17,16 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
-/**
- *
- * @author ivan
- */
 
 @WebServlet(name = "SvAgregarTemaFavorito", urlPatterns = {"/SvAgregarTemaFavorito"})
 public class SvAgregarTemaFavorito extends HttpServlet {
-Fabrica fabrica = Fabrica.getInstance();
-IControlador control = fabrica.getIControlador();
-
+//Fabrica fabrica = Fabrica.getInstance();
+//IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
@@ -49,14 +48,14 @@ IControlador control = fabrica.getIControlador();
     try {
         // Código para agregar el tema favorito
         HttpSession session = request.getSession(false);
-        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+        DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
 
         String albumName = request.getParameter("album");
         String artistName = request.getParameter("artista");
         String temaName = request.getParameter("tema");
 
-        String correoArtist = control.ConvierteNick_A_Correo(artistName);
-        control.GuardarTemaFavorito(dtUsuario.getCorreo(), correoArtist, albumName, temaName);
+        String correoArtist = control.convierteNickACorreo(artistName)/*control.ConvierteNick_A_Correo(artistName)*/;
+        control.guardarTemaFavorito(dtUsuario.getCorreo(), correoArtist, albumName, temaName);//control.GuardarTemaFavorito(dtUsuario.getCorreo(), correoArtist, albumName, temaName);
 
         // Si todo va bien, enviamos respuesta de éxito
         response.getWriter().write("{\"success\": true, \"message\": \"Tema agregado a favoritos exitosamente.\"}");

@@ -1,13 +1,13 @@
 
 package Servlets;
 
-import Datatypes.DTArtista;
-import Datatypes.DTCliente;
-import Datatypes.DTUsuario;
+import webservices.DtArtista;
+import webservices.DtCliente;
+import webservices.DtUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import Logica.Fabrica;
-import Logica.IControlador;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -25,19 +25,27 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.servlet.http.Part;
-
+import java.util.GregorianCalendar;
+import javax.xml.datatype.DatatypeFactory;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.IOException_Exception;
+import Logica.DateUtils;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 @WebServlet(name = "SvRegistrarUsuario", urlPatterns = {"/SvRegistrarUsuario"})
 @MultipartConfig
 public class SvRegistrarUsuario extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+//    Fabrica fabrica = Fabrica.getInstance();
+//    IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -79,7 +87,11 @@ public class SvRegistrarUsuario extends HttpServlet {
         if (imagenPart != null && imagenPart.getSize() > 0) {
             byte[] archivoImagen = new byte[(int) imagenPart.getSize()];
             imagenPart.getInputStream().read(archivoImagen); // Leer el archivo como bytes
+        try {
             imagen = control.guardarImagenesEnCarpeta(archivoImagen, nickname); // Guardar la imagen
+        } catch (IOException_Exception ex) {
+            Logger.getLogger(SvRegistrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         } else {
             imagen = "/home/usuario/imagenes_usuarios/generico.jpg"; // Ruta por defecto
         }
@@ -88,13 +100,32 @@ public class SvRegistrarUsuario extends HttpServlet {
         //Artista
         String biografia = request.getParameter("bio");
         String web = request.getParameter("website");
+        XMLGregorianCalendar xmlFecha = DateUtils.convertDateToXMLGregorianCalendar(fecha);
         
         //DTUsuario user = new DTArtista o cliente
-        DTUsuario usuario = new DTUsuario();
+        DtUsuario usuario = new DtUsuario();
         if(tipoUsuario.equals("Cliente")){
-            usuario = new DTCliente(nickname, nombre, apellido, correo, fecha, contrasenia, contraseniaC, imagen);
+            usuario = new DtCliente();//(nickname, nombre, apellido, correo, fecha, contrasenia, contraseniaC, imagen);
+            usuario.setNombre(nombre);
+            usuario.setNickname(nickname);
+            usuario.setApellido(apellido);
+            usuario.setCorreo(web);
+            usuario.setFechaNac(xmlFecha);
+            usuario.setContrasenia(contrasenia);
+            usuario.setConfirmacion(contraseniaC);
+            usuario.setImagen(imagen);
+            
         }else{
-            usuario = new DTArtista(nickname, nombre, apellido, contrasenia, contraseniaC, imagen, fecha, correo, biografia, web);
+            usuario = new DtArtista();//(nickname, nombre, apellido, contrasenia, contraseniaC, imagen, fecha, correo, biografia, web);
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setNickname(nickname);
+            usuario.setCorreo(web);
+            usuario.setContrasenia(contrasenia);
+            usuario.setConfirmacion(contraseniaC);
+            usuario.setImagen(imagen);
+            usuario.setFechaNac(xmlFecha);
+            
         }
         try {
             control.crearUsuario(usuario);

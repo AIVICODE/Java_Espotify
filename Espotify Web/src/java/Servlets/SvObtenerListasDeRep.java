@@ -1,10 +1,9 @@
-
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -19,13 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTListaRep;
+import webservices.ListaString;
 
 
 @WebServlet(name = "SvObtenerListasDeRep", urlPatterns = {"/SvObtenerListasDeRep"})
 public class SvObtenerListasDeRep extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
@@ -43,13 +48,15 @@ public class SvObtenerListasDeRep extends HttpServlet {
     
     if (genero != null && !genero.isEmpty()) {
         try {
-            List<DTListaRep> listasRep = control.obtenerDTListaPorGenero(genero);
+            ListaDTListaRep lisRe = control.obtenerDTListaPorGenero(genero);
+            List<DtListaRep> listasRep = lisRe.getLista();//control.obtenerDTListaPorGenero(genero);
             request.setAttribute("listasdeRep", listasRep);
             
          
             
             // Obtener nuevamente la lista de géneros para mantener el contexto en la JSP
-            List<String> nombreGeneros = control.MostrarNombreGeneros();
+            ListaString nomGe = control.mostrarNombreGeneros();
+            List<String> nombreGeneros = nomGe.getLista();//control.MostrarNombreGeneros();
             request.setAttribute("nombreGeneros", nombreGeneros);
             
             // Redirigir a la página JSP para mostrar las listas de reproducción

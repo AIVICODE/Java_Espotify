@@ -1,10 +1,10 @@
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -17,12 +17,16 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 
 @WebServlet(name = "SvAgregarListaParticularFavorito", urlPatterns = {"/SvAgregarListaParticularFavorito"})
 public class SvAgregarListaParticularFavorito extends HttpServlet {
-Fabrica fabrica = Fabrica.getInstance();
-IControlador control = fabrica.getIControlador();
+//Fabrica fabrica = Fabrica.getInstance();
+//IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,14 +49,15 @@ IControlador control = fabrica.getIControlador();
         response.setCharacterEncoding("UTF-8");
         
         HttpSession session = request.getSession(false);
-        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+        DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
         
         String listaName = request.getParameter("lista");
-        String clienteName = control.ConvierteNick_A_Correo(request.getParameter("cliente"));
+        //String clienteName = control.ConvierteNick_A_Correo(request.getParameter("cliente"));
+        String clienteName = control.convierteNickACorreo(request.getParameter("cliente"));
         
         try {
-            control.GuardarListaFavorito(dtUsuario.getCorreo(), clienteName, listaName);
-            
+            //control.GuardarListaFavorito(dtUsuario.getCorreo(), clienteName, listaName);
+            control.guardarListaFavorito(dtUsuario.getCorreo(), clienteName, listaName);
             // Enviar respuesta exitosa en formato JSON
             response.getWriter().write("{\"success\": true, \"message\": \"Lista agregada a favoritos exitosamente.\"}");
         } catch (Exception ex) {

@@ -16,8 +16,8 @@ public class Espotify {
         
         //Fabrica fabrica = Fabrica.getInstance();
         //IControlador control = fabrica.getIControlador();
-        Endpoint.publish("http://localhost:5000/ControladorSoap", new ControladorSoap());
-        System.out.println("Servicio SOAP iniciado en http://localhost:5000/ControladorSoap");
+        Endpoint.publish("http://localhost:8567/ControladorSoap", new ControladorSoap());
+        System.out.println("Servicio SOAP iniciado en http://localhost:8567/ControladorSoap");
 
     
         Controlador control = new Controlador();

@@ -61,7 +61,7 @@ public static final String CARPETA_GENERICO ="/home/mramos/NetBeansProjects/Prog
 
     private Date createDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day); // month is 0-based in Calendar
+        calendar.set(year, month - 1, day); // month is 0-based in Calendar AgregarTema_De_Album_A_Lista
         return calendar.getTime();
     }
 

@@ -1,9 +1,10 @@
+
 package Servlets;
 
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,13 +17,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTListaRep;
 
 @WebServlet(name = "SvObtenerListasParticulares", urlPatterns = {"/SvObtenerListaRepCliente"})
 public class SvObtenerListaRepCliente extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
-
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lógica principal aquí
@@ -33,12 +38,13 @@ public class SvObtenerListaRepCliente extends HttpServlet {
             throws ServletException, IOException {
 
  HttpSession session = request.getSession(false);
-    DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+    DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
 
     if (dtUsuario != null && !dtUsuario.getNickname().isEmpty()) {
         try {
             // Obtener las listas particulares del cliente
-            List<DTListaRep> listasParticulares = control.obtenerDTListaPorCliente(dtUsuario.getCorreo());
+            ListaDTListaRep lisPart = control.obtenerDTListaPorCliente(dtUsuario.getCorreo());
+            List<DtListaRep> listasParticulares = lisPart.getLista();//control.obtenerDTListaPorCliente(dtUsuario.getCorreo());
 
             // Convertir la lista a JSON
             Gson gson = new Gson();

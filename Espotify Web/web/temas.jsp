@@ -1,6 +1,6 @@
-<%@page import="Datatypes.DTCliente"%>
-<%@page import="Datatypes.DTUsuario"%>
-<%@page import="Datatypes.DTTema"%>
+<%@page import="webservices.DtCliente"%>
+<%@page import="webservices.DtUsuario"%>
+<%@page import="webservices.DtTema"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,18 +9,18 @@
 <%
     String album = (String) request.getAttribute("album");
     String artista = (String) request.getAttribute("artista");
-    List<DTTema> temas = (List<DTTema>) request.getAttribute("temas");
+    List<DtTema> temas = (List<DtTema>) request.getAttribute("temas");
     byte[][] temasBytes = (byte[][]) request.getAttribute("temasBytes");
 %>
 
 <h2>Temas de <%= album %></h2>
 <ul>
     <% for (int i = 0; i < temas.size(); i++) { 
-        DTTema tema = temas.get(i);
+        DtTema tema = temas.get(i);
         String temaDataUrl = "data:audio/mpeg;base64," + java.util.Base64.getEncoder().encodeToString(temasBytes[i]);
     %>
     <% session = request.getSession(false); 
-        DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario"); 
+        DtUsuario dtUsuario = (DtUsuario) session.getAttribute("usuario"); 
     %>
         <li style="display: flex; align-items: center; justify-content: space-between;" 
             onclick='seleccionarTema("<%= tema.getNombre() %>", "<%= tema.getDirectorio() %>", "<%= artista %>",<%= tema.getOrden() %>)'>
@@ -85,7 +85,7 @@
 // Lista de temas con datos del servidor
 let temas = [];
 <% for (int i = 0; i < temas.size(); i++) { 
-    DTTema tema = temas.get(i);
+    DtTema tema = temas.get(i);
     String temaDataUrl = "data:audio/mpeg;base64," + java.util.Base64.getEncoder().encodeToString(temasBytes[i]);
 %>
     temas.push({

@@ -22,29 +22,7 @@ public class DTTema extends DTContenido{
     private String nombreartista;
     private int anioCreacion;
 
-    public int getAnioCreacion() {
-        return anioCreacion;
-    }
-
-    public void setAnioCreacion(int anioCreacion) {
-        this.anioCreacion = anioCreacion;
-    }
-
-    public String getNombrealbum() {
-        return nombrealbum;
-    }
-
-    public void setNombrealbum(String nombrealbum) {
-        this.nombrealbum = nombrealbum;
-    }
-
-    public String getNombreartista() {
-        return nombreartista;
-    }
-
-    public void setNombreartista(String nombreartista) {
-        this.nombreartista = nombreartista;
-    }
+    
     
     
     public DTTema(String nombre, int minutos, int segundos, String directorio) {
@@ -107,6 +85,30 @@ public class DTTema extends DTContenido{
     
      public int getOrden() {
         return orden;
+    }
+     
+    public int getAnioCreacion() {
+        return anioCreacion;
+    }
+
+    public void setAnioCreacion(int anioCreacion) {
+        this.anioCreacion = anioCreacion;
+    }
+
+    public String getNombrealbum() {
+        return nombrealbum;
+    }
+
+    public void setNombrealbum(String nombrealbum) {
+        this.nombrealbum = nombrealbum;
+    }
+
+    public String getNombreartista() {
+        return nombreartista;
+    }
+
+    public void setNombreartista(String nombreartista) {
+        this.nombreartista = nombreartista;
     }
 
     

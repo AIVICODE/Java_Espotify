@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -21,12 +17,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTAlbum;
 
 @WebServlet(name = "SvObtenerAlbumxGenero", urlPatterns = {"/SvObtenerAlbumxGenero"})
 public class SvObtenerAlbumxGenero extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,10 +44,11 @@ public class SvObtenerAlbumxGenero extends HttpServlet {
         if (genero != null && !genero.isEmpty()) {
             try {
                 // Llamar al método del controlador para obtener la lista de DTAlbum
-                List<DTAlbum> nombresAlbumes = control.findDTAlbum(genero);
+                ListaDTAlbum nomAlb = control.findDTAlbum(genero);
+                List<DtAlbum> nombresAlbumes = nomAlb.getLista();
                 System.out.println("Número de álbumes encontrados: " + nombresAlbumes.size());
                 List<byte[]> listaImgAlbumes = new ArrayList<>();
-                for (DTAlbum album : nombresAlbumes) {
+                for (DtAlbum album : nombresAlbumes) {
                     
                     byte[] imgAlbumBytes;
                     imgAlbumBytes = album.getImagenBytes();

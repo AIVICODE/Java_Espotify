@@ -1,9 +1,9 @@
 package Servlets;
 
-import Datatypes.DTListaRep;
-import Datatypes.DTTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtListaRep;
+import webservices.DtTema;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -18,11 +18,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 @WebServlet(name = "SvSeleccionarLista", urlPatterns = {"/SvSeleccionarLista"})
 public class SvSeleccionarLista extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,26 +45,26 @@ public class SvSeleccionarLista extends HttpServlet {
             String nombreCliente = request.getParameter("nombreCliente"); // Puede ser null para listas generales
             
             // Lógica para obtener la lista de reproducción por nombre y cliente
-            DTListaRep listaSeleccionada = null;
+            DtListaRep listaSeleccionada = null;
             
             // Comprobar si el nombreCliente es nulo para distinguir entre listas generales y particulares
             if (nombreCliente == null || nombreCliente.isEmpty()) {
                 try {
                     
                     // Buscar lista de reproducción por nombre (listas generales)
-                    listaSeleccionada = control.obtenerDatosDeLista_Por_Defecto(nombreLista);
+                    listaSeleccionada = control.obtenerDatosDeListaPorDefecto(nombreLista);//control.obtenerDatosDeLista_Por_Defecto(nombreLista);
                 } catch (Exception ex) {
                     Logger.getLogger(SvSeleccionarLista.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                String correo= control.ConvierteNick_A_Correo(nombreCliente);
+                String correo= control.convierteNickACorreo(nombreCliente);//control.ConvierteNick_A_Correo(nombreCliente);
                 // Buscar lista de reproducción por nombre y cliente (listas particulares)
-                listaSeleccionada = control.obtenerDatosDeLista_Por_Cliente(correo, nombreLista);
+                listaSeleccionada = control.obtenerDatosDeListaPorCliente(correo, nombreLista);//control.obtenerDatosDeLista_Por_Cliente(correo, nombreLista);
             }
             
             if (listaSeleccionada != null) {
                 // Obtener los temas de la lista seleccionada
-                List<DTTema> temas = listaSeleccionada.getTemas();
+                List<DtTema> temas = listaSeleccionada.getTemas();
 
                 request.setAttribute("listaSeleccionada", listaSeleccionada);
                 request.setAttribute("temas", temas);

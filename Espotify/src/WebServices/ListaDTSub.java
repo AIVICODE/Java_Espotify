@@ -13,7 +13,7 @@ public class ListaDTSub {
     public List<DTSub> getLista(){
         return lista;
     }
-    
+
     public void setLista(List<DTSub> lista){
         this.lista = lista;
     }

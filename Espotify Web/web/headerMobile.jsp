@@ -1,10 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Datatypes.DTUsuario"%>
-<%@page import="Datatypes.DTCliente"%>
-<%@page import="Datatypes.DTArtista"%>
+<%@page import="webservices.DtUsuario"%>
+<%@page import="webservices.DtCliente"%>
+<%@page import="webservices.DtArtista"%>
 <%
     session = request.getSession(false);
-    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    DtUsuario dtUsuario = (DtUsuario) session.getAttribute("usuario");
     if (dtUsuario == null) {
         response.sendRedirect("index.jsp");    
         return;
@@ -44,7 +44,7 @@
                     %>
                 <div class="user-info">
                     <span class="user-nickname"><%= dtUsuario.getNickname() %></span>
-                    <% if (dtUsuario instanceof DTCliente) { %>
+                    <% if (dtUsuario instanceof DtCliente) { %>
                     <div class="user-favorites">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star-icon">
                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
