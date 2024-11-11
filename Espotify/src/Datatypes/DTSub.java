@@ -7,6 +7,8 @@ package Datatypes;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 
@@ -15,15 +17,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * @author ivan
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTSub {
+    @XmlElement
     private Long id; // ID de la suscripción
+    @XmlElement
     private String cliente; // Nombre o ID del cliente
+    @XmlElement
     private String tipo; // Tipo de suscripción (semanal, mensual, anual)
+    @XmlElement
     private String estado; // Estado de la suscripción (Pendiente, Vigente, Cancelada, Vencida)
+    @XmlElement
     private Date fechaActivacion; // Fecha en que se activó la suscripción
+    @XmlElement
     private Date fechaVencimiento; // Fecha de vencimiento de la suscripción
 
     // Constructor
+    public DTSub() {}
+
     public DTSub(Long id, String cliente, String tipo, String estado, Date fechaActivacion) {
         this.id = id;
         this.cliente = cliente;

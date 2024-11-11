@@ -59,12 +59,27 @@ public class SvCargarUsuarios extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = (HttpSession) request.getSession(false);
         DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
+        System.out.println("ENTRA AL SERVLET");
         ListaString listaUsuario = control.nicknamesDeTodosLosArtistas();
+        System.out.println("cargo nicknamesTodos artistas");
         List<String> listaUsuarios = listaUsuario.getLista() ;//control.nicknamesDeTodosLosArtistas();el combo va a tener primero los artistas y luego los cientes
-        ListaDTCliente lisCli = control.listaClientesDT();
+        System.out.println("los paso a list string");
+        for(String elemento : listaUsuarios){
+            System.out.println(elemento);
+        }
         
-        for (DtCliente c:lisCli.getLista()){
-            listaUsuarios.add(c.getNickname());
+        System.out.println("AHORa a la lista de clientesdt");
+        //ListaDTCliente lisCli = control.listaClientesDT();
+        ListaString lisCli = control.nicknamesDeTodosLosClientes();
+        for (String c : lisCli.getLista()){
+            listaUsuarios.add(c);
+        }
+        //for (DtCliente c:lisCli.getLista()){
+        //    listaUsuarios.add(c.getNickname());
+        //}
+        System.out.println("print despues de sumar clientes");
+        for(String elemento : listaUsuarios){
+            System.out.println(elemento);
         }
         // Configurar la respuesta para JSON
         response.setContentType("application/json");

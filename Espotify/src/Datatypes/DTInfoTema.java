@@ -6,16 +6,23 @@ package Datatypes;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ivan
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTInfoTema {
+    @XmlElement
     int cantidadDescargas;
+    @XmlElement
     int cantidadReproducciones;
+    @XmlElement
     int cantidadfavoritos;
+    @XmlElement
     int cantidadlistas;
 
     public DTInfoTema(int cantidadDescargas, int cantidadReproducciones, int cantidadfavoritos, int cantidadlistas) {

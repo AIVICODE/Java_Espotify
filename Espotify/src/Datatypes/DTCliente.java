@@ -6,8 +6,11 @@ import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTCliente extends DTUsuario{
     
     public DTCliente(){}
@@ -19,6 +22,7 @@ public class DTCliente extends DTUsuario{
      public DTCliente(String nickname, String nombre, String apellido, String correo, Date fechaNac, String contrasenia,String confirmacion, String imagen) {
         super(nickname, nombre, apellido, correo, fechaNac, contrasenia,confirmacion, imagen);
     }
+    @XmlElement
     private List<ListaRep> listaReproduccion;
     
     public String getNickname() {

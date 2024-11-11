@@ -7,18 +7,28 @@ package Datatypes;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ivan
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTIngresoWeb {
-      String ip;
+    @XmlElement
+    String ip;
+    @XmlElement
     String url;
+    @XmlElement
     String browser;
+    @XmlElement
     String So;
+    @XmlElement
     Date fecha;
+
+    public DTIngresoWeb() {}
 
     public DTIngresoWeb(String ip, String url, String browser, String So,Date fecha) {
         this.ip = ip;

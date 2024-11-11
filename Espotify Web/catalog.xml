@@ -6,4 +6,7 @@
     <system systemId="http://localhost:5000/ControladorSoap?wsdl" uri="src/conf/xml-resources/web-service-references/ControladorSoap/wsdl/localhost_5000/ControladorSoap.wsdl"/>
     <system systemId="http://localhost:5000/ControladorSoap?xsd=1" uri="src/conf/xml-resources/web-service-references/ControladorSoap/wsdl/localhost_5000/ControladorSoap.xsd_1.xsd"/>
     <system systemId="http://localhost:5000/ControladorSoap?xsd=2" uri="src/conf/xml-resources/web-service-references/ControladorSoap/wsdl/localhost_5000/ControladorSoap.xsd_2.xsd"/>
+    <system systemId="http://192.168.1.24:5000/ControladorSoap?wsdl" uri="src/conf/xml-resources/web-service-references/ControladorSoap/wsdl/192.168.1.24_5000/ControladorSoap.wsdl"/>
+    <system systemId="http://192.168.1.24:5000/ControladorSoap?xsd=1" uri="src/conf/xml-resources/web-service-references/ControladorSoap/wsdl/192.168.1.24_5000/ControladorSoap.xsd_1.xsd"/>
+    <system systemId="http://192.168.1.24:5000/ControladorSoap?xsd=2" uri="src/conf/xml-resources/web-service-references/ControladorSoap/wsdl/192.168.1.24_5000/ControladorSoap.xsd_2.xsd"/>
 </catalog>

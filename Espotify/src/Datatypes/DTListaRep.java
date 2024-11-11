@@ -7,20 +7,30 @@ package Datatypes;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ivan
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTListaRep extends DTContenido{
+    @XmlElement
     protected String nombreListaRep;
+    @XmlElement
     protected String nombreCliente;
+    @XmlElement
     protected String Genero;
+    @XmlElement
     protected String imagen;
+    @XmlElement
     protected List<DTTema> temas;
+    @XmlElement
     protected byte[] imagenBytes; 
-    
+    public DTListaRep() {}
+
     public DTListaRep(String nombreListaRep, String nombreCliente, String Genero, String imagen, List<DTTema> temas) {
         this.nombreListaRep = nombreListaRep;
         this.nombreCliente = nombreCliente;

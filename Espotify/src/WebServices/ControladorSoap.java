@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template  obtenerTemasComoBytes 
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template  encontrarClientePorNickname 
  */
 package WebServices;
 import Datatypes.DTUsuario;
@@ -21,6 +21,7 @@ import Logica.Tema;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +32,9 @@ import javax.jws.WebParam;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.ws.Endpoint;
 
 
@@ -175,6 +179,19 @@ public class ControladorSoap {
          result.setLista(control.nicknamesDeTodosLosArtistas());
          return result;
      }
+     @WebMethod
+     public ListaString nicknamesDeTodosLosClientes() {
+         List<DTCliente> dtClientes = control.listaClientesDT();
+         List<String> nicknames = new ArrayList<>();
+         for (DTCliente cliente : dtClientes) {
+              System.out.println(cliente.getNickname());
+            nicknames.add(cliente.getNickname());
+        }
+         ListaString result = new ListaString();
+         result.setLista(nicknames);
+         return result;
+     }
+
      
     @WebMethod
     public ListaDTCliente listaClientesDT() {
@@ -297,12 +314,68 @@ public class ControladorSoap {
     
     @WebMethod
     public DTCliente encontrarClientePorNickname(String nick) {
-        return control.encontrarClientePorNickname(nick);
+        try {
+            // Crear una instancia de DTCliente y asignar valores
+            DTCliente cliente = new DTCliente();
+            DTCliente cli = control.encontrarClientePorNickname(nick);
+            cliente.setNickname(cli.getNickname());
+            cliente.setNombre(cli.getNombre());
+            cliente.setApellido(cli.getApellido());
+            cliente.setCorreo(cli.getCorreo());
+            cliente.setFechaNac(cli.getFechaNac());
+            cliente.setContrasenia(cli.getContrasenia());
+            cliente.setImagen(cli.getImagen());  
+            cliente.setListaUsuariosFavoritos(cli.getListaUsuariosFavoritos());
+
+            // Configurar JAXB para serializar DTCliente
+            JAXBContext context = JAXBContext.newInstance(DTCliente.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            // Serializar a XML y mostrar en consola
+            marshaller.marshal(cliente, System.out);
+            return cliente;
+            
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return null;
+        
     }
     
     @WebMethod
-    public DTArtista encontrarDTArtistaPorNickname(String nick) {
-        return control.encontrarDTArtistaPorNickname(nick);
+    public DTArtista encontrarDTArtistaPorNickname(String nick) throws Exception {
+        //return control.encontrarDTArtistaPorNickname(nick);
+        
+        try {
+            // Crear una instancia de DTCliente y asignar valores
+            DTArtista artista = new DTArtista();
+            DTArtista art = control.encontrarDTArtistaPorNickname(nick);
+            artista.setNickname(art.getNickname());
+            artista.setNombre(art.getNombre());
+            artista.setApellido(art.getApellido());
+            artista.setCorreo(art.getCorreo());
+            artista.setFechaNac(art.getFechaNac());
+            artista.setContrasenia(art.getContrasenia());
+            artista.setImagen(art.getImagen());  
+            artista.setBiografia(art.getBiografia());
+            artista.setSitioWeb(art.getSitioWeb());
+            //artista.setListaUsuariosFavoritos(art.getListaUsuariosFavoritos());
+
+            // Configurar JAXB para serializar DTCliente
+            JAXBContext context = JAXBContext.newInstance(DTArtista.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            // Serializar a XML y mostrar en consola
+            marshaller.marshal(artista, System.out);
+            return artista;
+            
+        } catch (IllegalArgumentException  e) {
+            //e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+   
     }
     
     @WebMethod

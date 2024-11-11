@@ -32,6 +32,7 @@ import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import webservices.ControladorSoap;
 import webservices.ControladorSoapService;
+import webservices.Exception_Exception;
 import webservices.ListaString;
 
 
@@ -58,8 +59,7 @@ public class SvObtenerDatosUsuario extends HttpServlet {
             out.println("</html>");
         }
     }
-
-    @Override
+/* @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -69,11 +69,17 @@ public class SvObtenerDatosUsuario extends HttpServlet {
             response.getWriter().write("Nickname no proporcionado");
             return;
         }
-        DtUsuario usuario = null;    
-        usuario = control.encontrarClientePorNickname(nickname);//dt cliente
-        if (usuario == null){
-            usuario = control.encontrarDTArtistaPorNickname(nickname);
-        }        
+        DtUsuario usuario = null; 
+        try{
+            usuario = control.encontrarClientePorNickname(nickname);//dt cliente
+            if (usuario == null){
+                usuario = control.encontrarDTArtistaPorNickname(nickname);
+            }   
+        }catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write("{\"error\":\"" + e.getMessage() + "\"}");
+            return;
+        }     
         if (usuario != null) {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -90,7 +96,7 @@ public class SvObtenerDatosUsuario extends HttpServlet {
         }  
     }
 
-   
+  */ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
@@ -119,30 +125,52 @@ public class SvObtenerDatosUsuario extends HttpServlet {
             return;
         }  
         //Operaciones para mandar la info al jsp en forma de json
-        DtArtista artista = new DtArtista();
-        DtCliente cliente = new DtCliente();
-        artista = null;
-        cliente = null;
-        artista = control.encontrarDTArtistaPorNickname(nickname);
-        if(artista == null){//si no encontro al artista busca por clientes
-            cliente = control.encontrarClientePorNickname(nickname);//dt cliente
+        //DtArtista artista = new DtArtista();
+        //DtCliente cliente = new DtCliente();
+        DtUsuario usuario = null;
+        //artista = null;
+        //cliente = null;
+       //artista = control.encontrarDTArtistaPorNickname(nickname);
+        ListaString listaUsuario = control.nicknamesDeTodosLosArtistas();
+        List<String> listaTodosArtistas = listaUsuario.getLista();
+        
+        ListaString lisCli = control.nicknamesDeTodosLosClientes();
+        List<String> listaTodosClientes = lisCli.getLista();
+        if (listaTodosArtistas.contains(nickname)){
+            try {
+            /*artista*/usuario = control.encontrarDTArtistaPorNickname(nickname);
+        } catch (Exception_Exception e) {
+            // Manejar la excepción, por ejemplo, registrando el error o enviando una respuesta de error
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\":\"Error al obtener datos del artista\"}");
+            return;
         }
-        if (artista != null){//si es artista mandarlo
-            DtArtista usuario = artista;
+        }else if(listaTodosClientes.contains(nickname)){
+            /*cliente*/usuario = control.encontrarClientePorNickname(nickname);//dt cliente
+        }
+        
+        
+        //if(/*artista*/usuario == null){//si no encontro al artista busca por clientes
+        //    /*cliente*/usuario = control.encontrarClientePorNickname(nickname);//dt cliente
+        //}
+        if (/*artista != null*/usuario instanceof DtArtista){//si es artista mandarlo
+            DtArtista /*usuario*/artista =(DtArtista) usuario; //artista;
             StringBuilder jsonUsuario = new StringBuilder();
             //Convierto a JSON
             jsonUsuario.append("{");
             jsonUsuario.append("\"nickname\": \"").append(usuario.getNickname()).append("\",");
             
-            jsonUsuario.append("\"imagen\": \"").append(usuario.getImagen()).append("\",");
-            jsonUsuario.append("\"nombre\": \"").append(usuario.getNombre()).append("\",");
-            jsonUsuario.append("\"apellido\": \"").append(usuario.getApellido()).append("\",");
-            jsonUsuario.append("\"correo\": \"").append(usuario.getCorreo()).append("\",");
-            jsonUsuario.append("\"biografia\": \"").append(usuario.getBiografia()).append("\",");
-            jsonUsuario.append("\"sitioWeb\": \"").append(usuario.getSitioWeb()).append("\",");
+            jsonUsuario.append("\"imagen\": \"").append(/*usuario*/artista.getImagen()).append("\",");
+            jsonUsuario.append("\"nombre\": \"").append(/*usuario*/artista.getNombre()).append("\",");
+            jsonUsuario.append("\"apellido\": \"").append(/*usuario*/artista.getApellido()).append("\",");
+            jsonUsuario.append("\"correo\": \"").append(/*usuario*/artista.getCorreo()).append("\",");
+            jsonUsuario.append("\"biografia\": \"").append(/*usuario*/artista.getBiografia()).append("\",");
+            jsonUsuario.append("\"sitioWeb\": \"").append(/*usuario*/artista.getSitioWeb()).append("\",");
             jsonUsuario.append("\"esCliente\": \"n\","); // Campo esCliente con valor "n" si no es cliente es artista
             // Convierte la fecha a String y agrega al JSON y Formatea la fecha de nacimiento
-            String fechaNacStr = (usuario.getFechaNac() != null) ? dateFormat.format(usuario.getFechaNac()) : "";
+            //String fechaNacStr = (usuario.getFechaNac() != null) ? dateFormat.format(usuario.getFechaNac()) : "";
+            String fechaNacStr = /*usuario*/artista.getFechaNac().toString();
             jsonUsuario.append("\"fechaNac\": \"").append(fechaNacStr).append("\"");
             jsonUsuario.append("}");
             
@@ -216,21 +244,22 @@ public class SvObtenerDatosUsuario extends HttpServlet {
             response.getWriter().print(jsonRespuesta.toString());
             response.getWriter().flush();
         }
-        if(cliente != null){//si es null es cliente
-            DtCliente usuario = cliente;
+        else if(/*cliente != null*/usuario instanceof DtCliente){//si es null es cliente
+            DtCliente /*usuario*/cliente =(DtCliente) usuario;
             StringBuilder jsonUsuario = new StringBuilder();
             //Convierto a JSON
             jsonUsuario.append("{");
-            jsonUsuario.append("\"nickname\": \"").append(usuario.getNickname()).append("\",");
-            jsonUsuario.append("\"nombre\": \"").append(usuario.getNombre()).append("\",");
-             jsonUsuario.append("\"imagen\": \"").append(usuario.getImagen()).append("\",");
-            jsonUsuario.append("\"apellido\": \"").append(usuario.getApellido()).append("\",");
-            jsonUsuario.append("\"correo\": \"").append(usuario.getCorreo()).append("\",");
+            jsonUsuario.append("\"nickname\": \"").append(/*usuario*/cliente.getNickname()).append("\",");
+            jsonUsuario.append("\"nombre\": \"").append(/*usuario*/cliente.getNombre()).append("\",");
+             jsonUsuario.append("\"imagen\": \"").append(/*usuario*/cliente.getImagen()).append("\",");
+            jsonUsuario.append("\"apellido\": \"").append(/*usuario*/cliente.getApellido()).append("\",");
+            jsonUsuario.append("\"correo\": \"").append(/*usuario*/cliente.getCorreo()).append("\",");
             jsonUsuario.append("\"biografia\": \"\",");
             jsonUsuario.append("\"sitioWeb\": \"\",");
             jsonUsuario.append("\"esCliente\": \"s\","); // Campo esCliente con valor "s" para controles
             // Convierte la fecha a String y agrega al JSON en formato lindo
-            String fechaNacStr = (usuario.getFechaNac() != null) ? dateFormat.format(usuario.getFechaNac()) : "";
+            //String fechaNacStr = (/*usuario*/cliente.getFechaNac().toString() != null) ? dateFormat.format(usuario.getFechaNac().toString()) : "";
+            String fechaNacStr = /*usuario*/cliente.getFechaNac().toString();
             jsonUsuario.append("\"fechaNac\": \"").append(fechaNacStr).append("\"");
             jsonUsuario.append("}");
             
@@ -310,6 +339,7 @@ public class SvObtenerDatosUsuario extends HttpServlet {
             jsonAlbumesArtista.append("[\"n\"]"); // Crea un array con solo "n"
             
             // NUEVO Crear el JSON de listas publicas del cliente
+            System.out.println("Contenido de correo c " +usuario.getCorreo());
             String c = usuario.getCorreo();//agarra correo de cliente
             
             ListaString lisPub = control.listasPublicasDeCliente(c);

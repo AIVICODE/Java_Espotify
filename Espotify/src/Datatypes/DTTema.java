@@ -6,24 +6,36 @@ package Datatypes;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ivan
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTTema extends DTContenido{
+    @XmlElement
     private String nombre;
+    @XmlElement
     private int minutos;
+    @XmlElement
     private int segundos;
+    @XmlElement
     private String directorio;
+    @XmlElement
     private int orden;
+    @XmlElement
     private String nombrealbum;
+    @XmlElement
     private String nombreartista;
+    @XmlElement
     private int anioCreacion;
 
     
-    
+    public DTTema() {
+    }
     
     public DTTema(String nombre, int minutos, int segundos, String directorio) {
         this.nombre = nombre;

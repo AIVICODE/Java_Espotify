@@ -383,6 +383,10 @@
 <part name="arg4" type="xsd:string"/>
 </message>
 <message name="AgregarTema_De_ListaPart_A_ListaResponse"/>
+<message name="nicknamesDeTodosLosClientes"/>
+<message name="nicknamesDeTodosLosClientesResponse">
+<part name="return" type="tns:listaString"/>
+</message>
 <message name="obtTemasComoBytes">
 <part name="arg0" type="tns:listaString"/>
 </message>
@@ -527,6 +531,7 @@
 <operation name="encontrarDTArtistaPorNickname">
 <input wsam:Action="http://WebServices/ControladorSoap/encontrarDTArtistaPorNicknameRequest" message="tns:encontrarDTArtistaPorNickname"/>
 <output wsam:Action="http://WebServices/ControladorSoap/encontrarDTArtistaPorNicknameResponse" message="tns:encontrarDTArtistaPorNicknameResponse"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://WebServices/ControladorSoap/encontrarDTArtistaPorNickname/Fault/Exception"/>
 </operation>
 <operation name="nicksClientesSiguenArtista">
 <input wsam:Action="http://WebServices/ControladorSoap/nicksClientesSiguenArtistaRequest" message="tns:nicksClientesSiguenArtista"/>
@@ -684,6 +689,10 @@
 <input wsam:Action="http://WebServices/ControladorSoap/AgregarTema_De_ListaPart_A_ListaRequest" message="tns:AgregarTema_De_ListaPart_A_Lista"/>
 <output wsam:Action="http://WebServices/ControladorSoap/AgregarTema_De_ListaPart_A_ListaResponse" message="tns:AgregarTema_De_ListaPart_A_ListaResponse"/>
 <fault message="tns:Exception" name="Exception" wsam:Action="http://WebServices/ControladorSoap/AgregarTema_De_ListaPart_A_Lista/Fault/Exception"/>
+</operation>
+<operation name="nicknamesDeTodosLosClientes">
+<input wsam:Action="http://WebServices/ControladorSoap/nicknamesDeTodosLosClientesRequest" message="tns:nicknamesDeTodosLosClientes"/>
+<output wsam:Action="http://WebServices/ControladorSoap/nicknamesDeTodosLosClientesResponse" message="tns:nicknamesDeTodosLosClientesResponse"/>
 </operation>
 <operation name="obtTemasComoBytes">
 <input wsam:Action="http://WebServices/ControladorSoap/obtTemasComoBytesRequest" message="tns:obtTemasComoBytes"/>
@@ -1019,6 +1028,9 @@
 <output>
 <soap:body use="literal" namespace="http://WebServices/"/>
 </output>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</fault>
 </operation>
 <operation name="nicksClientesSiguenArtista">
 <soap:operation soapAction=""/>
@@ -1386,6 +1398,15 @@
 <soap:fault name="Exception" use="literal"/>
 </fault>
 </operation>
+<operation name="nicknamesDeTodosLosClientes">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://WebServices/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://WebServices/"/>
+</output>
+</operation>
 <operation name="obtTemasComoBytes">
 <soap:operation soapAction=""/>
 <input>
@@ -1401,7 +1422,7 @@
 </binding>
 <service name="ControladorSoapService">
 <port name="ControladorSoapPort" binding="tns:ControladorSoapPortBinding">
-<soap:address location="http://localhost:5000/ControladorSoap"/>
+<soap:address location="http://192.168.1.24:5000/ControladorSoap"/>
 </port>
 </service>
 </definitions>
