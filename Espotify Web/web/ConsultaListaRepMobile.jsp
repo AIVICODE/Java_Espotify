@@ -312,7 +312,7 @@ function abrirPopup(nombreTema, nombreArtista, nombreAlbum) {
                 // Posicionar el modal junto al botón
                 var botonRect = boton.getBoundingClientRect();
                 var modal = document.getElementById("popupModal");
-                modal.style.left = (botonRect.left + 30) + "px";
+                modal.style.left = (botonRect.left - 220) + "px";
                 modal.style.top = (botonRect.top + 30 + window.scrollY) + "px";
 
                 // Mostrar el modal

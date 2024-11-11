@@ -104,6 +104,9 @@
             height:auto !important;
             flex-direction:column;
         }
+        .mt-4 {
+    margin-top: 1.0rem !important;
+}
     </style>
 </head>
 <jsp:include page="headerMobile.jsp" />
