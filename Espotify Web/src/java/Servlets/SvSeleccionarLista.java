@@ -65,6 +65,14 @@ public class SvSeleccionarLista extends HttpServlet {
                 request.setAttribute("listaSeleccionada", listaSeleccionada);
                 request.setAttribute("temas", temas);
                 // Redirigir a la página de detalles de la lista
+                String userAgent = request.getHeader("User-Agent");
+    
+    // Verificar si el User-Agent contiene "Mobi", lo cual indica que es un dispositivo móvil
+    if (userAgent != null && userAgent.contains("Mobi")) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ConsultaListaRepMobile.jsp");
+        dispatcher.forward(request, response);
+        return; // Detener la ejecución del código posterior
+    } 
                 request.getRequestDispatcher("ConsultaListaRep.jsp").forward(request, response);
             } else {
                 // Manejar el caso donde no se encuentra la lista
