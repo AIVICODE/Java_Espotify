@@ -51,10 +51,10 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 
 public class Controlador implements IControlador {
-    public static final String CARPETA_LISTA = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_listarep/";
-public static final String CARPETA_ALBUM = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_album/";
-public static final String CARPETA_USUARIOS = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/";
-public static final String CARPETA_TEMA = "/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_tema/";
+    public static final String CARPETA_LISTA ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_listarep/";
+public static final String CARPETA_ALBUM = "home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_album/";
+public static final String CARPETA_USUARIOS ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/";
+public static final String CARPETA_TEMA ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_tema/";
 
 public static final String CARPETA_GENERICO ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
 
