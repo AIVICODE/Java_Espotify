@@ -5,6 +5,8 @@ import Datatypes.DTInfoTema;
 import Datatypes.DTTema;
 import GUI.Principal;
 import Logica.Controlador;
+import javax.xml.ws.Endpoint;
+import WebServices.ControladorSoap;
 import Logica.Fabrica;
 import Logica.IControlador;
 
@@ -14,6 +16,10 @@ public class Espotify {
         
         //Fabrica fabrica = Fabrica.getInstance();
         //IControlador control = fabrica.getIControlador();
+        Endpoint.publish("http://0.0.0.0:5000/ControladorSoap", new ControladorSoap());
+        System.out.println("Servicio SOAP iniciado en http://0.0.0.0:5000/ControladorSoap");
+
+    
         Controlador control = new Controlador();
         Principal prin= new Principal();
         prin.setVisible(true);

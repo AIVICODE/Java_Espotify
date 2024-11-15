@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
-import jakarta.servlet.RequestDispatcher;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
+//import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,12 +15,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import java.util.List;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaString;
 
 
 @WebServlet(name = "SvObtenerArtistas", urlPatterns = {"/SvObtenerArtistas"})
 public class SvObtenerArtistas extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -34,7 +35,8 @@ public class SvObtenerArtistas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                List<String> nombreArtistas = control.nicknamesDeTodosLosArtistas();
+                ListaString nomArt = control.nicknamesDeTodosLosArtistas();
+                List<String> nombreArtistas = nomArt.getLista();
       
         // Debug: imprimir la lista en la consola
         System.out.println("Géneros obtenidos: " + nombreArtistas);

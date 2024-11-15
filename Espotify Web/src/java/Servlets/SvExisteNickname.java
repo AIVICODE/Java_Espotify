@@ -3,8 +3,8 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import Logica.Fabrica;
-import Logica.IControlador;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -20,18 +20,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 
 @WebServlet(name = "SvExisteNickname", urlPatterns = {"/SvExisteNickname"})
 public class SvExisteNickname extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

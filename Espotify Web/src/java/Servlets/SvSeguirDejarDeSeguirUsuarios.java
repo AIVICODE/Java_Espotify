@@ -1,8 +1,8 @@
 package Servlets;
 
-import Datatypes.DTUsuario;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtUsuario;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,18 +10,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 @WebServlet(name = "SvSeguirDejarDeSeguirUsuarios", urlPatterns = {"/SvSeguirDejarDeSeguirUsuarios"})
 public class SvSeguirDejarDeSeguirUsuarios extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    private IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //private IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
-        DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+        DtUsuario dtUsuario = (DtUsuario) session.getAttribute("usuario");
         System.out.println("llea el user "+ dtUsuario.getNickname());
         if (dtUsuario == null) {
             response.sendRedirect("login.jsp");

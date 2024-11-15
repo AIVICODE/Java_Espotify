@@ -2,14 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Datatypes.DTTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+import webservices.DtTema;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,16 +21,21 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 /**
  *
  * @author camil
  */
+
 @WebServlet(name = "SvObtenerTemaDeUnaListaP", urlPatterns = {"/SvObtenerTemaDeUnaListaP"})
 public class SvObtenerTemaDeUnaListaP extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,11 +57,11 @@ public class SvObtenerTemaDeUnaListaP extends HttpServlet {
         String nombreCliente = request.getParameter("nombreCliente");
 
         // Buscar el álbum usando los parámetros
-        String correocliente= control.ConvierteNick_A_Correo(nombreCliente);
-        DTListaRep ListaP = control.obtenerDatosDeLista_Por_Cliente(correocliente, nombreLista);
+        String correocliente= control.convierteNickACorreo(nombreCliente);//control.ConvierteNick_A_Correo(nombreCliente);
+        DtListaRep ListaP = control.obtenerDatosDeListaPorCliente(correocliente, nombreLista);//control.obtenerDatosDeLista_Por_Cliente(correocliente, nombreLista);
 
         // Generar el HTML de las opciones del ComboBox
-        for (DTTema tema : ListaP.getTemas()) {
+        for (DtTema tema : ListaP.getTemas()) {
             out.println("<option value=\"" + tema.getNombre() + "\">" + tema.getNombre() + "</option>");
         }
     } catch (Exception ex) {
@@ -72,7 +78,7 @@ public class SvObtenerTemaDeUnaListaP extends HttpServlet {
         
     try {
         HttpSession session = request.getSession();
-        DTCliente dtcliente = (DTCliente) session.getAttribute("usuario");
+        DtCliente dtcliente = (DtCliente) session.getAttribute("usuario");
         
         //A donde voy a agregar el tema
         String nombreListaA_Agregar = request.getParameter("nombreLista");
@@ -92,7 +98,8 @@ public class SvObtenerTemaDeUnaListaP extends HttpServlet {
         
         
         // Llamar al método del controlador con los valores
-        control.AgregarTema_De_ListaPart_A_Lista(dtcliente.getNickname(),nombreListaA_Agregar ,nombreListaA_Sacar,nombreClienteA_Sacar, nombreTema);
+        control.agregarTemaDeListaPartALista(dtcliente.getNickname(),nombreListaA_Agregar ,nombreListaA_Sacar,nombreClienteA_Sacar, nombreTema);
+        //control.AgregarTema_De_ListaPart_A_Lista(dtcliente.getNickname(),nombreListaA_Agregar ,nombreListaA_Sacar,nombreClienteA_Sacar, nombreTema);
         
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("Datos recibidos y procesados correctamente");

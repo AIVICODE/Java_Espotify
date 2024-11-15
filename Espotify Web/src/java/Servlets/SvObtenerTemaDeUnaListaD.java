@@ -4,12 +4,12 @@
  */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Datatypes.DTTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+import webservices.DtTema;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,6 +20,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+
 
 /**
  *
@@ -28,8 +31,10 @@ import java.util.logging.Logger;
 @WebServlet(name = "SvObtenerTemaDeUnaListaD", urlPatterns = {"/SvObtenerTemaDeUnaListaD"})
 public class SvObtenerTemaDeUnaListaD extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,10 +53,10 @@ public class SvObtenerTemaDeUnaListaD extends HttpServlet {
     try {
         // Obtener parámetros
         String nombreListaD = request.getParameter("nombreLista");
-        DTListaRep ListaD = control.obtenerDatosDeLista_Por_Defecto(nombreListaD);
+        DtListaRep ListaD = control.obtenerDatosDeListaPorDefecto(nombreListaD);//control.obtenerDatosDeLista_Por_Defecto(nombreListaD);
 
         // Generar el HTML de las opciones del ComboBox
-        for (DTTema tema : ListaD.getTemas()) {
+        for (DtTema tema : ListaD.getTemas()) {
             out.println("<option value=\"" + tema.getNombre() + "\">" + tema.getNombre() + "</option>");
         }
     } catch (Exception ex) {
@@ -67,7 +72,7 @@ public class SvObtenerTemaDeUnaListaD extends HttpServlet {
         
     try {
         HttpSession session = request.getSession();
-        DTCliente dtcliente = (DTCliente) session.getAttribute("usuario");
+        DtCliente dtcliente = (DtCliente) session.getAttribute("usuario");
         
         //A donde voy a agregar el tema
         String nombreListaA_Agregar = request.getParameter("nombreLista");
@@ -83,7 +88,8 @@ public class SvObtenerTemaDeUnaListaD extends HttpServlet {
          System.out.println("Nombre tema:" + nombreTema);
         
         // Llamar al método del controlador con los valores
-        control.AgregarTema_De_ListaDef_A_Lista(dtcliente.getNickname(), nombreListaA_Agregar, nombreListaA_Sacar, nombreTema);
+        control.agregarTemaDeListaDefALista(dtcliente.getNickname(), nombreListaA_Agregar, nombreListaA_Sacar, nombreTema);
+        //control.AgregarTema_De_ListaDef_A_Lista(dtcliente.getNickname(), nombreListaA_Agregar, nombreListaA_Sacar, nombreTema);
         
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("Datos recibidos y procesados correctamente");

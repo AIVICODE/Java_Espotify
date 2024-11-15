@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
-<%@page import="Datatypes.DTSub"%>
+<%@page import="webservices.DtSub"%>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -77,9 +77,9 @@
 
                     <%
                         // Obtener la lista de suscripciones desde el request
-                        List<DTSub> subscripciones = (List<DTSub>) request.getAttribute("subscripciones");
+                        List<DtSub> subscripciones = (List<DtSub>) request.getAttribute("subscripciones");
                         if (subscripciones != null && !subscripciones.isEmpty()) {
-                            for (DTSub subscripcion : subscripciones) {
+                            for (DtSub subscripcion : subscripciones) {
                     %>
                         <form action="SvActualizarSubscripcion" method="POST" class="subs-form">
     <input type="hidden" name="id" value="<%= subscripcion.getId() %>">

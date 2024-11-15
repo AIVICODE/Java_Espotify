@@ -1,5 +1,5 @@
-<%@page import="Datatypes.DTUsuario"%>
-<%@page import="Datatypes.DTAlbum"%>
+<%@page import="webservices.DtUsuario"%>
+<%@page import="webservices.DtAlbum"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Base64"%>
@@ -20,7 +20,7 @@
 <body>
 
 <%
-    List<DTAlbum> albumes = (List<DTAlbum>) request.getAttribute("listaAlbumes");
+    List<DtAlbum> albumes = (List<DtAlbum>) request.getAttribute("listaAlbumes");
     List<byte[]> listaImgAlbumes = (List<byte[]>) request.getAttribute("listaImgAlbumes");
 
     if (albumes != null && !albumes.isEmpty() && listaImgAlbumes != null && !listaImgAlbumes.isEmpty()) {
@@ -30,7 +30,7 @@
     <h1>Álbumes</h1>
     <%
         for (int i = 0; i < albumes.size(); i++) {
-            DTAlbum album = albumes.get(i);
+            DtAlbum album = albumes.get(i);
             byte[] imgAlbumBytes = listaImgAlbumes.get(i);
 
             // Convierte los bytes en una URL base64
@@ -48,7 +48,7 @@
         <div class="album-artist"><%= album.getArtista().getNickname() %></div>
 
         <% session = request.getSession(false);
-        DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+        DtUsuario dtUsuario = (DtUsuario) session.getAttribute("usuario");
         if (dtUsuario != null) { %>
             <button class="add-favorite" 
                     onclick=" verificarYAgregarFavorito('<%= album.getNombre() %>', '<%= album.getArtista().getCorreo() %>')"

@@ -1,8 +1,8 @@
-<%@page import="Datatypes.DTCliente"%>
-<%@page import="Datatypes.DTListaRep"%>
-<%@page import="Datatypes.DTAlbum"%>
-<%@page import="Datatypes.DTTema"%>
-<%@page import="Datatypes.DTContenido"%>
+<%@page import="webservices.DtCliente"%>
+<%@page import="webservices.DtListaRep"%>
+<%@page import="webservices.DtAlbum"%>
+<%@page import="webservices.DtTema"%>
+<%@page import="webservices.DtContenido"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
 
 <%
             session = request.getSession(false);
-            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+            DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
             if (dtUsuario == null) {
         %>
         <jsp:include page="headerunlogged.jsp" /> 
@@ -54,7 +54,7 @@
     <!-- Sección para mostrar los resultados de la búsqueda -->
     <div class="results">
         <%
-            List<DTContenido> dtContenidoList = (List<DTContenido>) request.getAttribute("dtContenidoList");
+            List<DtContenido> dtContenidoList = (List<DtContenido>) request.getAttribute("dtContenidoList");
             String mensajeError = (String) request.getAttribute("mensajeError");
 
             if (mensajeError != null) {
@@ -64,9 +64,9 @@
                 </div>
         <%
             } else if (dtContenidoList != null && !dtContenidoList.isEmpty()) {
-                for (DTContenido contenido : dtContenidoList) {
-                    if (contenido instanceof DTTema) {
-                        DTTema tema = (DTTema) contenido;
+                for (DtContenido contenido : dtContenidoList) {
+                    if (contenido instanceof DtTema) {
+                        DtTema tema = (DtTema) contenido;
         %>
                         <div class="alert alert-info">
                             <strong>Tema:</strong> <%= tema.getNombre() %>, 
@@ -75,8 +75,8 @@
                             <strong>Año de Creación:</strong> <%= tema.getAnioCreacion() %>
                         </div>
         <%
-                    } else if (contenido instanceof DTAlbum) {
-                        DTAlbum album = (DTAlbum) contenido;
+                    } else if (contenido instanceof DtAlbum) {
+                        DtAlbum album = (DtAlbum) contenido;
         %>
                         <div class="alert alert-light">
                             <strong>Album:</strong> <%= album.getNombre() %>, 
@@ -84,8 +84,8 @@
                             <strong>Año de Creación:</strong> <%= album.getAnioCreacion() %>
                         </div>
         <%
-                    } else if (contenido instanceof DTListaRep) {
-                        DTListaRep listaRep = (DTListaRep) contenido;
+                    } else if (contenido instanceof DtListaRep) {
+                        DtListaRep listaRep = (DtListaRep) contenido;
             if (listaRep.getGenero() != null && !listaRep.getGenero().isEmpty()) {
 
         %>

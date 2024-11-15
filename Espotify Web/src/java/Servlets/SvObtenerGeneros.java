@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -19,19 +15,20 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import java.util.List;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaString;
 
 
 
 
-/**
- *
- * @author ivan
- */
+
 @WebServlet(name = "SvObtenerGeneros", urlPatterns = {"/SvObtenerGeneros"})
 public class SvObtenerGeneros extends HttpServlet {
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
-    
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,7 +40,8 @@ public class SvObtenerGeneros extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<String> nombreGeneros = control.MostrarNombreGeneros();
+        ListaString nomGen = control.mostrarNombreGeneros();
+        List<String> nombreGeneros = nomGen.getLista();//control.MostrarNombreGeneros();
         
         // Debug: imprimir la lista en la consola
         System.out.println("Géneros obtenidos: " + nombreGeneros);

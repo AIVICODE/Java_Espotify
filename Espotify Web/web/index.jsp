@@ -1,9 +1,9 @@
-<%@page import="Datatypes.DTUsuario"%>
+<%@page import="webservices.DtUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <%
     session = request.getSession(false);
-    DTUsuario dtUsuario = (DTUsuario) session.getAttribute("usuario");
+    DtUsuario dtUsuario = (DtUsuario) session.getAttribute("usuario");
     if (dtUsuario != null) {
         response.sendRedirect("dashboard.jsp");    
         return;

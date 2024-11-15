@@ -1,10 +1,9 @@
-
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -18,11 +17,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+import webservices.ListaDTAlbum;
 @WebServlet(name = "SvObtenerAlbumxArtista", urlPatterns = {"/SvObtenerAlbumxArtista"})
 public class SvObtenerAlbumxArtista extends HttpServlet {
     
-    Fabrica fabrica = Fabrica.getInstance();
-    IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,10 +43,11 @@ public class SvObtenerAlbumxArtista extends HttpServlet {
         if (artista != null && !artista.isEmpty()) {
             try {
                 // Llamar al método del controlador para obtener la lista de DTAlbum
-                List<DTAlbum> nombresAlbumes = control.findAlbumesPorArtista(artista);
+                ListaDTAlbum nomAlb = control.findAlbumesPorArtista(artista);
+                List<DtAlbum> nombresAlbumes = nomAlb.getLista();
                 //System.out.println("Número de álbumes encontrados: " + nombresAlbumes.size());
                 List<byte[]> listaImgAlbumes = new ArrayList<>();
-                for (DTAlbum album : nombresAlbumes) {
+                for (DtAlbum album : nombresAlbumes) {
                     
                     listaImgAlbumes.add(album.getImagenBytes()); // Agrega cada imagen a la lista
                 }

@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -17,21 +13,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Datatypes.DTUsuario;
+import webservices.DtUsuario;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 
 
-/**
- *
- * @author ivan
- */
+
 @WebServlet(name = "SvAgregarAlbumFavorito", urlPatterns = {"/SvAgregarAlbumFavorito"})
 public class SvAgregarAlbumFavorito extends HttpServlet {
 
-    Fabrica fabrica = Fabrica.getInstance();
-    private IControlador control = fabrica.getIControlador();
+    //Fabrica fabrica = Fabrica.getInstance();
+    //private IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,14 +54,14 @@ public class SvAgregarAlbumFavorito extends HttpServlet {
             throw new Exception("Usuario no autenticado.");
         }
 
-        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+        DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
         String albumName = request.getParameter("album");
         String artistName = request.getParameter("artista");
 
         System.out.println("Nombre del álbum recibido: " + albumName);
         System.out.println("Nombre del artista recibido: " + artistName);
 
-        control.GuardarAlbumFavorito(dtUsuario.getCorreo(), artistName, albumName);
+        control.guardarAlbumFavorito(dtUsuario.getCorreo(), artistName, albumName);
 
         // Enviamos una respuesta de éxito en formato JSON
         response.getWriter().write("{\"success\": true, \"message\": \"Álbum agregado a favoritos exitosamente.\"}");

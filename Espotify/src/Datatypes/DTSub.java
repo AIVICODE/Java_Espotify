@@ -5,6 +5,10 @@
 package Datatypes;
 
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 
@@ -12,15 +16,25 @@ import java.util.Date;
  *
  * @author ivan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTSub {
+    @XmlElement
     private Long id; // ID de la suscripción
+    @XmlElement
     private String cliente; // Nombre o ID del cliente
+    @XmlElement
     private String tipo; // Tipo de suscripción (semanal, mensual, anual)
+    @XmlElement
     private String estado; // Estado de la suscripción (Pendiente, Vigente, Cancelada, Vencida)
+    @XmlElement
     private Date fechaActivacion; // Fecha en que se activó la suscripción
+    @XmlElement
     private Date fechaVencimiento; // Fecha de vencimiento de la suscripción
 
     // Constructor
+    public DTSub() {}
+
     public DTSub(Long id, String cliente, String tipo, String estado, Date fechaActivacion) {
         this.id = id;
         this.cliente = cliente;
@@ -30,7 +44,7 @@ public class DTSub {
 
     }
 
-    // Getters y Setters
+    // Getters y Setters    
     public Long getId() {
         return id;
     }
@@ -38,7 +52,7 @@ public class DTSub {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getCliente() {
         return cliente;
     }
@@ -46,7 +60,7 @@ public class DTSub {
     public void setCliente(String cliente) {
         this.cliente = cliente;
     }
-
+    
     public String getTipo() {
         return tipo;
     }
@@ -54,7 +68,7 @@ public class DTSub {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
+    
     public String getEstado() {
         return estado;
     }
@@ -62,7 +76,7 @@ public class DTSub {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
+    
     public Date getFechaActivacion() {
         return fechaActivacion;
     }
@@ -70,7 +84,7 @@ public class DTSub {
     public void setFechaActivacion(Date fechaActivacion) {
         this.fechaActivacion = fechaActivacion;
     }
-
+    
     public Date getFechaVencimiento() {
         return fechaVencimiento;
     }

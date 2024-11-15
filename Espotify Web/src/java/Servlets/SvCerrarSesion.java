@@ -4,10 +4,10 @@
  */
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Datatypes.DTUsuario;
+import webservices.DtUsuario;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "SvCerrarSesion", urlPatterns = {"/SvCerrarSesion"})

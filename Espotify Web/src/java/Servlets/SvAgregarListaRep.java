@@ -1,10 +1,10 @@
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -21,15 +21,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.servlet.annotation.MultipartConfig;
 import java.nio.file.Files;
-/**
- *
- * @author ivan
- */
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+
 @MultipartConfig
 @WebServlet(name = "SvAgregarListaRep", urlPatterns = {"/SvAgregarListaRep"})
 public class SvAgregarListaRep extends HttpServlet {
-Fabrica fabrica = Fabrica.getInstance();
-IControlador control = fabrica.getIControlador();
+//Fabrica fabrica = Fabrica.getInstance();
+//IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -46,7 +47,7 @@ IControlador control = fabrica.getIControlador();
             throws ServletException, IOException {
   try {
         HttpSession session = request.getSession(false);
-        DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
+        DtCliente dtUsuario = (DtCliente) session.getAttribute("usuario");
 
         // Obtener el nombre de la lista desde el formulario
         String listName = request.getParameter("nombreLista");
@@ -62,7 +63,8 @@ IControlador control = fabrica.getIControlador();
             System.out.println(rutaImagen);
             archivoTemporal.delete();
         }
-        control.CrearListaRepParticular(listName, dtUsuario.getCorreo(), rutaImagen, true);
+        //control.CrearListaRepParticular(listName, dtUsuario.getCorreo(), rutaImagen, true);
+        control.crearListaRepParticular(listName, dtUsuario.getCorreo(), rutaImagen, true);
 
         // Responder con éxito en formato JSON
         response.setContentType("application/json");

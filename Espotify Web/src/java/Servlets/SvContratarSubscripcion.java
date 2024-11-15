@@ -1,10 +1,10 @@
 package Servlets;
 
-import Datatypes.DTAlbum;
-import Datatypes.DTCliente;
-import Datatypes.DTListaRep;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtAlbum;
+import webservices.DtCliente;
+import webservices.DtListaRep;
+//import Logica.Fabrica;
+//import Logica.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
@@ -13,21 +13,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Datatypes.DTUsuario;
+import webservices.DtUsuario; 
 import jakarta.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-/**
- *
- * @author ivan
- */
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
+
 @WebServlet(name = "SvContratarSubscripcion", urlPatterns = {"/SvContratarSubscripcion"})
 public class SvContratarSubscripcion extends HttpServlet {
 
-Fabrica fabrica = Fabrica.getInstance();
-IControlador control = fabrica.getIControlador();
+//Fabrica fabrica = Fabrica.getInstance();
+//IControlador control = fabrica.getIControlador();
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -52,7 +53,7 @@ IControlador control = fabrica.getIControlador();
 
         try {
             HttpSession session = request.getSession();
-            DTCliente dtcliente = (DTCliente) session.getAttribute("usuario");
+            DtCliente dtcliente = (DtCliente) session.getAttribute("usuario");
 
             if (dtcliente == null) {
                 out.println("{\"status\":\"error\",\"message\":\"No hay usuario en sesión\"}");

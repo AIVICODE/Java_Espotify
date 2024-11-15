@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Datatypes.DTUsuario"%>
+<%@page import="webservices.DtUsuario"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -148,7 +148,7 @@
     </head>
     <jsp:include page="header.jsp" />
     <%
-        DTUsuario nickLogueado = (DTUsuario) session.getAttribute("usuario");
+        DtUsuario nickLogueado = (DtUsuario) session.getAttribute("usuario");
         String correoLogueado = nickLogueado != null ? nickLogueado.getNickname() : null;
     %>
     <body>
@@ -158,7 +158,7 @@
                         <h1 id="borrar">Consulta de Perfil de Usuario</h1>
                         <div class="mb-3">                       
                             <label for="opciones">Seleccione el usuario</label>
-                            <select id="listaUsuarios" name="nickUsuario"><!-- IMPORTANTE PARA PROXIMOS FORMULARIOS -->
+                            <select id="listaUsuarios" name="nickUsuario"><!-- IMPORTANTE PARA PROXIMOS FORMULARIOS Sv -->
                                 <option value="">...</option>
                             </select>
                         </div>
@@ -168,7 +168,7 @@
                         <h2>Información del Usuario</h2>
                         <p><strong>Nickname:</strong> <span id="nickname"></span></p>
 <p>
-    <img id="imagen" 
+    <img id="imagen"          
          src="" 
          alt="Imagen de Usuario" 
          style="width: 150px; height: auto; border-radius: 8px; border: 2px solid #ccc; margin-top: 10px;">
@@ -276,7 +276,12 @@
                     
   const nombreImagen = usuario.imagen; 
         console.log("Nombre de la imagen:", nombreImagen);
-            document.getElementById('imagen').src = "/SvGetImagen?nombre=" + nombreImagen;
+            //document.getElementById('imagen').src = "/SvGetImagen?nombre=" + nombreImagen;
+            if (nombreImagen) {
+                document.getElementById('imagen').src = "SvGetImagen?nombre=" + encodeURIComponent(nombreImagen);
+            } else {
+                document.getElementById('imagen').src = ""; // Deja el src vacío si no hay imagen
+            }
 
                     // Hace visible el div con la información del usuario    
                     document.getElementById('userInfo').style.display = 'block';

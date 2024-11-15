@@ -1,9 +1,9 @@
 
 package Servlets;
 
-import Datatypes.DTTema;
-import Logica.Fabrica;
-import Logica.IControlador;
+import webservices.DtTema;
+import webservices.ControladorSoap;
+import webservices.ControladorSoapService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "SvActualizarConteo", urlPatterns = {"/SvActualizarConteo"})
 public class SvActualizarConteo extends HttpServlet {
-Fabrica fabrica = Fabrica.getInstance();
-IControlador control = fabrica.getIControlador();
+//Fabrica fabrica = Fabrica.getInstance();
+//IControlador control = fabrica.getIControlador();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,6 +35,8 @@ IControlador control = fabrica.getIControlador();
             throws ServletException, IOException {
         response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
+    ControladorSoapService service = new ControladorSoapService();
+    ControladorSoap control = service.getControladorSoapPort();
 
     try {
 
@@ -51,12 +53,17 @@ IControlador control = fabrica.getIControlador();
         System.out.println("Tipo de acción: " + tipo);
 
         // Crear DTTema y actualizar conteo en la lógica de negocio
-        DTTema tema = new DTTema(temaName, albumName, artistName);
+        DtTema ntema=new DtTema();
+        ntema.setNombre(temaName);
+        ntema.setNombrealbum(albumName);
+        ntema.setNombreartista(artistName);
+        //DtTema tema = new DtTema(temaName, albumName, artistName);
         
         if ("reproduccion".equalsIgnoreCase(tipo)) {
-            control.AgregaReproduccionTema(tema);
+           // control.AgregaReproduccionTema(ntema);
+           control.agregaReproduccionTema(ntema);
         } else if ("descarga".equalsIgnoreCase(tipo)) {
-            control.AgregaDescargaTema(tema);
+           control.agregaDescargaTema(ntema);
         } else {
             throw new Exception("Tipo de acción no válido.");
         }

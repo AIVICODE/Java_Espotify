@@ -7,19 +7,34 @@ package Datatypes;
 import java.time.Year;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ivan
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTAlbum extends DTContenido{
+    @XmlElement
     protected String nombre;
+    @XmlElement
     protected int anioCreacion;
+    @XmlElement
     protected String imagen;
+    @XmlElement
     protected List<String> listaGeneros;
+    @XmlElement
     protected List<DTTema> listaTemas;
+    @XmlElement
     protected DTArtista artista;
-protected byte[] imagenBytes; 
+    @XmlElement
+    protected byte[] imagenBytes; 
+    public DTAlbum() {
+    }
     public DTAlbum(String nombre, int anioCreacion, String imagen, List<String> listaGeneros) {
         this.nombre = nombre;
         this.anioCreacion = anioCreacion;

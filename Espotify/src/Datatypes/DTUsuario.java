@@ -2,14 +2,24 @@ package Datatypes;
 
 import java.util.Date;
 import java.util.List;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class DTUsuario {
-
+    @XmlElement
     protected String nickname;
+    @XmlElement
     protected String nombre, apellido, contrasenia;
+    @XmlElement
     protected String correo, imagen;
+    @XmlElement
     protected Date fechaNac;
+    @XmlElement
     protected String confirmacion;
+    @XmlElement
     private List<String> listaUsuariosFavoritos;
     
     public DTUsuario() {}
