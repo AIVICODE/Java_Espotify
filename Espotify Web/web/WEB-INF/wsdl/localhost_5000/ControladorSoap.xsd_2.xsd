@@ -6,6 +6,26 @@
 
 <xs:element name="base64BinaryArray" type="tns:base64BinaryArray"/>
 
+<xs:element name="dtAlbum" type="tns:dtAlbum"/>
+
+<xs:element name="dtArtista" type="tns:dtArtista"/>
+
+<xs:element name="dtCliente" type="tns:dtCliente"/>
+
+<xs:element name="dtContenido" type="tns:dtContenido"/>
+
+<xs:element name="dtInfoTema" type="tns:dtInfoTema"/>
+
+<xs:element name="dtIngresoWeb" type="tns:dtIngresoWeb"/>
+
+<xs:element name="dtListaRep" type="tns:dtListaRep"/>
+
+<xs:element name="dtSub" type="tns:dtSub"/>
+
+<xs:element name="dtTema" type="tns:dtTema"/>
+
+<xs:element name="dtUsuario" type="tns:dtUsuario"/>
+
 <xs:element name="listaDTAlbum" type="tns:listaDTAlbum"/>
 
 <xs:element name="listaDTCliente" type="tns:listaDTCliente"/>
@@ -39,8 +59,8 @@
 <xs:element name="nombre" type="xs:string" minOccurs="0"/>
 <xs:element name="anioCreacion" type="xs:int"/>
 <xs:element name="imagen" type="xs:string" minOccurs="0"/>
-<xs:element name="listaGeneros" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="listaTemas" type="tns:dtTema" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listaGeneros" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listaTemas" type="tns:dtTema" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="artista" type="tns:dtArtista" minOccurs="0"/>
 <xs:element name="imagenBytes" type="xs:base64Binary" minOccurs="0"/>
 </xs:sequence>
@@ -90,7 +110,7 @@
 <xs:element name="imagen" type="xs:string" minOccurs="0"/>
 <xs:element name="fechaNac" type="xs:dateTime" minOccurs="0"/>
 <xs:element name="confirmacion" type="xs:string" minOccurs="0"/>
-<xs:element name="listaUsuariosFavoritos" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listaUsuariosFavoritos" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -126,7 +146,7 @@
 <xs:element name="nombreCliente" type="xs:string" minOccurs="0"/>
 <xs:element name="Genero" type="xs:string" minOccurs="0"/>
 <xs:element name="imagen" type="xs:string" minOccurs="0"/>
-<xs:element name="temas" type="tns:dtTema" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="temas" type="tns:dtTema" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="imagenBytes" type="xs:base64Binary" minOccurs="0"/>
 </xs:sequence>
 </xs:extension>
@@ -169,7 +189,7 @@
 <xs:complexContent>
 <xs:extension base="tns:dtUsuario">
 <xs:sequence>
-<xs:element name="listaReproduccion" type="tns:listaRep" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listaReproduccion" type="tns:listaRep" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:extension>
 </xs:complexContent>

@@ -214,6 +214,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
       
     <script>
+        
         let correoLogueado = "<%= correoLogueado %>";
         function cargarUsuarios() {
             fetch('SvCargarUsuarios')
@@ -239,6 +240,15 @@
         }
         document.getElementById('listaUsuarios').addEventListener('change', cargarDatosUsuario);
         
+        //Oculta el boton si se consulta por si mismo el usuario
+        document.getElementById('listaUsuarios').addEventListener('change', function() {
+    const selectedCorreo = this.value; // Obtiene el correo del usuario seleccionado
+    if (correoLogueado !== selectedCorreo) {
+        document.getElementById("seguirDiv").style.display = "block"; // Mostrar el botón de seguir
+    } else {
+        document.getElementById("seguirDiv").style.display = "none"; // Ocultar el botón de seguir
+    }
+});
         function cargarDatosUsuario() {
             const nickname = document.getElementById('listaUsuarios').value;
 

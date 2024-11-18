@@ -56,7 +56,7 @@ public static final String CARPETA_ALBUM = "home/mramos/NetBeansProjects/ProgApp
 public static final String CARPETA_USUARIOS ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/";
 public static final String CARPETA_TEMA ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_tema/";
 
-public static final String CARPETA_GENERICO ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
+public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
 
 
     private Date createDate(int year, int month, int day) {
@@ -4392,7 +4392,7 @@ return null;
         if (Files.exists(ruta)) {
             return Files.readAllBytes(ruta); // Lee y devuelve el como un arreglo de bytes
         } else {
-            ruta = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
+            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.mp3");
             return Files.readAllBytes(ruta);
         }
     }
@@ -4406,7 +4406,7 @@ return null;
                 temasBytes[i] = Files.readAllBytes(ruta); // Lee y almacena cada archivo en el array
             } else {
                 // Si el archivo no existe, cargar un archivo genérico
-                Path rutaGenerica = Paths.get("/home/tecnologo/Documentos/Discreta/Espotify/imagenes_tema/generico.mp3");
+                Path rutaGenerica = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.mp3");
                 temasBytes[i] = Files.readAllBytes(rutaGenerica);
             }
         }
@@ -4562,7 +4562,7 @@ public void CrearListaRepSugerencia() throws Exception {
         }
     }
 
-    // Usamos un PriorityQueue directamente con los temas y sus puntajes
+ 
     PriorityQueue<Tema> pq = new PriorityQueue<>((t1, t2) -> {
         double puntajeT1 = calcularPuntaje(t1, temasEnListas, favoritosSet);
         double puntajeT2 = calcularPuntaje(t2, temasEnListas, favoritosSet);
