@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espotify</title>
-    <link rel="stylesheet" href="css/headerunlogged.css?v1.2"> <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="css/headerunlogged.css?v1.3"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
 
 <header>
@@ -43,7 +43,10 @@
                         if (imagenUsuario != null) {
                             String base64Image = java.util.Base64.getEncoder().encodeToString(imagenUsuario);
                     %>
+                    <a href="InformacionPerfil.jsp" class="link-avatar">
                 <img src="data:image/jpeg;base64,<%= base64Image %>" alt="Avatar del usuario" class="user-avatar">
+                </a>
+                
                     <%
                         }
                     %>
@@ -52,9 +55,8 @@
                     <% if (dtUsuario instanceof DtCliente) { %>
                     <div class="user-favorites">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star-icon">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                         </svg>
-                        <span>Favoritos</span>
+
                     </div>
                     <% } %>
                 </div>

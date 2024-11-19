@@ -1,174 +1,37 @@
+
+    
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="webservices.DtUsuario"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Consulta Usuario</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.2">
-        <style>
-            body{
-                background-color: #191414;
-            }
-            .boton {
-                width: 100%;
-                padding: 0.75rem;
-                background-color: #22c55e;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 1rem;
-            }
-            .boton:hover {
-                background-color: #16a34a;
-            }       
-            /* barra de arriba*/
-            .user-section {
-                display: flex;
-                align-items: center;
-            }
-            .user-avatar {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                margin-right: 0.5rem;
-            }
-            .profile-section {
-                display: flex;
-                align-items: center;
-            }
-
-            .profile-img {
-                width: 2.5rem;
-                height: 2.5rem;
-                border-radius: 50%;
-                margin-right: 1rem;
-            }
-
-            .profile-info button {
-                background: none;
-                border: none;
-                color: white;
-                cursor: pointer;
-                font-size: 0.875rem;
-                display: inline-flex;
-                align-items: center;
-                margin-right: 0.5rem;
-            }
-
-            .profile-info button:hover {
-                text-decoration: underline;
-            }
-            .user-info {
-                display: flex;
-                flex-direction: column;
-                margin-right: 1rem;
-            }
-            .user-nickname {
-                font-weight: bold;
-            }
-            .user-favorites {
-                display: flex;
-                align-items: center;
-                font-size: 0.8rem;
-                color: #ffff00;
-            }
-            .star-icon {
-                margin-right: 0.25rem;
-            }
-            .logout-button {
-                background-color: transparent;
-                border: 1px solid white;
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 2rem;
-                cursor: pointer;
-                transition: background-color 0.3s, color 0.3s;
-            }
-            .logout-button:hover {
-                background-color: white;
-                color: #191414;
-            }
-            header {
-                width: 100%; /* Header ocupa todo el ancho */
-                position: fixed; /* Fijarlo en la parte superior */
-                top: 0;
-                z-index: 1000;
-            }
-            h1{
-                font-family: 'Circular', Arial, sans-serif;
-                color: white;
-            }
-            .formi {
-                max-width: 400px;
-                margin: 6rem auto; /* Margen de arriba para que aparezca en la pantalla */
-                padding: 2rem;
-                background-color: #27272a;
-                border-radius: 8px;
-            }
-            label{
-                font-family: 'Circular', Arial, sans-serif;
-                color: white;
-            }
-            
-            select {
-            width: 100%; /* Ancho completo del combobox */
-            padding: 10px; /* Espaciado interno del combobox */
-            border-radius: 5px; /* Bordes redondeados del combobox */
-            border: none; /* Sin borde */
-            background-color: #333333; /* Color de fondo del combobox */
-            color: white; /* Color del texto en el combobox */
-            }
-            .mensajeExito {
-            color: white; /* Color del texto */
-            background-color: #22c55e; /* Fondo verde */
-            padding: 10px; /* Espaciado interno */
-            border-radius: 8px; /* Bordes redondeados */
-            text-align: center; /* Centrar texto */
-            margin-top: 15px; /* Espacio arriba */
-            margin-bottom: 20px; /* Espacio inferior */
-            width: 30%; /* Ancho del rectángulo */
-            margin-left: auto; /* Centrar horizontalmente */
-            margin-right: auto; /* Centrar horizontalmente */
-        }
-        
-        #userInfo {
+        <title>JSP Page</title>
+        <style>        #userInfo {
                 background-color: #27272a;
                 border-radius: 8px;
                 padding: 20px;
                 margin-top: 20px;
+                margin:auto;
                 color: white;
-            }
-             #dynamicContent {
+                
+                #dynamicContent {
                     
                     margin:auto;
                 }
-        </style>
+            }</style>
     </head>
-    <jsp:include page="header.jsp" />
+    
+    
+        <jsp:include page="header.jsp" />
     <%
         DtUsuario nickLogueado = (DtUsuario) session.getAttribute("usuario");
         String correoLogueado = nickLogueado != null ? nickLogueado.getNickname() : null;
     %>
     <body>
-        <div class="container d-flex justify-content-center">
-                <div class="spotify-card">
-                    <form id="userForm" class="formi"><!-- SERVLET CAMBIAR --> 
-                        <h1 id="borrar">Consulta de Perfil de Usuario</h1>
-                        <div class="mb-3">                       
-                            <label for="opciones">Seleccione el usuario</label>
-                            <select id="listaUsuarios" name="nickUsuario"><!-- IMPORTANTE PARA PROXIMOS FORMULARIOS Sv -->
-                                <option value="">...</option>
-                            </select>
-                        </div>
-                    </form>
-                    
-                    <div id="userInfo" style="display: none;">
+        <div id="userInfo" style="display: none;">
                         <h2>Información del Usuario</h2>
                         <p><strong>Nickname:</strong> <span id="nickname"></span></p>
 <p>
@@ -204,9 +67,7 @@
                         <ul id="albumesFavoritos"></ul>
                         </div>
                         <div class="section-divider"></div>
-                        <div id="seguirDiv">
-                        <button id="seguirButton" class="boton" onclick="verificarYAgregarFavorito()">Seguir</button>
-                        </div>
+   
                         <!-- Dynamic Content para albumes-->
                         <div id="dynamicContent"> </div>
                     </div>
@@ -218,43 +79,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
       
     <script>
-        
-        let correoLogueado = "<%= correoLogueado %>";
-        function cargarUsuarios() {
-            fetch('SvCargarUsuarios')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la red');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const select = document.getElementById('listaUsuarios');
-                    data.forEach(usu => {
-                        const option = document.createElement('option');
-                        option.value = usu;
-                        option.textContent = usu;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al cargar los usuarios:', error);
-                    alert('No se pudieron cargar los usuarios.');
-                });
-        }
-        document.getElementById('listaUsuarios').addEventListener('change', cargarDatosUsuario);
-        
-        //Oculta el boton si se consulta por si mismo el usuario
-        document.getElementById('listaUsuarios').addEventListener('change', function() {
-    const selectedCorreo = this.value; // Obtiene el correo del usuario seleccionado
-    if (correoLogueado !== selectedCorreo) {
-        document.getElementById("seguirDiv").style.display = "block"; // Mostrar el botón de seguir
-    } else {
-        document.getElementById("seguirDiv").style.display = "none"; // Ocultar el botón de seguir
-    }
-});
-        function cargarDatosUsuario() {
-            const nickname = document.getElementById('listaUsuarios').value;
+       document.addEventListener("DOMContentLoaded", function () {
+                cargarDatosUsuario();
+            });
+        function cargarDatosUsuario() { 
+            const nickname = "<%= correoLogueado %>";
 
             if (nickname) {
                 fetch('SvObtenerDatosUsuario', {
@@ -334,12 +163,7 @@
                             console.log(seguidos);//MOSTRAR CLIENTES Y ARTISTAS
      //-------------------------------------------------------MARIANO-----------------------------------------------------------------------------
                             // Mostrar el botón de seguir o dejar de seguir según estado actual
-                        const seguirButton = document.getElementById('seguirButton');
-                        if (correoLogueado && seguidores.includes(correoLogueado)) {
-                            seguirButton.textContent = "Dejar de seguir";
-                        } else {
-                            seguirButton.textContent = "Seguir";
-                        }
+ 
     //-------------------------------------------------------MARIANO-----------------------------------------------------------------------------    
                         } else {
                             document.getElementById('seguidosDiv').style.display = 'none'; // Asegúrate de que el contenedor esté visible

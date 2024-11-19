@@ -120,6 +120,9 @@
 }
 .user-nickname {
     font-weight: bold;
+    margin:auto;
+    margin-top: 15px;
+    margin-left: 3px;
 }
 .user-favorites {
     display: flex;
@@ -144,4 +147,13 @@
 .logout-button:hover {
     background-color: white;
     color: #191414;
+}
+
+.link-avatar img {
+    display: block; /* Elimina el espacio extra que podría aparecer debajo de la imagen */
+}
+.auth-links a {
+    width: 40px;
+    height: 40px;
+        padding: 0rem 0rem !important;
 }

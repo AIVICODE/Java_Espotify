@@ -63,7 +63,7 @@ h1{
     color: #fff; /* Texto blanco para contraste */
         position: absolute; /* Cambiado a absolute */
 height: auto;
-    top: 80px;
+    top: 85px;
     left: 0;
     display: flex;
     flex-direction: column; /* Alinear los botones en columna */

@@ -37,7 +37,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espotify</title>
-    <link rel="stylesheet" href="css/index.css?v1.3"> <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="css/index.css?v1.4"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
 
 <jsp:include page="header.jsp" />

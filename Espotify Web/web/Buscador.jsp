@@ -40,13 +40,14 @@
         <div class="form-group mx-2">
             <label for="filtro" class="mr-2">Coincidencias de: <%= request.getParameter("filtro") %></label>
             <label for="sortBy" class="mr-2">Ordenar por:</label>
-            <select id="sortBy" name="sortBy" class="form-control bg-dark text-white border-0">
-                <option value="nombre">Nombre</option>
-                <option value="fecha">Fecha de Creación</option>
+            <select id="sortBy" name="sortBy" class="form-control bg-dark text-white border-0" onchange="this.form.submit()">
+                            <option value="-" <%= (request.getParameter("sortBy") == null || "-".equals(request.getParameter("sortBy"))) ? "selected" : "" %>>-</option>
+
+                <option value="nombre" <%= "nombre".equals(request.getParameter("sortBy")) ? "selected" : "" %>>Nombre</option>
+            <option value="fecha" <%= "fecha".equals(request.getParameter("sortBy")) ? "selected" : "" %>>Fecha de Creación</option>
             </select>
         </div>
         
-        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
     </form>
 
     <hr class="my-4">
