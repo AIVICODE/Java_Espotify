@@ -22,6 +22,8 @@
         <meta charset="UTF-8">
         <title>Seleccionar Género</title>
         <link rel="stylesheet" href="css/ConsultaListaRep.css?v=1.7">
+                    <link rel="icon" type="image/png" href="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"> <!-- Ruta del logo de Spotify -->
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Obtener los géneros desde el servlet

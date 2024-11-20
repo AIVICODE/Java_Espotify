@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión - Espotify</title>
     <link rel="stylesheet" href="css/login.css"> <!-- Asegúrate de que la ruta sea correcta -->
+                <link rel="icon" type="image/png" href="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"> <!-- Ruta del logo de Spotify -->
+
 </head>
 <body>
     <nav class="navbar">

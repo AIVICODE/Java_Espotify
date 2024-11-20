@@ -51,9 +51,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 
 public class Controlador implements IControlador {
-    public static final String CARPETA_LISTA ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_listarep/";
-public static final String CARPETA_ALBUM = "home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_album/";
-public static final String CARPETA_USUARIOS ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/";
+    public static final String CARPETA_LISTA ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_listarep/";
+public static final String CARPETA_ALBUM = "/home/ivan/GitProject/ProgApps-/Espotify/imagenes_album/";
+public static final String CARPETA_USUARIOS ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/";
 public static final String CARPETA_TEMA ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
 
 public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
@@ -4472,12 +4472,16 @@ return null;
                 temasDT.add(dtTema);
             }
 
-            if (listaRep instanceof ListaRepGeneral listaRepGeneral) {
-                String generoList = listaRepGeneral.getGenero().getNombre();
-                 System.out.println("Lista general:"+ generoList);
-                dtListaRepList.add(new DTListaRep(listaRep.getNombre(), "", generoList, temasDT));
-                System.out.println("Nombre lista:" + listaRepGeneral.getNombre());
-            }
+          if (listaRep instanceof ListaRepGeneral listaRepGeneral) {
+    if (listaRepGeneral.getGenero() != null) { // Validar si tiene género
+        String generoList = listaRepGeneral.getGenero().getNombre();
+        System.out.println("Lista general: " + generoList);
+        dtListaRepList.add(new DTListaRep(listaRep.getNombre(), "", generoList, temasDT));
+        System.out.println("Nombre lista: " + listaRepGeneral.getNombre());
+    } else {
+        System.out.println("La lista general no tiene género. No se agregará.");
+    }
+}
         }
     }
 

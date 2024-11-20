@@ -8,7 +8,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.2">
-        <title>JSP Page</title>
+        <title>Perfil</title>
+            <link rel="icon" type="image/png" href="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"> <!-- Ruta del logo de Spotify -->
         <style>        #userInfo {
                 background-color: #27272a;
                 border-radius: 8px;

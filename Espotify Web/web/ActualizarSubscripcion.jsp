@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/ContratarSubscripcion.css"> 
     <title>Actualizar Suscripción</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="icon" type="image/png" href="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"> <!-- Ruta del logo de Spotify -->
+
     <style>
         :root {
             --spotify-green: #1DB954;

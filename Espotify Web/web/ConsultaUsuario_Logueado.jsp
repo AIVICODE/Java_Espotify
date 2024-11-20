@@ -10,6 +10,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/mostrarAlbumes.css?v=1.2">
+                    <link rel="icon" type="image/png" href="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"> <!-- Ruta del logo de Spotify -->
+
         <style>
             body{
                 background-color: #191414;

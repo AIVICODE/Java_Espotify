@@ -9,6 +9,8 @@
     <meta charset="UTF-8">
     <title>Mis Listas de Reproducción</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+                <link rel="icon" type="image/png" href="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"> <!-- Ruta del logo de Spotify -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
