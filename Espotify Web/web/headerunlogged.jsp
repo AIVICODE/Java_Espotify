@@ -11,6 +11,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>header</title>
         <link rel="stylesheet" href="css/headerunlogged.css">
+        <style>
+            .auth-links a {
+    width: 40px;
+    height: 40px;
+        padding: 8px 15px !important;
+}
+            
+        </style>
     </head>
 
         <header>

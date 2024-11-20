@@ -81,8 +81,11 @@
         %>
                         <div class="alert alert-light">
                             <strong>Album:</strong> <%= album.getNombre() %>, 
+                            <strong>Artista:</strong> <%= album.getArtista().getCorreo() %>, 
                             <strong>Género:</strong> <%= album.getListaGeneros()%>, 
                             <strong>Año de Creación:</strong> <%= album.getAnioCreacion() %>
+                            
+                            
                         </div>
         <%
                     } else if (contenido instanceof DtListaRep) {
@@ -93,6 +96,11 @@
                         <div class="alert alert-secondary">
                     <strong>Lista de Reproducción:</strong> <%= listaRep.getNombreListaRep() %>
                     <strong>Género:</strong> <%= listaRep.getGenero() %>
+                    
+                        <a href="javascript:void(0);" 
+               onclick="fetchLista('<%= listaRep.getNombreListaRep() %>', null);">
+               Ver
+            </a>
                 </div>
 <%
             } else {
@@ -101,6 +109,10 @@
                 <div class="alert alert-secondary">
                     <strong>Lista de Reproducción de clientes:</strong> <%= listaRep.getNombreListaRep() %>
                     <strong>Cliente:</strong> <%= listaRep.getNombreCliente() %>
+                    <a href="javascript:void(0);" 
+               onclick="fetchLista('<%= listaRep.getNombreListaRep() %>','<%= listaRep.getNombreCliente() %>');">
+               Ver
+            </a>
                 </div>
         <%
                     }
@@ -121,7 +133,34 @@
 
         %>
     </div>
+   <iframe id="dynamicIframe" style="width: 100%; height: 400px; border: none;"></iframe>
 </div>
 
 </body>
+
+<script>
+           
+        function fetchLista(nombreLista, nombreCliente) {
+    const encodedNombreLista = encodeURIComponent(nombreLista);
+    const encodedNombreCliente = nombreCliente ? encodeURIComponent(nombreCliente) : null;
+
+    // Construye la URL del servlet según si hay cliente o no
+    let servletUrl;
+    if (encodedNombreCliente === null) {
+        servletUrl = "SvSeleccionarLista?nombreLista=" + encodedNombreLista;
+    } else {
+        servletUrl = "SvSeleccionarLista?nombreLista=" + encodedNombreLista + "&nombreCliente=" + encodedNombreCliente;
+    }
+    // Obtiene el iframe existente y actualiza su fuente
+    if (servletUrl) {
+    // Abrir en una nueva pestaña o ventana
+    window.open(servletUrl, '_blank'); // '_blank' abre en una nueva pestaña
+    // O usa `window.location.href` si quieres redirigir en la misma página
+    // window.location.href = servletUrl;
+} else {
+    console.error("No se pudo generar la URL para abrir la página.");
+}
+}
+    
+</script>
 </html>

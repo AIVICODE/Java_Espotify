@@ -75,7 +75,11 @@
             Your browser does not support the audio element.
         </audio>
 
-            <a id="downloadLink" href="" download >Descargar</a>
+            <a id="downloadLink" href="" download style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="#1DB954">
+    <path d="M12 16.5l4.5-4.5H13V3h-2v9H7.5l4.5 4.5zm-8 2h16v2H4v-2z"/>
+  </svg>
+</a>
 
 
     </div>

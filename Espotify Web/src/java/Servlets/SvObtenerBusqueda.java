@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import webservices.ControladorSoap;
 import webservices.ControladorSoapService;
+import webservices.Exception_Exception;
 import webservices.ListaDTContenido;
 
 
@@ -47,7 +48,7 @@ public class SvObtenerBusqueda extends HttpServlet {
             // Redirige a la JSP para mostrar los resultados
             RequestDispatcher dispatcher = request.getRequestDispatcher("/Buscador.jsp");
             dispatcher.forward(request, response);
-        } catch (Exception e) {
+        } catch (ServletException | IOException | Exception_Exception e) {
             // En caso de error, redirige a una página de error
             request.setAttribute("error", e.getMessage());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");

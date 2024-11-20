@@ -54,7 +54,7 @@ public class Controlador implements IControlador {
     public static final String CARPETA_LISTA ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_listarep/";
 public static final String CARPETA_ALBUM = "home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_album/";
 public static final String CARPETA_USUARIOS ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_usuarios/";
-public static final String CARPETA_TEMA ="/home/mramos/NetBeansProjects/ProgApps-/Espotify/imagenes_tema/";
+public static final String CARPETA_TEMA ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/";
 
 public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.jpg";
 
@@ -4203,9 +4203,12 @@ public String guardarImagenesLista(byte[] archivoImagen, String nombreLista) thr
 
                
             } else if (listaRep instanceof ListaRepGeneral) {
-                String generolist = ((ListaRepGeneral) listaRep).getGenero().getNombre();
-                dtContenidoList.add(new DTListaRep(listaRep.getNombre(),"", generolist));
-        }
+    String generolist = "Generada automaticamente";
+    if (((ListaRepGeneral) listaRep).getGenero() != null) {
+        generolist = ((ListaRepGeneral) listaRep).getGenero().getNombre();
+    }
+    dtContenidoList.add(new DTListaRep(listaRep.getNombre(), "", generolist));
+}
         }
     }
 
@@ -4392,7 +4395,7 @@ return null;
         if (Files.exists(ruta)) {
             return Files.readAllBytes(ruta); // Lee y devuelve el como un arreglo de bytes
         } else {
-            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.mp3");
+            ruta = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/generico.mp3");
             return Files.readAllBytes(ruta);
         }
     }
@@ -4406,7 +4409,7 @@ return null;
                 temasBytes[i] = Files.readAllBytes(ruta); // Lee y almacena cada archivo en el array
             } else {
                 // Si el archivo no existe, cargar un archivo genérico
-                Path rutaGenerica = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_usuarios/generico.mp3");
+                Path rutaGenerica = Paths.get("/home/ivan/GitProject/ProgApps-/Espotify/imagenes_tema/generico.mp3");
                 temasBytes[i] = Files.readAllBytes(rutaGenerica);
             }
         }

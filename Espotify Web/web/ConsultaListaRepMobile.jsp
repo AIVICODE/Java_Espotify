@@ -1,17 +1,17 @@
-<%@page import="Datatypes.DTCliente"%>
-<%@page import="Datatypes.DTListaRep"%>
-<%@page import="Datatypes.DTTema"%>
+<%@page import="webservices.DtCliente"%>
+<%@page import="webservices.DtListaRep"%>
+<%@page import="webservices.DtTema"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<%@page import="Datatypes.DTUsuario"%>
+<%@page import="webservices.DtUsuario"%>
 <%
                 // Mostrar los temas de la lista seleccionada si están disponibles
-                List<DTTema> temas = (List<DTTema>) request.getAttribute("temas");
-                DTListaRep listaSeleccionada = (DTListaRep) request.getAttribute("listaSeleccionada");
+                List<DtTema> temas = (List<DtTema>) request.getAttribute("temas");
+                DtListaRep listaSeleccionada = (DtListaRep) request.getAttribute("listaSeleccionada");
 
            
             %>
@@ -62,8 +62,8 @@
 
         <%
             session = request.getSession(false);
-            DTCliente dtUsuario = (DTCliente) session.getAttribute("usuario");
-            if (dtUsuario == null) {
+            DtCliente DtUsuario = (DtCliente) session.getAttribute("usuario");
+            if (DtUsuario == null) {
         %>
         
         
@@ -116,14 +116,14 @@
             <!-- Aquí se llenarán las listas de reproducción cuando se seleccione un género -->
             <%
                 // Mostrar listas de reproducción por género
-                List<DTListaRep> listasRep = (List<DTListaRep>) request.getAttribute("listasdeRep");
+                List<DtListaRep> listasRep = (List<DtListaRep>) request.getAttribute("listasdeRep");
 
                 if (listasRep != null && !listasRep.isEmpty()) {
             %>
             <h2>Listas de Reproducción para el Género Seleccionado</h2>
             <ul>
                 <%
-                    for (DTListaRep lista : listasRep) {
+                    for (DtListaRep lista : listasRep) {
                 %>
 
                 <li>
@@ -132,7 +132,7 @@
                         
                      <%
     session = request.getSession(false);
-    if (dtUsuario != null) {
+    if (DtUsuario != null) {
     %>
 <button class="add-favorite" onclick="verificarYAgregarListaDefFavorito('<%= lista.getNombreListaRep() %>')">+</button>
  <%
@@ -140,13 +140,13 @@
     }
     
 %>
-                <div style="width: auto; height: 150px; border: 1px solid black;">
+                <div style="wiDth: auto; height: 150px; border: 1px solid black;">
 <%
                         byte[] imagenAlbum = (byte[]) lista.getImagenBytes();
                         if (imagenAlbum != null) {
                             String base64Image = java.util.Base64.getEncoder().encodeToString(imagenAlbum);
                     %>
-                <img src="data:image/jpeg;base64,<%= base64Image %>" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="data:image/jpeg;base64,<%= base64Image %>" style="wiDth: 100%; height: 100%; object-fit: cover;">
                     <%
                         }
                     %>                    
@@ -181,21 +181,21 @@
 
             <%
                 // Mostrar listas particulares si están disponibles
-                List<DTListaRep> listasParticulares = (List<DTListaRep>) request.getAttribute("listasdeRepparticular");
+                List<DtListaRep> listasParticulares = (List<DtListaRep>) request.getAttribute("listasdeRepparticular");
 
                 if (listasParticulares != null && !listasParticulares.isEmpty()) {
             %>
             <h2>Listas Particulares</h2>
             <ul>
                 <%
-                    for (DTListaRep lista : listasParticulares) {
+                    for (DtListaRep lista : listasParticulares) {
                 %>
    <li onclick="seleccionarLista('<%= lista.getNombreListaRep().replaceAll(" ", "_") %>', '<%= lista.getNombreCliente().replaceAll(" ", "_") %>')">
     <div style="display: flex; align-items: center;">
         <!-- Botón de agregar a favoritos -->
         <%
         session = request.getSession(false);
-        if (dtUsuario != null) {
+        if (DtUsuario != null) {
         %>
             <button class="add-favorite" style="margin-right: 10px;" 
                     onclick="event.stopPropagation(); verificarYAgregarListaPartFavorito('<%= lista.getNombreListaRep() %>', '<%= lista.getNombreCliente() %>')">+</button>
@@ -209,7 +209,7 @@
             if (imagenAlbum != null) {
                 String base64Image = java.util.Base64.getEncoder().encodeToString(imagenAlbum);
             %>
-                <img src="data:image/jpeg;base64,<%= base64Image %>" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="data:image/jpeg;base64,<%= base64Image %>" style="wiDth: 100%; height: 100%; object-fit: cover;">
             <%
             }
             %>
@@ -246,12 +246,12 @@
     <ul>
     <%
         int contador = 0;
-        for (DTTema tema : temas) {
+        for (DtTema tema : temas) {
     %>
     <li>
         <a href="javascript:void(0);" class="tema-enlace" 
            onclick="seleccionarTema('<%= tema.getNombre() %>', '<%= tema.getDirectorio() %>', '<%= tema.getNombreartista() %>', <%= contador %>,'<%= tema.getNombrealbum() %>');">
-            <% if (dtUsuario != null) { %>
+            <% if (DtUsuario != null) { %>
                 <button class="add-favorite-tema" 
                         onclick="event.stopPropagation(); verificarYAgregarTemaFavorito('<%= tema.getNombre() %>', '<%= tema.getNombrealbum() %>', '<%= tema.getNombreartista() %>')">+</button>
             <% } %>
@@ -276,7 +276,7 @@
     %>
 </div>
 
-<div id="popupModal" style="display:none; position:absolute; background-color: #404040; color: white; padding: 15px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5); width: 260px; font-family: Arial, sans-serif;">
+<div id="popupModal" style="display:none; position:absolute; background-color: #404040; color: white; padding: 15px; border-radius: 8px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5); wiDth: 260px; font-family: Arial, sans-serif;">
  
     <p id="popupDownloads" style="margin: 8px 0; font-size: 14px;"></p>
     <p id="popupPlays" style="margin: 8px 0; font-size: 14px;"></p>
@@ -366,19 +366,19 @@ function cerrarPopup() {
             </div>
             <div class="player-controls">
                 <button id="prevBtn" onclick="prevTema()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" wiDth="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wiDth="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="19 20 9 12 19 4 19 20"></polygon>
                     <line x1="5" y1="19" x2="5" y2="5"></line>
                     </svg>
                 </button>
                 <button id="playPauseBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" wiDth="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wiDth="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polygon points="10 8 16 12 10 16 10 8"></polygon>
                     </svg>
                 </button>
                 <button id="nextBtn" onclick="nextTema()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" wiDth="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wiDth="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="5 4 15 12 5 20 5 4"></polygon>
                     <line x1="19" y1="5" x2="19" y2="19"></line>
                     </svg>
@@ -392,9 +392,13 @@ function cerrarPopup() {
             </audio>
                         <%
             session = request.getSession(false);
-            if (dtUsuario != null) {
+            if (DtUsuario != null) {
         %>
-            <a id="downloadLink" href="" download >Descargar</a>
+            <a id="downloadLink" href="" download style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="#1DB954">
+    <path d="M12 16.5l4.5-4.5H13V3h-2v9H7.5l4.5 4.5zm-8 2h16v2H4v-2z"/>
+  </svg>
+</a>
             <%
             }
         %>
@@ -409,7 +413,7 @@ function cerrarPopup() {
         <%
         if (temas != null && !temas.isEmpty()) {
             int contador = 0; // Variable contador para asignar orden secuencial
-            for (DTTema tema : temas) {
+            for (DtTema tema : temas) {
         %>
         temas.push({
             nombre: "<%= tema.getNombre()%>",
@@ -574,7 +578,7 @@ AumentarReproducciones(nombreTema, album, artista);
     
     
     function AumentarReproducciones(temaName, albumName, artistName) {
-    const encodedTemaName = encodeURIComponent(temaName);
+    const encodeDtemaName = encodeURIComponent(temaName);
     const encodedAlbumName = encodeURIComponent(albumName);
     const encodedArtistName = encodeURIComponent(artistName);
     
@@ -583,7 +587,7 @@ AumentarReproducciones(nombreTema, album, artista);
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: "temaName=" + encodedTemaName + "&albumName=" + encodedAlbumName + "&artistName=" + encodedArtistName +"&tipo=reproduccion"
+        body: "temaName=" + encodeDtemaName + "&albumName=" + encodedAlbumName + "&artistName=" + encodedArtistName +"&tipo=reproduccion"
     })
     .then(response => {
         // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
@@ -603,7 +607,7 @@ AumentarReproducciones(nombreTema, album, artista);
 }
 
 function AumentarDescargas(temaName, albumName, artistName) {
-    const encodedTemaName = encodeURIComponent(temaName);
+    const encodeDtemaName = encodeURIComponent(temaName);
     const encodedAlbumName = encodeURIComponent(albumName);
     const encodedArtistName = encodeURIComponent(artistName);
     
@@ -612,7 +616,7 @@ function AumentarDescargas(temaName, albumName, artistName) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: "temaName=" + encodedTemaName + "&albumName=" + encodedAlbumName + "&artistName=" + encodedArtistName +"&tipo=descarga"
+        body: "temaName=" + encodeDtemaName + "&albumName=" + encodedAlbumName + "&artistName=" + encodedArtistName +"&tipo=descarga"
     })
     .then(response => {
         // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
@@ -702,7 +706,7 @@ function AumentarDescargas(temaName, albumName, artistName) {
 }
 
  function AgregarTemaFavorito(temaName, albumName, artistName) {
-    const encodedTemaName = encodeURIComponent(temaName);
+    const encodeDtemaName = encodeURIComponent(temaName);
     const encodedAlbumName = encodeURIComponent(albumName);
     const encodedArtistName = encodeURIComponent(artistName);
 
@@ -711,7 +715,7 @@ function AumentarDescargas(temaName, albumName, artistName) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: "tema=" + encodedTemaName + "&album=" + encodedAlbumName + "&artista=" + encodedArtistName
+        body: "tema=" + encodeDtemaName + "&album=" + encodedAlbumName + "&artista=" + encodedArtistName
     })
     .then(response => {
         // Capturamos el error si el servidor respondió con un estado HTTP no exitoso
