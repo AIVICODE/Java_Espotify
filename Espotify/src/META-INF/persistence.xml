@@ -12,6 +12,7 @@
     <class>Logica.Tema</class>
     <class>Logica.Subscripcion</class>
     <class>Logica.RegistroIngresoWeb</class>
+    <class>Logica.ArtistaEliminado</class>
     <properties>
       <property name="eclipselink.cache.shared.default" value="false"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Espotify?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

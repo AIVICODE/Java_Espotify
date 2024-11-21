@@ -707,5 +707,9 @@ public class ControladorSoap {
     }
 
 
+    public void eliminarArt(String nickname) {
+        // Llama al controlador para eliminar el artista
+        control.eliminarArtista(nickname);
+    }
 
 }

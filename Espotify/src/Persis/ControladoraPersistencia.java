@@ -2,6 +2,7 @@ package Persis;
 
 import Logica.Album;
 import Logica.Artista;
+import Logica.ArtistaEliminado;
 import Logica.Cliente;
 import Logica.Favoritos;
 import Logica.Genero;
@@ -11,6 +12,7 @@ import Logica.ListaRepParticular;
 import Logica.RegistroIngresoWeb;
 import Logica.Subscripcion;
 import Logica.Tema;
+import Persis.exceptions.NonexistentEntityException;
 import Persis.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -348,5 +350,41 @@ public Artista encontrarArtistaPorNickname(String nickname) {
         listjpa.edit(lista);
     }
     }
+public void eliminarArtista(String mail){
+        try {
+            artjpa.destroy(mail);
+        } catch (NonexistentEntityException ex) {
+   
+        }
+    }
+    public void eliminarAlbum(Long id){
+        try {
+            albjpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            
+        }
+    }
+    public void eliminarTema(Long id){
+        try {
+            temajpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            
+        }
+    }
+    ArtistaEliminadoJpaController arejpa = new ArtistaEliminadoJpaController();
+    public void altaArtistaEliminado (ArtistaEliminado a){
+        try {
+            arejpa.create(a);
+        } catch (Exception ex) {
+           
+        }
+    }
+    public List<ArtistaEliminado> listaArtistasEliminados (){
+        return arejpa.findArtistaEliminadoEntities(); //me devuelve una lista con todos los artistas eliminados
+    }
 
+
+ public void modificarBiografiaArtistaE(){
+        arejpa.modificarBiografiaArtista();
+    }
 }

@@ -31,6 +31,8 @@
         <div class="sidebar">
             <h2>Opciones</h2>
             <button id="btnAltaAlbum">Alta Album</button>
+            <button id="btnDarDeBaja">Baja Artista</button>
+            
 
             
         </div>
@@ -42,5 +44,10 @@
         // Redirigir a la página altaAlbum .jsp
         console.log('Button clicked');
         window.location.href = 'altaAlbum.jsp';
+    });
+      document.getElementById('btnDarDeBaja').addEventListener('click', function() {
+        // Redirigir a la página altaAlbum .jsp
+        console.log('Button clicked');
+        window.location.href = 'BajaDeArtista.jsp';
     });
     </script>

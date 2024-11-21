@@ -7,15 +7,17 @@
 <xsd:import namespace="http://WebServices/" schemaLocation="http://localhost:5000/ControladorSoap?xsd=2"/>
 </xsd:schema>
 </types>
+<message name="CrearListaRepSugerencia"/>
+<message name="CrearListaRepSugerenciaResponse"/>
+<message name="Exception">
+<part name="fault" element="tns:Exception"/>
+</message>
 <message name="login">
 <part name="usuario" type="xsd:string"/>
 <part name="password" type="xsd:string"/>
 </message>
 <message name="loginResponse">
 <part name="return" type="tns:dtUsuario"/>
-</message>
-<message name="Exception">
-<part name="fault" element="tns:Exception"/>
 </message>
 <message name="listarSubdeCliente">
 <part name="arg0" type="xsd:string"/>
@@ -166,8 +168,6 @@
 <message name="obtenerDTListaPorClientepublicaResponse">
 <part name="return" type="tns:listaDTListaRep"/>
 </message>
-<message name="CrearListaRepSugerencia"/>
-<message name="CrearListaRepSugerenciaResponse"/>
 <message name="encontrarClientePorNickname">
 <part name="arg0" type="xsd:string"/>
 </message>
@@ -393,7 +393,16 @@
 <message name="obtTemasComoBytesResponse">
 <part name="return" type="tns:base64BinaryArray"/>
 </message>
+<message name="eliminarArt">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="eliminarArtResponse"/>
 <portType name="ControladorSoap">
+<operation name="CrearListaRepSugerencia">
+<input wsam:Action="http://WebServices/ControladorSoap/CrearListaRepSugerenciaRequest" message="tns:CrearListaRepSugerencia"/>
+<output wsam:Action="http://WebServices/ControladorSoap/CrearListaRepSugerenciaResponse" message="tns:CrearListaRepSugerenciaResponse"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://WebServices/ControladorSoap/CrearListaRepSugerencia/Fault/Exception"/>
+</operation>
 <operation name="login" parameterOrder="usuario password">
 <input wsam:Action="http://WebServices/ControladorSoap/loginRequest" message="tns:login"/>
 <output wsam:Action="http://WebServices/ControladorSoap/loginResponse" message="tns:loginResponse"/>
@@ -518,11 +527,6 @@
 <input wsam:Action="http://WebServices/ControladorSoap/obtenerDTListaPorClientepublicaRequest" message="tns:obtenerDTListaPorClientepublica"/>
 <output wsam:Action="http://WebServices/ControladorSoap/obtenerDTListaPorClientepublicaResponse" message="tns:obtenerDTListaPorClientepublicaResponse"/>
 <fault message="tns:Exception" name="Exception" wsam:Action="http://WebServices/ControladorSoap/obtenerDTListaPorClientepublica/Fault/Exception"/>
-</operation>
-<operation name="CrearListaRepSugerencia">
-<input wsam:Action="http://WebServices/ControladorSoap/CrearListaRepSugerenciaRequest" message="tns:CrearListaRepSugerencia"/>
-<output wsam:Action="http://WebServices/ControladorSoap/CrearListaRepSugerenciaResponse" message="tns:CrearListaRepSugerenciaResponse"/>
-<fault message="tns:Exception" name="Exception" wsam:Action="http://WebServices/ControladorSoap/CrearListaRepSugerencia/Fault/Exception"/>
 </operation>
 <operation name="encontrarClientePorNickname">
 <input wsam:Action="http://WebServices/ControladorSoap/encontrarClientePorNicknameRequest" message="tns:encontrarClientePorNickname"/>
@@ -699,9 +703,25 @@
 <output wsam:Action="http://WebServices/ControladorSoap/obtTemasComoBytesResponse" message="tns:obtTemasComoBytesResponse"/>
 <fault message="tns:IOException" name="IOException" wsam:Action="http://WebServices/ControladorSoap/obtTemasComoBytes/Fault/IOException"/>
 </operation>
+<operation name="eliminarArt">
+<input wsam:Action="http://WebServices/ControladorSoap/eliminarArtRequest" message="tns:eliminarArt"/>
+<output wsam:Action="http://WebServices/ControladorSoap/eliminarArtResponse" message="tns:eliminarArtResponse"/>
+</operation>
 </portType>
 <binding name="ControladorSoapPortBinding" type="tns:ControladorSoap">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+<operation name="CrearListaRepSugerencia">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://WebServices/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://WebServices/"/>
+</output>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</fault>
+</operation>
 <operation name="login">
 <soap:operation soapAction=""/>
 <input>
@@ -988,18 +1008,6 @@
 </output>
 </operation>
 <operation name="obtenerDTListaPorClientepublica">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://WebServices/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://WebServices/"/>
-</output>
-<fault name="Exception">
-<soap:fault name="Exception" use="literal"/>
-</fault>
-</operation>
-<operation name="CrearListaRepSugerencia">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://WebServices/"/>
@@ -1418,6 +1426,15 @@
 <fault name="IOException">
 <soap:fault name="IOException" use="literal"/>
 </fault>
+</operation>
+<operation name="eliminarArt">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://WebServices/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://WebServices/"/>
+</output>
 </operation>
 </binding>
 <service name="ControladorSoapService">

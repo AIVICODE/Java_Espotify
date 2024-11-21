@@ -824,9 +824,10 @@ public static final String CARPETA_GENERICO ="/home/ivan/GitProject/ProgApps-/Es
         return null;
     }
 
-    public void Cargar_Datos_Prueba() throws Exception {
+ public void Cargar_Datos_Prueba() throws Exception {
         //modifico la tabla de artista
         controlpersis.modificarBiografiaArtista();
+        controlpersis.modificarBiografiaArtistaE();//NUEVO
         
         Cargar_Perfiles();
         Cargar_Generos();
@@ -4655,6 +4656,174 @@ int favoritosCon = (int) controlpersis.findtemasfavoritos().stream()
                           
                           return info;
 }
+
+public void eliminarArtista(String nick){
+        for (Artista a : controlpersis.listaArtistas()){
+            if(a.getNickname().equals(nick)){//si encuentro al artista
+                altaArtistaEliminado(a);
+                for(Album al : a.getAlbumes()){//eliminar cada uno de sus albumes
+                    for (Tema t : al.getListaTemas()){//para cada tema del album
+                        //para cada tema del album del artista a eliminar controlar antes si aparece en los favs de cada cliente
+                        for (Cliente c:controlpersis.listaClientes()){
+                            for (Tema tc:c.getTemas()){
+                                if(tc.equals(t)){//si el tema fav del cliente es el tema dle alb a eliminar, lo saco de favs
+                                    try {
+                                        EliminarTemaFavorito( c.getMail(),  a.getMail(),  al.getNombre(),  tc.getNombre());
+                                    } catch (Exception ex) {
+                                        Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+                        }
+                        //Borrar el tema de las listas part y generales
+                        for (ListaRep l : controlpersis.listas()){//para cada lista en bd
+                            List<Tema> temas = l.getListaTemas();//New???
+                            temas.removeIf(tema -> tema.getNombre().equals(t.getNombre()));
+                            if (l instanceof ListaRepGeneral) {
+                                try {
+                                    ListaRepGeneral lg = (ListaRepGeneral) l;
+                                    controlpersis.editListaPorDefecto(lg);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } if (l instanceof ListaRepParticular){
+                                try {
+                                    ListaRepParticular lp = (ListaRepParticular) l;
+                                    controlpersis.editListaPrivada(lp);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                        controlpersis.eliminarTema(t.getId());
+                    }//para cada album del artista, verificar si algun cliente lo tiene como favorito
+                    for (Cliente c : controlpersis.listaClientes()){
+                        for (Album alc : c.getAlbums()){//para cada album fav de cada cliente en bd
+                            if (alc.equals(al)){
+                                try {//
+                                    EliminarAlbumFavorito( c.getMail(),  a.getMail(),  alc.getNombre());
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    }
+                    controlpersis.eliminarAlbum(al.getId());
+                }
+            }
+        }
+        Artista aEl = null;
+        try {
+            aEl = (controlpersis.findArtistaByNickname(nick));
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //borrar de los seguidos de los clientes
+        for (Cliente c : controlpersis.listaClientes()){//para cada cliente en bd
+            for (Artista ar : c.getArtistasSeguidos()){//para cada artista que siue cada cliente en bd
+                if (ar.getMail().equals(aEl.getMail())){//si el cliente sigue al artista a eliminar, lo deja de seguir
+                    try {
+                        dejarSeguirUsuario(c.getMail(), ar.getMail());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        
+        controlpersis.eliminarArtista(aEl.getMail());     
+    } 
+public void altaArtistaEliminado(Artista a){
+        ArtistaEliminado aE = new ArtistaEliminado();
+        Date fechaAc = new Date();
+        String fechaActual = fechaAc.getDate() + "/" + (fechaAc.getMonth() +1) + "/" + (fechaAc.getYear() + 1900);
+        aE.setFechaEliminado(fechaActual);
+        aE.setNombre(a.getNombre());
+        aE.setApellido(a.getApellido());
+        aE.setFechaNac(a.getFechaNac());
+        aE.setNickname(a.getNickname());
+        aE.setMail(a.getMail());
+        aE.setBiografia(a.getBiografia());
+        aE.setContrasenia(a.getContrasenia());
+        aE.setSitioWeb(a.getSitioWeb());
+        aE.setImagen(a.getImagen());
+        String listaAlbumes = " ";
+        String listaTemas = " ";
+        if (!(a.getAlbumes().isEmpty())){
+            for(Album alb : a.getAlbumes()){
+                listaAlbumes = listaAlbumes + alb.getNombre() + " / ";
+                if (!(alb.getListaTemas().isEmpty())){
+                    for(Tema t:alb.getListaTemas()){
+                        listaTemas = listaTemas + t.getNombre() + " / ";
+                    }
+                }
+            }
+        }
+        
+        aE.setAlbumes(listaAlbumes);
+        aE.setTemas(listaTemas);
+        
+        int cant = controlpersis.listaArtistasEliminados().size();
+        String id = a.getNickname() + cant;
+        aE.setId(id);
+        
+        controlpersis.altaArtistaEliminado(aE);
+    }
+    
+    public List<String> listaArtistasEliminados(){
+       List<String> lista = new ArrayList<>();
+       for (ArtistaEliminado a : controlpersis.listaArtistasEliminados()){
+           lista.add(a.getId());
+       }
+       return lista;
+    }
+    
+    public DTArtista artistaEliminadoSeleccionado(String id){
+        DTArtista artistaE = new DTArtista();
+        for (ArtistaEliminado a : controlpersis.listaArtistasEliminados()){
+            if (a.getId().equals(id)){
+                artistaE.setNombre(a.getNombre());
+                artistaE.setApellido(a.getApellido());
+                artistaE.setFechaNac(a.getFechaNac());
+                artistaE.setNickname(a.getNickname());
+                artistaE.setCorreo(a.getMail());
+                artistaE.setBiografia(a.getBiografia());
+                artistaE.setContrasenia(a.getContrasenia());
+                artistaE.setSitioWeb(a.getSitioWeb());
+            }
+        }
+        return artistaE;
+    }
+    public String albumesArtistaElimSel(String id){
+        String albumes = " ";
+        for (ArtistaEliminado a : controlpersis.listaArtistasEliminados()){
+            if (a.getId().equals(id)){
+                albumes = a.getAlbumes();
+            }
+        }
+        return albumes;
+    }
+    
+    public String temasArtistaElimSel(String id){
+        String temas = " ";
+        for (ArtistaEliminado a : controlpersis.listaArtistasEliminados()){
+            if (a.getId().equals(id)){
+                temas = a.getTemas();
+            }
+        }
+        return temas;
+    }
+    public String fechaEArtistaESel(String id){
+        String fecha = " ";
+        for (ArtistaEliminado a : controlpersis.listaArtistasEliminados()){
+            if (a.getId().equals(id)){
+                fecha = a.getFechaEliminado();
+            }
+        }
+        return fecha;
+    }
+
 
 }
 //GuardarTemaFavorito

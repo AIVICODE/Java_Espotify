@@ -42,13 +42,16 @@ public class SvObtenerClientes extends HttpServlet {
             ListaString lnicks = control.nicksClientes();
             List<String> nicks = lnicks.getLista();
             List<DtListaRep> todasListasRepparticulares = new ArrayList<>();
-
+            System.out.println("ACA ENTRO AL OBTENERCLIENTES");
             // Recorrer cada nick para obtener el correo y luego las listas de reproducción
             for (String nick : nicks) {
                 try {
                     // Convertir el nick a correo
+                    System.out.println("ACA ENTRO AL OBTENERCLIENTES2");
                     String correo = control.convierteNickACorreo(nick);//control.ConvierteNick_A_Correo(nick);
+                    System.out.println("ACA ENTRO AL OBTENERCLIENTES3");
                     ListaDTListaRep l = control.obtenerDTListaPorClientepublica(correo);
+                    System.out.println("ACA ENTRO AL OBTENERCLIENTES4");
                     List<DtListaRep> list = l.getLista(); //control.obtenerDTListaPorClientepublica(correo);
                     todasListasRepparticulares.addAll(list);
                 } catch (Exception ex) {

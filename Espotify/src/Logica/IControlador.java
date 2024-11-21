@@ -214,4 +214,12 @@ public interface IControlador {
    public abstract void CrearListaRepSugerencia() throws Exception ;
    
    public abstract DTInfoTema ObtenerInfoTema(String nombreTema,String nombreArtista,String nombreAlbum) throws Exception;
+   
+   public abstract void eliminarArtista(String nick);
+    public abstract void altaArtistaEliminado(Artista a);
+    public abstract List<String> listaArtistasEliminados();
+    public abstract DTArtista artistaEliminadoSeleccionado(String id);
+    public abstract String albumesArtistaElimSel(String id);
+    public abstract String temasArtistaElimSel(String id);
+    public abstract String fechaEArtistaESel(String id);
 }
