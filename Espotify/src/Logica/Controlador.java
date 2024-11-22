@@ -2848,7 +2848,11 @@ String genero = (listaPorDefecto.getGenero() != null) ? listaPorDefecto.getGener
         for (ListaRep l : controlpersis.listas()) {
             if (l instanceof ListaRepGeneral) {
                 ListaRepGeneral general = (ListaRepGeneral) l;
+                if(general.getNombre().equals("Sugerencias")){
+
+      }else{
                 listas.add(general.getNombre());
+                }
             }
         }
         return listas;

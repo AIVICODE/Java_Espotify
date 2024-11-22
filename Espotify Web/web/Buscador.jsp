@@ -74,7 +74,9 @@
                         <div class="alert alert-info">
                             <strong>Tema:</strong> <%= tema.getNombre() %>, 
                             <strong>Artista:</strong> <%= tema.getNombreartista()%>, 
-                            <strong>Album:</strong> <%= tema.getNombrealbum()%>,
+                             <a href="#" onclick="fetchAlbum('<%= tema.getNombrealbum()%>', '<%= tema.getNombreartista() %>')">
+        <%= tema.getNombrealbum() %>
+    </a>,
                             <strong>Año de Creación:</strong> <%= tema.getAnioCreacion() %>
                         </div>
         <%
@@ -82,7 +84,9 @@
                         DtAlbum album = (DtAlbum) contenido;
         %>
                         <div class="alert alert-light">
-                            <strong>Album:</strong> <%= album.getNombre() %>, 
+                            <a href="#" onclick="fetchAlbum('<%= album.getNombre() %>', '<%= album.getArtista().getNickname() %>')">
+        <%= album.getNombre() %>
+    </a>, 
                             <strong>Artista:</strong> <%= album.getArtista().getCorreo() %>, 
                             <strong>Género:</strong> <%= album.getListaGeneros()%>, 
                             <strong>Año de Creación:</strong> <%= album.getAnioCreacion() %>
@@ -135,6 +139,8 @@
 
         %>
     </div>
+   
+   <div id="dynamicContent"> </div>
    <iframe id="dynamicIframe" style="width: 100%; height: 400px; border: none;"></iframe>
 </div>
 
@@ -163,6 +169,44 @@
     console.error("No se pudo generar la URL para abrir la página.");
 }
 }
+
+function fetchAlbum(nombreAlbum, nombreArtista) {
+            const variableUrl = encodeURIComponent(nombreArtista);
+            const url = "SvObtenerAlbumxArtista?artista=" + variableUrl;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener álbumes: ' + response.statusText);
+                    }
+                    return response.text(); // Cambia a .text() para obtener el HTML
+                })
+                .then(html => {
+                    const dynamicContent = document.getElementById('dynamicContent');
+                    dynamicContent.innerHTML = html; // Incrusta el nuevo HTML
+
+                    // Vuelve a asociar el evento de clic a cada elemento de álbum
+                    const albumItems = dynamicContent.querySelectorAll('.album-item');
+                    albumItems.forEach(item => {
+                        const albumName = nombreAlbum//item.querySelector('.album-name').textContent.trim();
+                        const artistName = item.querySelector('.album-artist').textContent.trim();
+                        console.log(`Nombre albumpasado: `, nombreAlbum, `, Nombre Artistapasado: `, nombreArtista);
+                        console.log(`Nombre album: `, albumName, `, Nombre Artista: `, artistName);
+
+                        item.onclick = () => {
+                            console.log(`todo ok `, albumName);
+                            const encodedAlbumName = encodeURIComponent(albumName);
+                            const encodedArtistName = encodeURIComponent(artistName);
+                            const servletUrl = "SvObtenerTemas?album=" + encodedAlbumName + "&artista=" + encodedArtistName;
+                            console.log(servletUrl);
+                            console.log(`Nombre album: `, albumName, `, Nombre Artista: `, artistName);
+                            const iframe = document.getElementById('dynamicIframe');
+                            iframe.src = servletUrl; // Establece la URL del iframe 
+                            console.log(`Album: `, albumName);
+                        };
+                    });
+                })
+                .catch(error => console.error('Error al obtener álbumes:', error));
+        }
     
 </script>
 </html>
